@@ -8,9 +8,18 @@ const Trainee = mongoose.Schema({
         minLength: 3,
         maxLength: 50
     },
+    username: {
+        type: String,
+        unique: true,
+        required: true
+    },
     password: {
         type: String,
         required: true,
+    },
+    fields: {
+        type: [mongoose.Schema.Types.Mixed],
+        default: []
     },
     gender: {
         type: String,
@@ -32,7 +41,8 @@ const Trainee = mongoose.Schema({
         default: "Egypt"
     },
     courses: {
-        type: [String]
+        type: [String],
+        default: []
     },
     isCorporate: {
         type: Boolean,

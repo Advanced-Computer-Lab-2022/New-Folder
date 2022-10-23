@@ -1,17 +1,16 @@
 const mongoose = require('mongoose')
-const Week = require('./Week')
+const Subtitle = require('./Subtitle')
 
 const Course = mongoose.Schema({
     name: {
         type: String,
         required: true
     },
-    price: {
-        type: Number,
-        min: 0
-    },
-    currency: {
+    field: {
         type: String
+    },
+    price: {
+        type: mongoose.Schema.Types.Mixed,
     },
     description: {
         type: String
@@ -40,20 +39,11 @@ const Course = mongoose.Schema({
         type: String,
         required: true
     },
-    revenueAnnual: {
-        type: Number
-    },
-    revenueMonth: {
-        type: Number
-    },
-    revenueWeek: {
-        type: Number
-    },
     trainees: {
         type: [String]
     },
-    Weeks: {
-        type: [Week]
+    subtitles: {
+        type: [Subtitle]
     }
 })
 

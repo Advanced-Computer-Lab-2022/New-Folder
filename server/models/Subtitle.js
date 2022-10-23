@@ -1,20 +1,17 @@
 const mongoose = require('mongoose')
 const Content = require('./Content')
-const Quiz = require('./Quiz')
+const Exercises = require('./Exercises')
 
 
 const Week = mongoose.Schema({
-    courseID: {
-        type: String
-    },
-    weekNumber: {
+    subtitleNumber: {
         type: Number
     },
     Contents: {
         type: [Content]
     },
-    Quiz: {
-        type: [Quiz]
+    exercises: {
+        type: [Exercises]
     }
 })
 

@@ -8,6 +8,11 @@ const Instructor = mongoose.Schema({
         minLength: 3,
         maxLength: 50
     },
+    username:{
+        type: String,
+        unique: true,
+        required: true
+    },
     password: {
         type: String,
         required: true,
@@ -29,9 +34,21 @@ const Instructor = mongoose.Schema({
     },
     country: {
         type: String,
-        default: "Egypt"
+    },
+    about: {
+        type: String
     },
     courses: {
+        type: [String],
+        default: []
+    },
+    rating: {
+        type: Number,
+        min: 0,
+        max: 5,
+        default: -1
+    },
+    reviews: {
         type: [String],
         default: []
     }

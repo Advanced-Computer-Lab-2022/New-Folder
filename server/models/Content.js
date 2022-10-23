@@ -8,8 +8,8 @@ const Content = mongoose.Schema({
     description: {
         type: String
     },
-    duration: { // what type
-
+    duration: { 
+        type: mongoose.Schema.Types.Mixed // {hrs: , minutes: , seconds: }
     },
     video: {
         type: String
