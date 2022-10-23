@@ -25,8 +25,17 @@ app.use(cors({ origin: true, credentials: true }));
 
 
 // routes
-const testRoutes = require("./routes/test");
-app.use("/",testRoutes);
+// instructor routes
+const instructorRoutes = require("./routes/instructor");
+app.use("/instructor",instructorRoutes);
+
+// admin routes
+const adminRoutes = require("./routes/admin");
+app.use("/admin",adminRoutes);
+
+// trainee routes
+const traineeRoutes = require("./routes/trainee");
+app.use("/",traineeRoutes);
 
 //port
 const port = process.env.PORT || 8080;
