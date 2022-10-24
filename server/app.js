@@ -5,7 +5,7 @@ const cors = require("cors");
 const { urlencoded } = express;
 require("dotenv").config();
 const bodyParser = require('body-parser')
-json = bodyParser.json()
+const json = bodyParser.json()
 // app
 const app = express();
 app.use(json)

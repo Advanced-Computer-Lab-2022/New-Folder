@@ -42,11 +42,15 @@ const Instructor = mongoose.Schema({
         type: [String],
         default: []
     },
+    ratingNo:{
+        type: Number,
+        default:0
+    },
     rating: {
         type: Number,
         min: 0,
         max: 5,
-        default: -1
+        default: 0
     },
     reviews: {
         type: [String],

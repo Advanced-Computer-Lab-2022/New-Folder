@@ -40,10 +40,12 @@ const Course = mongoose.Schema({
         required: true
     },
     trainees: {
-        type: [String]
+        type: [String],
+        default: []
     },
     subtitles: {
-        type: [Subtitle]
+        type: [Subtitle],
+        default: []
     }
 })
 
