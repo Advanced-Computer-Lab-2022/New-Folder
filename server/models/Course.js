@@ -25,7 +25,7 @@ const Course = mongoose.Schema({
         type: Number,
         min: 0,
         max: 5,
-        default: -1
+        default: 0
     },
     ratingNo: {
         type: Number,
@@ -40,10 +40,12 @@ const Course = mongoose.Schema({
         required: true
     },
     trainees: {
-        type: [String]
+        type: [String],
+        default: []
     },
     subtitles: {
-        type: [Subtitle]
+        type: [Subtitle],
+        default: []
     }
 })
 
