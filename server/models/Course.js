@@ -10,7 +10,7 @@ const Course = mongoose.Schema({
         type: String
     },
     price: {
-        type: mongoose.Schema.Types.Mixed,
+        type: mongoose.Schema.Types.Mixed, // {Mag: , currency: }
     },
     description: {
         type: String
@@ -25,7 +25,7 @@ const Course = mongoose.Schema({
         type: Number,
         min: 0,
         max: 5,
-        default: -1
+        default: 0
     },
     ratingNo: {
         type: Number,
