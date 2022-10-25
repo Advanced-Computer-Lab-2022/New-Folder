@@ -1,5 +1,6 @@
+const Course = require("../../models/Course");
+
 exports.getExplore = async (req, res) => {
-    res.status(200).json({
-        message: "Explore",
-    })
-}
+  const courses = await Course.find();
+  res.send(courses);
+};
