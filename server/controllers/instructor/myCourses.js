@@ -1,5 +1,5 @@
 exports.getMyCourses = async (req, res) => {
-    res.status(200).json({
-        message: "Instructor My Courses",
-    })
-}
+  res.status(200).json({
+    message: "Instructor My Courses",
+  });
+};
