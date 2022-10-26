@@ -1,7 +1,7 @@
 // don't run the data already on the db
 const mongoose = require('mongoose')
 const Content = require('./Content')
-const Course = require('./Course')
+const Course = require('./Course.model')
 const Exercises = require('./Exercises')
 const Instructor = require('./Instructor')
 const Subtitle = require('./Subtitle')
@@ -222,6 +222,7 @@ async function populate() {
     [],
     []
   );
+}
 
 async function populate () {
     let java = await insertCourse('Java OOP','Computer Science',18,'USA','This course introduces computer programming using the JAVA programming language with object-oriented programming principles','https://www.aacomputercollege.com/wp-content/uploads/2018/08/java-1030x579.jpg','',5,5,[],'125A' , [],[]);
