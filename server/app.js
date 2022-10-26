@@ -22,7 +22,7 @@ mongoose
 
 // middleware
 app.use(cors({ origin: true, credentials: true }));
-
+app.use(express.json())
 
 // routes
 // instructor routes
