@@ -3,16 +3,16 @@ const Content = require('./Content')
 const Exercises = require('./Exercises')
 
 
-const Week = mongoose.Schema({
+const Subtitle = mongoose.Schema({
     subtitleNumber: {
         type: Number
     },
     Contents: {
-        type: [Content]
+        type: [Content.schema]
     },
     exercises: {
-        type: [Exercises]
+        type: [Exercises.schema]
     }
 })
 
-module.exports = Week
+module.exports = mongoose.model('Subtitle', Subtitle);
