@@ -2,11 +2,8 @@ import "./App.css";
 import { Link, Route, Routes } from "react-router-dom";
 import Explore from "./pages/Explore";
 import Search from "./pages/Search";
-<<<<<<< HEAD
 import CreateCourse from "./pages/CreateCourse";
-=======
 import Login from "./pages/Login";
->>>>>>> Testing
 
 function App() {
   return (
