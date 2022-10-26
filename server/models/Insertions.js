@@ -1,7 +1,7 @@
 // don't run the data already on the db
 const mongoose = require('mongoose')
 const Content = require('./Content')
-const Course = require('./Course')
+const Course = require('./Course.model')
 const Exercises = require('./Exercises')
 const Instructor = require('./Instructor')
 const Subtitle = require('./Subtitle')
@@ -156,17 +156,17 @@ async  function insertSubtitleToCourse(courseID , subtitle) {
 
 
 async function populate () {
-    let java = await insertCourse('Java OOP','Computer Science',18,'USA','This course introduces computer programming using the JAVA programming language with object-oriented programming principles','https://www.aacomputercollege.com/wp-content/uploads/2018/08/java-1030x579.jpg','',5,5,[],'125A' , [],[]);
-    let sokk = await insertTrainee ("alyhassan123456@gmail.com","Elsokkary101","1234",['Computer Science'], 'Male','Aly Hassan','Elsokkary','','',[java._id],false);
-    let soubra = await insertInstructor('soubra@gmail.com','soubraJokexD', '0000','Male', 'Hassan Hassona', 'Soubra','','UAE','RAGL MEYA MEYA',5,5,[java._id],[]);
+    // let java = await insertCourse('Java OOP','Computer Science',18,'USA','This course introduces computer programming using the JAVA programming language with object-oriented programming principles','https://www.aacomputercollege.com/wp-content/uploads/2018/08/java-1030x579.jpg','',5,5,[],'125A' , [],[]);
+    // let sokk = await insertTrainee ("alyhassan123456@gmail.com","Elsokkary101","1234",['Computer Science'], 'Male','Aly Hassan','Elsokkary','','',[java._id],false);
+    let soubra = await insertInstructor('Mosalah@gmail.com','mosalapl', '0000','Male', 'Mohamed Salah', 'Liverpool','','UK','RAGL MEYA MEYA',5,5,[],[]);
 
-    let questionaya = await insertExcercises('masr gabl el goal el wa7eed fe kas el 3ala sanet kam ?', "1900", "4526", "2001", "1920", 3);
-    let contentaya = await insertContent(java._id, "masr masr masrrrr" , '','');
+    // let questionaya = await insertExcercises('masr gabl el goal el wa7eed fe kas el 3ala sanet kam ?', "1900", "4526", "2001", "1920", 3);
+    // let contentaya = await insertContent(java._id, "masr masr masrrrr" , '','');
 
-    let Subtitlaya = await insertSubtitle(1,[contentaya], [questionaya]);
+    // let Subtitlaya = await insertSubtitle(1,[contentaya], [questionaya]);
 
-    await insertTraineeToCourse(java._id , sokk._id);
-    await insertSubtitleToCourse(java._id,Subtitlaya );
+    // await insertTraineeToCourse(java._id , sokk._id);
+    // await insertSubtitleToCourse(java._id,Subtitlaya );
 
     console.log("Relation has been done ✔️ ");
 
@@ -176,3 +176,4 @@ async function populate () {
 
 
 populate();
+mongoose.connection.close();

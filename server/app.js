@@ -32,9 +32,15 @@ app.use("/instructor", instructorRoutes);
 const adminRoutes = require("./routes/admin");
 app.use("/admin", adminRoutes);
 
+// Course routes
+const courseRoutes =require("./routes/course.route");
+app.use("/course", courseRoutes);
+
 // trainee routes
 const traineeRoutes = require("./routes/trainee");
 app.use("/", traineeRoutes);
+
+
 
 //port
 const port = process.env.PORT || 8080;
