@@ -1,66 +1,271 @@
 // don't run the data already on the db
-const mongoose = require('mongoose')
-const Content = require('./Content')
-const Course = require('./Course')
-const Exercises = require('./Exercises')
-const Instructor = require('./Instructor')
-const Subtitle = require('./Subtitle')
-const Trainee = require('./Trainee')
-const bodyParser = require('body-parser')
-
+const mongoose = require("mongoose");
+const Content = require("./Content");
+const Course = require("./Course");
+const Exercises = require("./Exercises");
+const Instructor = require("./Instructor");
+const Subtitle = require("./Subtitle");
+const Trainee = require("./Trainee");
+const bodyParser = require("body-parser");
 
 mongoose
-	.connect("mongodb+srv://NewFolderTeam:pass123456@cluster0.qvnetbs.mongodb.net/?retryWrites=true&w=majority", {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-	})
-	.then(() => console.log("DB CONNECTED"))
-	.catch((err) => console.log("DB CONNECTION ERROR", err));
+  .connect(
+    "mongodb+srv://NewFolderTeam:pass123456@cluster0.qvnetbs.mongodb.net/?retryWrites=true&w=majority",
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => console.log("DB CONNECTED"))
+  .catch((err) => console.log("DB CONNECTION ERROR", err));
 
+// insert new courses
+async function insertCourse(
+  name,
+  field,
+  priceMag,
+  priceCurr,
+  description,
+  image,
+  introVideo,
+  rating,
+  ratingNo,
+  reviews,
+  instructorID,
+  trainees,
+  subtitles
+) {
+  let c = await Course.create({
+    name: name,
+    field: field,
+    price: {
+      magnitude: priceMag,
+      currency: priceCurr,
+    },
+    description: description,
+    image: image,
+    introVideo: introVideo,
+    rating: rating,
+    ratingNo: ratingNo,
+    reviews: reviews,
+    instructorID: instructorID,
+    trainees: trainees,
+    subtitles: subtitles,
+  });
 
+  console.log(c.name + "COURSE has been added ✔️");
+  return c;
+}
 
-const instructor =  Instructor.create({
-    email: "Ins@Z3bola.com",
-    username: "ins.z3bola",
-    password: "0000",
-    gender: "Male",
-    image: "https://p16-sign-va.tiktokcdn.com/tos-maliva-avt-0068/79f588df19805b1d2dedfc3cfe27f68d~c5_100x100.jpeg?x-expires=1666789200&x-signature=S0VF2luObEtxbtalxYPEirJhuwo%3D",
-    firstName: "Ins",
-    lastName: "Z3bola",
-    country: "Egypt",
-    about: "I am Ins Z3bola",
-    ratingNo: 10,
-    rating: 5,
-    reviews: ["Mr.Z3bola is the best", "No caption"]
-})
+// insert new Instructor
+async function insertInstructor(
+  email,
+  username,
+  password,
+  gender,
+  firstName,
+  lastName,
+  image,
+  country,
+  about,
+  rating,
+  ratingNo,
+  courses,
+  reviews
+) {
+  let c = await Instructor.create({
+    email: email,
+    username: username,
+    password: password,
+    gender: gender,
+    firstName: firstName,
+    lastName: lastName,
+    image: image,
+    country: country,
+    about: about,
+    courses: courses,
+    ratingNo: ratingNo,
+    rating: rating,
+    reviews: reviews,
+  });
 
-const trainee =  Trainee.create({
-    email : 'ziko@gmail.com',
-    password  : '123@abc',
-    username: "zico",
-    gender : 'Male',
-    firstName : 'Ziad Ahmed',
-    lastName : 'Sadek',
-    image : 'https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.reddit.com%2Fr%2Fsoccermemes%2Fcomments%2Flk7poi%2Fmini_messi%2F&psig=AOvVaw0u4Ixiztd9bx9fbxcRH-yL&ust=1666703775827000&source=images&cd=vfe&ved=0CAwQjRxqFwoTCIjU0cX5-PoCFQAAAAAdAAAAABAE',
-    country:'USA',
-    isCorporate:  false
-})
+  console.log("INSTRUCTOR has been added ✔️");
+  return c;
+}
 
-const course = Course.create({
-    name: "Z3bola z3bolism course",
-    field: "z3bolism",
-    price: {magnitude: 10, currency: "USD"},
-    description: "we will learn how to learn",
-    introVideo: "https://www.youtube.com/watch?v=S1aicEKamXk",
-    rating: 5,
-    ratingNo: 10,
-    instructorID: instructor.schema.paths._id.toString()
-})
+//insert new Trainee (individual or corporate)
+async function insertTrainee(
+  email,
+  username,
+  password,
+  fields,
+  gender,
+  firstName,
+  lastName,
+  image,
+  country,
+  courses,
+  isCorporate
+) {
+  let c = await Trainee.create({
+    email: email,
+    username: username,
+    password: password,
+    fields: fields,
+    gender: gender,
+    firstName: firstName,
+    lastName: lastName,
+    image: image,
+    country: country,
+    courses: courses,
+    isCorporate: isCorporate,
+  });
 
-// const express = require('express')
-// const app = express()
-// app.get('/', (req, res) => {
-//     res.send(Instructor.find())
-// })
-// app.listen(3000)
-console.log("finished")
+  console.log("TRAINEE has been added ✔️");
+  return c;
+}
+
+// insert new content
+async function insertContent(courseID, description, duration, video) {
+  let c = await Content.create({
+    courseID: courseID,
+    description: description,
+    duration: duration,
+    video: video,
+  });
+  console.log("CONTENT has been added ✔️");
+  return c;
+}
+
+// insert new Excercise
+async function insertExcercises(
+  statement,
+  firstAns,
+  secondAns,
+  thirdAns,
+  forthAns,
+  correctIdx
+) {
+  let c = await Exercises.create({
+    Questions: [
+      {
+        statement: statement,
+        choices: [firstAns, secondAns, thirdAns, forthAns],
+        correctIdx: correctIdx,
+      },
+    ],
+  });
+  console.log("Excercise has been added ✔️");
+  return c;
+}
+
+// insert new Subtitle
+async function insertSubtitle(subtitleNumber, Contents, exercises) {
+  let c = await Subtitle.create({
+    subtitleNumber: subtitleNumber,
+    Contents: Contents,
+    exercises: exercises,
+  });
+  console.log("Subtitle has been added ✔️");
+  return c;
+}
+
+// insert a new trainee to a course
+async function insertTraineeToCourse(courseID, traineeID) {
+  let courseReq = await Course.find({ _id: courseID });
+  courseReq[0].trainees.push(traineeID);
+
+  await Course.updateMany(
+    {
+      _id: courseID,
+    },
+    {
+      trainees: courseReq[0].trainees,
+    }
+  );
+
+  console.log("DONE INSERTION of trainee to course");
+}
+
+// insert a new subtitle into this course
+
+async function insertSubtitleToCourse(courseID, subtitle) {
+  let courseReq = await Course.find({ _id: courseID });
+  courseReq[0].subtitles.push(subtitle);
+
+  await Course.updateMany(
+    {
+      _id: courseID,
+    },
+    {
+      subtitles: courseReq[0].subtitles,
+    }
+  );
+
+  console.log("DONE INSERTION of trainee to course");
+}
+
+async function populate() {
+  let java = await insertCourse(
+    "Java OOP",
+    "Computer Science",
+    18,
+    "USA",
+    "This course introduces computer programming using the JAVA programming language with object-oriented programming principles",
+    "https://www.aacomputercollege.com/wp-content/uploads/2018/08/java-1030x579.jpg",
+    "",
+    5,
+    5,
+    [],
+    "125A",
+    [],
+    []
+  );
+  let sokk = await insertTrainee(
+    "alyhassan123456@gmail.com",
+    "Elsokkary101",
+    "1234",
+    ["Computer Science"],
+    "Male",
+    "Aly Hassan",
+    "Elsokkary",
+    "",
+    "",
+    [java._id],
+    false
+  );
+  let soubra = await insertInstructor(
+    "soubra@gmail.com",
+    "soubraJokexD",
+    "0000",
+    "Male",
+    "Hassan Hassona",
+    "Soubra",
+    "",
+    "UAE",
+    "RAGL MEYA MEYA",
+    5,
+    5,
+    [java._id],
+    []
+  );
+
+  let questionaya = await insertExcercises(
+    "masr gabl el goal el wa7eed fe kas el 3ala sanet kam ?",
+    "1900",
+    "4526",
+    "2001",
+    "1920",
+    3
+  );
+  let contentaya = await insertContent(java._id, "masr masr masrrrr", "", "");
+
+  let Subtitlaya = await insertSubtitle(1, [contentaya], [questionaya]);
+
+  await insertTraineeToCourse(java._id, sokk._id);
+  await insertSubtitleToCourse(java._id, Subtitlaya);
+
+  console.log("Relation has been done ✔️ ");
+}
+
+populate();

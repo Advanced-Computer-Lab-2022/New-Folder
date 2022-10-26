@@ -1,18 +1,15 @@
-const mongoose = require('mongoose')
-const Content = require('./Content')
-const Exercises = require('./Exercises')
+const mongoose = require("mongoose");
 
+const Subtitle = mongoose.Schema({
+  subtitleNumber: {
+    type: Number,
+  },
+  Contents: {
+    type: [{ type: mongoose.Types.ObjectId, ref: "Content" }],
+  },
+  exercises: {
+    type: [{ type: mongoose.Types.ObjectId, ref: "Exercises" }],
+  },
+});
 
-const Week = mongoose.Schema({
-    subtitleNumber: {
-        type: Number
-    },
-    Contents: {
-        type: [Content]
-    },
-    exercises: {
-        type: [Exercises]
-    }
-})
-
-module.exports = Week
+module.exports = mongoose.model("Subtitle", Subtitle);
