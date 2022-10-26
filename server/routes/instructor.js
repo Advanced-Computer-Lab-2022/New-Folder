@@ -1,21 +1,12 @@
 const express = require("express");
+const { getExplore } = require("../controllers/explore");
 const router = express.Router();
-const {
-  registerInstructor,
-  getInstructor,
-  loginInstructor,
-} = require("../controllers/instructorController");
-const {
-  protectInstructor,
-} = require("../middlewares/authInstructorMiddleware");
+const { login } = require("../controllers/login");
+const { protectUser } = require("../middlewares/authUserMiddleware");
 // import controllers
 
 // import middlewares
 
 // api routes
-
-router.post("/", registerInstructor);
-router.post("/login", loginInstructor);
-router.get("/me", protectInstructor, getInstructor);
 
 module.exports = router;

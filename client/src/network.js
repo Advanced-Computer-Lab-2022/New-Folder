@@ -12,3 +12,8 @@ export const fetchExploreData = async () => {
   console.log(res.data);
   return res.data;
 };
+
+export const login = async (loginData) => {
+  const res = await axios.post(`${baseURI}login`, loginData);
+  return res;
+};
