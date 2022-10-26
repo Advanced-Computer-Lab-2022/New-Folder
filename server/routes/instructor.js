@@ -1,13 +1,12 @@
 const express = require("express");
+const { getExplore } = require("../controllers/explore");
 const router = express.Router();
-
+const { login } = require("../controllers/login");
+const { protectUser } = require("../middlewares/authUserMiddleware");
 // import controllers
-const {getMyCourses} = require("../controllers/instructor/myCourses");
 
 // import middlewares
 
 // api routes
-router.get("/",getMyCourses);
-
 
 module.exports = router;
