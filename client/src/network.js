@@ -12,3 +12,9 @@ export const fetchExploreData = async () => {
   console.log(res.data);
   return res.data;
 };
+
+export const postCourse = async (data) => {
+  const res = await axios.post(`${baseURI}/instructor/CreateCourse`, data);
+  console.log(res.data);
+  return res.data;
+};
