@@ -16,4 +16,4 @@ const Content = mongoose.Schema({
     }
 })
 
-module.exports = Content
+module.exports = mongoose.model('Content', Content);

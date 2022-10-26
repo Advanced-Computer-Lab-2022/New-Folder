@@ -44,7 +44,7 @@ const Course = mongoose.Schema({
         default: []
     },
     subtitles: {
-        type: [Subtitle],
+        type: [Subtitle.schema],
         default: []
     }
 })

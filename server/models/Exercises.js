@@ -5,3 +5,5 @@ const Exercises = mongoose.Schema({
         type: [mongoose.Schema.Types.Mixed] // [{statement: , choices: , correctIdx}]
     }
 })
+
+module.exports = mongoose.model('Exercises', Exercises);
