@@ -5,7 +5,9 @@ const {
   getInstructor,
   loginInstructor,
 } = require("../controllers/instructorController");
-const { protectInstructor } = require("../middleWare/authInstructorMiddleWare");
+const {
+  protectInstructor,
+} = require("../middlewares/authInstructorMiddleware");
 // import controllers
 
 // import middlewares

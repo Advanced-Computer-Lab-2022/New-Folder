@@ -55,4 +55,4 @@ const Instructor = mongoose.Schema(
   User
 );
 
-module.exports = mongoose.model("Instructor", Instructor);
+module.exports = User.discriminator("Instructor", Instructor);

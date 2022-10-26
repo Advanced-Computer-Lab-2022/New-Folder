@@ -43,4 +43,4 @@ const Trainee = mongoose.Schema(
   User
 );
 
-module.exports = mongoose.model("Trainee", Trainee);
+module.exports = User.discriminator("Trainee", Trainee);
