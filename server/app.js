@@ -20,9 +20,6 @@ mongoose
   .then(() => console.log("DB CONNECTED"))
   .catch((err) => console.log("DB CONNECTION ERROR", err));
 
-// middleware
-app.use(cors({ origin: true, credentials: true }));
-
 // routes
 // instructor routes
 const instructorRoutes = require("./routes/instructor");

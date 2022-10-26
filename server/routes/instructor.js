@@ -1,12 +1,19 @@
 const express = require("express");
 const router = express.Router();
-
+const {
+  registerInstructor,
+  getInstructor,
+  loginInstructor,
+} = require("../controllers/instructorController");
+const { protectInstructor } = require("../middleWare/authInstructorMiddleWare");
 // import controllers
-const { getMyCourses } = require("../controllers/instructor/myCourses");
 
 // import middlewares
 
 // api routes
-router.get("/", getMyCourses);
+
+router.post("/", registerInstructor);
+router.post("/login", loginInstructor);
+router.get("/me", protectInstructor, getInstructor);
 
 module.exports = router;
