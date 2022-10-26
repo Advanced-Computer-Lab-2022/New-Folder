@@ -206,6 +206,22 @@ async function insertSubtitleToCourse(courseID, subtitle) {
 }
 
 async function populate() {
+  let soubra = await insertInstructor(
+    "soubra@gmail.com",
+    "soubraJokexD",
+    "0000",
+    "Male",
+    "Hassan Hassona",
+    "Soubra",
+    "",
+    "UAE",
+    "RAGL MEYA MEYA",
+    5,
+    5,
+    [],
+    []
+  );
+
   let java = await insertCourse(
     "Java OOP",
     "Computer Science",
@@ -217,7 +233,7 @@ async function populate() {
     5,
     5,
     [],
-    "125A",
+    soubra._id,
     [],
     []
   );
@@ -233,21 +249,6 @@ async function populate() {
     "",
     [java._id],
     false
-  );
-  let soubra = await insertInstructor(
-    "soubra@gmail.com",
-    "soubraJokexD",
-    "0000",
-    "Male",
-    "Hassan Hassona",
-    "Soubra",
-    "",
-    "UAE",
-    "RAGL MEYA MEYA",
-    5,
-    5,
-    [java._id],
-    []
   );
 
   let questionaya = await insertExcercises(

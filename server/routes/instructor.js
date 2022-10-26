@@ -1,11 +1,8 @@
 const express = require("express");
+const { getExplore } = require("../controllers/explore");
 const router = express.Router();
-const {
-  registerInstructor,
-  getInstructor,
-  loginInstructor,
-} = require("../controllers/instructorController");
-const { protectInstructor } = require("../middleWare/authInstructorMiddleWare");
+const { login } = require("../controllers/login");
+const { protectUser } = require("../middlewares/authUserMiddleware");
 // import controllers
 const {getMyCourses} = require("../controllers/instructor/myCourses");
 const {createCourse} = require('../controllers/instructor/createCourse')
