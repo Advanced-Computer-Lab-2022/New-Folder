@@ -4,7 +4,6 @@ const router = express.Router();
 const { login } = require("../controllers/login");
 const { protectUser } = require("../middlewares/authUserMiddleware");
 // import controllers
-const {getMyCourses} = require("../controllers/instructor/myCourses");
 const {createCourse} = require('../controllers/instructor/createCourse')
 
 // import middlewares

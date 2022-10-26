@@ -14,7 +14,7 @@ export const fetchExploreData = async () => {
 };
 
 export const postCourse = async (data) => {
-  const res = await axios.post(`${baseURI}/instructor/CreateCourse`, data);
+  const res = await axios.post(`${baseURI}instructor/createCourse`, data);
   console.log(res.data);
   return res.data;
 };
