@@ -13,6 +13,18 @@ export const fetchExploreData = async () => {
   return res.data;
 };
 
+export const postInstructor = async (data) => {
+  const res = await axios.post(`${baseURI}admin/addInstructor`, data);
+  console.log(res.data);
+  return res.data;
+};
+
+export const postCorporateTrainee = async (data) => {
+  const res = await axios.post(`${baseURI}admin/addCorporateTrainee`, data);
+  console.log(res.data);
+  return res.data;
+};
+
 export const login = async (loginData) => {
   const res = await axios.post(`${baseURI}login`, loginData);
   return res;
