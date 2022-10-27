@@ -3,6 +3,7 @@ import { Link, Route, Routes } from "react-router-dom";
 import Explore from "./pages/Explore";
 import Search from "./pages/Search";
 import Login from "./pages/Login";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
@@ -25,6 +26,7 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/login" element={<Login />} />
       </Routes>
+      <Navbar></Navbar>
     </>
   );
 }
