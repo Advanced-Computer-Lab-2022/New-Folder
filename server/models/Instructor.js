@@ -51,6 +51,10 @@ const Instructor = mongoose.Schema(
       type: [String],
       default: [],
     },
+    userType: {
+      type: String,
+      default: "instructor",
+    },
   },
   User
 );
