@@ -12,8 +12,8 @@ const {createCourse} = require('../controllers/instructor/createCourse')
 
 router.post("/createCourse", createCourse)
 
-router.post("/", registerInstructor);
-router.post("/login", loginInstructor);
-router.get("/me", protectInstructor, getInstructor);
+// router.post("/", registerInstructor);
+// router.post("/login", loginInstructor);
+// router.get("/me", protectInstructor, getInstructor);
 
 module.exports = router;

@@ -5,6 +5,7 @@ import Search from "./pages/Search";
 import CreateCourse from "./pages/CreateCourse";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar/Navbar";
+import AddAdmin from "./pages/AddAdmin";
 
 function App() {
   return (
@@ -23,6 +24,9 @@ function App() {
           <li>
             <Link to="/instructor/CreateCourse">createCourse</Link>
           </li>
+          <li>
+            <Link to="/addAdmin">addAdmin</Link>
+          </li>
         </ul>
       </nav>
       <Routes>
@@ -30,6 +34,7 @@ function App() {
         <Route path="/search" element={<Search />} />
         <Route path="/instructor/CreateCourse" element={<CreateCourse />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/addAdmin" element={<AddAdmin />} />
       </Routes>
       <Navbar></Navbar>
     </>
