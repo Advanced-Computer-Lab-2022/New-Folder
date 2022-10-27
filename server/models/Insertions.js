@@ -220,7 +220,7 @@ async function populate() {
     [],
     []
   );
-}
+
 
   let java = await insertCourse(
     "Java OOP",
