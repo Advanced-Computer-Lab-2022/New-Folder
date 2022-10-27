@@ -1,12 +1,13 @@
 // don't run the data already on the db
-const mongoose = require("mongoose");
-const Content = require("./Content");
-const Course = require("./Course");
-const Exercises = require("./Exercises");
-const Instructor = require("./Instructor");
-const Subtitle = require("./Subtitle");
-const Trainee = require("./Trainee");
-const bodyParser = require("body-parser");
+const mongoose = require('mongoose')
+const Content = require('./Content')
+const Course = require('./Course.model')
+const Exercises = require('./Exercises')
+const Instructor = require('./Instructor')
+const Subtitle = require('./Subtitle')
+const Trainee = require('./Trainee')
+const bodyParser = require('body-parser')
+
 
 mongoose
   .connect(
@@ -220,6 +221,7 @@ async function populate() {
     []
   );
 
+
   let java = await insertCourse(
     "Java OOP",
     "Computer Science",
@@ -245,25 +247,20 @@ async function populate() {
     "Elsokkary",
     "",
     "",
-    [java._id]
+    [java._id],
+    false
   );
 
-  let questionaya = await insertExcercises(
-    "masr gabl el goal el wa7eed fe kas el 3ala sanet kam ?",
-    "1900",
-    "4526",
-    "2001",
-    "1920",
-    3
-  );
-  let contentaya = await insertContent(java._id, "masr masr masrrrr", "", "");
+    let questionaya = await insertExcercises('masr gabl el goal el wa7eed fe kas el 3ala sanet kam ?', "1900", "4526", "2001", "1920", 3);
+    let contentaya = await insertContent(java._id, "masr masr masrrrr" , '','');
 
-  let Subtitlaya = await insertSubtitle(1, [contentaya], [questionaya]);
+    let Subtitlaya = await insertSubtitle(1,[contentaya], [questionaya]);
 
-  await insertTraineeToCourse(java._id, sokk._id);
-  await insertSubtitleToCourse(java._id, Subtitlaya);
+    await insertTraineeToCourse(java._id , sokk._id);
+    await insertSubtitleToCourse(java._id,Subtitlaya );
 
   console.log("Relation has been done ✔️ ");
 }
 
 populate();
+mongoose.connection.close();

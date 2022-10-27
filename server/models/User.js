@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+
 //email password gender firstName lastName image country courses isCorporate
 const User = mongoose.Schema({
   username: {

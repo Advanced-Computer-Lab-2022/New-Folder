@@ -1,3 +1,6 @@
+import React from "react";
+import { Link } from "react-router-dom";
+
 const Navbar = () => {
   return (
     <nav>
@@ -17,9 +20,7 @@ const Navbar = () => {
           <Link to="/search">Search</Link>
         </li>
         <li>
-          <select>
-            <ReactCountryFlag countryCode="US" />
-          </select>
+
         </li>
       </ul>
     </nav>

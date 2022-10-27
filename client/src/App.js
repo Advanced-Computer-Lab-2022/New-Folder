@@ -4,6 +4,7 @@ import Explore from "./pages/Explore";
 import Search from "./pages/Search";
 import CreateCourse from "./pages/CreateCourse";
 import Login from "./pages/Login";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
         <Route path="/instructor/CreateCourse" element={<CreateCourse />} />
         <Route path="/login" element={<Login />} />
       </Routes>
+      <Navbar></Navbar>
     </>
   );
 }
