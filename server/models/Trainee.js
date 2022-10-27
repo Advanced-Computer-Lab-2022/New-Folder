@@ -7,8 +7,6 @@ const Trainee = mongoose.Schema(
   {
     email: {
       type: String,
-      required: true,
-      unique: true,
       minLength: 3,
       maxLength: 50,
     },
@@ -18,15 +16,12 @@ const Trainee = mongoose.Schema(
     },
     gender: {
       type: String,
-      required: true,
     },
     firstName: {
       type: String,
-      required: true,
     },
     lastName: {
       type: String,
-      required: true,
     },
     image: {
       type: String,
