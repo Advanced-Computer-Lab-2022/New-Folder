@@ -9,7 +9,6 @@ exports.addInstructor = async (req , res) => {
     const instructor = await Instructor.create({
         username: req.body.username
         ,password:req.body.password
-        ,email:"dumb"
     })
     //.save() to save data in the db
    res.status(200).json(instructor)
