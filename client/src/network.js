@@ -37,6 +37,19 @@ export const postAddadmin = async (data) => {
   return res.data;
 };
 
+export const postAddInstructor = async (data) => {
+  const res = await axios.post(`${baseURI}admin/addInstructor`, data);
+  console.log(res.data);
+  return res.data;
+};
+
+
+export const postAddCorporateTrainee = async (data) => {
+  const res = await axios.post(`${baseURI}admin/addCorporateTrainee`, data);
+  console.log(res.data);
+  return res.data;
+};
+
 export const login = async (loginData) => {
   const res = await axios.post(`${baseURI}login`, loginData);
   return res;

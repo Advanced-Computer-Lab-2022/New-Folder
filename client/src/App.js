@@ -6,6 +6,8 @@ import CreateCourse from "./pages/CreateCourse";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar/Navbar";
 import AddAdmin from "./pages/AddAdmin";
+import AddInstructor from './pages/AddInstructor'
+import AddCorporateTrainee from "./pages/AddCorporateTrainee";
 
 function App() {
   return (
@@ -27,6 +29,12 @@ function App() {
           <li>
             <Link to="/addAdmin">addAdmin</Link>
           </li>
+          <li>
+            <Link to="/addCorporateTrainee">addCorporateTrainee</Link>
+          </li>
+          <li>
+            <Link to="/AddInstructor">addInstructor</Link>
+          </li>
         </ul>
       </nav>
       <Routes>
@@ -35,8 +43,9 @@ function App() {
         <Route path="/instructor/CreateCourse" element={<CreateCourse />} />
         <Route path="/login" element={<Login />} />
         <Route path="/addAdmin" element={<AddAdmin />} />
+        <Route path="/AddInstructor" element={<AddInstructor />} />
+        <Route path="/AddCorporateTrainee" element={<AddCorporateTrainee />} />
       </Routes>
-      <Navbar></Navbar>
     </>
   );
 }
