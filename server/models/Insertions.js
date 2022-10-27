@@ -104,8 +104,7 @@ async function insertTrainee(
   lastName,
   image,
   country,
-  courses,
-  isCorporate
+  courses
 ) {
   let c = await Trainee.create({
     email: email,
@@ -118,7 +117,6 @@ async function insertTrainee(
     image: image,
     country: country,
     courses: courses,
-    isCorporate: isCorporate,
   });
 
   console.log("TRAINEE has been added ✔️");
@@ -247,8 +245,7 @@ async function populate() {
     "Elsokkary",
     "",
     "",
-    [java._id],
-    false
+    [java._id]
   );
 
   let questionaya = await insertExcercises(

@@ -39,9 +39,10 @@ const Trainee = mongoose.Schema(
       type: [{ type: mongoose.Types.ObjectId, ref: "Course" }],
       default: [],
     },
-    isCorporate: {
-      type: Boolean,
-      default: false,
+    userType: {
+      type: String,
+      enum: ["trainee", "corporateTrainee"],
+      default: "trainee",
     },
   },
   User
