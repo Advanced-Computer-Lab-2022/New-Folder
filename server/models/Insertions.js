@@ -105,8 +105,7 @@ async function insertTrainee(
   lastName,
   image,
   country,
-  courses,
-  isCorporate
+  courses
 ) {
   let c = await Trainee.create({
     email: email,
@@ -119,7 +118,6 @@ async function insertTrainee(
     image: image,
     country: country,
     courses: courses,
-    isCorporate: isCorporate,
   });
 
   console.log("TRAINEE has been added ✔️");
@@ -224,10 +222,34 @@ async function populate() {
   );
 }
 
-async function populate () {
-    let java = await insertCourse('Java OOP','Computer Science',18,'USA','This course introduces computer programming using the JAVA programming language with object-oriented programming principles','https://www.aacomputercollege.com/wp-content/uploads/2018/08/java-1030x579.jpg','',5,5,[],'125A' , [],[]);
-    let sokk = await insertTrainee ("alyhassan123456@gmail.com","Elsokkary101","1234",['Computer Science'], 'Male','Aly Hassan','Elsokkary','','',[java._id],false);
-    let soubra = await insertInstructor('soubra@gmail.com','soubraJokexD', '0000','Male', 'Hassan Hassona', 'Soubra','','UAE','RAGL MEYA MEYA',5,5,[java._id],[]);
+  let java = await insertCourse(
+    "Java OOP",
+    "Computer Science",
+    18,
+    "USA",
+    "This course introduces computer programming using the JAVA programming language with object-oriented programming principles",
+    "https://www.aacomputercollege.com/wp-content/uploads/2018/08/java-1030x579.jpg",
+    "",
+    5,
+    5,
+    [],
+    soubra._id,
+    [],
+    []
+  );
+  let sokk = await insertTrainee(
+    "alyhassan123456@gmail.com",
+    "Elsokkary101",
+    "1234",
+    ["Computer Science"],
+    "Male",
+    "Aly Hassan",
+    "Elsokkary",
+    "",
+    "",
+    [java._id],
+    false
+  );
 
     let questionaya = await insertExcercises('masr gabl el goal el wa7eed fe kas el 3ala sanet kam ?', "1900", "4526", "2001", "1920", 3);
     let contentaya = await insertContent(java._id, "masr masr masrrrr" , '','');
