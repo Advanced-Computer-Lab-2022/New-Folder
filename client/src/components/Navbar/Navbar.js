@@ -1,25 +1,36 @@
-const Navbar = () => {
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import { fetchSearchData } from "../../network";
+
+const Navbar = (props) => {
+  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState("");
+  const submit = async (e) => {
+    e.preventDefault();
+    try {
+      const searchResults = await fetchSearchData(searchQuery);
+      props.setSearchResults(searchResults);
+      navigate("/search");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   return (
     <nav>
       <ul>
         <li>
-          <select name="User">
-            <option value="/trainee">Trainee</option>
-            <option value="/coorporateTrainee">Coorporate Trainee</option>
-            <option value="/instructor">Instructor</option>
-            <option value="/admin">Admin</option>
-          </select>
-        </li>
-        <li>
           <Link to="/">Explore</Link>
         </li>
         <li>
-          <Link to="/search">Search</Link>
-        </li>
-        <li>
-          <select>
-            <ReactCountryFlag countryCode="US" />
-          </select>
+          <form onSubmit={submit}>
+            <input
+              type="text"
+              value={searchQuery}
+              placeholder="search"
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+            <button type="submit">search</button>
+          </form>
         </li>
       </ul>
     </nav>
