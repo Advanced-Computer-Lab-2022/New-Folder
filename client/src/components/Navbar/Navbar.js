@@ -8,7 +8,7 @@ const Navbar = (props) => {
   const submit = async (e) => {
     e.preventDefault();
     try {
-      const searchResults = await fetchSearchData(searchQuery);
+      const searchResults = await fetchSearchData({ query: searchQuery });
       props.setSearchResults(searchResults);
       navigate("/search");
     } catch (err) {
