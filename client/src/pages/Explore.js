@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import CourseCard from "../components/CourseCard/CourseCard";
 import { fetchExploreData } from "../network";
 
 const Explore = () => {
@@ -20,7 +21,7 @@ const Explore = () => {
   return (
     <ul>
       {courses.map((course) => (
-        <li> {course.name} </li>
+        <CourseCard course={course}></CourseCard>
       ))}
     </ul>
   );

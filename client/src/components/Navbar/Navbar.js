@@ -22,10 +22,9 @@ const Navbar = (props) => {
   };
 
   const selectCountry = (e) => {
-    e.preventDefault();
+    sessionStorage.setItem("country", countries.country_name_code[e]);
     setCurrentCountry(e);
   };
-  console.log(countryList);
   return (
     <nav>
       <ul>

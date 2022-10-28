@@ -1,17 +1,16 @@
 import "./App.css";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Explore from "./pages/Explore";
 import Search from "./pages/Search";
 import CreateCourse from "./pages/CreateCourse";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar/Navbar";
 import AddAdmin from "./pages/AddAdmin";
-import AddInstructor from './pages/AddInstructor'
+import AddInstructor from "./pages/AddInstructor";
 import AddCorporateTrainee from "./pages/AddCorporateTrainee";
 import { useState } from "react";
 
 function App() {
-  const [country, setCountry] = useState("Egypt");
   const [searchResults, setSearchResults] = useState("");
   return (
     <>

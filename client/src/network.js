@@ -1,5 +1,5 @@
 import axios from "axios";
-
+import countryCurrency from "./CountryCurrency.json";
 //maximum time elapses before dropping the request
 const MAX_TIMEOUT = 60000;
 
@@ -13,7 +13,6 @@ export const fetchExploreData = async () => {
   console.log(res.data);
   return res.data;
 };
-
 
 // Create Course
 export const postCourse = async (data) => {
@@ -54,4 +53,21 @@ export const fetchSearchData = async (query) => {
 export const login = async (loginData) => {
   const res = await axios.post(`${baseURI}login`, loginData);
   return res;
+};
+
+// Get price
+
+export const getPrice = async (price) => {
+  const rates = await axios.get("https://api.exchangerate.host/latest");
+  const currCurrency = countryCurrency.country_currency["EG"];
+  const courseCurrency = price.currency;
+  var magnitude = price.magnitude;
+
+  const ratio =
+    rates.data.rates[currCurrency] / rates.data.rates[courseCurrency];
+  console.log(rates.data.rates[currCurrency]);
+  console.log(rates.data.rates[courseCurrency]);
+  console.log(currCurrency);
+  console.log(courseCurrency);
+  return magnitude * ratio + " "+currCurrency;
 };
