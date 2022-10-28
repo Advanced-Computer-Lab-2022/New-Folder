@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { login } from "../network";
 import { useNavigate } from "react-router-dom";
+import { ReactSession } from "react-client-session";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -15,6 +16,7 @@ const Login = () => {
     };
     try {
       await login(loginData);
+      ReactSession.set("username", username);
       navigate("/");
     } catch (err) {
       console.log(err);

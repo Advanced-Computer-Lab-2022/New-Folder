@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { fetchExploreData } from "../network";
+import { ReactSession } from "react-client-session";
 
 const Explore = () => {
   const [courses, setCourses] = useState([]);
@@ -22,6 +23,7 @@ const Explore = () => {
       {courses.map((course) => (
         <li> {course.name} </li>
       ))}
+      <li>{ReactSession.get("username")}</li>
     </ul>
   );
 };

@@ -1,17 +1,21 @@
 import "./App.css";
-import { Link, Route, Routes } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
+import { ReactSession } from "react-client-session";
 import Explore from "./pages/Explore";
 import Search from "./pages/Search";
 import Login from "./pages/Login";
 import Navbar from "./components/Navbar/Navbar";
 import { useState } from "react";
 
+ReactSession.setStoreType("localStorage");
+
 function App() {
   const [country, setCountry] = useState("Egypt");
   const [searchResults, setSearchResults] = useState([]);
+  ReactSession.set("country", country);
   return (
     <>
-      <Navbar setSearchResults={setSearchResults} />
+      <Navbar setSearchResults={setSearchResults} setCountry={setCountry} />
       <Routes>
         <Route path="/" element={<Explore />} />
         <Route
