@@ -1,16 +1,16 @@
-function filterCoursesByPrice(min, max, courses) {
+export const filterCoursesByPrice = (min, max, courses) => {
   return courses.filter(
     (course) => course.price.magnitude >= min && course.price.magnitude <= max
   );
-}
+};
 
-function filterCoursesByRating(value, courses) {
+export const filterCoursesByRating = (value, courses) => {
   return courses.filter((course) => course.rating == value);
-}
+};
 
-function filterCoursesBySubject(value, courses) {
+export const filterCoursesBySubject = (value, courses) => {
   return courses.filter((course) => hasSubString(course.subject, value));
-}
+};
 
 let hasSubString = (string, substring) => {
   let regularExpression = new RegExp(substring, "gi");
@@ -62,9 +62,3 @@ let hasSubString = (string, substring) => {
 //       return -1;
 //     }
 //   }
-
-module.exports = {
-  filterCoursesByPrice: filterCoursesByPrice,
-  filterCoursesByRating: filterCoursesByRating,
-  filterCoursesBySubject: filterCoursesBySubject,
-};

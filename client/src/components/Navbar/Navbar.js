@@ -42,7 +42,7 @@ const Navbar = (props) => {
             onChange={(e) => props.setCountry(e.target.value)}
           >
             {countries.map((country) => (
-              <option selected={country.name == "Egypt"} value={country.code}>
+              <option selected={country.name === "Egypt"} value={country.code}>
                 {country.name}
               </option>
             ))}
