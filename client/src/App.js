@@ -8,7 +8,7 @@ import { useState } from "react";
 
 function App() {
   const [country, setCountry] = useState("Egypt");
-  const [searchResults, setSearchResults] = useState("");
+  const [searchResults, setSearchResults] = useState([]);
   return (
     <>
       <Navbar setSearchResults={setSearchResults} />
@@ -16,7 +16,12 @@ function App() {
         <Route path="/" element={<Explore />} />
         <Route
           path="/search"
-          element={<Search searchResults={searchResults} />}
+          element={
+            <Search
+              searchResults={searchResults}
+              setSearchResults={setSearchResults}
+            />
+          }
         />
         <Route path="/login" element={<Login />} />
       </Routes>
