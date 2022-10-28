@@ -6,7 +6,7 @@ const Course = mongoose.Schema({
     type: String,
     required: true,
   },
-  field: {
+  subject: {
     type: String,
   },
   price: {

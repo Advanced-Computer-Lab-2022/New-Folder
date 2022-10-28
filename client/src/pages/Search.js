@@ -1,5 +1,11 @@
-const Search = () => {
-  return <h1>Search</h1>;
+const Search = (props) => {
+  return (
+    <ul>
+      {props.searchResults.map((result) => (
+        <li>{result.name}</li>
+      ))}
+    </ul>
+  );
 };
 
 export default Search;

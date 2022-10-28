@@ -8,43 +8,25 @@ import Navbar from "./components/Navbar/Navbar";
 import AddAdmin from "./pages/AddAdmin";
 import AddInstructor from './pages/AddInstructor'
 import AddCorporateTrainee from "./pages/AddCorporateTrainee";
+import { useState } from "react";
 
 function App() {
+  const [country, setCountry] = useState("Egypt");
+  const [searchResults, setSearchResults] = useState("");
   return (
     <>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/">Explore</Link>
-          </li>
-          <li>
-            <Link to="/search">Search</Link>
-          </li>
-          <li>
-            <Link to="/login">Login</Link>
-          </li>
-          <li>
-            <Link to="/instructor/CreateCourse">createCourse</Link>
-          </li>
-          <li>
-            <Link to="/addAdmin">addAdmin</Link>
-          </li>
-          <li>
-            <Link to="/addCorporateTrainee">addCorporateTrainee</Link>
-          </li>
-          <li>
-            <Link to="/AddInstructor">addInstructor</Link>
-          </li>
-        </ul>
-      </nav>
+      <Navbar setSearchResults={setSearchResults} />
       <Routes>
         <Route path="/" element={<Explore />} />
-        <Route path="/search" element={<Search />} />
-        <Route path="/instructor/CreateCourse" element={<CreateCourse />} />
+        <Route
+          path="/search"
+          element={<Search searchResults={searchResults} />}
+        />
         <Route path="/login" element={<Login />} />
         <Route path="/addAdmin" element={<AddAdmin />} />
         <Route path="/AddInstructor" element={<AddInstructor />} />
         <Route path="/AddCorporateTrainee" element={<AddCorporateTrainee />} />
+        <Route path="/CreateCourse" element={<CreateCourse />} />
       </Routes>
     </>
   );

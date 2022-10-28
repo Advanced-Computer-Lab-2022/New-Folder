@@ -50,6 +50,12 @@ export const postAddCorporateTrainee = async (data) => {
   return res.data;
 };
 
+export const fetchSearchData = async (query) => {
+  const res = await axios.post(`${baseURI}search`, query);
+  console.log(res.data);
+  return res.data;
+};
+
 export const login = async (loginData) => {
   const res = await axios.post(`${baseURI}login`, loginData);
   return res;

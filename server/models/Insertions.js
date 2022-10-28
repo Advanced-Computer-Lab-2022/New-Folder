@@ -23,7 +23,7 @@ mongoose
 // insert new courses
 async function insertCourse(
   name,
-  field,
+  subject,
   priceMag,
   priceCurr,
   description,
@@ -38,7 +38,7 @@ async function insertCourse(
 ) {
   let c = await Course.create({
     name: name,
-    field: field,
+    subject: subject,
     price: {
       magnitude: priceMag,
       currency: priceCurr,
@@ -237,6 +237,7 @@ async function populate() {
     [],
     []
   );
+
   let sokk = await insertTrainee(
     "alyhassan123456@gmail.com",
     "Elsokkary101",
