@@ -1,6 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { fetchSearchData } from "../../network";
+import countries from '../../CountryNameCode.json'
+import Dropdown from 'react-dropdown';
+import 'react-dropdown/style.css';
+
+const countryList = Object.keys(countries)
 
 const Navbar = (props) => {
   const navigate = useNavigate();
@@ -15,6 +20,7 @@ const Navbar = (props) => {
       console.log(err);
     }
   };
+  console.log(countries)
   return (
     <nav>
       <ul>
@@ -31,6 +37,9 @@ const Navbar = (props) => {
             />
             <button type="submit">search</button>
           </form>
+        </li>
+        <li>
+          <Dropdown options={countryList} onChange={this._onSelect} value="Egypt" placeholder="Select an option" />;
         </li>
       </ul>
     </nav>
