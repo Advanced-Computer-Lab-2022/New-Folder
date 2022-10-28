@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import { fetchSearchData } from "../../network";
+import { countries } from "country-list-json";
 
 const Navbar = (props) => {
   const navigate = useNavigate();
@@ -40,14 +41,15 @@ const Navbar = (props) => {
             name="country"
             onChange={(e) => props.setCountry(e.target.value)}
           >
-            <option value="EGY">EGY</option>
-            <option value="EUR">EUR</option>
-            <option value="USA">USA</option>
+            {countries.map((country) => (
+              <option selected={country.name == "Egypt"} value={country.code}>
+                {country.name}
+              </option>
+            ))}
           </select>
         </li>
         <li>{ReactSession.get("country")}</li>
         <li>
-          {" "}
           <Link to="/login">Login</Link>
         </li>
       </ul>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { fetchExploreData } from "../network";
 import { ReactSession } from "react-client-session";
+import CourseCard from "../components/CourseCard/CourseCard";
 
 const Explore = () => {
   const [courses, setCourses] = useState([]);
@@ -21,7 +22,7 @@ const Explore = () => {
   return (
     <ul>
       {courses.map((course) => (
-        <li> {course.name} </li>
+        <CourseCard course={course} />
       ))}
       <li>{ReactSession.get("username")}</li>
     </ul>
