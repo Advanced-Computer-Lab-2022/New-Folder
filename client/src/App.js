@@ -10,7 +10,7 @@ import { useState } from "react";
 ReactSession.setStoreType("localStorage");
 
 function App() {
-  const [country, setCountry] = useState("Egypt");
+  const [country, setCountry] = useState("EG");
   const [searchResults, setSearchResults] = useState([]);
   ReactSession.set("country", country);
   return (
