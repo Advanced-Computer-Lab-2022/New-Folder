@@ -1,9 +1,11 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { ReactSession } from "react-client-session";
 import { fetchSearchData } from "../../network";
 import countries from "../../CountryNameCode.json";
 import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
+import { countries } from "country-list-json";
 
 const countryList = Object.keys(countries.country_name_code);
 const Navbar = (props) => {
@@ -21,16 +23,17 @@ const Navbar = (props) => {
     }
   };
 
-  const selectCountry = (e) => {
-    sessionStorage.setItem("country", countries.country_name_code[e]);
-    setCurrentCountry(e);
-  };
   return (
     <nav>
       <ul>
         <li>
           <Link to="/">Explore</Link>
         </li>
+        {ReactSession.get("userType") === "instructor" ? (
+          <li>
+            <Link to="/myCourses">myCourses</Link>
+          </li>
+        ) : null}
         <li>
           <form onSubmit={submit}>
             <input
@@ -43,14 +46,23 @@ const Navbar = (props) => {
           </form>
         </li>
         <li>
-          <Dropdown
-            options={countryList}
-            value={currentCountry}
-            fluid
-            selection
-            onChange={(e) => selectCountry(e.value)}
-            placeholder="Select an option"
-          />
+          <select
+            id="country"
+            name="country"
+            onChange={(e) => props.setCountry(e.target.value)}
+          >
+            {countries.map((country) => (
+              <option
+                selected={country.code === ReactSession.get("country")}
+                value={country.code}
+              >
+                {country.name}
+              </option>
+            ))}
+          </select>
+        </li>
+        <li>
+          <Link to="/login">Login</Link>
         </li>
       </ul>
     </nav>

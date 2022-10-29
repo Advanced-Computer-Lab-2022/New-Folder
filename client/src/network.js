@@ -1,5 +1,6 @@
 import axios from "axios";
 import countryCurrency from "./CountryCurrency.json";
+import { ReactSession } from "react-client-session";
 //maximum time elapses before dropping the request
 const MAX_TIMEOUT = 60000;
 
@@ -10,7 +11,6 @@ export const fetchExploreData = async () => {
   const res = await axios.get(baseURI, {
     timeout: MAX_TIMEOUT,
   });
-  console.log(res.data);
   return res.data;
 };
 
@@ -45,7 +45,6 @@ export const postAddCorporateTrainee = async (data) => {
 // Search results
 export const fetchSearchData = async (query) => {
   const res = await axios.post(`${baseURI}search`, query);
-  console.log(res.data);
   return res.data;
 };
 
@@ -55,19 +54,20 @@ export const login = async (loginData) => {
   return res;
 };
 
-// Get price
-
 export const getPrice = async (price) => {
   const rates = await axios.get("https://api.exchangerate.host/latest");
-  const currCurrency = countryCurrency.country_currency["EG"];
+  const currCurrency =
+    countryCurrency.country_currency[ReactSession.get("country")];
   const courseCurrency = price.currency;
   var magnitude = price.magnitude;
-
   const ratio =
     rates.data.rates[currCurrency] / rates.data.rates[courseCurrency];
-  console.log(rates.data.rates[currCurrency]);
-  console.log(rates.data.rates[courseCurrency]);
-  console.log(currCurrency);
-  console.log(courseCurrency);
-  return magnitude * ratio + " "+currCurrency;
+  return magnitude * ratio + " " + currCurrency;
+};
+
+export const fetchMyCourses = async () => {
+  const res = await axios.get(`${baseURI}myCourses`, {
+    timeout: MAX_TIMEOUT,
+  });
+  return res.data;
 };

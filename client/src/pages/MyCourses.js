@@ -1,14 +1,12 @@
 import { useState, useEffect } from "react";
-import CourseCard from "../components/CourseCard/CourseCard";
-import { fetchExploreData } from "../network";
-import CourseCard from "../components/CourseCard/CourseCard";
+import { fetchMyCourses } from "../network";
 
-const Explore = () => {
+const MyCourses = () => {
   const [courses, setCourses] = useState([]);
 
   const fetchData = async () => {
     try {
-      const fetchedCourses = await fetchExploreData();
+      const fetchedCourses = await fetchMyCourses();
       setCourses(fetchedCourses);
     } catch (err) {
       console.log(err);
@@ -22,10 +20,10 @@ const Explore = () => {
   return (
     <ul>
       {courses.map((course) => (
-        <CourseCard course={course} />
+        <li> {course.name} </li>
       ))}
     </ul>
   );
 };
 
-export default Explore;
+export default MyCourses;

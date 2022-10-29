@@ -21,9 +21,6 @@ mongoose
   .catch((err) => console.log("DB CONNECTION ERROR", err));
 
 // routes
-// instructor routes
-const instructorRoutes = require("./routes/instructor");
-app.use("/instructor", instructorRoutes);
 
 // admin routes
 const adminRoutes = require("./routes/admin");
