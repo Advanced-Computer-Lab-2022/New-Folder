@@ -24,7 +24,8 @@ const Explore = () => {
       {courses.map((course) => (
         <CourseCard course={course} />
       ))}
-      <li>{ReactSession.get("username")}</li>
+      <li>{ReactSession.get("id")}</li>
+      <li>{ReactSession.get("userType")}</li>
     </ul>
   );
 };

@@ -30,12 +30,7 @@ export const getPrice = async (price, country) => {
   const currCurrency = countryCurrency.country_currency[country];
   const courseCurrency = price.currency;
   var magnitude = price.magnitude;
-
   const ratio =
     rates.data.rates[currCurrency] / rates.data.rates[courseCurrency];
-  console.log(rates.data.rates[currCurrency]);
-  console.log(rates.data.rates[courseCurrency]);
-  console.log(currCurrency);
-  console.log(courseCurrency);
   return magnitude * ratio + " " + currCurrency;
 };

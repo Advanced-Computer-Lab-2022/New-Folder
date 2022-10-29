@@ -3,11 +3,10 @@ import { login } from "../network";
 import { useNavigate } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 
-const Login = () => {
+const Login = (props) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
-
   const submit = async (e) => {
     e.preventDefault();
     const loginData = {
@@ -15,8 +14,9 @@ const Login = () => {
       password,
     };
     try {
-      await login(loginData);
-      ReactSession.set("username", username);
+      const userData = await login(loginData);
+      props.setUserType(userData.data.userType);
+      ReactSession.set("id", userData.data.id);
       navigate("/");
     } catch (err) {
       console.log(err);

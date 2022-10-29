@@ -12,7 +12,9 @@ ReactSession.setStoreType("sessionStorage");
 function App() {
   const [country, setCountry] = useState("EG");
   const [searchResults, setSearchResults] = useState([]);
+  const [userType, setUserType] = useState("Guest");
   ReactSession.set("country", country);
+  ReactSession.set("userType", userType);
   return (
     <>
       <Navbar setSearchResults={setSearchResults} setCountry={setCountry} />
@@ -27,7 +29,7 @@ function App() {
             />
           }
         />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setUserType={setUserType} />} />
       </Routes>
     </>
   );
