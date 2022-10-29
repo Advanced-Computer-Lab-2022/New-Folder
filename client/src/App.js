@@ -11,7 +11,7 @@ import { useState } from "react";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
-  const [country, setCountry] = useState("EG");
+  const [country, setCountry] = useState(ReactSession.get("country") ?? "EG");
   const [searchResults, setSearchResults] = useState([]);
   const [userType, setUserType] = useState("Guest");
   ReactSession.set("country", country);

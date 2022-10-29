@@ -1,4 +1,5 @@
 import { useState } from "react";
+import CourseCard from "../components/CourseCard/CourseCard";
 import {
   filterCoursesBySubject,
   filterCoursesByPrice,
@@ -11,7 +12,7 @@ const Search = (props) => {
   const [rating, setRating] = useState("");
   const [subject, setSubject] = useState("");
 
-  const filter = () => {
+  const filter = async () => {
     let newSearchResults = props.searchResults;
     if (subject !== "") {
       newSearchResults = filterCoursesBySubject(subject, newSearchResults);
@@ -21,7 +22,7 @@ const Search = (props) => {
       console.log(newSearchResults);
     }
     if (minPrice !== "" && maxPrice !== "") {
-      newSearchResults = filterCoursesByPrice(
+      newSearchResults = await filterCoursesByPrice(
         minPrice,
         maxPrice,
         newSearchResults
@@ -34,7 +35,7 @@ const Search = (props) => {
     <>
       <ul>
         {props.searchResults.map((result) => (
-          <li>{result.name}</li>
+          <CourseCard course={result} />
         ))}
       </ul>
       <input

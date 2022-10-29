@@ -6,10 +6,8 @@ function CourseCard(props) {
   const [price, setPrice] = useState();
   const fetchPrice = async () => {
     try {
-      const fetchedPrice = await getPrice(
-        props.course.price,
-        ReactSession.get("country")
-      );
+      const fetchedPrice = await getPrice(props.course.price);
+      console.log(fetchedPrice);
       setPrice(fetchedPrice);
     } catch (err) {
       console.log(err);
@@ -18,8 +16,7 @@ function CourseCard(props) {
 
   useEffect(() => {
     fetchPrice();
-  });
-
+  }, [ReactSession.get("country")]);
   return (
     <div>
       <ul>
