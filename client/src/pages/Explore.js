@@ -1,7 +1,6 @@
 import { useState, useEffect } from "react";
 import CourseCard from "../components/CourseCard/CourseCard";
 import { fetchExploreData } from "../network";
-import CourseCard from "../components/CourseCard/CourseCard";
 
 const Explore = () => {
   const [courses, setCourses] = useState([]);

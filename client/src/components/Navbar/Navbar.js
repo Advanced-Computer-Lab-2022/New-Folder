@@ -2,16 +2,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import { fetchSearchData } from "../../network";
-import countries from "../../CountryNameCode.json";
-import Dropdown from "react-dropdown";
 import "react-dropdown/style.css";
 import { countries } from "country-list-json";
 
-const countryList = Object.keys(countries.country_name_code);
 const Navbar = (props) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
-  const [currentCountry, setCurrentCountry] = useState("Egypt");
   const submit = async (e) => {
     e.preventDefault();
     try {
