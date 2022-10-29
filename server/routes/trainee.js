@@ -5,6 +5,7 @@ const router = express.Router();
 const { getExplore } = require("../controllers/explore");
 const { login } = require("../controllers/login");
 const { postSearch } = require("../controllers/search");
+const { getMyCourses } = require("../controllers/getMyCourses");
 
 // import middlewares
 
@@ -12,5 +13,6 @@ const { postSearch } = require("../controllers/search");
 router.get("/", getExplore);
 router.post("/login", login);
 router.post("/search", postSearch);
-
+//For instructor
+router.get("/myCourses", getMyCourses);
 module.exports = router;

@@ -4,6 +4,7 @@ import { ReactSession } from "react-client-session";
 import Explore from "./pages/Explore";
 import Search from "./pages/Search";
 import Login from "./pages/Login";
+import MyCourses from "./pages/MyCourses";
 import Navbar from "./components/Navbar/Navbar";
 import { useState } from "react";
 
@@ -20,6 +21,7 @@ function App() {
       <Navbar setSearchResults={setSearchResults} setCountry={setCountry} />
       <Routes>
         <Route path="/" element={<Explore />} />
+        <Route path="/myCourses" element={<MyCourses />} />
         <Route
           path="/search"
           element={

@@ -34,3 +34,10 @@ export const getPrice = async (price, country) => {
     rates.data.rates[currCurrency] / rates.data.rates[courseCurrency];
   return magnitude * ratio + " " + currCurrency;
 };
+
+export const fetchMyCourses = async () => {
+  const res = await axios.get(`${baseURI}myCourses`, {
+    timeout: MAX_TIMEOUT,
+  });
+  return res.data;
+};

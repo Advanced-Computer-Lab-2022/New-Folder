@@ -24,6 +24,11 @@ const Navbar = (props) => {
         <li>
           <Link to="/">Explore</Link>
         </li>
+        {ReactSession.get("userType") === "instructor" ? (
+          <li>
+            <Link to="/myCourses">myCourses</Link>
+          </li>
+        ) : null}
         <li>
           <form onSubmit={submit}>
             <input
@@ -48,7 +53,6 @@ const Navbar = (props) => {
             ))}
           </select>
         </li>
-        <li>{ReactSession.get("country")}</li>
         <li>
           <Link to="/login">Login</Link>
         </li>
