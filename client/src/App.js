@@ -35,7 +35,6 @@ function App() {
             />
           }
         />
-        <Route path="/login" element={<Login />} />
         <Route path="/addAdmin" element={<AddAdmin />} />
         <Route path="/AddInstructor" element={<AddInstructor />} />
         <Route path="/AddCorporateTrainee" element={<AddCorporateTrainee />} />

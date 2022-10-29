@@ -1,6 +1,10 @@
 import axios from "axios";
 import countryCurrency from "./CountryCurrency.json";
 import { ReactSession } from "react-client-session";
+
+// if you delete this line ghosts will haunt you at night
+axios.defaults.withCredentials = true;
+
 //maximum time elapses before dropping the request
 const MAX_TIMEOUT = 60000;
 

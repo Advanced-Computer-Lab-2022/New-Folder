@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import { fetchSearchData } from "../../network";
-import "react-dropdown/style.css";
 import { countries } from "country-list-json";
 
 const Navbar = (props) => {
