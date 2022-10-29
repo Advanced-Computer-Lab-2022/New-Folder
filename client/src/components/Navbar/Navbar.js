@@ -32,6 +32,9 @@ const Navbar = (props) => {
             <button type="submit">search</button>
           </form>
         </li>
+        <li>
+          <Link to="/login">Login</Link>
+        </li>
       </ul>
     </nav>
   );

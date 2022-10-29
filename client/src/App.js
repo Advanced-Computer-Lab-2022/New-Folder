@@ -1,5 +1,5 @@
 import "./App.css";
-import { Link, Route, Routes } from "react-router-dom";
+import {  Route, Routes } from "react-router-dom";
 import Explore from "./pages/Explore";
 import Search from "./pages/Search";
 import CreateCourse from "./pages/CreateCourse";
@@ -11,7 +11,7 @@ import AddCorporateTrainee from "./pages/AddCorporateTrainee";
 import { useState } from "react";
 
 function App() {
-  const [country, setCountry] = useState("Egypt");
+  // const [country, setCountry] = useState("Egypt");
   const [searchResults, setSearchResults] = useState("");
   return (
     <>

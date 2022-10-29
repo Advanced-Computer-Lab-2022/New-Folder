@@ -50,8 +50,14 @@ export const fetchSearchData = async (query) => {
   return res.data;
 };
 
+
+
 // Login
 export const login = async (loginData) => {
-  const res = await axios.post(`${baseURI}login`, loginData);
+  const res = await axios.post(`${baseURI}login`, loginData, {
+    headers: {
+      'Authorization': 'my secret token'
+    }
+  })
   return res;
 };

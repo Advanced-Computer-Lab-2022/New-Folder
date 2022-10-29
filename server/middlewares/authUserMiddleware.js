@@ -4,14 +4,16 @@ const User = require("../models/User");
 
 const protectUser = asyncHandler(async (req, res, next) => {
   let token;
-
+  console.log("----- "+ JSON.stringify(req.headers)+"----------------");
   if (
-    req.headers.authorization &&
-    req.headers.authorization.startsWith("Bearer")
+    req.headers.Authorization &&
+    req.headers.Authorization.startsWith("Bearer")
   ) {
     try {
-      token = req.headers.authorization.split(" ")[1];
+      console.log('entered in the middleware check')
+      token = req.headers.Authorization.split(" ")[1];
       const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      console.log(decoded);
       req.user = await User.findById(decoded.id).select("-password");
       next();
     } catch (error) {
@@ -26,6 +28,5 @@ const protectUser = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = {
-  protectUser,
-};
+module.exports = protectUser
+
