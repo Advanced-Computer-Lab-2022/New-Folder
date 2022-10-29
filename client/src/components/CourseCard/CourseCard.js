@@ -22,7 +22,7 @@ function CourseCard(props) {
       <ul>
         <li>{"title: " + props.course.name}</li>
         <li>{"rating: " + props.course.rating}</li>
-        <li>{"Duration: "}</li>
+        <li>{"Duration: "+ props.course.duration}</li>
         <li>{"Price: " + price}</li>
         <li>{"--------------------------------------"}</li>
       </ul>

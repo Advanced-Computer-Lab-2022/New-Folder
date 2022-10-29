@@ -21,6 +21,10 @@ const Course = mongoose.Schema({
   introVideo: {
     type: String,
   },
+  duration: {
+    type: Number,
+    default: 0
+  },
   rating: {
     type: Number,
     min: 0,
@@ -35,8 +39,8 @@ const Course = mongoose.Schema({
     type: [String],
     default: [],
   },
-  instructorID: {
-    type: mongoose.Types.ObjectId,
+  instructorInfo: {
+    type: mongoose.Schema.Types.Mixed, // {insId, insName}
     ref: "Instructor",
     required: true,
   },
