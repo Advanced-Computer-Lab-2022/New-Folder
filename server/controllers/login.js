@@ -9,8 +9,9 @@ const login = asyncHandler(async (req, res) => {
   //const isCorrectPassword = await bcrypt.compare(password, user.password);
   const isCorrectPassword = password === user.password;
   if (user && isCorrectPassword) {
-    req.session.user = user;
-    res.status(201).json({ id: user.id, userType: user.toJSON().userType });
+    req.session.userId = user.id;
+    req.session.userType = user.toJSON().userType;
+    res.status(201).json({ userType: user.toJSON().userType });
   } else {
     res.status(400);
     throw new Error("invalid credintials");
