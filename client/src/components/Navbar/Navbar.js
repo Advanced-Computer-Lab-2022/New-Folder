@@ -3,8 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import { fetchSearchData } from "../../network";
 import { countries } from "country-list-json";
+import Container from "react-bootstrap/Container";
+import Nav from "react-bootstrap/Nav";
+import Navbar from "react-bootstrap/Navbar";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import InputGroup from "react-bootstrap/InputGroup";
 
-const Navbar = (props) => {
+const MainNavbar = (props) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const submit = async (e) => {
@@ -21,49 +27,46 @@ const Navbar = (props) => {
   };
 
   return (
-    <nav>
-      <ul>
-        <li>
-          <Link to="/">Explore</Link>
-        </li>
-        {ReactSession.get("userType") === "instructor" ? (
-          <li>
-            <Link to="/myCourses">myCourses</Link>
-          </li>
-        ) : null}
-        <li>
-          <form onSubmit={submit}>
-            <input
-              type="text"
-              value={searchQuery}
-              placeholder="search"
-              onChange={(e) => setSearchQuery(e.target.value)}
-            />
-            <button type="submit">search</button>
-          </form>
-        </li>
-        <li>
-          <select
-            id="country"
-            name="country"
-            onChange={(e) => props.setCountry(e.target.value)}
-          >
-            {countries.map((country) => (
-              <option
-                selected={country.code === ReactSession.get("country")}
-                value={country.code}
-              >
-                {country.name}
-              </option>
-            ))}
-          </select>
-        </li>
-        <li>
-          <Link to="/login">Login</Link>
-        </li>
-      </ul>
-    </nav>
+    <Navbar bg="dark" variant="dark" className="mb-4">
+      <Container>
+        <Nav className="me-auto">
+          <Nav.Link href="/">Explore</Nav.Link>
+          {ReactSession.get("userType") === "instructor" ? (
+            <Nav.Link href="/myCourses">myCourses</Nav.Link>
+          ) : null}
+          <Nav.Link href="/login">Login</Nav.Link>
+          <Nav.Link>
+            <Form.Select
+              className="bg-dark text-light"
+              id="country"
+              name="country"
+              onChange={(e) => props.setCountry(e.target.value)}
+            >
+              {countries.map((country) => (
+                <option
+                  selected={country.code === ReactSession.get("country")}
+                  value={country.code}
+                >
+                  {country.name}
+                </option>
+              ))}
+            </Form.Select>
+          </Nav.Link>
+          <Form onSubmit={submit}>
+            <InputGroup>
+              <Form.Control
+                placeholder="search"
+                onChange={(e) => setSearchQuery(e.target.value)}
+              />
+              <Button type="submit" variant="outline-light">
+                Search
+              </Button>
+            </InputGroup>
+          </Form>
+        </Nav>
+      </Container>
+    </Navbar>
   );
 };
 
-export default Navbar;
+export default MainNavbar;
