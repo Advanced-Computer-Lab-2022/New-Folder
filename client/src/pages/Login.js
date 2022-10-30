@@ -15,8 +15,8 @@ const Login = (props) => {
     };
     try {
       const userData = await login(loginData);
-      props.setUserType(userData.data.userType);
       ReactSession.set("id", userData.data.id);
+      ReactSession.set("userType", userData.data.userType);
       navigate("/");
     } catch (err) {
       console.log(err);
