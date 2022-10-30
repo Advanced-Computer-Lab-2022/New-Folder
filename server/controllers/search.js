@@ -7,7 +7,7 @@ exports.postSearch = async (req, res) => {
         index: "courses",
         text: {
           query: req.body.query,
-          path: ["name", "subject"],
+          path: ["name", "subject", "instructorInfo.instructorName"],
         },
       },
     },

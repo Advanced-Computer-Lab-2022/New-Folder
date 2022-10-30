@@ -16,13 +16,14 @@ function CourseCard(props) {
 
   useEffect(() => {
     fetchPrice();
-  }, [ReactSession.get("country")]);
+  }, [ReactSession.get("country"), props.course]);
+
   return (
     <div>
       <ul>
         <li>{"title: " + props.course.name}</li>
         <li>{"rating: " + props.course.rating}</li>
-        <li>{"Duration: "+ props.course.duration}</li>
+        <li>{"Duration: " + props.course.duration}</li>
         <li>{"Price: " + price}</li>
         <li>{"--------------------------------------"}</li>
       </ul>

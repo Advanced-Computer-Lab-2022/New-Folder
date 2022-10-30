@@ -1,16 +1,14 @@
 import { getPrice } from "../network";
 
 export const filterCoursesByPrice = async (min, max, courses) => {
-  const coursesPrices = await Promise.all(
-    courses.map(async (course) => {
-      const result = await getPrice(course.price);
-      return result.split(" ");
-    })
+  console.log(courses);
+  let coursesPrices = await Promise.all(
+    courses.map((course) => getPrice(course.price))
   );
-  console.log(coursesPrices);
+  coursesPrices = coursesPrices.map((course) => course.split(" ")[0]);
   return courses.filter(
     (course, index) =>
-      coursesPrices[index][0] >= min && coursesPrices[index][0] <= max
+      coursesPrices[index] >= min && coursesPrices[index] <= max
   );
 };
 

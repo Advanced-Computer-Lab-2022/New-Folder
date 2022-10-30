@@ -19,7 +19,6 @@ const Search = (props) => {
     }
     if (rating !== "") {
       newSearchResults = filterCoursesByRating(rating, newSearchResults);
-      console.log(newSearchResults);
     }
     if (minPrice !== "" && maxPrice !== "") {
       newSearchResults = await filterCoursesByPrice(

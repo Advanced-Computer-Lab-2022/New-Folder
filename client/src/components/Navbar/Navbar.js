@@ -9,12 +9,14 @@ const Navbar = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const submit = async (e) => {
     e.preventDefault();
-    try {
-      const searchResults = await fetchSearchData({ query: searchQuery });
-      props.setSearchResults(searchResults);
-      navigate("/search");
-    } catch (err) {
-      console.log(err);
+    if (searchQuery) {
+      try {
+        const searchResults = await fetchSearchData({ query: searchQuery });
+        props.setSearchResults(searchResults);
+        navigate("/search");
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
