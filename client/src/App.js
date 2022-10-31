@@ -12,6 +12,9 @@ import AddInstructor from "./pages/AddInstructor";
 import AddCorporateTrainee from "./pages/AddCorporateTrainee";
 import { useState } from "react";
 import CourseDetails from "./pages/CourseDetails";
+import AdminHome from './pages/AdminHome'
+import AdminNavbar from "./components/Navbar/AdminNavbar";
+
 
 ReactSession.setStoreType("sessionStorage");
 
@@ -21,7 +24,7 @@ function App() {
   ReactSession.set("country", country);
   return (
     <>
-      <Navbar setSearchResults={setSearchResults} setCountry={setCountry} />
+      {ReactSession.get("userType") === "admin"?<AdminNavbar setSearchResults={setSearchResults} setCountry={setCountry}/> :<Navbar setSearchResults={setSearchResults} setCountry={setCountry} />}
       <Routes>
         <Route path="/" element={<Explore />} />
         <Route path="/myCourses" element={<MyCourses />} />
@@ -36,7 +39,7 @@ function App() {
         />
         
         <Route path="/courses" element={<CourseDetails/>} />
-        
+        <Route path="/Admin" element={<AdminHome/>} />
         <Route path="/addAdmin" element={<AddAdmin />} />
         <Route path="/AddInstructor" element={<AddInstructor />} />
         <Route path="/AddCorporateTrainee" element={<AddCorporateTrainee />} />

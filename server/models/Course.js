@@ -49,7 +49,7 @@ const Course = mongoose.Schema({
     default: [],
   },
   subtitles: {
-    type: [{ type: mongoose.Types.ObjectId, ref: "Subtitle" }],
+    type: [{ type: mongoose.Schema.Types.Mixed, ref: "Subtitle" }],
     default: [],
   },
 });

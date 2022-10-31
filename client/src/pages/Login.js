@@ -20,7 +20,12 @@ const Login = (props) => {
     try {
       const userData = await login(loginData);
       ReactSession.set("userType", userData.data.userType);
-      navigate("/");
+      if(userData.data.userType === "admin"){
+        navigate("/Admin")
+      }else{
+        navigate("/");
+      }
+      
     } catch (err) {
       console.log(err);
     }

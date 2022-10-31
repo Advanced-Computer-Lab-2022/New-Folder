@@ -12,7 +12,7 @@ const login = asyncHandler(async (req, res) => {
     req.session.userId = user.id;
     req.session.userType = user.toJSON().userType;
     req.session.userName = user.toJSON().firstName + " " + user.toJSON().lastName;
-    res.status(201).json({ userType: user.toJSON().userType });
+    res.status(201).json({ userType: user.toJSON().userType?? "admin"});
   } else {
     res.status(400);
     throw new Error("invalid credintials");

@@ -38,15 +38,6 @@ const MainNavbar = (props) => {
           {ReactSession.get("userType") === "instructor" ? (
             <Nav.Link href="/createCourse">Create Course</Nav.Link>
           ) : null}
-          {ReactSession.get("userType") == null? (
-            <Nav.Link href="/addAdmin">Add Admin</Nav.Link>
-          ) : null}
-          {ReactSession.get("userType") == null? (
-            <Nav.Link href="/addInstructor">Add instructor</Nav.Link>
-          ) : null}
-          {ReactSession.get("userType") == null? (
-            <Nav.Link href="/addCorporateTrainee">Add Corporate Trainee</Nav.Link>
-          ) : null}
           <Nav.Link href="/login">Login</Nav.Link>
           <ReactCountryFlag countryCode={ReactSession.get("country")} svg />
           <Nav.Link>
