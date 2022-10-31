@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import CourseCard from "../components/CourseCard/CourseCard";
 import { fetchMyCourses } from "../network";
 import {
   filterCoursesBySubject,
@@ -16,6 +17,7 @@ const MyCourses = () => {
     try {
       const fetchedCourses = await fetchMyCourses();
       setCourses(fetchedCourses);
+      setFilteredCourses(fetchedCourses);
     } catch (err) {
       console.log(err);
     }
@@ -33,14 +35,14 @@ const MyCourses = () => {
     }
     setFilteredCourses(newCourses);
   };
-  useEffect(async () => {
-    await fetchData();
+  useEffect(() => {
+    fetchData();
   }, []);
   return (
     <>
       <ul>
         {filteredCourses.map((course) => (
-          <li> {course.name} </li>
+          <li> {<CourseCard course={course} />} </li>
         ))}
       </ul>
       <input
