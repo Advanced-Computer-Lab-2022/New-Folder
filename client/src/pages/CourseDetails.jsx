@@ -6,6 +6,7 @@ import { useLocation } from 'react-router-dom';
 const CourseDetails = () => {
     const [courses, setCourses] = useState(0);
     const [reviews , setReviws] = useState([]);
+    const [subTitles , setSubTitle] = useState([]);
     const location = useLocation();
 
     
