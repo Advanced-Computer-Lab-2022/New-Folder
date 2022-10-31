@@ -55,7 +55,8 @@ async function fetchAllContents(array_Contents) {
 let getCourseFromController = async (req, res, next) => {
   // get Course ID
   let reqId = req.params.id;
-
+  // GET TOTOAL DURATION 
+  let total__duration = 0;
   // get Course from DB
   let coursewithreqID = await findCoursebyID(reqId);
   
@@ -74,6 +75,7 @@ let getCourseFromController = async (req, res, next) => {
     let duration = 0;
     for (let j = 0 ;j  < subTitle__FetchedContent.length; j++) {
       duration = (duration +  parseInt(subTitle__FetchedContent[j].duration));
+      total__duration +=  parseInt(subTitle__FetchedContent[j].duration);
     }
 
     let subtitle__finalMap = {
@@ -86,9 +88,9 @@ let getCourseFromController = async (req, res, next) => {
   }
   // console.log(subtitle__array)
   coursewithreqID.subtitles = subtitle__array;
-  // coursewithreqID.subtitles.push(subtitle__array);
-  
-  console.log("Ambizo",coursewithreqID.subtitles[1].duration);
+
+  coursewithreqID.duration = total__duration;
+  // console.log(coursewithreqID);
 
   res.send(coursewithreqID);
   // render and pass Course
