@@ -7,8 +7,8 @@ const createCourse = async (req, res) => {
     name: req.body.name,
     field: req.body.field,
     price: { magnitude: req.body.magnitude, currency: req.body.currency },
-    instructorInfo: { id: "635ac15b9697b1ff844a01b4", name: "Hassan Soubra" },
-    duration: 10 ,
+    instructorInfo: { id: req.session.userId, name: req.session.userName },
+    duration: 10,
   });
   res.json(course);
 };

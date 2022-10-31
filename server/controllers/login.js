@@ -11,6 +11,7 @@ const login = asyncHandler(async (req, res) => {
   if (user && isCorrectPassword) {
     req.session.userId = user.id;
     req.session.userType = user.toJSON().userType;
+    req.session.userName = user.toJSON().firstName + " " + user.toJSON().lastName;
     res.status(201).json({ userType: user.toJSON().userType });
   } else {
     res.status(400);

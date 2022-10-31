@@ -9,6 +9,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
+import ReactCountryFlag from "react-country-flag"
 
 const MainNavbar = (props) => {
   const navigate = useNavigate();
@@ -32,9 +33,22 @@ const MainNavbar = (props) => {
         <Nav className="me-auto">
           <Nav.Link href="/">Explore</Nav.Link>
           {ReactSession.get("userType") === "instructor" ? (
-            <Nav.Link href="/myCourses">myCourses</Nav.Link>
+            <Nav.Link href="/myCourses">My Courses</Nav.Link>
+          ) : null}
+          {ReactSession.get("userType") === "instructor" ? (
+            <Nav.Link href="/createCourse">Create Course</Nav.Link>
+          ) : null}
+          {ReactSession.get("userType") == null? (
+            <Nav.Link href="/addAdmin">Add Admin</Nav.Link>
+          ) : null}
+          {ReactSession.get("userType") == null? (
+            <Nav.Link href="/addInstructor">Add instructor</Nav.Link>
+          ) : null}
+          {ReactSession.get("userType") == null? (
+            <Nav.Link href="/addCorporateTrainee">Add Corporate Trainee</Nav.Link>
           ) : null}
           <Nav.Link href="/login">Login</Nav.Link>
+          <ReactCountryFlag countryCode={ReactSession.get("country")} svg />
           <Nav.Link>
             <Form.Select
               className="bg-dark text-light"
@@ -47,6 +61,7 @@ const MainNavbar = (props) => {
                   selected={country.code === ReactSession.get("country")}
                   value={country.code}
                 >
+                  <ReactCountryFlag countryCode={country.code} svg />
                   {country.name}
                 </option>
               ))}
