@@ -12,19 +12,26 @@ import AddInstructor from "./pages/AddInstructor";
 import AddCorporateTrainee from "./pages/AddCorporateTrainee";
 import { useState } from "react";
 import CourseDetails from "./pages/CourseDetails";
-import AdminHome from './pages/AdminHome'
 import AdminNavbar from "./components/Navbar/AdminNavbar";
-
 
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
   const [country, setCountry] = useState(ReactSession.get("country") ?? "EG");
   const [searchResults, setSearchResults] = useState([]);
+  const [userType, setUserType] = useState(ReactSession.get("userType") ?? "");
   ReactSession.set("country", country);
+  ReactSession.set("userType", userType);
   return (
     <>
-      {ReactSession.get("userType") === "admin"?<AdminNavbar setSearchResults={setSearchResults} setCountry={setCountry}/> :<Navbar setSearchResults={setSearchResults} setCountry={setCountry} />}
+      {ReactSession.get("userType") === "admin" ? (
+        <AdminNavbar
+          setSearchResults={setSearchResults}
+          setCountry={setCountry}
+        />
+      ) : (
+        <Navbar setSearchResults={setSearchResults} setCountry={setCountry} />
+      )}
       <Routes>
         <Route path="/" element={<Explore />} />
         <Route path="/myCourses" element={<MyCourses />} />
@@ -37,14 +44,13 @@ function App() {
             />
           }
         />
-        
-        <Route path="/courses" element={<CourseDetails/>} />
-        <Route path="/Admin" element={<AdminHome/>} />
+
+        <Route path="/courses" element={<CourseDetails />} />
         <Route path="/addAdmin" element={<AddAdmin />} />
         <Route path="/AddInstructor" element={<AddInstructor />} />
         <Route path="/AddCorporateTrainee" element={<AddCorporateTrainee />} />
         <Route path="/CreateCourse" element={<CreateCourse />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setUserType={setUserType} />} />
       </Routes>
     </>
   );

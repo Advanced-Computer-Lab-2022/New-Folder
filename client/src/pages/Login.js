@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { login } from "../network";
 import { useNavigate } from "react-router-dom";
-import { ReactSession } from "react-client-session";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/esm/Container";
@@ -19,13 +18,8 @@ const Login = (props) => {
     };
     try {
       const userData = await login(loginData);
-      ReactSession.set("userType", userData.data.userType);
-      if(userData.data.userType === "admin"){
-        navigate("/Admin")
-      }else{
-        navigate("/");
-      }
-      
+      props.setUserType(userData.data.userType)
+      navigate("/")
     } catch (err) {
       console.log(err);
     }

@@ -74,7 +74,7 @@ export const getPrice = async (price) => {
   var magnitude = price.magnitude;
   const ratio =
     rates.data.rates[currCurrency] / rates.data.rates[courseCurrency];
-  return magnitude * ratio + " " + currCurrency;
+  return (magnitude * ratio).toFixed(2) + " " + currCurrency;
 };
 
 export const fetchMyCourses = async () => {

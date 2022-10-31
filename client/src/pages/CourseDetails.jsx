@@ -29,7 +29,7 @@ const CourseDetails = () => {
         setReviws(location.state.course.reviews);
         setsubtitles(location.state.course.subtitles);
         fetchPrice();
-    }, [ReactSession.get("country")]);
+    }, [ReactSession.get("country"), courses]);
 
     return (
         <div>

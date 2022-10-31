@@ -8,33 +8,39 @@ import ReactCountryFlag from "react-country-flag";
 const countries = CountryCurrency.getAllISOCodes();
 
 function CreateCourse() {
-  const [data, setData] = useState({
-    name: "",
-    field: "",
-    description: "",
-    magnitude: "",
-    currency: "EGP",
-  });
+  // const [data, setData] = useState({
+  //   name: "",
+  //   field: "",
+  //   description: "",
+  //   magnitude: "",
+  //   currency: "EGP",
+  //   subtitle: "",
+  // });
   const navigate = useNavigate();
-  const { name, field, description, magnitude, currency } = data;
+  // const { name, field, description, magnitude, currency, subtitle } = data;
+  const [name, setName] = useState("");
+  const [field, setField] = useState("");
+  const [description, setDescription] = useState("");
+  const [magnitude, setMagnitude] = useState("");
+  const [currency, setCurrency] = useState("EGP");
+  const [subtitle, setSubtitle] = useState("");
   const onSubmit = (e) => {
-    console.log(data);
+    const data = {"name":name, "field": field, "description": description, "magnitude": magnitude, "currency": currency, "subtitle": subtitle}
     postCourse(data);
     e.preventDefault();
     navigate("/");
   };
 
-  const onChange = (e) => {
-    console.log(name);
-    setData((prevState) => ({
-      ...prevState,
-      [e.target.name]: e.target.value,
-    }));
-  };
+  // const onChange = (e) => {
+  //   setData((prevState) => ({
+  //     ...prevState,
+  //     [e.target.name]: e.target.value,
+  //   }));
+  // };
 
-  const onSelectedCurrency = (currencyAbbrev) => {
-    currency = currencyAbbrev;
-  };
+  // const onSelectedCurrency = (currencyAbbrev) => {
+  //   currency = currencyAbbrev;
+  // };
 
   return (
     <div>
@@ -45,7 +51,7 @@ function CreateCourse() {
           name="name"
           value={name}
           placeholder="Enter your name"
-          onChange={onChange}
+          onChange={(e) => setName(e.target.value)}
         />
         <br></br>
         <input
@@ -54,7 +60,7 @@ function CreateCourse() {
           name="field"
           value={field}
           placeholder="Enter your field"
-          onChange={onChange}
+          onChange={(e) => setField(e.target.value)}
         />
         <br></br>
         <input
@@ -63,7 +69,16 @@ function CreateCourse() {
           name="description"
           value={description}
           placeholder="Enter your description"
-          onChange={onChange}
+          onChange={(e) => setDescription(e.target.value)}
+        />
+        <br></br>
+        <input
+          type="text"
+          id="subtitle"
+          name="subtitle"
+          value={subtitle}
+          placeholder="Enter course subtitle"
+          onChange={(e) => setSubtitle(e.target.value)}
         />
         <br></br>
         <input
@@ -71,18 +86,20 @@ function CreateCourse() {
           id="magnitude"
           name="magnitude"
           value={magnitude}
-          placeholder="Enter your magnitude"
-          onChange={onChange}
+          placeholder="Enter your price magnitude"
+          onChange={(e) => setMagnitude(e.target.value)}
         />
         <br></br>
         <Form.Select
           id="currency"
           name="currency"
-          onChange={(e) => (currency = e.target.value)}
+          onChange={(e) => {
+            console.log(e.target.value);
+            setCurrency(e.target.value)
+          }}
         >
           {countries.map((country) => (
-            <option selected={country.currency === currency} value={currency}>
-              <ReactCountryFlag countryCode={country.code} svg />
+            <option selected={country.currency === currency} value={country.currency}>
               {country.countryName + " (" + country.currency + ")"}
             </option>
           ))}
