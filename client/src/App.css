@@ -1,0 +1,5 @@
+.contentDiv {
+    border:5px solid black;
+    margin-left: 5px;
+    display: inline-block;
+}
