@@ -9,6 +9,8 @@ const CourseDetails = () => {
     const [courses, setCourses] = useState(0);
     const [reviews , setReviws] = useState([]);
     const [price, setPrice] = useState();
+    const [subtitles, setsubtitles] = useState([]);
+    
     const location = useLocation();
 
 
@@ -25,6 +27,7 @@ const CourseDetails = () => {
     React.useEffect(()=>{
         setCourses(location.state.course);
         setReviws(location.state.course.reviews);
+        setsubtitles(location.state.course.subtitles);
         fetchPrice();
     }, [ReactSession.get("country")]);
 
@@ -35,6 +38,10 @@ const CourseDetails = () => {
             <h3>{courses.subject}</h3>
             <h3>{"price"+": "+price}</h3>
             <p>{courses.description}</p>
+            <div>
+                <h6>Course Content :</h6>
+                {/* <h4>{subtitles[0]}</h4> */}
+            </div>
             <h4>Reviews : </h4>
             <ul>
                 {reviews.map((review) => (
