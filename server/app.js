@@ -3,6 +3,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
 const { json, urlencoded } = express;
+const session = require("express-session");
 require("dotenv").config();
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
@@ -10,7 +11,15 @@ const MongoStore = require('connect-mongo');
 const app = express();
 app.use(json());
 app.use(urlencoded({ extended: false }));
-app.use(cors({ origin: true, credentials: true }));
+app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(
+  session({
+    secret: process.env.SECRET,
+    cookie: {},
+    resave: true,
+    saveUninitialized: true,
+  })
+);
 
 // db
 const connection = mongoose
@@ -43,14 +52,12 @@ const adminRoutes = require("./routes/admin");
 app.use("/admin", adminRoutes);
 
 // Course routes
-const courseRoutes =require("./routes/course.route");
+const courseRoutes = require("./routes/course.route");
 app.use("/course", courseRoutes);
 
 // trainee routes
 const traineeRoutes = require("./routes/trainee");
 app.use("/", traineeRoutes);
-
-
 
 //port
 const port = process.env.PORT || 8080;

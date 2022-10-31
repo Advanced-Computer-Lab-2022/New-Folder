@@ -1,72 +1,61 @@
 import axios from "axios";
 import countryCurrency from "./CountryCurrency.json";
 import { ReactSession } from "react-client-session";
+
+// if you delete this part ghosts will haunt you at night
+const instance = axios.create({
+  withCredentials: true,
+  baseURL: "http://localhost:8080",
+});
+
 //maximum time elapses before dropping the request
 const MAX_TIMEOUT = 60000;
 
-const baseURI = "http://localhost:8080/";
-
 // Explore
 export const fetchExploreData = async () => {
-  const res = await axios.get(baseURI, {
+  const res = await instance.get("/", {
     timeout: MAX_TIMEOUT,
   });
   return res.data;
 };
-// Explore
-export const fetchcCourseDetils = async (id) => {
-  console.log("mmsdr mn axios");
-  const res = await axios.get(`${baseURI}course/${id}`, {
-    timeout: MAX_TIMEOUT,
-  });
-  return res.data;
-};
-
-
 
 // Create Course
 export const postCourse = async (data) => {
-  const res = await axios.post(`${baseURI}createCourse`, data);
+  const res = await instance.post("/createCourse", data);
   console.log(res.data);
   return res.data;
 };
 
 // Add Admin
 export const postAddadmin = async (data) => {
-  const res = await axios.post(`${baseURI}admin/addAdmin`, data);
+  const res = await instance.post("/admin/addAdmin", data);
   console.log(res.data);
   return res.data;
 };
 
 // Add Instructor
 export const postAddInstructor = async (data) => {
-  const res = await axios.post(`${baseURI}admin/addInstructor`, data);
+  const res = await instance.post("/admin/addInstructor", data);
   console.log(res.data);
   return res.data;
 };
 
 // Add Corporate Trainee
 export const postAddCorporateTrainee = async (data) => {
-  const res = await axios.post(`${baseURI}admin/addCorporateTrainee`, data);
+  const res = await instance.post("/admin/addCorporateTrainee", data);
   console.log(res.data);
   return res.data;
 };
 
 // Search results
 export const fetchSearchData = async (query) => {
-  const res = await axios.post(`${baseURI}search`, query);
+  const res = await instance.post("/search", query);
   return res.data;
 };
 
-
-
 // Login
 export const login = async (loginData) => {
-  const res = await axios.post(`${baseURI}login`, loginData, {
-    headers: {
-      'Authorization': 'my secret token'
-    }
-  })
+  const res = await instance.post("/login", loginData);
   return res;
 };
 
@@ -82,7 +71,7 @@ export const getPrice = async (price) => {
 };
 
 export const fetchMyCourses = async () => {
-  const res = await axios.get(`${baseURI}myCourses`, {
+  const res = await instance.get("/myCourses", {
     timeout: MAX_TIMEOUT,
   });
   return res.data;

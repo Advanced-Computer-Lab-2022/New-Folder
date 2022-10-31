@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CourseCard from "../components/CourseCard/CourseCard";
 import {
   filterCoursesBySubject,
@@ -7,10 +7,21 @@ import {
 } from "../utils/filters";
 
 const Search = (props) => {
+  const [filteredSearchResults, setFilteredSearchResults] = useState(
+    props.searchResults
+  );
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [rating, setRating] = useState("");
   const [subject, setSubject] = useState("");
+
+  useEffect(() => {
+    setFilteredSearchResults(props.searchResults);
+    setMinPrice("");
+    setMaxPrice("");
+    setRating("");
+    setSubject("");
+  }, [props.searchResults]);
 
   const filter = async () => {
     let newSearchResults = props.searchResults;
@@ -19,7 +30,6 @@ const Search = (props) => {
     }
     if (rating !== "") {
       newSearchResults = filterCoursesByRating(rating, newSearchResults);
-      console.log(newSearchResults);
     }
     if (minPrice !== "" && maxPrice !== "") {
       newSearchResults = await filterCoursesByPrice(
@@ -28,13 +38,13 @@ const Search = (props) => {
         newSearchResults
       );
     }
-    props.setSearchResults(newSearchResults);
+    setFilteredSearchResults(newSearchResults);
   };
 
   return (
     <>
       <ul>
-        {props.searchResults.map((result) => (
+        {filteredSearchResults.map((result) => (
           <CourseCard course={result} />
         ))}
       </ul>

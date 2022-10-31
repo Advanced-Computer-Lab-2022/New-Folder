@@ -2,7 +2,6 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import { fetchSearchData } from "../../network";
-import "react-dropdown/style.css";
 import { countries } from "country-list-json";
 
 const Navbar = (props) => {
@@ -10,12 +9,14 @@ const Navbar = (props) => {
   const [searchQuery, setSearchQuery] = useState("");
   const submit = async (e) => {
     e.preventDefault();
-    try {
-      const searchResults = await fetchSearchData({ query: searchQuery });
-      props.setSearchResults(searchResults);
-      navigate("/search");
-    } catch (err) {
-      console.log(err);
+    if (searchQuery) {
+      try {
+        const searchResults = await fetchSearchData({ query: searchQuery });
+        props.setSearchResults(searchResults);
+        navigate("/search");
+      } catch (err) {
+        console.log(err);
+      }
     }
   };
 
