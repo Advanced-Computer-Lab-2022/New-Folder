@@ -15,12 +15,16 @@ const Search = (props) => {
   const [rating, setRating] = useState("");
   const [subject, setSubject] = useState("");
 
-  useEffect(() => {
-    setFilteredSearchResults(props.searchResults);
+  const clearFilters = () => {
     setMinPrice("");
     setMaxPrice("");
     setRating("");
     setSubject("");
+    setFilteredSearchResults(props.searchResults);
+  };
+
+  useEffect(() => {
+    clearFilters();
   }, [props.searchResults]);
 
   const filter = async () => {
@@ -43,11 +47,6 @@ const Search = (props) => {
 
   return (
     <>
-      <ul>
-        {filteredSearchResults.map((result) => (
-          <CourseCard course={result} />
-        ))}
-      </ul>
       <input
         type="number"
         value={minPrice}
@@ -73,6 +72,12 @@ const Search = (props) => {
         onChange={(e) => setSubject(e.target.value)}
       />
       <button onClick={filter}>Filter</button>
+      <button onClick={clearFilters}>Clear filters</button>
+      <ul>
+        {filteredSearchResults.map((result) => (
+          <CourseCard course={result} />
+        ))}
+      </ul>
     </>
   );
 };
