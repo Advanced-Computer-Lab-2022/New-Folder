@@ -1,4 +1,4 @@
-import { getPrice , fetchcCourseDetils } from "../../network";
+import { getPrice, fetchcCourseDetils } from "../../network";
 import { useState, useEffect } from "react";
 import { ReactSession } from "react-client-session";
 import { useNavigate } from "react-router-dom";
@@ -16,12 +16,10 @@ function CourseCard(props) {
     }
   };
 
-
-
   const fetchCourseReq = async (id) => {
     try {
       const fetchedCourses = await fetchcCourseDetils(id);
-      navigate('/courses', {state : {course : fetchedCourses}});
+      navigate("/courses", { state: { course: fetchedCourses } });
     } catch (err) {
       console.log(err);
     }
@@ -37,8 +35,12 @@ function CourseCard(props) {
         <li>{"title: " + props.course.name}</li>
         <li>{"rating: " + props.course.rating}</li>
         <li>{"Duration: " + props.course.duration}</li>
-        <li>{"Price: " + price}</li>
-        <button type="button" onClick={(e)=> fetchCourseReq(props.course._id)}>Go to Course</button>
+        {ReactSession.get("userType") !== "corporateTrainee" ? (
+          <li>{"Price: " + price}</li>
+        ) : null}
+        <button type="button" onClick={(e) => fetchCourseReq(props.course._id)}>
+          Go to Course
+        </button>
         <li>{"--------------------------------------"}</li>
       </ul>
     </div>
