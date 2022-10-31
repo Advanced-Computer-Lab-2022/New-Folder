@@ -1,0 +1,19 @@
+Aly Hassan Elsokkary --> - Create Course page and preview with their subtitles and Excercise
+                         - Create all course routes, controller, and model
+                         - connecting and passing all data related to the course from backend to frontend 
+
+Abdelrahman Fathy Elsalh --> - creating instructor and trainee model and checking on all models with required attributes
+                             - Embed country API with currency API to be shown in frontend
+                             - working on implementing Add admin to Admin controller
+                             - create course with its frontend include required backend 
+
+Ahmed Mounir --> - Add corporate trainee and instructor in Admin Model
+                 - Developing on frontEnd of the admin and secure routes using sessions
+
+Ziad Ahmed Sadek --> implementing Instructor/ Mycourses routes and controllers
+                 --> Embed country API with currency API to be shown in frontend
+                 --> Working on filtering in Mycourses page
+
+Aya Ahmed Fayed --> - working on search and filter in Explore page
+                    - implementing required routes for any user (Explore , Login, ...)
+                    - implementing sessions for users
