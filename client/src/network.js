@@ -13,6 +13,16 @@ export const fetchExploreData = async () => {
   });
   return res.data;
 };
+// Explore
+export const fetchcCourseDetils = async (id) => {
+  console.log("mmsdr mn axios");
+  const res = await axios.get(`${baseURI}course/${id}`, {
+    timeout: MAX_TIMEOUT,
+  });
+  return res.data;
+};
+
+
 
 // Create Course
 export const postCourse = async (data) => {

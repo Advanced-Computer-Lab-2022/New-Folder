@@ -11,6 +11,7 @@ import AddAdmin from "./pages/AddAdmin";
 import AddInstructor from "./pages/AddInstructor";
 import AddCorporateTrainee from "./pages/AddCorporateTrainee";
 import { useState } from "react";
+import CourseDetails from "./pages/CourseDetails";
 
 ReactSession.setStoreType("sessionStorage");
 
@@ -35,7 +36,7 @@ function App() {
             />
           }
         />
-        <Route path="/login" element={<Login />} />
+        <Route path="/courses" element={<CourseDetails />} />
         <Route path="/addAdmin" element={<AddAdmin />} />
         <Route path="/AddInstructor" element={<AddInstructor />} />
         <Route path="/AddCorporateTrainee" element={<AddCorporateTrainee />} />
