@@ -5,8 +5,8 @@ const cors = require("cors");
 const { json, urlencoded } = express;
 const session = require("express-session");
 require("dotenv").config();
-const session = require('express-session');
-const MongoStore = require('connect-mongo');
+
+
 // app
 const app = express();
 app.use(json());
