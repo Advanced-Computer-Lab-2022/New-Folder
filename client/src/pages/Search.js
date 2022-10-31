@@ -5,6 +5,10 @@ import {
   filterCoursesByPrice,
   filterCoursesByRating,
 } from "../utils/filters";
+import Button from "react-bootstrap/Button";
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
+import Row from "react-bootstrap/Row";
 
 const Search = (props) => {
   const [filteredSearchResults, setFilteredSearchResults] = useState(
@@ -48,31 +52,41 @@ const Search = (props) => {
           <CourseCard course={result} />
         ))}
       </ul>
-      <input
-        type="number"
-        value={minPrice}
-        placeholder="min price"
-        onChange={(e) => setMinPrice(e.target.value)}
-      />
-      <input
-        type="number"
-        value={maxPrice}
-        placeholder="max price"
-        onChange={(e) => setMaxPrice(e.target.value)}
-      />
-      <input
-        type="number"
-        value={rating}
-        placeholder="rating"
-        onChange={(e) => setRating(e.target.value)}
-      />
-      <input
-        type="text"
-        value={subject}
-        placeholder="subject"
-        onChange={(e) => setSubject(e.target.value)}
-      />
-      <button onClick={filter}>Filter</button>
+      <Row className="m-4">
+        <Form.Group as={Col}>
+          <Form.Control
+            type="number"
+            placeholder="min price"
+            onChange={(e) => setMinPrice(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Control
+            type="number"
+            placeholder="max price"
+            onChange={(e) => setMaxPrice(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Control
+            type="number"
+            placeholder="rating"
+            onChange={(e) => setRating(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Control
+            type="text"
+            placeholder="subject"
+            onChange={(e) => setSubject(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Button variant="dark" type="submit" onClick={filter}>
+            Filter
+          </Button>
+        </Form.Group>
+      </Row>
     </>
   );
 };
