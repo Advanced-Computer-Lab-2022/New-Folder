@@ -37,10 +37,26 @@ const CourseDetails = () => {
             <img src={courses.image}></img>
             <h3>{courses.subject}</h3>
             <h3>{"price"+": "+price}</h3>
-            <p>{courses.description}</p>
+            <p>Description : <span>{courses.description}</span></p>
+            <p> Total Number of Hours : {courses.duration}</p>
+            
             <div>
                 <h6>Course Content :</h6>
-                {/* <h4>{subtitles[0]}</h4> */}
+            
+                    {subtitles.map((sub) => (
+                       <ul>
+                       <h4>Week {sub.subtitleNumber}</h4>
+                       <h6>Content</h6>
+                        <li>Number of hours : {sub.duration}</li>
+                        <h6>Excercises</h6>
+                        {sub.exercises.map((ex , index) =>{
+                           return <button type='submit' disabled>Excercise {index +1}</button>
+                        })}
+                        
+                     </ul>
+                        
+                    ))}
+                
             </div>
             <h4>Reviews : </h4>
             <ul>

@@ -25,6 +25,7 @@ async function findContents (contentID) {
   return content;
 }
 
+
 // get content from content model
 async function findExcercises (ExcerciseID) {
   let excercises = await Exercises.findById(ExcerciseID);
@@ -70,11 +71,16 @@ let getCourseFromController = async (req, res, next) => {
     let subTitle__FetchedContent = await fetchAllContents(subTitle__contentArray__IDs);
     let subTitle__FetchedExcercise = await fetchAllExcercises(subTitle__excerciseArray__IDs);
     // console.log(subTitle__FetchedExcercise);
+    let duration = 0;
+    for (let j = 0 ;j  < subTitle__FetchedContent.length; j++) {
+      duration = (duration +  parseInt(subTitle__FetchedContent[j].duration));
+    }
 
     let subtitle__finalMap = {
       subtitleNumber: subtitle_Number,
       Contents : subTitle__FetchedContent,
       exercises : subTitle__FetchedExcercise,
+      duration : duration,
     }
     subtitle__array.push(subtitle__finalMap);
   }
@@ -82,9 +88,8 @@ let getCourseFromController = async (req, res, next) => {
   coursewithreqID.subtitles = subtitle__array;
   // coursewithreqID.subtitles.push(subtitle__array);
   
-  
-  // console.log(coursewithreqID.subtitles);
-  // console.log(coursewithreqID.subtitles);
+  console.log("Ambizo",coursewithreqID.subtitles[1].duration);
+
   res.send(coursewithreqID);
   // render and pass Course
 };
