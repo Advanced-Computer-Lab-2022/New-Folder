@@ -1,8 +1,7 @@
 const Course = require("../models/Course");
 const User = require("../models/User");
 exports.getMyCourses = async (req, res) => {
-  const userID = "635ac15b9697b1ff844a01b4";
-  const user = await User.findById(userID);
+  const user = await User.findById(req.session.userId);
   if (user) {
     const coursesId = user.toJSON().courses;
     const courses = await Promise.all(

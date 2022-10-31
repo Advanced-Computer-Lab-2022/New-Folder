@@ -1,1 +1,14 @@
-GET http://localhost:8080/Course/635937cd9356af97449214a4
+POST http://localhost:8080/login
+Content-Type: application/json
+
+{
+    "username":"Elsokkary101",
+    "password":"1234"
+}
+###
+
+GET http://localhost:8080/course/635e6026f86a4e3558209798
+
+###
+
+GET http://localhost:3000/login

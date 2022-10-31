@@ -19,8 +19,16 @@ const Search = (props) => {
   const [rating, setRating] = useState("");
   const [subject, setSubject] = useState("");
 
-  useEffect(() => {
+  const clearFilters = () => {
+    setMinPrice("");
+    setMaxPrice("");
+    setRating("");
+    setSubject("");
     setFilteredSearchResults(props.searchResults);
+  };
+
+  useEffect(() => {
+    clearFilters();
   }, [props.searchResults]);
 
   const filter = async () => {
@@ -43,16 +51,12 @@ const Search = (props) => {
 
   return (
     <>
-      <ul>
-        {filteredSearchResults.map((result) => (
-          <CourseCard course={result} />
-        ))}
-      </ul>
       <Row className="m-4">
         <Form.Group as={Col}>
           <Form.Control
             type="number"
             placeholder="min price"
+            value={minPrice}
             onChange={(e) => setMinPrice(e.target.value)}
           />
         </Form.Group>
@@ -60,6 +64,7 @@ const Search = (props) => {
           <Form.Control
             type="number"
             placeholder="max price"
+            value={maxPrice}
             onChange={(e) => setMaxPrice(e.target.value)}
           />
         </Form.Group>
@@ -67,6 +72,7 @@ const Search = (props) => {
           <Form.Control
             type="number"
             placeholder="rating"
+            value={rating}
             onChange={(e) => setRating(e.target.value)}
           />
         </Form.Group>
@@ -74,15 +80,24 @@ const Search = (props) => {
           <Form.Control
             type="text"
             placeholder="subject"
+            value={subject}
             onChange={(e) => setSubject(e.target.value)}
           />
         </Form.Group>
         <Form.Group as={Col}>
-          <Button variant="dark" type="submit" onClick={filter}>
+          <Button variant="dark" className="me-4" onClick={filter}>
             Filter
+          </Button>
+          <Button variant="dark" onClick={clearFilters}>
+            Clear filters
           </Button>
         </Form.Group>
       </Row>
+      <ul>
+        {filteredSearchResults.map((result) => (
+          <CourseCard course={result} />
+        ))}
+      </ul>
     </>
   );
 };
