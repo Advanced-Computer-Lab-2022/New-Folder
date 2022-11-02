@@ -31,8 +31,7 @@ const Explore = () => {
   useEffect(() => {
     fetchData();
     clearFilters();
-
-  });
+  }, []);
 
   const clearFilters = () => {
     setMinPrice("");
@@ -51,11 +50,7 @@ const Explore = () => {
       newCourses = filterCoursesByRating(rating, newCourses);
     }
     if (minPrice !== "" && maxPrice !== "") {
-      newCourses = await filterCoursesByPrice(
-        minPrice,
-        maxPrice,
-        newCourses
-      );
+      newCourses = await filterCoursesByPrice(minPrice, maxPrice, newCourses);
     }
     setFilteredCourses(newCourses);
   };
