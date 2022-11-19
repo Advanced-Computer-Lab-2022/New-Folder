@@ -1,8 +1,8 @@
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
-const User = require("../models/User");
+const User = require("../../models/User");
 
-const login = asyncHandler(async (req, res) => {
+exports.login = asyncHandler(async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
   const user = await User.findOne({ username });
@@ -11,14 +11,11 @@ const login = asyncHandler(async (req, res) => {
   if (user && isCorrectPassword) {
     req.session.userId = user.id;
     req.session.userType = user.toJSON().userType;
-    req.session.userName = user.toJSON().firstName + " " + user.toJSON().lastName;
-    res.status(201).json({ userType: user.toJSON().userType?? "admin"});
+    req.session.userName =
+      user.toJSON().firstName + " " + user.toJSON().lastName;
+    res.status(201).json({ userType: user.toJSON().userType ?? "admin" });
   } else {
     res.status(400);
     throw new Error("invalid credintials");
   }
 });
-
-module.exports = {
-  login,
-};

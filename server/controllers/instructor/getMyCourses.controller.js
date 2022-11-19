@@ -1,5 +1,5 @@
-const Course = require("../models/Course");
-const User = require("../models/User");
+const Course = require("../../models/Course");
+const User = require("../../models/User");
 exports.getMyCourses = async (req, res) => {
   const user = await User.findById(req.session.userId);
   if (user) {

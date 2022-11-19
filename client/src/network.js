@@ -19,16 +19,16 @@ export const fetchExploreData = async () => {
   return res.data;
 };
 
-export const fetchcCourseDetils = async(id) => {
+export const fetchcCourseDetils = async (id) => {
   const res = await instance.get("/course/" + id, {
     timeout: MAX_TIMEOUT,
   });
   return res.data;
-}
+};
 
 // Create Course
 export const postCourse = async (data) => {
-  const res = await instance.post("/createCourse", data);
+  const res = await instance.post("/instructor/createCourse", data);
   console.log(res.data);
   return res.data;
 };
@@ -78,7 +78,7 @@ export const getPrice = async (price) => {
 };
 
 export const fetchMyCourses = async () => {
-  const res = await instance.get("/myCourses", {
+  const res = await instance.get("/instructor/myCourses", {
     timeout: MAX_TIMEOUT,
   });
   return res.data;

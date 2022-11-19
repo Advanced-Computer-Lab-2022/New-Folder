@@ -5,7 +5,7 @@ const router = express.Router();
 const { getExplore } = require("../controllers/explore");
 const { login } = require("../controllers/login");
 const { postSearch } = require("../controllers/search");
-const { getMyCourses } = require("../controllers/getMyCourses");
+const { getMyCourses } = require("../controllers/instructor/getMyCourses");
 const { createCourse } = require("../controllers/instructor/createCourse");
 const { authUser } = require("../middlewares/authUserMiddleware");
 
@@ -15,7 +15,4 @@ const { authUser } = require("../middlewares/authUserMiddleware");
 router.get("/", getExplore);
 router.post("/login", login);
 router.post("/search", postSearch);
-//For instructor
-router.get("/myCourses", authUser, getMyCourses);
-router.post("/createCourse", createCourse);
 module.exports = router;

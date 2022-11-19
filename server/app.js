@@ -40,9 +40,12 @@ const courseRoutes = require("./routes/course.route");
 app.use("/course", courseRoutes);
 
 // trainee routes
-const traineeRoutes = require("./routes/trainee");
-app.use("/", traineeRoutes);
+const traineeRoutes = require("./routes/trainee.route");
+app.use("/trainee", traineeRoutes);
 
+// guest routes
+const guestRoutes = require("./routes/guest.route");
+app.use("/", traineeRoutes);
 //port
 const port = process.env.PORT || 8080;
 
