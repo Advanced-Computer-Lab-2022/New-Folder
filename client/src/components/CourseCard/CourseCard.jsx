@@ -9,7 +9,6 @@ function CourseCard(props) {
   const fetchPrice = async () => {
     try {
       const fetchedPrice = await getPrice(props.course.price);
-      console.log(fetchedPrice);
       setPrice(fetchedPrice);
     } catch (err) {
       console.log(err);
