@@ -6,7 +6,6 @@ const { json, urlencoded } = express;
 const session = require("express-session");
 require("dotenv").config();
 
-
 // app
 const app = express();
 app.use(json());
@@ -30,25 +29,10 @@ const connection = mongoose
   .then(() => console.log("DB CONNECTED"))
   .catch((err) => console.log("DB CONNECTION ERROR", err));
 
-
-
-
-
-// app.use(session({
-//   store: MongoStore.create({ mongoUrl: process.env.MONGO_URI , collectionName : 'sessions'}),
-//   secret : "this is a secret y3m",
-//   resave : false,
-//   saveUninitialized : true,
-//   cookie : {
-//     maxAge : 1000* 60* 60* 24,
-    
-//   }
-// }));
-
 // routes
 
 // admin routes
-const adminRoutes = require("./routes/admin");
+const adminRoutes = require("./routes/admin.route");
 app.use("/admin", adminRoutes);
 
 // Course routes
