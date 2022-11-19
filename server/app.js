@@ -31,6 +31,9 @@ const connection = mongoose
 
 // routes
 
+// instructor routes
+const instructorRoutes = require("./routes/instructor.route");
+app.use("/instructor", instructorRoutes);
 // admin routes
 const adminRoutes = require("./routes/admin.route");
 app.use("/admin", adminRoutes);

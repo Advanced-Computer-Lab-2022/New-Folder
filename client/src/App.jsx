@@ -3,17 +3,17 @@ import { Route, Routes } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import Explore from "./pages/Explore";
 import Search from "./pages/Search";
-import CreateCourse from "./pages/CreateCourse";
+import CreateCourse from "./pages/instructor/CreateCourse";
 import Login from "./pages/Login";
-import MyCourses from "./pages/MyCourses";
+import MyCourses from "./pages/instructor/MyCourses";
 import Navbar from "./components/Navbar/Navbar";
-import AddAdmin from "./pages/AddAdmin";
-import AddInstructor from "./pages/AddInstructor";
-import AddCorporateTrainee from "./pages/AddCorporateTrainee";
+import AddAdmin from "./pages/admin/AddAdmin";
+import AddInstructor from "./pages/admin/AddInstructor";
+import AddCorporateTrainee from "./pages/admin/AddCorporateTrainee";
 import { useState } from "react";
 import CourseDetails from "./pages/CourseDetails";
 import AdminNavbar from "./components/Navbar/AdminNavbar";
-
+import UserTypes from "./constants/UserTypes.json";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -24,7 +24,7 @@ function App() {
   ReactSession.set("userType", userType);
   return (
     <>
-      {ReactSession.get("userType") === "admin" ? (
+      {ReactSession.get("userType") === UserTypes.admin? (
         <AdminNavbar
           setSearchResults={setSearchResults}
           setCountry={setCountry}

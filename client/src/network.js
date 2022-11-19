@@ -1,5 +1,5 @@
 import axios from "axios";
-import countryCurrency from "./CountryCurrency.json";
+import countryCurrency from "./constants/CountryCurrency.json";
 import { ReactSession } from "react-client-session";
 
 // if you delete this part ghosts will haunt you at night

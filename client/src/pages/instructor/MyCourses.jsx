@@ -1,11 +1,11 @@
 import { useState, useEffect } from "react";
-import CourseCard from "../components/CourseCard/CourseCard";
-import { fetchMyCourses } from "../network";
+import CourseCard from "../../components/CourseCard/CourseCard";
+import { fetchMyCourses } from "../../network";
 import {
   filterCoursesBySubject,
   filterCoursesByPrice,
   filterCoursesByRating,
-} from "../utils/filters";
+} from "../../utils/filters";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
@@ -41,7 +41,7 @@ const MyCourses = () => {
     }
     setFilteredCourses(newCourses);
   };
-  
+
   const clearFilters = () => {
     setMinPrice("");
     setMaxPrice("");

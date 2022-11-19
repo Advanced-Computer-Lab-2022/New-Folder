@@ -4,7 +4,10 @@ export const filterCoursesByPrice = async (min, max, courses) => {
   let coursesPrices = await Promise.all(
     courses.map((course) => getPrice(course.price))
   );
-  coursesPrices = coursesPrices.map((course) => parseInt(course.split(" ")[0]));
+  console.log(coursesPrices);
+  coursesPrices = coursesPrices.map((course) =>
+    parseFloat(course.split(" ")[0])
+  );
   return courses.filter(
     (course, index) =>
       coursesPrices[index] >= min && coursesPrices[index] <= max
@@ -16,7 +19,7 @@ export const filterCoursesByRating = (value, courses) => {
 };
 
 export const filterCoursesBySubject = (value, courses) => {
-  return courses.filter((course) => hasSubString(course.subject, value));
+  return courses.filter((course) => hasSubString(course.subject ?? "", value));
 };
 
 const hasSubString = (string, substring) => {

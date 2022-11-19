@@ -22,6 +22,7 @@ const Explore = () => {
   const fetchData = async () => {
     try {
       const fetchedCourses = await fetchExploreData();
+      setFilteredCourses(fetchedCourses);
       setCourses(fetchedCourses);
     } catch (err) {
       console.log(err);
