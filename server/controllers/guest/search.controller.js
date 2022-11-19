@@ -1,4 +1,4 @@
-const Course = require("../models/Course");
+const Course = require("../../models/Course.model");
 
 exports.postSearch = async (req, res) => {
   const courses = await Course.aggregate([
