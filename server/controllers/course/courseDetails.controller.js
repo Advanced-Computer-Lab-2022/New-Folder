@@ -1,8 +1,8 @@
 const { default: mongoose } = require("mongoose");
-const Content = require("../../models/Content");
-const courseModel = require("../../models/Course");
-const Exercises = require("../../models/Exercises");
-const Subtitle = require("../../models/Subtitle");
+const Content = require("../../models/Content.model");
+const courseModel = require("../../models/Course.model");
+const Exercises = require("../../models/Exercises.model");
+const Subtitle = require("../../models/Subtitle.model");
 
 async function findCoursebyID(id) {
   let courseFound = await courseModel.findOne({

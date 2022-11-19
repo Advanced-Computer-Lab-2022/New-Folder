@@ -1,5 +1,5 @@
 const constants = require("../../constants.json");
-const CorpTrainee = require("../../models/Trainee");
+const CorpTrainee = require("../../models/Trainee.model");
 exports.addCorpTrainee = async (req, res) => {
   if (!req.body) {
     res.status(400);

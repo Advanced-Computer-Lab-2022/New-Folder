@@ -1,6 +1,6 @@
 const bcrypt = require("bcryptjs");
 const asyncHandler = require("express-async-handler");
-const User = require("../../models/User");
+const User = require("../../models/User.model");
 
 exports.login = asyncHandler(async (req, res) => {
   const username = req.body.username;

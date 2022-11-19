@@ -1,5 +1,5 @@
 
-const Instructor = require('../../models/Instructor')
+const Instructor = require('../../models/Instructor.model')
 exports.addInstructor = async (req , res) => {
     if(!(req.body)){
         res.status(400)

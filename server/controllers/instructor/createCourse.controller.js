@@ -1,6 +1,6 @@
-const Content = require("../../models/Content");
-const Course = require("../../models/Course");
-const Subtitle = require("../../models/Subtitle");
+const Content = require("../../models/Content.model");
+const Course = require("../../models/Course.model");
+const Subtitle = require("../../models/Subtitle.model");
 
 const createCourse = async (req, res) => {
   console.log(req.body.description);
@@ -10,7 +10,7 @@ const createCourse = async (req, res) => {
   const subtitle = await Subtitle.create({
     subtitle: 1,
     Contents: [content._id],
-  })
+  });
   const course = await Course.create({
     description: req.body.description,
     name: req.body.name,
