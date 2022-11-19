@@ -1,9 +1,12 @@
 const express = require("express");
 const router = express.Router();
 // import controllers
-const { postSearch } = require("../controllers/search");
-const { getMyCourses } = require("../controllers/instructor/getMyCourses");
-const { createCourse } = require("../controllers/instructor/createCourse");
+const {
+  getMyCourses,
+} = require("../controllers/instructor/getMyCourses.controller");
+const {
+  createCourse,
+} = require("../controllers/instructor/createCourse.controller");
 const { authUser } = require("../middlewares/authUserMiddleware");
 // import middlewares
 
@@ -11,7 +14,5 @@ const { authUser } = require("../middlewares/authUserMiddleware");
 
 router.post("/createCourse", createCourse);
 router.get("/myCourses", authUser, getMyCourses);
-router.post("/createCourse", createCourse);
-router.post("/search", postSearch);
 
 module.exports = router;

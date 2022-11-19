@@ -45,7 +45,7 @@ app.use("/trainee", traineeRoutes);
 
 // guest routes
 const guestRoutes = require("./routes/guest.route");
-app.use("/", traineeRoutes);
+app.use("/", guestRoutes);
 //port
 const port = process.env.PORT || 8080;
 
