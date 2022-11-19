@@ -10,16 +10,18 @@ const {
   addCorpTrainee,
 } = require("../controllers/admin/addCorprateTrainee.controller");
 const { addAdmin } = require("../controllers/admin/addAdmin.controller");
+const { authAdmin } = require("../middlewares/authUserMiddleware");
+
 // import middlewares
 
 // api routes
 // admin/
-router.get("/", getHome);
+router.get("/", authAdmin, getHome);
 
-router.post("/addInstructor", addInstructor);
+router.post("/addInstructor", authAdmin, addInstructor);
 
-router.post("/addCorporateTrainee", addCorpTrainee);
+router.post("/addCorporateTrainee", authAdmin, addCorpTrainee);
 
-router.post("/addAdmin", addAdmin);
+router.post("/addAdmin", authAdmin, addAdmin);
 
 module.exports = router;

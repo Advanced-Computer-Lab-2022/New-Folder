@@ -7,12 +7,12 @@ const {
 const {
   createCourse,
 } = require("../controllers/instructor/createCourse.controller");
-const { authUser } = require("../middlewares/authUserMiddleware");
+const { authInstructor } = require("../middlewares/authUserMiddleware");
 // import middlewares
 
 // api routes
 
-router.post("/createCourse", createCourse);
-router.get("/myCourses", authUser, getMyCourses);
+router.post("/createCourse", authInstructor, createCourse);
+router.get("/myCourses", authInstructor, getMyCourses);
 
 module.exports = router;
