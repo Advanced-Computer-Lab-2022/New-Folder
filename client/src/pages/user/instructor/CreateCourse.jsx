@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { postCourse } from "../../network";
+import { postCourse } from "../../../network";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import CountryCurrency from "iso-country-currency";

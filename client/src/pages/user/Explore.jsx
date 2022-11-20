@@ -1,33 +1,48 @@
 import { useState, useEffect } from "react";
 import CourseCard from "../../components/CourseCard/CourseCard";
-import { fetchMyCourses } from "../../network";
+import { fetchExploreData } from "../../network";
 import {
   filterCoursesBySubject,
   filterCoursesByPrice,
   filterCoursesByRating,
 } from "../../utils/filters";
-
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
-const MyCourses = () => {
+const Explore = () => {
   const [courses, setCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState(courses);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [rating, setRating] = useState("");
   const [subject, setSubject] = useState("");
+
   const fetchData = async () => {
     try {
-      const fetchedCourses = await fetchMyCourses();
-      setCourses(fetchedCourses);
+      const fetchedCourses = await fetchExploreData();
       setFilteredCourses(fetchedCourses);
+      setCourses(fetchedCourses);
     } catch (err) {
       console.log(err);
     }
   };
+
+  useEffect(() => {
+    fetchData();
+    clearFilters();
+    console.log("masr");
+  }, []);
+
+  const clearFilters = () => {
+    setMinPrice("");
+    setMaxPrice("");
+    setRating("");
+    setSubject("");
+    setFilteredCourses(courses);
+  };
+
   const filter = async () => {
     let newCourses = courses;
     if (subject !== "") {
@@ -41,19 +56,6 @@ const MyCourses = () => {
     }
     setFilteredCourses(newCourses);
   };
-
-  const clearFilters = () => {
-    setMinPrice("");
-    setMaxPrice("");
-    setRating("");
-    setSubject("");
-    setFilteredCourses(courses);
-  };
-
-  useEffect(() => {
-    fetchData();
-    clearFilters();
-  }, []);
 
   return (
     <>
@@ -101,11 +103,11 @@ const MyCourses = () => {
       </Row>
       <ul>
         {filteredCourses.map((course) => (
-          <li> {<CourseCard course={course} />} </li>
+          <CourseCard course={course} />
         ))}
       </ul>
     </>
   );
 };
 
-export default MyCourses;
+export default Explore;

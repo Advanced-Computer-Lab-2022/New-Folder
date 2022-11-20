@@ -2,7 +2,7 @@ import React from 'react'
 import { useState , useEffect } from 'react'
 import { useLocation } from 'react-router-dom';
 import { ReactSession } from "react-client-session";
-import { getPrice } from '../network'
+import { getPrice } from '../../network'
 
 const CourseDetails = () => {
     const [courses, setCourses] = useState(0);

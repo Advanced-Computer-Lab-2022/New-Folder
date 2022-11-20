@@ -1,47 +1,33 @@
 import { useState, useEffect } from "react";
-import CourseCard from "../components/CourseCard/CourseCard";
-import { fetchExploreData } from "../network";
+import CourseCard from "../../../components/CourseCard/CourseCard";
+import { fetchMyCourses } from "../../../network";
 import {
   filterCoursesBySubject,
   filterCoursesByPrice,
   filterCoursesByRating,
-} from "../utils/filters";
+} from "../../../utils/filters";
+
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
 
-const Explore = () => {
+const MyCourses = () => {
   const [courses, setCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState(courses);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [rating, setRating] = useState("");
   const [subject, setSubject] = useState("");
-
   const fetchData = async () => {
     try {
-      const fetchedCourses = await fetchExploreData();
-      setFilteredCourses(fetchedCourses);
+      const fetchedCourses = await fetchMyCourses();
       setCourses(fetchedCourses);
+      setFilteredCourses(fetchedCourses);
     } catch (err) {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    fetchData();
-    clearFilters();
-  }, []);
-
-  const clearFilters = () => {
-    setMinPrice("");
-    setMaxPrice("");
-    setRating("");
-    setSubject("");
-    setFilteredCourses(courses);
-  };
-
   const filter = async () => {
     let newCourses = courses;
     if (subject !== "") {
@@ -55,6 +41,19 @@ const Explore = () => {
     }
     setFilteredCourses(newCourses);
   };
+
+  const clearFilters = () => {
+    setMinPrice("");
+    setMaxPrice("");
+    setRating("");
+    setSubject("");
+    setFilteredCourses(courses);
+  };
+
+  useEffect(() => {
+    fetchData();
+    clearFilters();
+  }, []);
 
   return (
     <>
@@ -102,11 +101,11 @@ const Explore = () => {
       </Row>
       <ul>
         {filteredCourses.map((course) => (
-          <CourseCard course={course} />
+          <li> {<CourseCard course={course} />} </li>
         ))}
       </ul>
     </>
   );
 };
 
-export default Explore;
+export default MyCourses;
