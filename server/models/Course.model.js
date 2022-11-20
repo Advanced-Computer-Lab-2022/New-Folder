@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Reviews = require("./Reviews.schema");
 const Subtitle = require("./Subtitle.model");
 
 const Course = mongoose.Schema({
@@ -36,7 +37,7 @@ const Course = mongoose.Schema({
     default: 0,
   },
   reviews: {
-    type: [String],
+    type: [Reviews],
     default: [],
   },
   instructorInfo: {

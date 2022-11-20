@@ -3,11 +3,11 @@ const mongoose = require("mongoose");
 const Reviews = mongoose.Schema({
 
   trainee: {
-    type: [{ type: mongoose.Schema.Types.Mixed, ref: "Trainee" }],
+    type: { type: mongoose.Schema.Types.Mixed, ref: "Trainee" },
   },
   review: {
     type: String,
   },
 });
 
-module.exports = mongoose.model("Reviews", Reviews);
+module.exports = Reviews;

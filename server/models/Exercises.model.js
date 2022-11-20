@@ -1,8 +1,9 @@
 const mongoose = require("mongoose");
+const Question = require("./Question.schema");
 
 const Exercises = mongoose.Schema({
   Questions: {
-    type: [mongoose.Schema.Types.Mixed], // [{statement: , choices: , correctIdx}]
+    type: [Question], // [{statement: , choices: , correctIdx}]
   },
   Mark : {
     type : [mongoose.Schema.Types.Mixed], // {Trainee_ID , Mark}
