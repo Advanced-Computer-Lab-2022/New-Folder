@@ -6,7 +6,7 @@ const Question = mongoose.Schema({
         default : ""
     },
     choices : {
-        type : [string],
+        type : [String],
         default : []
     },
     correctIdx : {
