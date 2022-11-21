@@ -37,7 +37,12 @@ const Course = mongoose.Schema({
     default: 0,
   },
   reviews: {
-    type: [Reviews],
+    type: [ { trainee: {
+      type: { type: mongoose.Schema.Types.Mixed, ref: "Trainee" },
+    },
+    review: {
+      type: String,
+    } }],
     default: [],
   },
   instructorInfo: {
