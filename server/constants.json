@@ -2,5 +2,7 @@
   "corporateTrainee": "corporateTrainee",
   "admin": "admin",
   "instructor": "instructor",
-  "trainee": "trainee"
+  "trainee": "trainee",
+  "content" : "content",
+  "excercise" : "excercise"
 }
