@@ -50,7 +50,7 @@ async function fetchAllContents(array_Contents) {
 }
 
 // Gets the duration of every subtitle in the course and accumlates the duratiions to get the total duration of the course.
-// Gets every subtitle with its corresponding content and video and refactors it in json format
+// Gets every subtitle with its corresponding content and video and refactors it in json format, Exactly
 let getCourseFromController = async (req, res, next) => {
   // get Course ID
   let reqId = req.params.id;
