@@ -56,6 +56,7 @@ async function insertCourse(
     },
     trainees: trainees,
     subtitles: subtitles,
+    
   });
 
   console.log(c.name + "COURSE has been added ✔️");
@@ -63,70 +64,70 @@ async function insertCourse(
 }
 
 // insert new Instructor
-// async function insertInstructor(
-//   email,
-//   username,
-//   password,
-//   gender,
-//   firstName,
-//   lastName,
-//   image,
-//   country,
-//   about,
-//   rating,
-//   ratingNo,
-//   courses,
-//   reviews
-// ) {
-//   let c = await Instructor.create({
-//     email: email,
-//     username: username,
-//     password: password,
-//     gender: gender,
-//     firstName: firstName,
-//     lastName: lastName,
-//     image: image,
-//     country: country,
-//     about: about,
-//     courses: courses,
-//     ratingNo: ratingNo,
-//     rating: rating,
-//     reviews: reviews,
-//   });
+async function insertInstructor(
+  email,
+  username,
+  password,
+  gender,
+  firstName,
+  lastName,
+  image,
+  country,
+  about,
+  rating,
+  ratingNo,
+  courses,
+  reviews
+) {
+  let c = await Instructor.create({
+    email: email,
+    username: username,
+    password: password,
+    gender: gender,
+    firstName: firstName,
+    lastName: lastName,
+    image: image,
+    country: country,
+    about: about,
+    courses: courses,
+    ratingNo: ratingNo,
+    rating: rating,
+    reviews: reviews,
+  });
 
-//   console.log("INSTRUCTOR has been added ✔️");
-//   return c;
-// }
+  console.log("INSTRUCTOR has been added ✔️");
+  return c;
+}
 
-//insert new Trainee (individual or corporate)
-// async function insertTrainee(
-//   email,
-//   username,
-//   password,
-//   fields,
-//   gender,
-//   firstName,
-//   lastName,
-//   image,
-//   country,
-//   courses
-// ) {
-//   let c = await Trainee.create({
-//     email: email,
-//     username: username,
-//     password: password,
-//     fields: fields,
-//     gender: gender,
-//     firstName: firstName,
-//     lastName: lastName,
-//     image: image,
-//     country: country,
-//     courses: courses,
-//   });
+// insert new Trainee (individual or corporate)
+async function insertTrainee(
+  email,
+  username,
+  password,
+  fields,
+  gender,
+  firstName,
+  lastName,
+  image,
+  country,
+  courses
+) {
+  let c = await Trainee.create({
+    email: email,
+    username: username,
+    password: password,
+    fields: fields,
+    gender: gender,
+    firstName: firstName,
+    lastName: lastName,
+    image: image,
+    country: country,
+    courses: courses,
+  });
 
-//   console.log("TRAINEE has been added ✔️");
-//   return c;
-// }
+  console.log("TRAINEE has been added ✔️");
+  return c;
+}
 
 // insert new content
 async function insertContent(courseID, description, duration, video) {
@@ -156,6 +157,19 @@ async function insertExcercises(
         choices: [firstAns, secondAns, thirdAns, forthAns],
         correctIdx: correctIdx,
       },
+      {
+        statement: statement,
+        choices: [firstAns, secondAns, thirdAns, forthAns],
+        correctIdx: correctIdx,
+
+      },
+      {
+        statement: statement,
+        choices: [firstAns, secondAns, thirdAns, forthAns],
+        correctIdx: correctIdx,
+
+      },
+
     ],
   });
   console.log("Excercise has been added ✔️");
@@ -208,21 +222,21 @@ async function insertSubtitleToCourse(courseID, subtitle) {
 }
 
 async function populate() {
-  // let soubra = await insertInstructor(
-  //   "soubra@gmail.com",
-  //   "soubraJokexD",
-  //   "0000",
-  //   "Male",
-  //   "Hassan Hassona",
-  //   "Soubra",
-  //   "",
-  //   "UAE",
-  //   "RAGL MEYA MEYA",
-  //   5,
-  //   5,
-  //   [],
-  //   []
-  // );
+  let soubra = await insertInstructor(
+    "soubra@gmail.com",
+    "mailamilas",
+    "0000",
+    "Male",
+    "Hassan Hassona",
+    "Soubra",
+    "",
+    "UAE",
+    "RAGL MEYA MEYA",
+    5,
+    5,
+    [],
+    []
+  );
 
   let java = await insertCourse(
     "sczxczxcxzc",
@@ -234,8 +248,8 @@ async function populate() {
     "",
     5,
     5,
-    [],
-    "123",
+    [{trainee : soubra._id, review : "ragl tmam"}],
+    [{trainee : soubra._id, review : "ragl tmam"}],
     "Hassan Soubra",
     [],
     []
@@ -256,7 +270,7 @@ async function populate() {
   let Subtitlaya = await insertSubtitle(1, contentaya, questionaya);
 
   // await insertTraineeToCourse(java._id, sokk._id);
-  // await insertSubtitleToCourse(java._id, Subtitlaya);
+  await insertSubtitleToCourse(java._id, Subtitlaya);
 
   console.log("Relation has been done ✔️ ");
 }

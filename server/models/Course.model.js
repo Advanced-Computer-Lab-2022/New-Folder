@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Reviews = require("./Reviews.schema");
 const Subtitle = require("./Subtitle.model");
 
 const Course = mongoose.Schema({

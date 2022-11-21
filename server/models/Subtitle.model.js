@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const SubTitle_Content = require("./SubTitleContent.schema")
 const constants = require("../constants.json");
 const Subtitle = mongoose.Schema({
   subtitleNumber: {
