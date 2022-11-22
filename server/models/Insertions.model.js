@@ -224,7 +224,7 @@ async function insertSubtitleToCourse(courseID, subtitle) {
 async function populate() {
   let soubra = await insertInstructor(
     "soubra@gmail.com",
-    "mailamilas",
+    "7omos",
     "0000",
     "Male",
     "Hassan Hassona",
@@ -239,8 +239,8 @@ async function populate() {
   );
 
   let java = await insertCourse(
-    "sczxczxcxzc",
-    "Cxxcxcxcxcxcxce",
+    "shashet mobile",
+    "shsha md8d8a",
     18,
     "USA",
     "This courasdasdas dasd asd the JAVA programming language with object-oriented programming principles",
@@ -270,6 +270,11 @@ async function populate() {
   let Subtitlaya = await insertSubtitle(1, contentaya, questionaya);
 
   // await insertTraineeToCourse(java._id, sokk._id);
+  await insertSubtitleToCourse(java._id, Subtitlaya);
+  await insertSubtitleToCourse(java._id, Subtitlaya);
+  await insertSubtitleToCourse(java._id, Subtitlaya);
+  await insertSubtitleToCourse(java._id, Subtitlaya);
+  await insertSubtitleToCourse(java._id, Subtitlaya);
   await insertSubtitleToCourse(java._id, Subtitlaya);
 
   console.log("Relation has been done ✔️ ");

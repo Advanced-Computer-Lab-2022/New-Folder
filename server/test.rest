@@ -7,7 +7,7 @@ Content-Type: application/json
 }
 ###
 
-GET http://localhost:8080/course/
+GET http://localhost:8080/course/637c00e6f038005a5e19ff9e
 
 ###
 
