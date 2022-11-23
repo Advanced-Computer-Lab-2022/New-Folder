@@ -23,7 +23,6 @@ export const fetchCourseDetails = async (id) => {
   const res = await instance.get("/course/" + id, {
     timeout: MAX_TIMEOUT,
   });
-  console.log(id);
   return res.data;
 };
 
@@ -85,10 +84,8 @@ export const fetchMyCourses = async () => {
   return res.data;
 };
 
-
 // get subtitle
 export const fetchSubtitle = async (id) => {
-  const res = await instance.get("/course/subtitle/"+id);
-  console.log(id);
+  const res = await instance.get("/course/subtitle/" + id);
   return res.data;
 };

@@ -1,26 +1,21 @@
 import React from "react";
-import {useState, useEffect} from "react";
-import {fetchSubtitle} from "../../network"
-
+import { useState, useEffect } from "react";
+import { fetchSubtitle } from "../../network";
 
 function SubtitleCard(props) {
-  const [subtitle, setSubtitle] = useState();
-  console.log(props.subtitleId);
-  const getSubtitle = async () =>{
-    try{
-      
+  const [subtitle, setSubtitle] = useState({});
+  const getSubtitle = async () => {
+    try {
       const fetchedSubtitle = await fetchSubtitle(props.subtitleId);
       setSubtitle(fetchedSubtitle);
-      console.log(fetchedSubtitle); 
-    }catch(err){
+    } catch (err) {
       console.log(err);
     }
-  }
+  };
 
-  useEffect(()=>{
-    console.log("useEffect");
+  useEffect(() => {
     getSubtitle();
-  }, [])
+  }, []);
 
   return <div>{subtitle.subtitleNumber}</div>;
 }

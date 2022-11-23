@@ -2,21 +2,21 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { ReactSession } from "react-client-session";
-import { getPrice, fetchCourseDetails} from "../../network";
+import { getPrice, fetchCourseDetails } from "../../network";
 import SubtitleCard from "../../components/SubtitleCard/SubtitleCard";
+import ReviewCard from "../../components/ReviewCard/ReviewCard";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
-  const [course, setCourse] = useState(0);
+  const [course, setCourse] = useState({});
   const [reviews, setReviews] = useState([]);
   const [subtitles, setSubtitles] = useState([]);
-  const [price, setPrice] = useState();
+  const [price, setPrice] = useState("");
 
   const fetchCourse = async () => {
     try {
       const fetchedCourse = await fetchCourseDetails(courseId);
       setCourse(fetchedCourse);
-      console.log(fetchedCourse.subtitles);
       setReviews(fetchedCourse.reviews);
       setSubtitles(fetchedCourse.subtitles);
     } catch (err) {
@@ -26,7 +26,6 @@ const CourseDetails = () => {
   const fetchPrice = async () => {
     try {
       const fetchedPrice = await getPrice(course.price);
-      console.log(fetchedPrice);
       setPrice(fetchedPrice);
     } catch (err) {
       console.log(err);
@@ -40,7 +39,6 @@ const CourseDetails = () => {
   useEffect(() => {
     fetchPrice();
   }, [ReactSession.get("country"), course]);
-  
 
   return (
     <div>
@@ -53,15 +51,19 @@ const CourseDetails = () => {
       </p>
       <p> Total Number of Hours : {course.duration} hrs</p>
 
-      <>
-        <h6>Course Content :</h6>
-        <ul>
+      <h6>Course Content :</h6>
+      <ul>
         {subtitles.map((subtitleId) => (
           <SubtitleCard subtitleId={subtitleId} />
         ))}
-        </ul>
-      </>
+      </ul>
+
       <h4>Reviews : </h4>
+      <ul>
+        {reviews.map((review) => (
+          <ReviewCard review={review} />
+        ))}
+      </ul>
     </div>
   );
 };
