@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { fetchSearchData } from "../../network";
 import CourseCard from "../../components/CourseCard/CourseCard";
 import {
   filterCoursesBySubject,
@@ -9,11 +10,12 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import { useParams } from "react-router-dom";
 
-const Search = (props) => {
-  const [filteredSearchResults, setFilteredSearchResults] = useState(
-    props.searchResults
-  );
+const Search = () => {
+  const { searchQuery } = useParams();
+  const [searchResults, setSearchResults] = useState([]);
+  const [filteredSearchResults, setFilteredSearchResults] = useState([]);
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [rating, setRating] = useState("");
@@ -24,15 +26,32 @@ const Search = (props) => {
     setMaxPrice("");
     setRating("");
     setSubject("");
-    setFilteredSearchResults(props.searchResults);
+    setFilteredSearchResults(searchResults);
+  };
+
+  const fetchData = async () => {
+    try {
+      const fetchedSearchResults = await fetchSearchData({
+        query: searchQuery,
+      });
+      setSearchResults(fetchedSearchResults);
+      setFilteredSearchResults(fetchedSearchResults);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   useEffect(() => {
+    fetchData();
     clearFilters();
-  }, [props.searchResults]);
+  }, []);
+
+  useEffect(() => {
+    clearFilters();
+  }, [searchResults]);
 
   const filter = async () => {
-    let newSearchResults = props.searchResults;
+    let newSearchResults = searchResults;
     if (subject !== "") {
       newSearchResults = filterCoursesBySubject(subject, newSearchResults);
     }
