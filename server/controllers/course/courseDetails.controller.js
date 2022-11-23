@@ -5,7 +5,6 @@ const Exercises = require("../../models/Exercises.model");
 const Subtitle = require("../../models/Subtitle.model");
 const constant = require("../../constants.json");
 
-
 async function findCoursebyID(id) {
   let courseFound = await courseModel.findOne({
     _id: id,
@@ -40,15 +39,15 @@ async function findExcercises(ExcerciseID) {
   return ex;
 }
 
-async function fetchAllSubtitle__Content (arr_SubTitle_Content) {
-  let ans =  [];
-  for (let i= 0 ; i <  arr_SubTitle_Content.length ; i++) {
+async function fetchAllSubtitle__Content(arr_SubTitle_Content) {
+  let ans = [];
+  for (let i = 0; i < arr_SubTitle_Content.length; i++) {
     let type = arr_SubTitle_Content[i].type;
     let id = arr_SubTitle_Content[i].subTitle_Content_id.toString();
 
-    if (type === constant.excercise){
+    if (type === constant.excercise) {
       ans.push(await findExcercises(id));
-    }else {
+    } else {
       ans.push(await findContents(id));
     }
   }
@@ -85,18 +84,24 @@ let getCourseFromController = async (req, res, next) => {
 
     // Arrays of IDs of Content and Excercises
     let subTitle__contentArray__IDs = courseSubtitle.subTitle_Content;
- 
-    
+
     // conver subTitle__contentArray__IDs into JSON format with attributes
-    let converted__subTitle__contentArray__IDs = await fetchAllSubtitle__Content(subTitle__contentArray__IDs);
-    
-   
+    let converted__subTitle__contentArray__IDs =
+      await fetchAllSubtitle__Content(subTitle__contentArray__IDs);
+
     // get duration of each subtitle from content
     let duration = 0;
     for (let j = 0; j < converted__subTitle__contentArray__IDs.length; j++) {
-      if (converted__subTitle__contentArray__IDs[j].typeOfSubtitle === constant.content) {
-        duration = duration + parseInt(converted__subTitle__contentArray__IDs[j].duration);
-        total__duration += parseInt(converted__subTitle__contentArray__IDs[j].duration);
+      if (
+        converted__subTitle__contentArray__IDs[j].typeOfSubtitle ===
+        constant.content
+      ) {
+        duration =
+          duration +
+          parseInt(converted__subTitle__contentArray__IDs[j].duration);
+        total__duration += parseInt(
+          converted__subTitle__contentArray__IDs[j].duration
+        );
       }
     }
 
@@ -110,7 +115,6 @@ let getCourseFromController = async (req, res, next) => {
     subtitle__array.push(subtitle__finalMap);
   }
 
-  
   coursewithreqID.subtitles = subtitle__array;
 
   coursewithreqID.duration = total__duration;
@@ -118,4 +122,13 @@ let getCourseFromController = async (req, res, next) => {
   res.send(coursewithreqID);
 };
 
-module.exports = getCourseFromController;
+const getSubtitle = async (req, res) => {
+  try {
+    const subtitle = await Subtitle.findById(req.body.subtitleId);
+    res.send(subtitle.toJSON());
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { getCourseFromController, getSubtitle };
