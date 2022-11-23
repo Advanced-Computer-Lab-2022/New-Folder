@@ -66,6 +66,12 @@ export const login = async (loginData) => {
   return res;
 };
 
+// send password reset link
+export const sendPasswordResetLink = async (email) => {
+  const res = await instance.post("/sendPasswordResetLink", email);
+  return res;
+};
+
 export const getPrice = async (price) => {
   const rates = await axios.get("https://api.exchangerate.host/latest");
   const currCurrency =
@@ -84,6 +90,7 @@ export const fetchMyCourses = async () => {
   return res.data;
 };
 
+// instructor info for the ViewInstructorProfile page
 export const fetchInstructorData = async (instructorID) => {
   const res = await instance.get("/instructorInfo", {
     params: {

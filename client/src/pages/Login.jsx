@@ -18,8 +18,8 @@ const Login = (props) => {
     };
     try {
       const userData = await login(loginData);
-      props.setUserType(userData.data.userType)
-      navigate("/")
+      props.setUserType(userData.data.userType);
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
@@ -46,6 +46,7 @@ const Login = (props) => {
           <Button variant="dark" type="submit">
             submit
           </Button>
+          <a href="/accountRecovery">forget password</a>
         </Col>
       </Container>
     </Form>

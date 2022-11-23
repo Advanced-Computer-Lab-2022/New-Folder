@@ -15,6 +15,7 @@ import CourseDetails from "./pages/course/CourseDetails";
 import AdminNavbar from "./components/Navbar/AdminNavbar";
 import UserTypes from "./constants/UserTypes.json";
 import ViewInstructorProfile from "./pages/user/ViewInstructorProfile";
+import AccountRecovery from "./pages/user/AccountRecovery";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -56,6 +57,7 @@ function App() {
           path="/viewInstructorProfile/:instructorID"
           element={<ViewInstructorProfile />}
         />
+        <Route path="/accountRecovery" element={<AccountRecovery />} />
       </Routes>
     </>
   );
