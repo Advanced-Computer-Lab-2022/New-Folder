@@ -1,17 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { fetchInstructorData } from "../../network";
-import {
-  MDBCol,
-  MDBContainer,
-  MDBRow,
-  MDBCard,
-  MDBCardText,
-  MDBCardBody,
-  MDBCardImage,
-  MDBBtn,
-  MDBTypography,
-} from "mdb-react-ui-kit";
 
 const ViewInstructorProfile = () => {
   const [name, setName] = useState("");
