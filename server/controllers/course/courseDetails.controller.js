@@ -1,6 +1,6 @@
 const { default: mongoose } = require("mongoose");
 const Content = require("../../models/Content.model");
-const courseModel = require("../../models/Course.model");
+const Course = require("../../models/Course.model");
 const Exercises = require("../../models/Exercises.model");
 const Subtitle = require("../../models/Subtitle.model");
 const constant = require("../../constants.json");
@@ -122,13 +122,23 @@ let getCourseFromController = async (req, res, next) => {
   res.send(coursewithreqID);
 };
 
-const getSubtitle = async (req, res) => {
+const getCourseDetails = async (req, res) => {
   try {
-    const subtitle = await Subtitle.findById(req.body.subtitleId);
-    res.send(subtitle.toJSON());
+    const course = await Course.findById(req.params.id);
+    res.json(course);
   } catch (err) {
     console.log(err);
   }
 };
 
-module.exports = { getCourseFromController, getSubtitle };
+const getSubtitle = async (req, res) => {
+  try {
+    const subtitle = await Subtitle.findById(req.params.id);
+    console.log(req.params);
+    res.json(subtitle);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { getCourseDetails, getSubtitle };
