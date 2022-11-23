@@ -66,6 +66,12 @@ export const login = async (loginData) => {
   return res;
 };
 
+// Change password
+export const changePassword = async (data) => {
+  const res = await instance.post("/changePassword", data);
+  return res;
+};
+
 // send password reset link
 export const sendPasswordResetLink = async (email) => {
   const res = await instance.post("/sendPasswordResetLink", email);

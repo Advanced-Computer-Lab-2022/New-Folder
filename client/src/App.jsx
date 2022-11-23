@@ -16,6 +16,7 @@ import AdminNavbar from "./components/Navbar/AdminNavbar";
 import UserTypes from "./constants/UserTypes.json";
 import ViewInstructorProfile from "./pages/user/ViewInstructorProfile";
 import AccountRecovery from "./pages/user/AccountRecovery";
+import ChangePassword from "./pages/user/ChangePassword";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -58,6 +59,7 @@ function App() {
           element={<ViewInstructorProfile />}
         />
         <Route path="/accountRecovery" element={<AccountRecovery />} />
+        <Route path="/changePassword" element={<ChangePassword />} />
       </Routes>
     </>
   );
