@@ -83,3 +83,13 @@ export const fetchMyCourses = async () => {
   });
   return res.data;
 };
+
+export const fetchInstructorData = async (instructorID) => {
+  const res = await instance.get("/instructorInfo", {
+    params: {
+      instructorID: instructorID,
+    },
+    timeout: MAX_TIMEOUT,
+  });
+  return res.data;
+};
