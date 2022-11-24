@@ -2,6 +2,7 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { fetchSubtitle } from "../../network";
 import { useNavigate } from "react-router-dom";
+import VideoPreview from "./VideoPreview";
 
 function SubtitleCard(props) {
   const navigate = useNavigate();
@@ -21,18 +22,28 @@ function SubtitleCard(props) {
 
   return (
     <>
-      <h5>{"subtitle: " + subtitle.subtitleNumber}</h5>
+      <h5>{"subtitle " + subtitle.subtitleNumber + ": "}</h5>
       <ol style={{ border: "1px dotted black" }}>
         {subtitle.subTitle_Content.map((content, index) => {
           return (
             <li>
               <h5>
                 {"content " + (index + 1) + ": "}
-                <a href={"/subtitle/"+props.subtitleId+"?idx="+ index}>
+                {/* <a href={"/subtitle/"+props.subtitleId+"?idx="+ index}>
                   {content.type === "content"
                     ? "watch video"
                     : "solve exercise"}
-                </a>
+                </a> */}
+                {content.type == "content" ? (
+                  <VideoPreview
+                    videoId={content.subTitle_Content_id}
+                    idx={index}
+                  />
+                ) : (
+                  <a href={"/subtitle/" + props.subtitleId + "?idx=" + index}>
+                    Solve Exercise
+                  </a>
+                )}
               </h5>
               <br />
             </li>
