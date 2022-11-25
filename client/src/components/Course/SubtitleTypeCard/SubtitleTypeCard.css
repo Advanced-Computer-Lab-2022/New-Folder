@@ -1,0 +1,42 @@
+.Content-card {
+    /* display: flex; */
+    font-size: 1.2em;
+    justify-content: space-between;
+    padding: .75em;
+    transition:  background-color 0.1ms;
+}
+
+.Content-card:hover {
+    background-color: #d0d7dc;
+    cursor: pointer;
+}
+.Content-card i{
+    margin-right: 1.5em;
+    
+}
+
+.Content-card span{
+    font-weight:500;
+    
+}
+
+.content-duration {
+    font-size: 14px;
+    color: #6a6f73;
+    gap: 0.1rem;
+    width: 73%;
+}
+
+.content-duration i {
+    margin-right: 0.4em;
+}
+
+.content-description {
+    text-overflow: ellipsis;
+    overflow: hidden; 
+    width: 70%; 
+    height: 1.2em; 
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    display: -webkit-box;
+}

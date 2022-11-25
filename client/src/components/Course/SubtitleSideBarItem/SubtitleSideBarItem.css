@@ -1,0 +1,52 @@
+.sidebar-item {
+    display: block;
+}
+
+
+
+.sidebar-title {
+    /* display: flex; */
+    padding: 0.8em;
+    font-size: 1.2em;
+    justify-content: space-between;
+    transition: background-color .15s;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+    background-color: #f7f9fa;
+}
+
+.sidebar-title:hover{
+    background-color: rgba(0, 0, 0, 0.048);
+    cursor: pointer;
+
+}
+.sidebar-title i{
+    float: right;
+    
+}
+.sidebar-title span{
+    font-weight: bold;
+    
+}
+
+
+
+.sidebar-title .toggle-btn {
+    cursor: pointer;
+    transition: transform .3s;
+}
+
+.sidebar-item.open .sidebar-title .toggle-btn {
+    transform: rotate(180deg);
+}
+
+.sidebar-content {
+ 
+    height: 0;
+    overflow: hidden;
+}
+
+.sidebar-item.open .sidebar-content{
+    height: auto;
+    transition: height 0.3s;
+
+}
