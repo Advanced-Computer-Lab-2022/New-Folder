@@ -6,8 +6,11 @@
 #profileName {
   margin: 0;
 }
+#profileRating {
+  margin: 0;
+}
 #profileInfo {
   margin: 0;
-  padding: 2%;
-  padding-top: 3%;
+  align-items: flex-start;
+  padding: 3%;
 }

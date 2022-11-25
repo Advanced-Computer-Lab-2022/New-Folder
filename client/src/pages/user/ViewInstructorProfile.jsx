@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import ReviewCard from "../../components/ReviewsCard/ReviewsCard";
 import { fetchInstructorData } from "../../network";
+import ReactStars from "react-rating-stars-component";
 
 const ViewInstructorProfile = () => {
   const [name, setName] = useState("");
