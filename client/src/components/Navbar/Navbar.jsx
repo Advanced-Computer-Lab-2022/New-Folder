@@ -9,7 +9,7 @@ import Navbar from "react-bootstrap/Navbar";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
-import ReactCountryFlag from "react-country-flag"
+import ReactCountryFlag from "react-country-flag";
 
 const MainNavbar = (props) => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const MainNavbar = (props) => {
   };
 
   return (
-    <Navbar bg="dark" variant="dark" className="mb-4">
+    <Navbar bg="dark" variant="dark">
       <Container>
         <Nav className="me-auto">
           <Nav.Link href="/">Explore</Nav.Link>

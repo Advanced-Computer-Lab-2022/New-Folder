@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import { fetchInstructorData } from "../../network";
 
 const ViewInstructorProfile = () => {
@@ -17,7 +18,7 @@ const ViewInstructorProfile = () => {
       setName(
         `${fetchedInstructorData.firstName} ${fetchedInstructorData.lastName}`
       );
-      setImg(fetchedInstructorData.img);
+      setImg(fetchedInstructorData.image);
       setAbout(fetchedInstructorData.about);
       setRating(fetchedInstructorData.rating);
       setRatingNo(fetchedInstructorData.ratingNo);
@@ -31,11 +32,7 @@ const ViewInstructorProfile = () => {
     fetchData();
   }, []);
 
-  return (
-    <>
-      <h1>{name}</h1>
-    </>
-  );
+  return <ProfileCard name={name} img={img} />;
 };
 
 export default ViewInstructorProfile;
