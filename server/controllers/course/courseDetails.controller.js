@@ -141,4 +141,4 @@ const getSubtitle = async (req, res) => {
   }
 };
 
-module.exports = { getCourseDetails, getSubtitle };
+module.exports = { getCourseDetails, getSubtitle, getCourseFromController };

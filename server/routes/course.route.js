@@ -5,6 +5,7 @@ const protectUser = require("../middlewares/authUserMiddleware");
 const {
   getCourseDetails,
   getSubtitle,
+  getCourseFromController
 } = require("../controllers/course/courseDetails.controller");
 
 router.get("/subtitle/:id", getSubtitle);

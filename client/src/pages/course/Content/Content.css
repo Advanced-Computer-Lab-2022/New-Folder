@@ -5,3 +5,20 @@
     margin-bottom: 2rem;
 }
 
+
+.watchScreen__description i {
+    margin-left: 1.5em;
+    margin-right : 1.5em;
+    float: left;
+    font-size: 1.5em;
+}
+
+.watchScreen__description span {
+    margin: 0;
+    font-size: 1.3em;
+    font-weight: 600;
+}
+
+.watchScreen__description button {
+    float: right;
+}

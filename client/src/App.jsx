@@ -52,7 +52,7 @@ function App() {
         <Route path="/AddCorporateTrainee" element={<AddCorporateTrainee />} />
         <Route path="/CreateCourse" element={<CreateCourse />} />
         <Route path="/login" element={<Login setUserType={setUserType} />} />
-        <Route path="/watch/:id" element = {<Content/>}/>
+        <Route path="/watch/:courseId" element = {<Content/>}/>
       </Routes>
     </>
   );

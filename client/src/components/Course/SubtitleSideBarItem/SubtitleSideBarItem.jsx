@@ -16,12 +16,14 @@ const SubtitleSideBarItem = (props) => {
       </div>
       <div className="sidebar-content">
         {/* from each subtitle get the array of subTitle_Content and insert each content and Excercise */}
-        { props.subtitleContent.subTitle_Content.map((subtitleContent,contentIdx)=> {
-        var idx = 0;
+        { props.subtitleContent.subTitle_Content.map((subtitleContent,exIdx)=> {
+        if (subtitleContent.typeOfSubtitle === 'content') exIdx= 0;
+        console.log(exIdx);
           return (
-            <SubtitleTypeCard content ={subtitleContent} contentIdx={idx +1 }/>
+            <SubtitleTypeCard content ={subtitleContent} contentIdx={1}/>
           );
         })}
+
         
       </div>
     </div>

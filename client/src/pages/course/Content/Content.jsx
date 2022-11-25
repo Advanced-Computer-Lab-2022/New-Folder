@@ -1,12 +1,11 @@
 import React from 'react'
+import { useEffect } from 'react';
+import { useState } from 'react';
 import {Col, Row} from 'react-bootstrap';
+import { useParams } from 'react-router-dom';
 import SubtitleSideBar from '../../../components/Course/SubtitleSideBar/SubtitleSideBar';
+import { youTubeGetID } from '../../../utils/videoID';
 import './Content.css'
-
-
-// 1- retreive subtitles from Course
-// 2- get corresponding subtitle with the index passed
-// 3- get corresponding content with the index passed from corresponding subtitle
 
 
 let indexOfSubtitle = 0;
@@ -19,7 +18,7 @@ let arrayofSubtitleFromCourse = [{
         "courseID": "637c00e6f038005a5e19ff9e",
         "description": "React Tutorial For Beginners",
         "duration": "6",
-        "video": "",
+        "video": "https://www.youtube.com/watch?v=ZAsO9rqzcfE&ab_channel=ProgrammingWithFaris",
         "__v": 0,
         "typeOfSubtitle": "content"
       },
@@ -28,7 +27,7 @@ let arrayofSubtitleFromCourse = [{
         "courseID": "637c00e6f038005a5e19ff9e",
         "description": "WWE wristle mania",
         "duration": "6",
-        "video": "",
+        "video": "https://www.youtube.com/watch?v=TVWDNhoBN1I&ab_channel=beINSPORTS",
         "__v": 0,
         "typeOfSubtitle": "content"
       },
@@ -60,7 +59,7 @@ let arrayofSubtitleFromCourse = [{
         "courseID": "637c00e6f038005a5e19ff9e",
         "description": "masr masr masrrrr",
         "duration": "6",
-        "video": "",
+        "video": "https://www.youtube.com/watch?v=BPaA8KvnP_E&ab_channel=AmrSherif",
         "__v": 0,
         "typeOfSubtitle": "content"
       },
@@ -83,7 +82,7 @@ let arrayofSubtitleFromCourse = [{
         "courseID": "637c00e6f038005a5e19ff9e",
         "description": "masr masr masrrrr",
         "duration": "6",
-        "video": "",
+        "video": "https://www.youtube.com/watch?v=7XxY4xHKeQs&ab_channel=HeshamAfifi",
         "__v": 0,
         "typeOfSubtitle": "content"
       },
@@ -92,7 +91,7 @@ let arrayofSubtitleFromCourse = [{
         "courseID": "637c00e6f038005a5e19ff9e",
         "description": "masr masr masrrrr",
         "duration": "6",
-        "video": "",
+        "video": "https://www.youtube.com/watch?v=Q5VSWvZibpQ&ab_channel=LeanaDeeb",
         "__v": 0,
         "typeOfSubtitle": "content"
       },
@@ -115,7 +114,7 @@ let arrayofSubtitleFromCourse = [{
         "courseID": "637c00e6f038005a5e19ff9e",
         "description": "masr masr masrrrr",
         "duration": "6",
-        "video": "",
+        "video": "https://www.youtube.com/watch?v=hL6rUxvuXT4&ab_channel=LayedBakDFR",
         "__v": 0,
         "typeOfSubtitle": "content"
       },
@@ -124,7 +123,7 @@ let arrayofSubtitleFromCourse = [{
         "courseID": "637c00e6f038005a5e19ff9e",
         "description": "masr masr masrrrr",
         "duration": "6",
-        "video": "",
+        "video": "https://www.youtube.com/watch?v=hL6rUxvuXT4&ab_channel=LayedBakDFR",
         "__v": 0,
         "typeOfSubtitle": "content"
       },
@@ -174,18 +173,45 @@ let arrayofSubtitleFromCourse = [{
 ];
 
 
+
+
 const Content = () => {
+  // get course ID to get Course Object
+  // get index of specific subtitle index (sId) and content that will be displayed (c)
+  const { courseId } = useParams();
+  const params = new URLSearchParams(window.location.search);
+  const indexOfSubtitle = params.get('sId');
+  const indexOfContent = params.get('cId');
+
+  // States of subtitle Array , Video will be displayed, and content description
+  const [subtitle, setSubtitle] = useState([]);
+  const [video,setVideo] = useState("");
+  const [description, setDescription] = useState("");
+
+
+
+  var contentDescription = arrayofSubtitleFromCourse[indexOfSubtitle].subTitle_Content[indexOfContent].description;
+  var contentVideoLink = youTubeGetID(arrayofSubtitleFromCourse[indexOfSubtitle].subTitle_Content[indexOfContent].video);
+  
+  useEffect(()=>{
+
+  }, [])
+
   return (
     <Row>
         <Col lg={8}>
             <div className="watchScreen__player">
                 {/* get video id from youtube API and concatenate it to https://www.youtube.com/embed/*/}
-                <iframe src="https://www.youtube.com/embed/U05BDwOTGp0" frameborder="0" title='My Video' allowFullScreen width="100%" height="100%"></iframe>
+                <iframe src={"https://www.youtube.com/embed/"+ contentVideoLink} frameborder="0" title='My Video' allowFullScreen width="100%" height="100%"></iframe>
             </div>
-            <h4>{arrayofSubtitleFromCourse[indexOfSubtitle].subTitle_Content[indexOfContent].description}</h4>
+            <div class="watchScreen__description">
+              <i class="bi bi-play-circle-fill"></i>
+              <span>{description}</span>
+              <button type="button" class="btn btn-primary">Next Video</button>
+            </div>
         </Col>
         <Col lg={4}>
-            <SubtitleSideBar subtitles={arrayofSubtitleFromCourse} />
+            <SubtitleSideBar subtitles={subtitle} />
         </Col>
     </Row>
   )

@@ -5,7 +5,7 @@ const SubtitleTypeCard = (props) => {
   return (
     <div className="Content-card">
         <i class={props.content.typeOfSubtitle === 'content'? "bi bi-play-circle" : "bi-card-checklist"}></i>
-        <span> {props.content.typeOfSubtitle === 'content' ? "Content" : "Excercise"} {props.contentIdx} : {props.content.description} </span>
+        <span> {props.content.typeOfSubtitle === 'content' ? "Content : " + props.content.description  : "Excercise " + props.contentIdx}   </span>
         
         {props.content.typeOfSubtitle === 'content' &&
             <div class="content-duration"> 
