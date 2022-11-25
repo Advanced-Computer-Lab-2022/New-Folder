@@ -5,17 +5,19 @@ import { ReactSession } from "react-client-session";
 import { getPrice, fetchCourseDetails } from "../../network";
 import SubtitleCard from "../../components/SubtitleCard/SubtitleCard";
 import ReviewCard from "../../components/ReviewCard/ReviewCard";
-
+import { getViewerContext } from "../../utils/viewerContext";
 const CourseDetails = () => {
   const { courseId } = useParams();
   const [course, setCourse] = useState({});
   const [reviews, setReviews] = useState([]);
   const [subtitles, setSubtitles] = useState([]);
   const [price, setPrice] = useState("");
-
+  const [vc, setVc] = useState("");
   const fetchCourse = async () => {
     try {
       const fetchedCourse = await fetchCourseDetails(courseId);
+      const fetchedVc = getViewerContext(fetchedCourse);
+      setVc(fetchedVc);
       setCourse(fetchedCourse);
       setReviews(fetchedCourse.reviews);
       setSubtitles(fetchedCourse.subtitles);
@@ -31,7 +33,6 @@ const CourseDetails = () => {
       console.log(err);
     }
   };
-
   useEffect(() => {
     fetchCourse();
   }, []);
@@ -42,6 +43,7 @@ const CourseDetails = () => {
 
   return (
     <div>
+      <h1>You are viewing this page as a {vc}</h1>
       <h1>{course.name}</h1>
       <img src={course.image}></img>
       <h3>{course.subject}</h3>

@@ -5,6 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/esm/Container";
 import Col from "react-bootstrap/esm/Col";
+import { ReactSession } from "react-client-session";
 
 const Login = (props) => {
   const navigate = useNavigate();
@@ -18,8 +19,9 @@ const Login = (props) => {
     };
     try {
       const userData = await login(loginData);
-      props.setUserType(userData.data.userType)
-      navigate("/")
+      props.setUserType(userData.data.userType);
+      ReactSession.set("userId", userData.data.userId);
+      navigate("/");
     } catch (err) {
       console.log(err);
     }
