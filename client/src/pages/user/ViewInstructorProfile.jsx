@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
+import ReviewCard from "../../components/ReviewsCard/ReviewsCard";
 import { fetchInstructorData } from "../../network";
 
 const ViewInstructorProfile = () => {
@@ -32,7 +33,21 @@ const ViewInstructorProfile = () => {
     fetchData();
   }, []);
 
-  return <ProfileCard name={name} img={img} />;
+  return (
+    <div>
+      <ProfileCard name={name} img={img} />
+      <ReviewCard
+        reviews={[
+          { trainee: "Aya", review: "Great!" },
+          { trainee: "Aya", review: "Great!" },
+          { trainee: "Aya", review: "Great!" },
+          { trainee: "Aya", review: "Great!" },
+          { trainee: "Aya", review: "Great!" },
+          { trainee: "Aya", review: "Great!" },
+        ]}
+      />
+    </div>
+  );
 };
 
 export default ViewInstructorProfile;

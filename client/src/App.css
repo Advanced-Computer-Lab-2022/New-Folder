@@ -1,5 +1,9 @@
 .contentDiv {
-    border:5px solid black;
-    margin-left: 5px;
-    display: inline-block;
+  border: 5px solid black;
+  margin-left: 5px;
+  display: inline-block;
+}
+#body {
+  margin: 0;
+  min-width: 100%;
 }

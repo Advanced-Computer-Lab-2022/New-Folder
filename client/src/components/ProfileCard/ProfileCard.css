@@ -1,12 +1,13 @@
-#main {
+#profileCardContainer {
   background-color: #a6d1e6;
   padding: 3%;
   padding-left: 5%;
 }
-#name {
+#profileName {
   margin: 0;
 }
-#info {
+#profileInfo {
   margin: 0;
+  padding: 2%;
   padding-top: 3%;
 }

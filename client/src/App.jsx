@@ -17,6 +17,7 @@ import UserTypes from "./constants/UserTypes.json";
 import ViewInstructorProfile from "./pages/user/ViewInstructorProfile";
 import AccountRecovery from "./pages/user/AccountRecovery";
 import ChangePassword from "./pages/user/ChangePassword";
+import Container from "react-bootstrap/Container";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -35,32 +36,36 @@ function App() {
       ) : (
         <Navbar setSearchResults={setSearchResults} setCountry={setCountry} />
       )}
-      <Routes>
-        <Route path="/" element={<Explore />} />
-        <Route path="/myCourses" element={<MyCourses />} />
-        <Route
-          path="/search"
-          element={
-            <Search
-              searchResults={searchResults}
-              setSearchResults={setSearchResults}
-            />
-          }
-        />
-
-        <Route path="/courses" element={<CourseDetails />} />
-        <Route path="/addAdmin" element={<AddAdmin />} />
-        <Route path="/AddInstructor" element={<AddInstructor />} />
-        <Route path="/AddCorporateTrainee" element={<AddCorporateTrainee />} />
-        <Route path="/CreateCourse" element={<CreateCourse />} />
-        <Route path="/login" element={<Login setUserType={setUserType} />} />
-        <Route
-          path="/viewInstructorProfile/:instructorID"
-          element={<ViewInstructorProfile />}
-        />
-        <Route path="/accountRecovery" element={<AccountRecovery />} />
-        <Route path="/changePassword" element={<ChangePassword />} />
-      </Routes>
+      <Container id="body">
+        <Routes>
+          <Route path="/" element={<Explore />} />
+          <Route path="/myCourses" element={<MyCourses />} />
+          <Route
+            path="/search"
+            element={
+              <Search
+                searchResults={searchResults}
+                setSearchResults={setSearchResults}
+              />
+            }
+          />
+          <Route path="/courses" element={<CourseDetails />} />
+          <Route path="/addAdmin" element={<AddAdmin />} />
+          <Route path="/AddInstructor" element={<AddInstructor />} />
+          <Route
+            path="/AddCorporateTrainee"
+            element={<AddCorporateTrainee />}
+          />
+          <Route path="/CreateCourse" element={<CreateCourse />} />
+          <Route path="/login" element={<Login setUserType={setUserType} />} />
+          <Route
+            path="/viewInstructorProfile/:instructorID"
+            element={<ViewInstructorProfile />}
+          />
+          <Route path="/accountRecovery" element={<AccountRecovery />} />
+          <Route path="/changePassword" element={<ChangePassword />} />
+        </Routes>
+      </Container>
     </>
   );
 }
