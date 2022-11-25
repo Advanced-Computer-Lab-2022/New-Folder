@@ -89,3 +89,9 @@ export const fetchSubtitle = async (id) => {
   const res = await instance.get("/course/subtitle/" + id);
   return res.data;
 };
+
+// get Video
+export const fetchVideoContent = async (id) => {
+  const res = await instance.get("/course/subtitle/video/" + id);
+  return res.data;
+};

@@ -134,11 +134,19 @@ const getCourseDetails = async (req, res) => {
 const getSubtitle = async (req, res) => {
   try {
     const subtitle = await Subtitle.findById(req.params.id);
-    console.log(req.params);
     res.json(subtitle);
   } catch (err) {
     console.log(err);
   }
 };
 
-module.exports = { getCourseDetails, getSubtitle, getCourseFromController };
+const getVideo = async (req, res) => {
+  try {
+    const video = await Content.findById(req.params.id);
+    res.json(video);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = { getCourseDetails, getSubtitle, getVideo };
