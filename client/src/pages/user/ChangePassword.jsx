@@ -9,12 +9,12 @@ import { changePassword } from "../../network";
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
-
+  const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const navigate = useNavigate();
 
   const submit = async (e) => {
     e.preventDefault();
-    await changePassword({ oldPassword, newPassword });
+    await changePassword({ oldPassword, newPassword, confirmNewPassword });
     navigate("/");
   };
 
@@ -34,6 +34,13 @@ const ChangePassword = () => {
             <Form.Control
               type="password"
               onChange={(e) => setNewPassword(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Confirm New password</Form.Label>
+            <Form.Control
+              type="password"
+              onChange={(e) => setConfirmNewPassword(e.target.value)}
             />
           </Form.Group>
           <Button variant="dark" type="submit">
