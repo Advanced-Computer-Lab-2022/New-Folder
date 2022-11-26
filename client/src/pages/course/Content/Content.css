@@ -22,3 +22,7 @@
 .watchScreen__description button {
     float: right;
 }
+.sideBar {
+    width: 85%;
+    float: left;
+}
