@@ -6,6 +6,7 @@ import { getPrice, fetchCourseDetails } from "../../network";
 import SubtitleCard from "../../components/SubtitleCard/SubtitleCard";
 import ReviewCard from "../../components/ReviewCard/ReviewCard";
 import { getViewerContext } from "../../utils/viewerContext";
+import CourseSummary from "../../components/CourseSummary/CourseSummary";
 const CourseDetails = () => {
   const { courseId } = useParams();
   const [course, setCourse] = useState({});
@@ -44,23 +45,14 @@ const CourseDetails = () => {
   return (
     <div>
       <h1>You are viewing this page as a {vc}</h1>
-      <h1>{course.name}</h1>
-      <img src={course.image}></img>
-      <h3>{course.subject}</h3>
-      <h3>{"price" + ": " + price}</h3>
-      <p>
-        Description : <span>{course.description}</span>
-      </p>
-      <p> Total Number of Hours : {course.duration} hrs</p>
-
-      <h6>Course Content :</h6>
+      <CourseSummary course={course} price={price} />
       <ul>
         {subtitles.map((subtitleId) => (
           <SubtitleCard subtitleId={subtitleId} />
         ))}
       </ul>
 
-      <h4>Reviews : </h4>
+      <h4>Reviews: </h4>
       <ul>
         {reviews.map((review) => (
           <ReviewCard review={review} />

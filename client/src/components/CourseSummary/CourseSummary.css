@@ -1,0 +1,16 @@
+#courseCardContainer {
+  background-color: #a6d1e6;
+  padding: 3%;
+  padding-left: 5%;
+}
+#courseName {
+  margin: 0;
+}
+#courseRating {
+  margin: 0;
+}
+#courseInfo {
+  margin: 0;
+  align-items: flex-start;
+  padding: 3%;
+}
