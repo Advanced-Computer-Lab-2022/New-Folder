@@ -2,12 +2,15 @@ import React from 'react'
 import "./SubtitleSideBarItem.css"
 import { useState } from 'react'
 import SubtitleTypeCard from '../SubtitleTypeCard/SubtitleTypeCard';
-import { fetchCourseDetails , fetchSubtitle} from '../../../network';
+import {  fetchSubtitle} from '../../../network';
 import { useEffect } from 'react';
+
 
 
 const SubtitleSideBarItem = (props) => {
   const subtitleID = props.subtitleContent;
+  const courseID = props.cid;
+  const subIDx = props.sidx;
   const [open , setOpen] = useState(false);
   const [subtitleContent , setSubtitleContent] = useState([]);
   const [subtitleNumber , setSubtitleNumber] = useState([]);
@@ -34,9 +37,11 @@ const SubtitleSideBarItem = (props) => {
       </div>
       <div className="sidebar-content">
         {/* from each subtitle get the array of subTitle_Content and insert each content and Excercise */}
-        { subtitleContent.map((subtitleContent)=> {
+        { subtitleContent.map((subtitleContent,index)=> {
           return (
-            <SubtitleTypeCard contentID={subtitleContent.subTitle_Content_id} contentType={subtitleContent.type}/>
+            <SubtitleTypeCard contentID={subtitleContent.subTitle_Content_id} contentType={subtitleContent.type}
+            cid={courseID} sidx ={subIDx} contentIdx={index}
+            />
           );
         })}
 

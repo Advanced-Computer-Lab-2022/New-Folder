@@ -4,10 +4,8 @@ import { useState } from 'react';
 import {Col, Row} from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
 import ContentDisplay from '../../../components/Course/ContentDisplay/ContentDisplay';
-import SubtitleSideBar from '../../../components/Course/SubtitleSideBar/SubtitleSideBar';
 import SubtitleSideBarItem from '../../../components/Course/SubtitleSideBarItem/SubtitleSideBarItem';
-import { fetchCourseDetails, fetchSubtitle, fetchVideoContent } from '../../../network';
-import { youTubeGetID } from '../../../utils/videoID';
+import { fetchCourseDetails } from '../../../network';
 import './Content.css'
 
 
@@ -46,7 +44,7 @@ const Content = () => {
         <Col lg={4}>
             <div className='sideBar'>
               {/* array of subtitles of the course and pass each subtitle to SubtitleSideBarItem  */}
-              {subtitles.map((subtitle)=>(<SubtitleSideBarItem subtitleContent={subtitle}/>))}
+              {subtitles.map((subtitle, index)=>(<SubtitleSideBarItem subtitleContent={subtitle} cid={courseId} sidx ={index}/>))}
             </div>
         </Col>
     </Row>
