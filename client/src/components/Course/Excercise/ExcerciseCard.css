@@ -1,0 +1,23 @@
+.question-main {
+    width: 55% !important;
+    padding-bottom: 2em;
+    padding-top: 1em;
+    margin-bottom: 2em;
+    background-color: #f2f2f2;
+
+}
+
+.question-main h3 {
+    font-weight: bold;
+}
+
+.question-main form {
+    margin-left: 0.75em;
+}
+
+
+.question-header p{
+    font-size: 1.2em;
+    margin-left: 0.5em;
+
+}

@@ -33,7 +33,7 @@ const SubtitleTypeCard = (props) => {
 
   return (
 
-    <div className="Content-card" onClick={(e)=> {type ==  constants.content ? navigate("/watch/"+courseID + "?sId=" +subIDx + "&cId=" + contentIDx) : navigate("/") }}>
+    <div className="Content-card" onClick={(e)=> {type ==  constants.content ? navigate("/watch/"+courseID + "?sId=" +subIDx + "&cId=" + contentIDx , {replace: true}) : navigate("/") }}>
         <i class={type === constants.content ? "bi bi-play-circle" : "bi-card-checklist"}></i>
         <span> {type === constants.content ? "Content : " +description  : "Excercise "}   </span>
         
