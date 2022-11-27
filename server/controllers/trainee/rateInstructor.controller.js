@@ -12,6 +12,7 @@ exports.rateInstructor = async (req, res) => {
     ratingNo: instructor.ratingNo + 1,
   });
   if (newReview) {
+    // what a review should be?
     const review = {
       trainee: req.session.userName,
       review: newReview,
