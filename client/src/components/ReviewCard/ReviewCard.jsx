@@ -4,16 +4,8 @@ import { fetchTraineeName } from "../../network";
 function ReviewCard(props) {
   const [trainee, setTrainee] = useState("");
   const [reviewText, setReviewText] = useState("");
-  const fetchTrainee = async (traineeId) => {
-    try {
-      const traineeName = await fetchTraineeName(traineeId);
-      setTrainee(traineeName.firstName + " " + traineeName.lastName);
-    } catch (err) {
-      console.log(err);
-    }
-  };
   useEffect(() => {
-    fetchTrainee(props.review.trainee);
+    setTrainee(props.review.traineeName??"");
     setReviewText(props.review.review);
   }, []);
   return (
