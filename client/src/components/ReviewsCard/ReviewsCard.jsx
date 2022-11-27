@@ -26,7 +26,7 @@ const ReviewCard = (props) => {
       );
     }
     setReviews(tempReviews);
-  }, []);
+  }, [props.reviews]);
 
   const onClick = () => {
     const tempReviews = [];

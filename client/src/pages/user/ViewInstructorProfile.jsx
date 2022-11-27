@@ -1,9 +1,8 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
-import ReviewCard from "../../components/ReviewsCard/ReviewsCard";
+import RateAndReviewInstructor from "../../components/RateAndReviewInstructor/RateAndReviewInstructor";
 import { fetchInstructorData } from "../../network";
-import ReactStars from "react-rating-stars-component";
 
 const ViewInstructorProfile = () => {
   const [name, setName] = useState("");
@@ -37,16 +36,7 @@ const ViewInstructorProfile = () => {
   return (
     <div>
       <ProfileCard name={name} img={img} />
-      <ReviewCard
-        reviews={[
-          { trainee: "Aya", review: "Great!" },
-          { trainee: "Aya", review: "Great!" },
-          { trainee: "Aya", review: "Great!" },
-          { trainee: "Aya", review: "Great!" },
-          { trainee: "Aya", review: "Great!" },
-          { trainee: "Aya", review: "Great!" },
-        ]}
-      />
+      <RateAndReviewInstructor instructorID={instructorID} />
     </div>
   );
 };

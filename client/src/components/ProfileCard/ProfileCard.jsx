@@ -24,7 +24,7 @@ const ProfileCard = (props) => {
           <div id="profileRating">
             <Stack direction="horizontal" gap={3}>
               <BsFillPatchCheckFill size={40} />
-              <h3>400 reviewss</h3>
+              <h3>400 reviews</h3>
             </Stack>
           </div>
           <div id="profileRating">
