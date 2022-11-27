@@ -25,6 +25,7 @@ const createCourse = async (req, res) => {
     instructorInfo: { id: req.session.userId, name: req.session.userName },
     duration: 0,
     subtitles: subtitles,
+    introVideo: req.body.introVideo
   });
   await updateInstructorCourses(course._id, req.session.userId);
   res.json(course);

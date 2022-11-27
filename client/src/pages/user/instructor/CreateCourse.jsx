@@ -7,6 +7,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/esm/Container";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/Row";
+import CloseButton from "react-bootstrap/CloseButton";
 
 const countries = CountryCurrency.getAllISOCodes();
 
@@ -18,6 +19,7 @@ function CreateCourse() {
   const [magnitude, setMagnitude] = useState("");
   const [currency, setCurrency] = useState("EGP");
   const [subtitles, setSubtitles] = useState([""]);
+  const [introVideo, setIntroVideo] = useState("");
 
   const removeSubtitle = (index) => {
     const temp = [...subtitles];
@@ -37,6 +39,7 @@ function CreateCourse() {
       magnitude: magnitude,
       currency: currency,
       subtitles: subtitles,
+      introVideo: introVideo,
     };
     postCourse(data);
     e.preventDefault();
@@ -59,6 +62,7 @@ function CreateCourse() {
                 value={name}
                 placeholder="Enter Course Name"
                 onChange={(e) => setName(e.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -69,6 +73,17 @@ function CreateCourse() {
                 value={field}
                 placeholder="Enter Course Field"
                 onChange={(e) => setField(e.target.value)}
+                required
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Control
+                type="text"
+                id="introVideo"
+                name="introVideo"
+                value={introVideo}
+                placeholder="add course preview link"
+                onChange={(e) => setIntroVideo(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3">
@@ -80,6 +95,7 @@ function CreateCourse() {
                 value={description}
                 placeholder="Enter Course Description"
                 onChange={(e) => setDescription(e.target.value)}
+                required
               />
             </Form.Group>
             {subtitles.map((sub, index) => {
@@ -97,15 +113,17 @@ function CreateCourse() {
                         temp[index] = e.target.value;
                         setSubtitles(temp);
                       }}
+                      required
                     />
                   </Form.Group>
-                  <Form.Group as={Col}>
-                    <Button
+                  <Form.Group as={Col} className="mt-2">
+                    {/* <Button
                       className="btn btn-danger "
                       onClick={() => removeSubtitle(index)}
                     >
                       x
-                    </Button>
+                    </Button> */}
+                    <CloseButton onClick={() => removeSubtitle(index)} />
                   </Form.Group>
                 </Row>
               );
@@ -125,8 +143,9 @@ function CreateCourse() {
                 id="magnitude"
                 name="magnitude"
                 value={magnitude}
-                placeholder="Enter your price magnitude"
+                placeholder="Enter Course price"
                 onChange={(e) => setMagnitude(e.target.value)}
+                required
               />
             </Form.Group>
             <Form.Group className="mb-3">
