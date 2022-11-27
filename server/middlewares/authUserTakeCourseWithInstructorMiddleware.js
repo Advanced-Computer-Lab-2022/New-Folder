@@ -1,6 +1,6 @@
 const asyncHandler = require("express-async-handler");
-const Trainee = require("../../models/Trainee.model");
-const Course = require("../../models/Course.model");
+const Trainee = require("../models/Trainee.model");
+const Course = require("../models/Course.model");
 
 exports.authUserTakeCourseWithInstructor = asyncHandler(
   async (req, res, next) => {

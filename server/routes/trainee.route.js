@@ -4,7 +4,7 @@ const router = express.Router();
 // import controllers
 const {
   getInstructorData,
-} = require("../controllers/trainee/viewInstructorInfo.controller");
+} = require("../controllers/trainee/getInstructorData.controller");
 const {
   changePassword,
 } = require("../controllers/trainee/changePassword.controller");
