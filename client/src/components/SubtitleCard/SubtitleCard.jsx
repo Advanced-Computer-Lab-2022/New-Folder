@@ -23,6 +23,7 @@ function SubtitleCard(props) {
   return (
     <>
       <h5>{"subtitle " + subtitle.subtitleNumber + ": "}</h5>
+      <p>{subtitle.title ?? ""}</p>
       <ol style={{ border: "1px dotted black" }}>
         {subtitle.subTitle_Content.map((content, index) => {
           return (

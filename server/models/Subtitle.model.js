@@ -4,6 +4,12 @@ const Subtitle = mongoose.Schema({
   subtitleNumber: {
     type: Number,
   },
+  courseId: {
+    type: mongoose.Types.ObjectId,
+  },
+  title: {
+    type: String,
+  },
   // Contents: {
   //   type: [{ type: mongoose.Types.ObjectId, ref: "Content" }],
   // },
