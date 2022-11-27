@@ -24,7 +24,7 @@ function App() {
   ReactSession.set("userType", userType);
   return (
     <>
-      {ReactSession.get("userType") === UserTypes.admin? (
+      {ReactSession.get("userType") === UserTypes.admin ? (
         <AdminNavbar
           setSearchResults={setSearchResults}
           setCountry={setCountry}
