@@ -5,3 +5,10 @@
 .submit-quiz button{
     float: right;
 }
+
+.mark-quiz {
+    /* float: left; */
+    text-align: right;
+    width: 57% !important;
+    padding: 1em;
+}

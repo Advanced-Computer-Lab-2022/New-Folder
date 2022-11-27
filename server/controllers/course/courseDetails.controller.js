@@ -4,6 +4,7 @@ const Course = require("../../models/Course.model");
 const Exercises = require("../../models/Exercises.model");
 const Subtitle = require("../../models/Subtitle.model");
 const constant = require("../../constants.json");
+const Exercise = require("../../models/Exercises.model");
 
 async function findCoursebyID(id) {
   let courseFound = await courseModel.findOne({
@@ -149,4 +150,13 @@ const getVideo = async (req, res) => {
   }
 };
 
-module.exports = { getCourseDetails, getSubtitle, getVideo };
+const getExcercise = async (req , res) => {
+  try {
+    const excercise = await Exercise.findById(req.params.id);
+    res.json(excercise);
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+module.exports = { getCourseDetails, getSubtitle, getVideo, getExcercise };

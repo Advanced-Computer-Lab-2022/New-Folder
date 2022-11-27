@@ -1,4 +1,5 @@
 import React from 'react'
+import { useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
 import ExcerciseCard from '../../../components/Course/Excercise/ExcerciseCard'
 import './Excercise.css'
@@ -31,10 +32,13 @@ const ExcerciseQuestions  = [{
 
 
 const Excercise = () => {
-  return (
+    const [isSubmitted, setIsFinished] = useState(false);
+    
+    return (
     <Col>
-        <Row><h4>Mark : 0 / 10</h4></Row>
+        
         <Row lg={1}>
+            <div className='mark-quiz'><span></span><h4>Mark : 0 / {ExcerciseQuestions.length}</h4></div>
             {ExcerciseQuestions.map((excercise, index)=>{
                 return(<ExcerciseCard questionIdx={index +1 }/>);
             })}
