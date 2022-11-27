@@ -44,8 +44,7 @@ const CourseDetails = () => {
 
   return (
     <div>
-      <h1>You are viewing this page as a {vc}</h1>
-      <CourseSummary course={course} price={price} />
+      <CourseSummary course={course} price={price} vc={vc} />
       <ul>
         {subtitles.map((subtitleId) => (
           <SubtitleCard subtitleId={subtitleId} />
