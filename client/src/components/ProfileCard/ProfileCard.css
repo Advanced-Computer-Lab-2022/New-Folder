@@ -3,10 +3,7 @@
   padding: 3%;
   padding-left: 5%;
 }
-#profileName {
-  margin: 0;
-}
-#profileRating {
+.viewProfileItem {
   margin: 0;
 }
 #profileInfo {

@@ -68,7 +68,7 @@ export const login = async (loginData) => {
 
 // Change password
 export const changePassword = async (data) => {
-  const res = await instance.post("/changePassword", data);
+  const res = await instance.post("/trainee/changePassword", data);
   return res;
 };
 
@@ -98,11 +98,23 @@ export const fetchMyCourses = async () => {
 
 // instructor info for the ViewInstructorProfile page
 export const fetchInstructorData = async (instructorID) => {
-  const res = await instance.get("/instructorInfo", {
+  const res = await instance.get("/trainee/instructorInfo", {
     params: {
       instructorID: instructorID,
     },
     timeout: MAX_TIMEOUT,
   });
   return res.data;
+};
+
+// rate and review instructor
+export const rateandReviewInstructor = async (instructorID, data) => {
+  const res = await instance.post("/trainee/rateInstructor", {
+    params: {
+      instructorID: instructorID,
+    },
+    body: data,
+    timeout: MAX_TIMEOUT,
+  });
+  return res;
 };

@@ -3,14 +3,15 @@ import { useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import { rateandReviewInstructor } from "../../network";
 
 const RateAndReviewInstructor = (props) => {
   const [newRating, setNewRating] = useState(0);
   const [newReview, setNewReview] = useState("");
 
-  const submitReview = () => {
-    // add rating and review to db
-    // same trainee can rate the same instructor multiple times
+  const submitReview = async () => {
+    setNewReview(newReview.trim());
+    await rateandReviewInstructor(props.instructorID, { newRating, newReview });
   };
 
   return (
