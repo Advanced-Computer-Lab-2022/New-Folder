@@ -108,7 +108,7 @@ export const fetchInstructorData = async (instructorID) => {
 };
 
 // rate and review instructor
-export const rateandReviewInstructor = async (instructorID, data) => {
+export const rateInstructor = async (instructorID, data) => {
   const res = await instance.post("/trainee/rateInstructor", {
     params: {
       instructorID: instructorID,
@@ -116,5 +116,19 @@ export const rateandReviewInstructor = async (instructorID, data) => {
     body: data,
     timeout: MAX_TIMEOUT,
   });
+  return res;
+};
+
+// get MyProfile for instructor
+export const getMyProfile = async (instructorID) => {
+  const res = await instance.get("/instructor/myProfile", {
+    timeout: MAX_TIMEOUT,
+  });
+  return res.data;
+};
+
+// edit MyProfile for instructor
+export const editMyProfile = async (data) => {
+  const res = await instance.post("/instructor/editMyProfile", data);
   return res;
 };

@@ -3,7 +3,7 @@ import { useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { rateandReviewInstructor } from "../../network";
+import { rateInstructor } from "../../network";
 
 const RateAndReviewInstructor = (props) => {
   const [newRating, setNewRating] = useState(0);
@@ -11,7 +11,7 @@ const RateAndReviewInstructor = (props) => {
 
   const submitReview = async () => {
     setNewReview(newReview.trim());
-    await rateandReviewInstructor(props.instructorID, { newRating, newReview });
+    await rateInstructor(props.instructorID, { newRating, newReview });
   };
 
   return (
