@@ -6,16 +6,12 @@ import { useState } from "react";
 import { useEffect } from "react";
 
 const ReviewCard = (props) => {
-  const [lastReviewIndex, setLastReviewIndex] = useState(5);
+  const [lastReviewIndex, setLastReviewIndex] = useState(3);
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
     const tempReviews = [];
-    for (
-      let i = reviews.length;
-      i < props.reviews.length && i < lastReviewIndex;
-      i++
-    ) {
+    for (let i = 0; i < props.reviews.length && i < lastReviewIndex; i++) {
       tempReviews.push(
         <Card className="cardFrame">
           <Card.Body className="reviewCard">

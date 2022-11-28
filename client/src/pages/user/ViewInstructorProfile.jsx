@@ -53,7 +53,7 @@ const ViewInstructorProfile = () => {
       </div>
     );
   }
-  return <></>;
+  return null;
 };
 
 export default ViewInstructorProfile;

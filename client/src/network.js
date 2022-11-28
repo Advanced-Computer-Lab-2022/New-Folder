@@ -120,7 +120,7 @@ export const rateInstructor = async (instructorID, data) => {
 };
 
 // get MyProfile for instructor
-export const getMyProfile = async (instructorID) => {
+export const getMyProfile = async () => {
   const res = await instance.get("/instructor/myProfile", {
     timeout: MAX_TIMEOUT,
   });

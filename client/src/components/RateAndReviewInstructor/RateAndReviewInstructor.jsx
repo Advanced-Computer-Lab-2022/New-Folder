@@ -31,8 +31,8 @@ const RateAndReviewInstructor = (props) => {
       <div id="reviewBox">
         <Form.Control
           size="lg"
-          type="text"
-          onChange={(review) => setNewReview(review)}
+          as="textarea"
+          onChange={(e) => setNewReview(e.target.value)}
         />
       </div>
       <Button variant="dark" id="submitReviewBtn" onClick={submitReview}>

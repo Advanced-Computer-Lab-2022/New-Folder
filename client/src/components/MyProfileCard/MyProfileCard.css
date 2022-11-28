@@ -1,0 +1,36 @@
+#myProfileTop {
+  background-color: #a6d1e6;
+  overflow: visible;
+  max-height: 250px;
+  align-items: center;
+  display: flex;
+}
+
+#myImg {
+  margin: auto;
+  margin-top: 5%;
+}
+
+#myName {
+  margin: auto;
+  margin-top: 105px;
+  align-items: center;
+  display: flex;
+}
+
+#myRating {
+  display: inline-flex;
+  align-items: center;
+}
+
+#myRatingStars {
+  width: 190px;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+#myRatingNo {
+  font-weight: 300;
+  margin-top: 12px;
+  margin-left: 0;
+}

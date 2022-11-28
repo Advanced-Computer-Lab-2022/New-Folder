@@ -18,6 +18,7 @@ import ViewInstructorProfile from "./pages/user/ViewInstructorProfile";
 import AccountRecovery from "./pages/user/AccountRecovery";
 import ChangePassword from "./pages/user/ChangePassword";
 import Container from "react-bootstrap/Container";
+import MyProfile from "./pages/user/instructor/MyProfile";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -64,6 +65,7 @@ function App() {
           />
           <Route path="/accountRecovery" element={<AccountRecovery />} />
           <Route path="/changePassword" element={<ChangePassword />} />
+          <Route path="/MyProfile" element={<MyProfile />} />
         </Routes>
       </Container>
     </>
