@@ -15,10 +15,11 @@ import CourseDetails from "./pages/course/CourseDetails";
 import AdminNavbar from "./components/Navbar/AdminNavbar";
 import UserTypes from "./constants/UserTypes.json";
 import ViewInstructorProfile from "./pages/user/ViewInstructorProfile";
-import AccountRecovery from "./pages/user/AccountRecovery";
+import ForgetPassword from "./pages/user/ForgetPassword";
 import ChangePassword from "./pages/user/ChangePassword";
 import Container from "react-bootstrap/Container";
 import MyProfile from "./pages/user/instructor/MyProfile";
+import ResetPassword from "./pages/user/ResetPassword";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -63,9 +64,13 @@ function App() {
             path="/viewInstructorProfile/:instructorID"
             element={<ViewInstructorProfile />}
           />
-          <Route path="/accountRecovery" element={<AccountRecovery />} />
+          <Route path="/forgetPassword" element={<ForgetPassword />} />
           <Route path="/changePassword" element={<ChangePassword />} />
-          <Route path="/MyProfile" element={<MyProfile />} />
+          <Route path="/myProfile" element={<MyProfile />} />
+          <Route
+            path="/resetPassword/:userID/:token"
+            element={<ResetPassword />}
+          />
         </Routes>
       </Container>
     </>

@@ -46,7 +46,7 @@ const Login = (props) => {
           <Button variant="dark" type="submit">
             submit
           </Button>
-          <a href="/accountRecovery">forget password</a>
+          <a href="/forgetPassword">forget password</a>
         </Col>
       </Container>
     </Form>

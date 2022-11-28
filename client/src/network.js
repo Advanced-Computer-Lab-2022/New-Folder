@@ -72,9 +72,15 @@ export const changePassword = async (data) => {
   return res;
 };
 
+// Reset password
+export const resetPassword = async (data) => {
+  const res = await instance.post("/resetPassword", data);
+  return res;
+};
+
 // send password reset link
-export const sendPasswordResetLink = async (email) => {
-  const res = await instance.post("/sendPasswordResetLink", email);
+export const sendPasswordResetLink = async (data) => {
+  const res = await instance.post("/sendPasswordResetLink", data);
   return res;
 };
 
@@ -108,14 +114,8 @@ export const fetchInstructorData = async (instructorID) => {
 };
 
 // rate and review instructor
-export const rateInstructor = async (instructorID, data) => {
-  const res = await instance.post("/trainee/rateInstructor", {
-    params: {
-      instructorID: instructorID,
-    },
-    body: data,
-    timeout: MAX_TIMEOUT,
-  });
+export const rateInstructor = async (data) => {
+  const res = await instance.post("/trainee/rateInstructor", data);
   return res;
 };
 

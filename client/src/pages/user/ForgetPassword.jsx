@@ -6,13 +6,13 @@ import Col from "react-bootstrap/esm/Col";
 import { useNavigate } from "react-router-dom";
 import { sendPasswordResetLink } from "../../network";
 
-const AccountRecovery = () => {
-  const [email, setEmail] = useState("");
+const ForgetPassword = () => {
+  const [username, setUsername] = useState("");
   const navigate = useNavigate();
 
   const submit = async (e) => {
     e.preventDefault();
-    await sendPasswordResetLink(email);
+    await sendPasswordResetLink({ username });
     navigate("/");
   };
 
@@ -21,10 +21,10 @@ const AccountRecovery = () => {
       <Container className="mt-4">
         <Col lg="5">
           <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Email</Form.Label>
+            <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
-              onChange={(e) => setEmail(e.target.value)}
+              onChange={(e) => setUsername(e.target.value)}
             />
           </Form.Group>
           <Button variant="dark" type="submit">
@@ -36,4 +36,4 @@ const AccountRecovery = () => {
   );
 };
 
-export default AccountRecovery;
+export default ForgetPassword;

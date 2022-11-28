@@ -11,7 +11,11 @@ const RateAndReviewInstructor = (props) => {
 
   const submitReview = async () => {
     setNewReview(newReview.trim());
-    await rateInstructor(props.instructorID, { newRating, newReview });
+    await rateInstructor({
+      instructorID: props.instructorID,
+      newRating,
+      newReview,
+    });
   };
 
   return (
