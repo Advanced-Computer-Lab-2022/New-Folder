@@ -12,7 +12,7 @@ exports.authUserTakeCourseWithInstructor = asyncHandler(
     for (let i = 0; i < courses.length; i++) {
       // this should not be this way
       let course = await Course.findById(courses[i]);
-      if (course.instructorInfo.id == req.params.instructorID) {
+      if (course.instructorInfo.id == req.body.instructorID) {
         next();
       }
     }
