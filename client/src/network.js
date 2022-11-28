@@ -89,3 +89,15 @@ export const fetchSubtitle = async (id) => {
   const res = await instance.get("/course/subtitle/" + id);
   return res.data;
 };
+
+// instructor add video data:{ courseID, subtitleID ,....}
+export const addVideo = async (data) => {
+  const res = await instance.post("/instructor/addVideo", data);
+  return res;
+};
+
+// instructor create exam data:{courseID , subtitleID,......}
+export const createExam = async (data) => {
+  const res = await instance.post("/instructor/createExam", data);
+  return res;
+};
