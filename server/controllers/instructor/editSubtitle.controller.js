@@ -1,6 +1,6 @@
 const Content = require("../../models/Content.model");
 const Subtitle = require("../../models/Subtitle.model");
-const constants = require("../constants.json");
+const constants = require("../../constants.json");
 
 const addVideo = async (req, res) => {
   const { courseID, subtitleID, videoURL, duration, description } = req.body;
@@ -15,6 +15,7 @@ const addVideo = async (req, res) => {
     subTitle_Content_id: content._id,
     type: constants.content,
   });
+  await subtitle.save();
   res.status(200).json();
 };
 
