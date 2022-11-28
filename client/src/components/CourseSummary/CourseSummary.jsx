@@ -4,14 +4,8 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Stack from "react-bootstrap/Stack";
-import {
-  BsStarFill,
-  BsPlayCircle,
-  BsFillPatchCheckFill,
-  BsCash,
-  BsClockFill,
-  BsInfoCircleFill,
-} from "react-icons/bs";
+import AddRating from "../AddRating/AddRating";
+import ViewerContexts from "../../constants/ViewerContexts.json";
 
 function CourseSummary(props) {
   const { course, price, vc } = props;
@@ -30,7 +24,7 @@ function CourseSummary(props) {
               <Stack gap={4} id="courseInfo">
                 <div id="courseRating">
                   <Stack direction="horizontal" gap={3}>
-                    <h3>Rating: {course.rating ?? 0}</h3>
+                    <h3>Rating: {course.totalRating ?? 0}</h3>
                   </Stack>
                 </div>
                 <div id="courseRating">
@@ -62,6 +56,9 @@ function CourseSummary(props) {
                     <h3>Subject: {course.subject ?? ""}</h3>
                   </Stack>
                 </div>
+                {vc === ViewerContexts.enrolledTrainee ? (
+                  <AddRating course={course} />
+                ) : null}
               </Stack>
             </Col>
           </Row>

@@ -25,23 +25,39 @@ const Course = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  rating: {
+  ratings: {
+    type: [
+      {
+        trainee: {
+          type: mongoose.Types.ObjectId,
+          ref: "Trainee",
+        },
+        rating: {
+          type: Number,
+          min: 0,
+          max: 5,
+        },
+      },
+    ],
+    default: [],
+  },
+  totalRating: {
     type: Number,
     min: 0,
     max: 5,
     default: 0,
   },
-  ratingNo: {
-    type: Number,
-    default: 0,
-  },
   reviews: {
-    type: [ { traineeName: {
-      type: String,
-    },
-    review: {
-      type: String,
-    } }],
+    type: [
+      {
+        traineeName: {
+          type: String,
+        },
+        review: {
+          type: String,
+        },
+      },
+    ],
     default: [],
   },
   instructorInfo: {
@@ -54,7 +70,7 @@ const Course = mongoose.Schema({
     default: [],
   },
   subtitles: {
-    type: [{ type: mongoose.Schema.Types.Mixed}],
+    type: [{ type: mongoose.Schema.Types.Mixed }],
     default: [],
   },
 });
