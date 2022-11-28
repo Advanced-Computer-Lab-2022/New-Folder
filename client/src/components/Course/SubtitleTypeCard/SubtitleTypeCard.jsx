@@ -17,9 +17,11 @@ const SubtitleTypeCard = (props) => {
   const [type,setType] = useState("");
   const [duration , setDuration] = useState("");
   const [description , setDescription] = useState("");
-  
+  const [conID, setConID] = useState("");
+
   const fetchingContent = async ()=> {
     setType(contentType);
+    setConID(contentID);
     if (contentType == constants.content) {
       const fetchedContent = await fetchVideoContent(contentID);
       setDescription(fetchedContent.description);
@@ -33,7 +35,7 @@ const SubtitleTypeCard = (props) => {
 
   return (
 
-    <div className="Content-card" onClick={(e)=> {type ==  constants.content ? navigate("/watch/"+courseID + "?sId=" +subIDx + "&cId=" + contentIDx , {replace: true}) : navigate("/") }}>
+    <div className="Content-card" onClick={(e)=> {type ==  constants.content ? navigate("/watch/"+courseID + "?sId=" +subIDx + "&cId=" + contentIDx , {replace: true}) : navigate("/excercise/" + conID) }}>
         <i class={type === constants.content ? "bi bi-play-circle" : "bi-card-checklist"}></i>
         <span> {type === constants.content ? "Content : " +description  : "Excercise "}   </span>
         

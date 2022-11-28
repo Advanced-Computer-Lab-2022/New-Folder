@@ -4,6 +4,7 @@
 }
 .submit-quiz button{
     float: right;
+    margin-left: 1em;
 }
 
 .mark-quiz {

@@ -2,7 +2,7 @@ import React from 'react'
 import { useEffect } from 'react'
 import { useState } from 'react'
 import { Col, Row } from 'react-bootstrap'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import ExcerciseCard from '../../../components/Course/Excercise/ExcerciseCard'
 import { fetchExcercise } from '../../../network'
 import './Excercise.css'
@@ -35,6 +35,7 @@ const ExcerciseQuestions  = [{
 
 
 const Excercise = () => {
+    const navigate = useNavigate();
     const { excerciseID } = useParams();
     const [isSubmitted, setIsFinished] = useState(false);
     const [lengthOfQuestions,setLengthOfQuestions] = useState(0);
@@ -92,7 +93,8 @@ const Excercise = () => {
           
         </Row>
         <div className="submit-quiz">
-            <button type="button" class="btn btn-primary" onClick={handleSubmit}>Submit</button>
+            <button disabled={isSubmitted} type="button" class="btn btn-primary" onClick={handleSubmit}>Submit</button>
+            {isSubmitted && <button type="button" class="btn btn-success" onClick={() => navigate(-1)} >Go Back to Course Content</button>}
         </div>
         
     </Col>
