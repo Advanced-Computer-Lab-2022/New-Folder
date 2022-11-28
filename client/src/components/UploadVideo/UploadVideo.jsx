@@ -7,7 +7,6 @@ import { addVideo } from "../../network";
 const UploadVideo = (props) => {
   const [videoURL, setVideoURL] = useState("");
   const [description, setDescription] = useState("");
-  const [duration, setDuration] = useState(0);
 
   const submit = async (e) => {
     e.preventDefault();
@@ -15,7 +14,6 @@ const UploadVideo = (props) => {
       subtitleID: props.subtitleID,
       courseID: props.courseID,
       videoURL,
-      duration,
       description,
     };
     try {
@@ -33,14 +31,6 @@ const UploadVideo = (props) => {
           <Form.Control
             type="text"
             onChange={(e) => setVideoURL(e.target.value)}
-          />
-        </Form.Group>
-
-        <Form.Group className="mb-3" controlId="formBasicEmail">
-          <Form.Label>Duration in minutes</Form.Label>
-          <Form.Control
-            type="number"
-            onChange={(e) => setDuration(e.target.value)}
           />
         </Form.Group>
 
