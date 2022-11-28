@@ -17,6 +17,7 @@ exports.rateInstructor = async (req, res) => {
       review: newReview,
     };
     instructor.reviews.push(review);
+    await instructor.save();
   }
   res.status(200).json();
 };
