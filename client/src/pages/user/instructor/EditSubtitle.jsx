@@ -5,14 +5,14 @@ import CreateExam from "../../../components/CreateExam/CreateExam";
 import UploadVideo from "../../../components/UploadVideo/UploadVideo";
 
 const EditSubtitle = () => {
-  const { subtitleID } = useParams();
+  const { courseID, subtitleID } = useParams();
   return (
     <Tabs defaultActiveKey="Upload video" className="m-4" justify>
       <Tab eventKey="Upload video" title="Upload video">
-        <UploadVideo subtitleID={subtitleID} />
+        <UploadVideo courseID={courseID} subtitleID={subtitleID} />
       </Tab>
       <Tab eventKey="Create exam" title="Create exam">
-        <CreateExam subtitleID={subtitleID} />
+        <CreateExam courseID={courseID} subtitleID={subtitleID} />
       </Tab>
     </Tabs>
   );
