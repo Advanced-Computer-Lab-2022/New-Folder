@@ -7,6 +7,10 @@ import SubtitleCard from "../../components/SubtitleCard/SubtitleCard";
 import ReviewCard from "../../components/ReviewCard/ReviewCard";
 import { getViewerContext } from "../../utils/viewerContext";
 import CourseSummary from "../../components/CourseSummary/CourseSummary";
+import Button from "react-bootstrap/Button"
+import ViewerContexts from "../../constants/ViewerContexts.json"; 
+import Accordion from 'react-bootstrap/Accordion';
+
 const CourseDetails = () => {
   const { courseId } = useParams();
   const [course, setCourse] = useState({});
@@ -20,6 +24,7 @@ const CourseDetails = () => {
     try {
       const fetchedCourse = await fetchCourseDetails(courseId);
       const fetchedVc = getViewerContext(fetchedCourse);
+      console.log(fetchedVc);
       setVc(fetchedVc);
       setCourse(fetchedCourse);
       setReviews(fetchedCourse.reviews);
@@ -65,19 +70,24 @@ const CourseDetails = () => {
     <div>
       <CourseSummary
         course={course}
+        setCourse={setCourse}
         price={price}
         vc={vc}
         duration={duration}
       />
-      <ul>
-        {subtitles.map((subtitleId) => (
+      {vc !== ViewerContexts.guest &&
+        <Button>open course</Button>
+      }
+      <Accordion >
+        {subtitles.map((subtitleId, index) => (
           <SubtitleCard
             subtitleId={subtitleId}
+            index={index}
             durationMap={durationMap}
             setDurationMap={setDurationMap}
           />
         ))}
-      </ul>
+      </Accordion>
 
       <h4>Reviews: </h4>
       <ul>

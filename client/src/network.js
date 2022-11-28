@@ -95,3 +95,10 @@ export const fetchVideoContent = async (id) => {
   const res = await instance.get("/course/subtitle/video/" + id);
   return res.data;
 };
+
+// update course video preview
+export const updateIntroVideo = async (data) => {
+  const res = await instance.patch(`course/${data.courseId}`, {videoLink: data.videoLink})
+  console.log(res.data);
+  return res.data;
+};

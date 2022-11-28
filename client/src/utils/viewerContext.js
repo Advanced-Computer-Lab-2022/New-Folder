@@ -7,7 +7,7 @@ export const getViewerContext = (course) => {
   const userType = ReactSession.get("userType");
   if (
     userType === UserTypes.instructor &&
-    course.instructorInfo.id === userId
+    course.instructorInfo.instructorId === userId
   ) {
     return ViewerContexts.author;
   }

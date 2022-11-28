@@ -149,4 +149,13 @@ const getVideo = async (req, res) => {
   }
 };
 
-module.exports = { getCourseDetails, getSubtitle, getVideo };
+const updateIntroVideo = async (req, res) => {
+  try{
+    const updatedCourse = await Course.findByIdAndUpdate(req.params.id, {introVideo: req.body.videoLink}, {new: true});
+    res.json(updatedCourse);
+  }catch(err){
+    console.log(err)
+  }
+}
+
+module.exports = { getCourseDetails, getSubtitle, getVideo , updateIntroVideo};

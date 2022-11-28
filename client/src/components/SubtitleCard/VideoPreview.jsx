@@ -23,17 +23,12 @@ function VideoPreview(props) {
     fetchVideo();
   }, []);
   return (
-    <h6>
-      <ul>
+    <>
+      <ul style={{border: "1px dotted black"}}>
         <li>{"Video Duration: " + video.duration + " hrs"}</li>
         <li>{"Video Description: " + video.description}</li>
-        <li>
-          <a href={"/subtitle/" + props.subtitleId + "?idx=" + props.idx}>
-            watch here
-          </a>
-        </li>
       </ul>
-    </h6>
+    </>
   );
 }
 

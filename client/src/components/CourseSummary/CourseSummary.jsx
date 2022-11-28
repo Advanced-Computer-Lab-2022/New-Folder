@@ -4,6 +4,10 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Stack from "react-bootstrap/Stack";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
+import ViewerContexts from "../../constants/ViewerContexts.json";
+import { updateIntroVideo } from "../../network";
 
 import {
   BsStarFill,
@@ -13,9 +17,22 @@ import {
   BsClockFill,
   BsInfoCircleFill,
 } from "react-icons/bs";
+import { useState, useEffect } from "react";
 
 function CourseSummary(props) {
-  const { course, price, vc } = props;
+  const { course, setCourse, price, vc } = props;
+  const [newVideo, setNewVideo] = useState();
+  const uploadIntroVideo = async () => {
+    try {
+      const data = { courseId: course._id, videoLink: newVideo };
+      const newCourse = await updateIntroVideo(data);
+      setCourse(newCourse);
+      setNewVideo("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <Row id="courseCardContainer">
@@ -64,14 +81,31 @@ function CourseSummary(props) {
                   </Stack>
                 </div>
                 <div id="introVideo">
-                  <iframe
-                    style={{ height: 200, width: "100%" }}
-                    src={
-                      course.introVideo === ""
-                        ? "https://www.youtube.com/embed/nRImyx4uj4I"
-                        : course.introVideo
-                    }
-                  ></iframe>
+                  {course.introVideo !== "" && (
+                    <iframe
+                      style={{ height: 200, width: "100%" }}
+                      src={course.introVideo}
+                    ></iframe>
+                  )}
+                  {
+                    <Form.Group>
+                      <Form.Control
+                        type="text"
+                        placeHolder="Upload Course Preview"
+                        value={newVideo}
+                        onChange={(e) => {
+                          setNewVideo(e.target.value);
+                        }}
+                      ></Form.Control>
+                      <Button
+                        onClick={(e) => {
+                          uploadIntroVideo();
+                        }}
+                      >
+                        upload
+                      </Button>
+                    </Form.Group>
+                  }
                 </div>
               </Stack>
             </Col>
