@@ -10,6 +10,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import ReactCountryFlag from "react-country-flag";
+import userTypes from "../../constants/UserTypes.json";
 
 const MainNavbar = (props) => {
   const navigate = useNavigate();
@@ -38,7 +39,14 @@ const MainNavbar = (props) => {
           {ReactSession.get("userType") === "instructor" ? (
             <Nav.Link href="/createCourse">Create Course</Nav.Link>
           ) : null}
+
           <Nav.Link href="/login">Login</Nav.Link>
+          {ReactSession.get("userType") ? (
+            <Nav.Link href="/changePassword">Change password</Nav.Link>
+          ) : null}
+          {ReactSession.get("userType") === userTypes.instructor ? (
+            <Nav.Link href="/myProfile">myProfile</Nav.Link>
+          ) : null}
           <ReactCountryFlag countryCode={ReactSession.get("country")} svg />
           <Nav.Link>
             <Form.Select
