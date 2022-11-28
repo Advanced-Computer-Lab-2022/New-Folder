@@ -1,30 +1,55 @@
 import React, { useState } from 'react'
+import { Col, Row } from 'react-bootstrap';
 import Form from "react-bootstrap/Form";
 import './ExcerciseCard.css'
 
 const ExcerciseCard = (props) => {
+    const isSubmitted = props.isSubmitted;
+    const correctIDx = props.correctIdx;
+    const choicesArray = props.questions.choices;
+    const statement = props.questions.statement;
+    const selectedChoice = props.selectedChoice; 
+
     const questionIdx  = props.questionIdx;
     const [answerSelected, setAnswerSelected ] = useState(-1);
 
     const handleChange = (e)=>{ 
-        setAnswerSelected(e.target.value)
+        setAnswerSelected(e.target.value);
+        selectedChoice(e.target.value);
     }
 
 
     return (
-        <div className='question-main'>
-            <h3 className='question-Number'>Question {questionIdx}</h3>
-            <div className='question-header'><p>where was the last world cup ?</p></div>
+        <div className={!isSubmitted? 'question-main': answerSelected == correctIDx ?  'question-main correct': 'question-main wrong'}>
+            <Row className='question-Number'>
+                <Col><h3>Question {questionIdx + 1}</h3></Col>
+                <Col>
+                    <Row>
+                        <div className={"answer-status " + (answerSelected == correctIDx ? "" : "wrong")} hidden={!isSubmitted}>
+                            <span>{answerSelected == correctIDx ? "Correct Answer" : "Worng Answer"}</span>
+                            <i class={answerSelected == correctIDx ? "bi bi-check-circle-fill" : "bi bi-x-circle-fill" }></i>
+                        </div>
+                    </Row>
+                </Col>
+            </Row>
+            
+            <div className='question-header'><p>{statement}</p></div>
             <form>
                 <Form.Group>
-                    <Form.Check checked={answerSelected == 0} value="0" type="radio" label="Russia" onChange={handleChange}/>
-                    <Form.Check checked={answerSelected == 1} value="1" type="radio" label="Masr" onChange={handleChange}/>
-                    <Form.Check checked={answerSelected == 2} value="2" type="radio" label="Italy" onChange={handleChange} />
-                    <Form.Check checked={answerSelected == 3} value="3" type="radio" label="Mona zaky" onChange={handleChange}/>
+                    {choicesArray.map((choice, index)=>{
+                        return(
+                            <Form.Check  disabled={isSubmitted} checked={answerSelected == index} value={index} type="radio" label={choice} onChange={handleChange}/>
+                        )})
+                    }
+                   
                 </Form.Group>
-        
             </form>
-        
+
+            <div className="correct-answer">
+                {isSubmitted && answerSelected != correctIDx && <p>Correct Answer : <span>  {choicesArray[correctIDx]}</span></p>}
+            </div>
+            
+
         </div>
     )
 }

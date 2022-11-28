@@ -96,6 +96,11 @@ export const fetchVideoContent = async (id) => {
   return res.data;
 };
 
+export const fetchExcercise = async (id) => {
+  const res = await instance.get("/course//subtitle/excercise/" + id);
+  return res.data;
+};
+
 export const fetchTraineeName = async (id) => {
   const res = await instance.get("/trainee/name/" + id);
   return res.data;
