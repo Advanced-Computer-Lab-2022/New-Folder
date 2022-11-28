@@ -9,6 +9,12 @@ function VideoPreview(props) {
     try {
       const fetchedVideo = await fetchVideoContent(props.videoId);
       setVideo(fetchedVideo);
+      
+      await props.setDurationMap(oldMap => {
+        const map = new Map(oldMap);
+        map.set(props.videoId, fetchedVideo.duration??0);
+        return map
+      });
     } catch (err) {
       console.log(err);
     }

@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import VideoPreview from "./VideoPreview";
 
 function SubtitleCard(props) {
-  const navigate = useNavigate();
   const [subtitle, setSubtitle] = useState({ subTitle_Content: [] });
   const getSubtitle = async () => {
     try {
@@ -39,6 +38,8 @@ function SubtitleCard(props) {
                   <VideoPreview
                     videoId={content.subTitle_Content_id}
                     idx={index}
+                    durationMap={props.durationMap}
+                    setDurationMap={props.setDurationMap}
                   />
                 ) : (
                   <a href={"/subtitle/" + props.subtitleId + "?idx=" + index}>

@@ -14,6 +14,8 @@ const CourseDetails = () => {
   const [subtitles, setSubtitles] = useState([]);
   const [price, setPrice] = useState("");
   const [vc, setVc] = useState("");
+  const [durationMap, setDurationMap] = useState(new Map());
+  const [duration, setDuration] = useState(0);
   const fetchCourse = async () => {
     try {
       const fetchedCourse = await fetchCourseDetails(courseId);
@@ -34,6 +36,19 @@ const CourseDetails = () => {
       console.log(err);
     }
   };
+
+  const claculateDuration = () => {
+    if (durationMap.size > 0) {
+      let d = 0;
+      for (let [key, value] of durationMap) {
+        if (!isNaN(value)) {
+          d = parseInt(d) + parseInt(value ?? 0);
+        }
+      }
+      setDuration(d);
+    }
+  };
+
   useEffect(() => {
     fetchCourse();
   }, []);
@@ -42,12 +57,25 @@ const CourseDetails = () => {
     fetchPrice();
   }, [ReactSession.get("country"), course]);
 
+  useEffect(() => {
+    claculateDuration();
+  },[durationMap])
+
   return (
     <div>
-      <CourseSummary course={course} price={price} vc={vc} />
+      <CourseSummary
+        course={course}
+        price={price}
+        vc={vc}
+        duration={duration}
+      />
       <ul>
         {subtitles.map((subtitleId) => (
-          <SubtitleCard subtitleId={subtitleId} />
+          <SubtitleCard
+            subtitleId={subtitleId}
+            durationMap={durationMap}
+            setDurationMap={setDurationMap}
+          />
         ))}
       </ul>
 

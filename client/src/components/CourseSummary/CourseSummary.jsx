@@ -4,6 +4,7 @@ import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Stack from "react-bootstrap/Stack";
+
 import {
   BsStarFill,
   BsPlayCircle,
@@ -51,16 +52,26 @@ function CourseSummary(props) {
               </Stack>
             </Col>
             <Col>
-              <Stack>
+              <Stack gap={4}>
                 <div id="courseRating">
                   <Stack direction="horizontal" gap={3}>
-                    <h3>Total duration: {course.duration ?? 0} hours</h3>
+                    <h3>Total duration: {props.duration ?? 0} hours</h3>
                   </Stack>
                 </div>
                 <div id="courseRating">
                   <Stack direction="horizontal" gap={3}>
                     <h3>Subject: {course.subject ?? ""}</h3>
                   </Stack>
+                </div>
+                <div id="introVideo">
+                  <iframe
+                    style={{ height: 200, width: "100%" }}
+                    src={
+                      course.introVideo === ""
+                        ? "https://www.youtube.com/embed/nRImyx4uj4I"
+                        : course.introVideo
+                    }
+                  ></iframe>
                 </div>
               </Stack>
             </Col>
