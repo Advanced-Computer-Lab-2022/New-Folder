@@ -52,20 +52,19 @@ function RatingCard(props) {
       }
       setTraineeRating(0);
       setRatingsCount(ratingsCount - 1);
+      setShown(false);
       await deleteRating({ courseId: courseId });
     } catch (err) {
       console.log(err);
     }
   };
   return (
-    <>
+    <div>
       {vc === ViewerContexts.enrolledTrainee ? (
         <>
-          <h1>{totalRating}</h1>
-          <h1>{traineeRating}</h1>
           {traineeRating !== 0 ? (
             <>
-              <h1>Course rating:</h1>
+              <h4>Course rating:</h4>
               <ReactStars
                 count={5}
                 size={50}
@@ -74,7 +73,7 @@ function RatingCard(props) {
                 value={totalRating}
                 edit={false}
               />
-              <h1>Your course rating:</h1>
+              <h4>Your course rating:</h4>
               <ReactStars
                 count={5}
                 size={50}
@@ -87,7 +86,7 @@ function RatingCard(props) {
             </>
           ) : (
             <>
-              <h1>Course rating:</h1>
+              <h4>Course rating:</h4>
               <ReactStars
                 count={5}
                 size={50}
@@ -136,7 +135,9 @@ function RatingCard(props) {
           edit={false}
         />
       )}
-    </>
+      <h4>{totalRating}</h4>
+      <h4>{traineeRating}</h4>
+    </div>
   );
 }
 

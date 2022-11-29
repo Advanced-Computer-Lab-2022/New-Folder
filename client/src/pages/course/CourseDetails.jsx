@@ -14,7 +14,6 @@ import Stack from "react-bootstrap/Stack";
 import RatingCard from "../../components/RatingCard/RatingCard";
 import Button from "react-bootstrap/Button";
 import ViewerContexts from "../../constants/ViewerContexts.json";
-import Accordion from "react-bootstrap/Accordion";
 import { updateIntroVideo } from "../../network";
 import Form from "react-bootstrap/Form";
 
@@ -111,6 +110,11 @@ const CourseDetails = () => {
                       <h3>Price: {price ?? 0}</h3>
                     </Stack>
                   </div>
+                  <div id="courseRating">
+                    <Stack direction="horizontal" gap={3}>
+                      <RatingCard courseId={courseId} vc={vc} />
+                    </Stack>
+                  </div>
                 </Stack>
               </Col>
               <Col>
@@ -125,7 +129,11 @@ const CourseDetails = () => {
                       <h3>Subject: {course.subject ?? ""}</h3>
                     </Stack>
                   </div>
-                  <RatingCard courseId={courseId} vc={vc} />
+                  <div id="courseRating">
+                    <Stack direction="horizontal" gap={3}>
+                      <h3>Summary: {course.description ?? ""}</h3>
+                    </Stack>
+                  </div>
                   <div id="introVideo">
                     {course.introVideo !== "" && (
                       <iframe
@@ -133,7 +141,7 @@ const CourseDetails = () => {
                         src={course.introVideo}
                       ></iframe>
                     )}
-                    {
+                    {vc === ViewerContexts.author ? (
                       <Form.Group>
                         <Form.Control
                           type="text"
@@ -151,7 +159,7 @@ const CourseDetails = () => {
                           upload
                         </Button>
                       </Form.Group>
-                    }
+                    ) : null}
                   </div>
                 </Stack>
               </Col>
