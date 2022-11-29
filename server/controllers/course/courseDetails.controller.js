@@ -200,11 +200,11 @@ const deleteRating = async (req, res) => {
     console.log(err);
   }
 };
-const updateIntroVideo = async (req, res) => {
+const updateCourse = async (req, res) => {
   try {
     const updatedCourse = await Course.findByIdAndUpdate(
       req.params.id,
-      { introVideo: req.body.videoLink },
+      req.body,
       { new: true }
     );
     res.json(updatedCourse);
@@ -224,6 +224,22 @@ const addPromotion = async (req, res) => {
     console.log(err);
   }
 };
+const createSubtitle = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    const subtitle = await Subtitle.create({
+      subtitleNumber: course.subtitles.length + 1,
+      title: req.body.subtitle,
+      courseId: course._id,
+    });
+    course.subtitles.push(subtitle._id);
+    course.save();
+    res.json(course);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getSubtitle,
   getVideo,
@@ -232,6 +248,7 @@ module.exports = {
   getVideo,
   addRating,
   deleteRating,
-  updateIntroVideo,
   addPromotion,
+  updateCourse,
+  createSubtitle,
 };

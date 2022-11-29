@@ -10,13 +10,15 @@ import "./CourseDetails.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import Container from "react-bootstrap/esm/Container";
 import Stack from "react-bootstrap/Stack";
 import RatingCard from "../../components/RatingCard/RatingCard";
 import Button from "react-bootstrap/Button";
 import ViewerContexts from "../../constants/ViewerContexts.json";
-import { updateIntroVideo } from "../../network";
+import { updateCourse, createNewSubtitle } from "../../network";
 import Form from "react-bootstrap/Form";
 import CourseSummary from "../../components/CourseSummary/CourseSummary";
+import Accordion from "react-bootstrap/Accordion";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -28,10 +30,13 @@ const CourseDetails = () => {
   const [durationMap, setDurationMap] = useState(new Map());
   const [duration, setDuration] = useState(0);
   const [newVideo, setNewVideo] = useState();
+  const [newSubtitle, setNewSubtitle] = useState("");
+
   const uploadIntroVideo = async () => {
     try {
-      const data = { courseId: course._id, videoLink: newVideo };
-      const newCourse = await updateIntroVideo(data);
+      const newCourse = await updateCourse(course._id, {
+        introVideo: newVideo,
+      });
       setCourse(newCourse);
       setNewVideo("");
     } catch (err) {
@@ -59,7 +64,6 @@ const CourseDetails = () => {
       console.log(err);
     }
   };
-
   const claculateDuration = () => {
     if (durationMap.size > 0) {
       let d = 0;
@@ -72,6 +76,17 @@ const CourseDetails = () => {
     }
   };
 
+  const addSubtitle = async (e) => {
+    e.preventDefault();
+    try {
+      const updatedCourse = await createNewSubtitle(course._id, newSubtitle);
+      setCourse(updatedCourse);
+      setSubtitles(updatedCourse.subtitles);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   useEffect(() => {
     fetchCourse();
   }, []);
@@ -81,97 +96,9 @@ const CourseDetails = () => {
   }, [ReactSession.get("country"), course]);
   useEffect(() => {
     claculateDuration();
-  }, [durationMap]);
+  }, [durationMap, course]);
   return (
     <div>
-      {/* <>
-        <Row id="courseCardContainer">
-          <Col md={2}>
-            <Image width={250} src={course.image} thumbnail />
-          </Col>
-          <Col>
-            <Row>
-              <h1 id="courseName">{course.name}</h1>
-            </Row>
-            <Row>
-              <Col>
-                <Stack gap={4} id="courseInfo">
-                  <div id="courseRating">
-                    <Stack direction="horizontal" gap={3}>
-                      <h3>{course.reviews?.length ?? 0} reviews</h3>
-                    </Stack>
-                  </div>
-                  <div id="courseRating">
-                    <Stack direction="horizontal" gap={3}>
-                      <h3>{course.subtitles?.length ?? 0} subtitles</h3>
-                    </Stack>
-                  </div>
-                  {vc !== ViewerContexts.nonEnrolledCorporateTrainee &&
-                  vc !== ViewerContexts.enrolledTrainee ? (
-                    <div id="courseRating">
-                      <Stack direction="horizontal" gap={3}>
-                        <h3>Price: {price ?? 0}</h3>
-                      </Stack>
-                    </div>
-                  ) : null}
-                  <div id="courseRating">
-                    <Stack direction="horizontal" gap={3}>
-                      <RatingCard courseId={courseId} vc={vc} />
-                    </Stack>
-                  </div>
-                  {vc === ViewerContexts.guest ? <Button>Enroll</Button> : null}
-                </Stack>
-              </Col>
-              <Col>
-                <Stack>
-                  <div id="courseRating">
-                    <Stack direction="horizontal" gap={3}>
-                      <h3>Total duration: {duration ?? 0} hours</h3>
-                    </Stack>
-                  </div>
-                  <div id="courseRating">
-                    <Stack direction="horizontal" gap={3}>
-                      <h3>Subject: {course.subject ?? ""}</h3>
-                    </Stack>
-                  </div>
-                  <div id="courseRating">
-                    <Stack direction="horizontal" gap={3}>
-                      <h3>Summary: {course.description ?? ""}</h3>
-                    </Stack>
-                  </div>
-                  <div id="introVideo">
-                    {course.introVideo !== "" && (
-                      <iframe
-                        style={{ height: 200, width: "100%" }}
-                        src={course.introVideo}
-                      ></iframe>
-                    )}
-                    {vc === ViewerContexts.author ? (
-                      <Form.Group>
-                        <Form.Control
-                          type="text"
-                          placeHolder="Upload Course Preview"
-                          value={newVideo}
-                          onChange={(e) => {
-                            setNewVideo(e.target.value);
-                          }}
-                        ></Form.Control>
-                        <Button
-                          onClick={(e) => {
-                            uploadIntroVideo();
-                          }}
-                        >
-                          upload
-                        </Button>
-                      </Form.Group>
-                    ) : null}
-                  </div>
-                </Stack>
-              </Col>
-            </Row>
-          </Col>
-        </Row>
-      </> */}
       <CourseSummary
         course={course}
         vc={vc}
@@ -185,17 +112,42 @@ const CourseDetails = () => {
       {vc === ViewerContexts.enrolledTrainee ? (
         <Button>Go to Course</Button>
       ) : null}
-      <ul>
-        {subtitles.map((subtitleId) => (
+      <Accordion>
+        {subtitles.map((subtitleId, index) => (
           <SubtitleCard
+            subtitles={subtitles}
+            setSubtitles={setSubtitles}
+            courseId={course._id}
+            index={index}
             subtitleId={subtitleId}
             durationMap={durationMap}
             setDurationMap={setDurationMap}
             vc={vc}
           />
         ))}
-        {vc === ViewerContexts.author ? <Button>Add Subtitle</Button> : null}
-      </ul>
+        {vc === ViewerContexts.author ? (
+          <Form onSubmit={addSubtitle}>
+            <Container className="mt-4">
+              <Form.Group className="mt-3">
+                <Form.Control
+                  type="text"
+                  placeholder="Add Subtitle"
+                  value={newSubtitle}
+                  required
+                  onChange={(e) => {
+                    setNewSubtitle(e.target.value);
+                  }}
+                ></Form.Control>
+              </Form.Group>
+              <div className="text-center">
+                <Button className="mt-3" type="submit">
+                  Add Subtitle
+                </Button>
+              </div>
+            </Container>
+          </Form>
+        ) : null}
+      </Accordion>
       <ReviewsCard reviews={reviews} />
     </div>
   );

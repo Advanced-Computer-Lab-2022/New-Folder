@@ -13,8 +13,9 @@ const {
   getExcercise,
   addRating,
   deleteRating,
-  updateIntroVideo,
   addPromotion,
+  updateCourse,
+  createSubtitle,
 } = require("../controllers/course/courseDetails.controller");
 
 router.get("/subtitle/excercise/:id", getExcercise);
@@ -24,5 +25,6 @@ router.get("/:id", getCourseDetails);
 router.post("/addRating", canRateCourse, addRating);
 router.post("/deleteRating", canDeleteRating, deleteRating);
 router.post("/addPromotion", canAddPromotion, addPromotion);
-router.patch("/:id", updateIntroVideo);
+router.patch("/:id", updateCourse);
+router.patch("/:id/newsubtitle", createSubtitle);
 module.exports = router;

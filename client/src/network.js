@@ -186,6 +186,8 @@ export const fetchExcercise = async (id) => {
 
 export const fetchTraineeName = async (id) => {
   const res = await instance.get("/trainee/name/" + id);
+  return res;
+};
 //addRating
 export const addRating = async (data) => {
   const res = await instance.post("/course/addRating", data);
@@ -196,11 +198,16 @@ export const deleteRating = async (data) => {
   const res = await instance.post("/course/deleteRating", data);
   return res;
 };
-// update course video preview
-export const updateIntroVideo = async (data) => {
-  const res = await instance.patch(`course/${data.courseId}`, {
-    videoLink: data.videoLink,
+
+// General Update course
+export const updateCourse = async (courseId, data) => {
+  const res = await instance.patch(`course/${courseId}`, data);
+  return res.data;
+};
+
+export const createNewSubtitle = async (courseId, subtitle) => {
+  const res = await instance.patch(`course/${courseId}/newsubtitle`, {
+    subtitle: subtitle,
   });
-  console.log(res.data);
   return res.data;
 };
