@@ -13,6 +13,7 @@ function RatingCard(props) {
   const [totalRating, setTotalRating] = useState(0);
   const [traineeRating, setTraineeRating] = useState(0);
   const [ratingsCount, setRatingsCount] = useState(0);
+  const [isShown, setShown] = useState(false);
   const initializeRatings = async () => {
     const fetchedCourse = await fetchCourseDetails(courseId);
     setTotalRating(fetchedCourse.totalRating);
@@ -62,37 +63,66 @@ function RatingCard(props) {
         <>
           <h1>{totalRating}</h1>
           <h1>{traineeRating}</h1>
-          <ReactStars
-            count={5}
-            size={50}
-            isHalf={true}
-            activeColor="#ffd700"
-            value={totalRating}
-            edit={false}
-          />
           {traineeRating !== 0 ? (
             <>
+              <h1>Course rating:</h1>
+              <ReactStars
+                count={5}
+                size={50}
+                isHalf={true}
+                activeColor="#ffd700"
+                value={totalRating}
+                edit={false}
+              />
+              <h1>Your course rating:</h1>
               <ReactStars
                 count={5}
                 size={50}
                 isHalf={true}
                 activeColor="#ffd700"
                 value={traineeRating}
-                onChange={(rating) => rate(rating)}
                 edit={false}
               />
               <Button onClick={() => removeRating()}>Delete rating</Button>
             </>
           ) : (
             <>
+              <h1>Course rating:</h1>
               <ReactStars
                 count={5}
                 size={50}
                 isHalf={true}
                 activeColor="#ffd700"
-                value={traineeRating}
-                onChange={(rating) => rate(rating)}
+                value={totalRating}
+                edit={false}
               />
+              {isShown ? (
+                <ReactStars
+                  count={5}
+                  size={50}
+                  isHalf={true}
+                  activeColor="#ffd700"
+                  value={traineeRating}
+                  onChange={(rating) => rate(rating)}
+                />
+              ) : null}
+              {isShown ? (
+                <Button
+                  onClick={() => {
+                    setShown(false);
+                  }}
+                >
+                  Cancel
+                </Button>
+              ) : (
+                <Button
+                  onClick={() => {
+                    setShown(true);
+                  }}
+                >
+                  Add rating
+                </Button>
+              )}
             </>
           )}
         </>
