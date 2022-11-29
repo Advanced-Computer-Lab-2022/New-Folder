@@ -118,6 +118,7 @@ const CourseDetails = () => {
                       <RatingCard courseId={courseId} vc={vc} />
                     </Stack>
                   </div>
+                  {vc === ViewerContexts.guest ? <Button>Enroll</Button> : null}
                 </Stack>
               </Col>
               <Col>

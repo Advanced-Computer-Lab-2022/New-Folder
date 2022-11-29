@@ -125,7 +125,6 @@ let getCourseFromController = async (req, res, next) => {
 const getCourseDetails = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
-    console.log("here");
     res.json(course);
   } catch (err) {
     console.log(err);
