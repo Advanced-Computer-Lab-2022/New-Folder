@@ -73,6 +73,21 @@ const Course = mongoose.Schema({
     type: [{ type: mongoose.Schema.Types.Mixed }],
     default: [],
   },
+  promotion: {
+    type: {
+      startDate: {
+        type: Date,
+      },
+      endDate: {
+        type: Date,
+      },
+      percentage: {
+        type: Number,
+        min: 0,
+        max: 100,
+      },
+    },
+  },
 });
 
 module.exports = mongoose.model("Course", Course);

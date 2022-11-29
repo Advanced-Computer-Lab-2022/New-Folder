@@ -5,7 +5,7 @@ const {
   canDeleteRating,
   isEnrolled,
 } = require("../middlewares/enrolledTraineeMiddleware");
-
+const { canAddPromotion } = require("../middlewares/canAddPromotionMiddleware");
 const {
   getCourseDetails,
   getSubtitle,
@@ -14,6 +14,7 @@ const {
   addRating,
   deleteRating,
   updateIntroVideo,
+  addPromotion,
 } = require("../controllers/course/courseDetails.controller");
 
 router.get("/subtitle/excercise/:id", getExcercise);
@@ -22,5 +23,6 @@ router.get("/subtitle/:id", getSubtitle);
 router.get("/:id", getCourseDetails);
 router.post("/addRating", canRateCourse, addRating);
 router.post("/deleteRating", canDeleteRating, deleteRating);
+router.post("/addPromotion", canAddPromotion, addPromotion);
 router.patch("/:id", updateIntroVideo);
 module.exports = router;

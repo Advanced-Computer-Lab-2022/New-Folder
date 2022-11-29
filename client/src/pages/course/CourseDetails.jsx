@@ -16,6 +16,7 @@ import Button from "react-bootstrap/Button";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import { updateIntroVideo } from "../../network";
 import Form from "react-bootstrap/Form";
+import CourseSummary from "../../components/CourseSummary/CourseSummary";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -83,7 +84,7 @@ const CourseDetails = () => {
   }, [durationMap]);
   return (
     <div>
-      <>
+      {/* <>
         <Row id="courseCardContainer">
           <Col md={2}>
             <Image width={250} src={course.image} thumbnail />
@@ -170,7 +171,17 @@ const CourseDetails = () => {
             </Row>
           </Col>
         </Row>
-      </>
+      </> */}
+      <CourseSummary
+        course={course}
+        vc={vc}
+        price={price}
+        courseId={courseId}
+        duration={duration}
+        newVideo={newVideo}
+        setNewVideo={setNewVideo}
+        uploadIntroVideo={uploadIntroVideo}
+      />
       {vc === ViewerContexts.enrolledTrainee ? (
         <Button>Go to Course</Button>
       ) : null}
