@@ -177,6 +177,7 @@ const CourseDetails = () => {
             subtitleId={subtitleId}
             durationMap={durationMap}
             setDurationMap={setDurationMap}
+            vc={vc}
           />
         ))}
       </ul>

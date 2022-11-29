@@ -5,6 +5,9 @@ import VideoPreview from "./VideoPreview";
 import Accordion from "react-bootstrap/Accordion";
 import { MdOutlineOndemandVideo } from "react-icons/md";
 import { GiNotebook } from "react-icons/gi";
+import ViewerContexts from "../../constants/ViewerContexts.json";
+import Button from "react-bootstrap/Button";
+
 function SubtitleCard(props) {
   const [subtitle, setSubtitle] = useState({ subTitle_Content: [] });
   const getSubtitle = async () => {
@@ -25,6 +28,7 @@ function SubtitleCard(props) {
       <Accordion.Item eventKey={props.index}>
         <Accordion.Header>
           {"section " + subtitle.subtitleNumber + ": "}
+          {props.vc === ViewerContexts.author ? <Button>edit</Button> : null}
         </Accordion.Header>
         <Accordion.Body>
           <p>{"Title: " + (subtitle.title ?? "")}</p>

@@ -126,14 +126,17 @@ function RatingCard(props) {
           )}
         </>
       ) : (
-        <ReactStars
-          count={5}
-          size={50}
-          isHalf={true}
-          activeColor="#ffd700"
-          value={totalRating}
-          edit={false}
-        />
+        <>
+          <h4>Course rating:</h4>
+          <ReactStars
+            count={5}
+            size={50}
+            isHalf={true}
+            activeColor="#ffd700"
+            value={totalRating}
+            edit={false}
+          />
+        </>
       )}
       <h4>{totalRating}</h4>
       <h4>{traineeRating}</h4>
