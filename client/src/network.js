@@ -120,7 +120,7 @@ export const addVideo = async (data) => {
 };
 
 // instructor create exam data:{courseID , subtitleID,......}
-export const createExam = async (data) => {
+export const addExam = async (data) => {
   const res = await instance.post("/instructor/createExam", data);
   return res;
 };

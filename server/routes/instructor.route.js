@@ -9,7 +9,7 @@ const {
 } = require("../controllers/instructor/createCourse.controller");
 const {
   addVideo,
-  createExam,
+  addExam,
 } = require("../controllers/instructor/editSubtitle.controller");
 
 // import middlewares
@@ -21,7 +21,7 @@ const {
 // api routes
 router.post("/createCourse", authInstructor, createCourse);
 router.post("/addVideo", authInstructorGivesCourse, addVideo);
-router.post("/createExam", authInstructorGivesCourse, createExam);
+router.post("/createExam", addExam);
 router.get("/myCourses", authInstructor, getMyCourses);
 
 module.exports = router;
