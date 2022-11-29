@@ -1,5 +1,6 @@
 const asyncHandler = require("express-async-handler");
 const constants = require("../constants.json");
+
 const authUser = asyncHandler(async (req, res, next) => {
   if (!req.session.userId) {
     throw new Error("you are not logged in");

@@ -14,6 +14,7 @@ import { useState } from "react";
 import CourseDetails from "./pages/course/CourseDetails";
 import AdminNavbar from "./components/Navbar/AdminNavbar";
 import UserTypes from "./constants/UserTypes.json";
+import EditSubtitle from "./pages/user/instructor/EditSubtitle";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -51,6 +52,10 @@ function App() {
         <Route path="/AddCorporateTrainee" element={<AddCorporateTrainee />} />
         <Route path="/CreateCourse" element={<CreateCourse />} />
         <Route path="/login" element={<Login setUserType={setUserType} />} />
+        <Route
+          path="/editSubtitle/:courseID/:subtitleID"
+          element={<EditSubtitle />}
+        />
       </Routes>
     </>
   );
