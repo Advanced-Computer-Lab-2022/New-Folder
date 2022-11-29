@@ -1,6 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const protectUser = require("../middlewares/authUserMiddleware");
+const {
+  canRateCourse,
+  canDeleteRating,
+} = require("../middlewares/enrolledTraineeMiddleware");
 
 const {
   getCourseDetails,
@@ -13,6 +16,6 @@ const {
 router.get("/subtitle/video/:id", getVideo);
 router.get("/subtitle/:id", getSubtitle);
 router.get("/:id", getCourseDetails);
-router.post("/addRating", addRating);
-router.post("/deleteRating", deleteRating);
+router.post("/addRating", canRateCourse, addRating);
+router.post("/deleteRating", canDeleteRating, deleteRating);
 module.exports = router;
