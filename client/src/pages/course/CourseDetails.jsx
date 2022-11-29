@@ -12,10 +12,11 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Stack from "react-bootstrap/Stack";
 import RatingCard from "../../components/RatingCard/RatingCard";
-import CourseSummary from "../../components/CourseSummary/CourseSummary";
 import Button from "react-bootstrap/Button";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import Accordion from "react-bootstrap/Accordion";
+import { updateIntroVideo } from "../../network";
+import Form from "react-bootstrap/Form";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -26,6 +27,17 @@ const CourseDetails = () => {
   const [vc, setVc] = useState("");
   const [durationMap, setDurationMap] = useState(new Map());
   const [duration, setDuration] = useState(0);
+  const [newVideo, setNewVideo] = useState();
+  const uploadIntroVideo = async () => {
+    try {
+      const data = { courseId: course._id, videoLink: newVideo };
+      const newCourse = await updateIntroVideo(data);
+      setCourse(newCourse);
+      setNewVideo("");
+    } catch (err) {
+      console.log(err);
+    }
+  };
   const fetchCourse = async () => {
     try {
       const fetchedCourse = await fetchCourseDetails(courseId);
@@ -67,6 +79,9 @@ const CourseDetails = () => {
   useEffect(() => {
     fetchPrice();
   }, [ReactSession.get("country"), course]);
+  useEffect(() => {
+    claculateDuration();
+  }, [durationMap]);
   return (
     <div>
       <>
@@ -102,7 +117,7 @@ const CourseDetails = () => {
                 <Stack>
                   <div id="courseRating">
                     <Stack direction="horizontal" gap={3}>
-                      <h3>Total duration: {course.duration ?? 0} hours</h3>
+                      <h3>Total duration: {duration ?? 0} hours</h3>
                     </Stack>
                   </div>
                   <div id="courseRating">
@@ -111,6 +126,33 @@ const CourseDetails = () => {
                     </Stack>
                   </div>
                   <RatingCard courseId={courseId} vc={vc} />
+                  <div id="introVideo">
+                    {course.introVideo !== "" && (
+                      <iframe
+                        style={{ height: 200, width: "100%" }}
+                        src={course.introVideo}
+                      ></iframe>
+                    )}
+                    {
+                      <Form.Group>
+                        <Form.Control
+                          type="text"
+                          placeHolder="Upload Course Preview"
+                          value={newVideo}
+                          onChange={(e) => {
+                            setNewVideo(e.target.value);
+                          }}
+                        ></Form.Control>
+                        <Button
+                          onClick={(e) => {
+                            uploadIntroVideo();
+                          }}
+                        >
+                          upload
+                        </Button>
+                      </Form.Group>
+                    }
+                  </div>
                 </Stack>
               </Col>
             </Row>
@@ -119,7 +161,11 @@ const CourseDetails = () => {
       </>
       <ul>
         {subtitles.map((subtitleId) => (
-          <SubtitleCard subtitleId={subtitleId} />
+          <SubtitleCard
+            subtitleId={subtitleId}
+            durationMap={durationMap}
+            setDurationMap={setDurationMap}
+          />
         ))}
       </ul>
 

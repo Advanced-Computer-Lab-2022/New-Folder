@@ -192,13 +192,17 @@ const deleteRating = async (req, res) => {
   }
 };
 const updateIntroVideo = async (req, res) => {
-  try{
-    const updatedCourse = await Course.findByIdAndUpdate(req.params.id, {introVideo: req.body.videoLink}, {new: true});
+  try {
+    const updatedCourse = await Course.findByIdAndUpdate(
+      req.params.id,
+      { introVideo: req.body.videoLink },
+      { new: true }
+    );
     res.json(updatedCourse);
-  }catch(err){
-    console.log(err)
+  } catch (err) {
+    console.log(err);
   }
-}
+};
 
 module.exports = {
   getCourseDetails,
@@ -206,4 +210,5 @@ module.exports = {
   getVideo,
   addRating,
   deleteRating,
-, updateIntroVideo};
+  updateIntroVideo,
+};
