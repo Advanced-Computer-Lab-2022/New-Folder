@@ -19,10 +19,10 @@ function RatingCard(props) {
     setTotalRating(fetchedCourse.totalRating);
     setRatingsCount(fetchedCourse.ratings.length);
     for (let i = 0; i < fetchedCourse.ratings.length; i++) {
-      if (
-        fetchedCourse.ratings[i].trainee ??
-        "" === ReactSession.get("userId")
-      ) {
+      if (fetchedCourse.ratings[i].trainee === ReactSession.get("userId")) {
+        console.log(
+          fetchedCourse.ratings[i].trainee + " " + ReactSession.get("userId")
+        );
         setTraineeRating(fetchedCourse.ratings[i].rating);
       }
     }

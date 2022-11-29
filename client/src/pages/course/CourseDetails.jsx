@@ -171,6 +171,9 @@ const CourseDetails = () => {
           </Col>
         </Row>
       </>
+      {vc === ViewerContexts.enrolledTrainee ? (
+        <Button>Go to Course</Button>
+      ) : null}
       <ul>
         {subtitles.map((subtitleId) => (
           <SubtitleCard
@@ -180,6 +183,7 @@ const CourseDetails = () => {
             vc={vc}
           />
         ))}
+        {vc === ViewerContexts.author ? <Button>Add Subtitle</Button> : null}
       </ul>
       <ReviewsCard reviews={reviews} />
     </div>
