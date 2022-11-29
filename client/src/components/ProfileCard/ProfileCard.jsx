@@ -25,7 +25,7 @@ const ProfileCard = (props) => {
             <Stack direction="horizontal" gap={3}>
               <BsStarFill size={35} />
               <Stack direction="horizontal" gap={2}>
-                <h4>{rating} rating</h4>
+                <h4>{parseFloat(rating.toFixed(1))} rating</h4>
                 <h6>({ratingNo} ratings)</h6>
               </Stack>
             </Stack>

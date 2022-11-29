@@ -53,6 +53,9 @@ const ViewInstructorProfile = () => {
         />
         <RateAndReviewInstructor
           instructorID={instructorID}
+          rating={rating}
+          ratingNo={ratingNo}
+          setRating={setRating}
           myRating={myRating}
         />
       </div>

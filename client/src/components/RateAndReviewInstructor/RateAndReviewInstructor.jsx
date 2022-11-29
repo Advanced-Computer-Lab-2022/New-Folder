@@ -16,6 +16,11 @@ const RateAndReviewInstructor = (props) => {
       newRating,
       newReview,
     });
+    let updatedRating = props.myRating
+      ? (props.rating * props.ratingNo - props.myRating + newRating) /
+        props.ratingNo
+      : (props.rating * props.ratingNo + newRating) / (props.ratingNo + 1);
+    props.setRating(updatedRating);
   };
 
   let Stars = useMemo(() => {
