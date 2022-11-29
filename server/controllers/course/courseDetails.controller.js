@@ -203,6 +203,22 @@ const updateCourse = async (req, res) => {
   }
 };
 
+const createSubtitle = async (req, res) => {
+  try {
+    const course = await Course.findById(req.params.id);
+    const subtitle = await Subtitle.create({
+      subtitleNumber: course.subtitles.length + 1,
+      title: req.body.subtitle,
+      courseId: course._id,
+    });
+    course.subtitles.push(subtitle._id);
+    course.save();
+    res.json(course);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getCourseDetails,
   getSubtitle,
@@ -210,4 +226,5 @@ module.exports = {
   addRating,
   deleteRating,
   updateCourse,
+  createSubtitle,
 };

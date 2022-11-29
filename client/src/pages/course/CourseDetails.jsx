@@ -10,11 +10,12 @@ import "./CourseDetails.css";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
+import Container from "react-bootstrap/esm/Container";
 import Stack from "react-bootstrap/Stack";
 import RatingCard from "../../components/RatingCard/RatingCard";
 import Button from "react-bootstrap/Button";
 import ViewerContexts from "../../constants/ViewerContexts.json";
-import { updateCourse } from "../../network";
+import { updateCourse, createNewSubtitle } from "../../network";
 import Form from "react-bootstrap/Form";
 import Accordion from "react-bootstrap/Accordion";
 
@@ -28,6 +29,8 @@ const CourseDetails = () => {
   const [durationMap, setDurationMap] = useState(new Map());
   const [duration, setDuration] = useState(0);
   const [newVideo, setNewVideo] = useState();
+  const [newSubtitle, setNewSubtitle] = useState("");
+
   const uploadIntroVideo = async () => {
     try {
       const newCourse = await updateCourse(course._id, {
@@ -60,7 +63,6 @@ const CourseDetails = () => {
       console.log(err);
     }
   };
-
   const claculateDuration = () => {
     if (durationMap.size > 0) {
       let d = 0;
@@ -70,6 +72,16 @@ const CourseDetails = () => {
         }
       }
       setDuration(d);
+    }
+  };
+
+  const addSubtitle = async () => {
+    try {
+      const updatedCourse = await createNewSubtitle(course._id, newSubtitle);
+      setCourse(updatedCourse);
+      setSubtitles(updatedCourse.subtitles);
+    } catch (err) {
+      console.log(err);
     }
   };
 
@@ -195,7 +207,26 @@ const CourseDetails = () => {
             vc={vc}
           />
         ))}
-        {vc === ViewerContexts.author ? <Button>Add Subtitle</Button> : null}
+        {vc === ViewerContexts.author ? (
+          <Form onSubmit={addSubtitle}>
+            <Container className="mt-4">
+              <Form.Group className="mt-3">
+                <Form.Control
+                  type="text"
+                  placeholder="Add Subtitle"
+                  value={newSubtitle}
+                  required
+                  onChange={(e) => {
+                    setNewSubtitle(e.target.value);
+                  }}
+                ></Form.Control>
+              </Form.Group>
+              <div className="text-center">
+                <Button className="mt-3" type="submit">Add Subtitle</Button>
+              </div>
+            </Container>
+          </Form>
+        ) : null}
       </Accordion>
       <ReviewsCard reviews={reviews} />
     </div>

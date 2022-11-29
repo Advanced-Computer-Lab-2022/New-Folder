@@ -190,8 +190,14 @@ export const deleteRating = async (data) => {
   return res;
 };
 
+// General Update course
 export const updateCourse = async (courseId, data) => {
   const res = await instance.patch(`course/${courseId}`, data);
+  return res.data;
+}
+
+export const createNewSubtitle = async (courseId, subtitle) => {
+  const res = await instance.patch(`course/${courseId}/newsubtitle`, {subtitle: subtitle});
   return res.data;
 }
 
