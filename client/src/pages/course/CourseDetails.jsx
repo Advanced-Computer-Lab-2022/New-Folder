@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import { getPrice, fetchCourseDetails } from "../../network";
 import SubtitleCard from "../../components/SubtitleCard/SubtitleCard";
-import ReviewCard from "../../components/ReviewCard/ReviewCard";
+import ReviewsCard from "../../components/ReviewsCard/ReviewsCard";
 import { getViewerContext } from "../../utils/viewerContext";
 import "./CourseDetails.css";
 import Row from "react-bootstrap/Row";
@@ -176,13 +176,7 @@ const CourseDetails = () => {
           />
         ))}
       </ul>
-
-      <h4>Reviews: </h4>
-      <ul>
-        {reviews.map((review) => (
-          <ReviewCard review={review} />
-        ))}
-      </ul>
+      <ReviewsCard reviews={reviews} />
     </div>
   );
 };
