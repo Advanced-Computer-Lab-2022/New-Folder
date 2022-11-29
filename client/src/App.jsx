@@ -24,55 +24,39 @@ ReactSession.setStoreType("sessionStorage");
 
 function App() {
   const [country, setCountry] = useState(ReactSession.get("country") ?? "EG");
-  const [searchResults, setSearchResults] = useState([]);
   const [userType, setUserType] = useState(ReactSession.get("userType") ?? "");
   ReactSession.set("country", country);
   ReactSession.set("userType", userType);
   return (
     <>
       {ReactSession.get("userType") === UserTypes.admin ? (
-        <AdminNavbar
-          setSearchResults={setSearchResults}
-          setCountry={setCountry}
-        />
+        <AdminNavbar setCountry={setCountry} />
       ) : (
-        <Navbar setSearchResults={setSearchResults} setCountry={setCountry} />
+        <Navbar setCountry={setCountry} />
       )}
-      <Container id="body">
-        <Routes>
-          <Route path="/" element={<Explore />} />
-          <Route path="/myCourses" element={<MyCourses />} />
-          <Route
-            path="/search"
-            element={
-              <Search
-                searchResults={searchResults}
-                setSearchResults={setSearchResults}
-              />
-            }
-          />
-          <Route path="/courses" element={<CourseDetails />} />
-          <Route path="/addAdmin" element={<AddAdmin />} />
-          <Route path="/AddInstructor" element={<AddInstructor />} />
-          <Route
-            path="/AddCorporateTrainee"
-            element={<AddCorporateTrainee />}
-          />
-          <Route path="/CreateCourse" element={<CreateCourse />} />
-          <Route path="/login" element={<Login setUserType={setUserType} />} />
-          <Route
-            path="/viewInstructorProfile/:instructorID"
-            element={<ViewInstructorProfile />}
-          />
-          <Route path="/forgetPassword" element={<ForgetPassword />} />
-          <Route path="/changePassword" element={<ChangePassword />} />
-          <Route path="/myProfile" element={<MyProfile />} />
-          <Route
-            path="/resetPassword/:userID/:token"
-            element={<ResetPassword />}
-          />
-        </Routes>
-      </Container>
+      <Routes>
+        <Route path="/" element={<Explore />} />
+        <Route path="/myCourses" element={<MyCourses />} />
+        <Route path="/search/:searchQuery" element={<Search />} />
+
+        <Route path="/courses" element={<CourseDetails />} />
+        <Route path="/addAdmin" element={<AddAdmin />} />
+        <Route path="/AddInstructor" element={<AddInstructor />} />
+        <Route path="/AddCorporateTrainee" element={<AddCorporateTrainee />} />
+        <Route path="/CreateCourse" element={<CreateCourse />} />
+        <Route path="/login" element={<Login setUserType={setUserType} />} />
+        <Route
+          path="/viewInstructorProfile/:instructorID"
+          element={<ViewInstructorProfile />}
+        />
+        <Route path="/forgetPassword" element={<ForgetPassword />} />
+        <Route path="/changePassword" element={<ChangePassword />} />
+        <Route path="/myProfile" element={<MyProfile />} />
+        <Route
+          path="/resetPassword/:userID/:token"
+          element={<ResetPassword />}
+        />
+      </Routes>
     </>
   );
 }

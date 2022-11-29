@@ -1,7 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { ReactSession } from "react-client-session";
-import { fetchSearchData } from "../../network";
 import { countries } from "country-list-json";
 import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
@@ -18,13 +17,7 @@ const MainNavbar = (props) => {
   const submit = async (e) => {
     e.preventDefault();
     if (searchQuery) {
-      try {
-        const searchResults = await fetchSearchData({ query: searchQuery });
-        props.setSearchResults(searchResults);
-        navigate("/search");
-      } catch (err) {
-        console.log(err);
-      }
+      navigate(`/search/${searchQuery}`);
     }
   };
 
