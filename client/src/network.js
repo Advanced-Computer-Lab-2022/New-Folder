@@ -95,3 +95,14 @@ export const fetchVideoContent = async (id) => {
   const res = await instance.get("/course/subtitle/video/" + id);
   return res.data;
 };
+
+//addRating
+export const addRating = async (data) => {
+  const res = await instance.post("/course/addRating", data);
+  return res;
+};
+//addRating
+export const deleteRating = async (data) => {
+  const res = await instance.post("/course/deleteRating", data);
+  return res;
+};

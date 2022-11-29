@@ -6,7 +6,13 @@ import { getPrice, fetchCourseDetails } from "../../network";
 import SubtitleCard from "../../components/SubtitleCard/SubtitleCard";
 import ReviewCard from "../../components/ReviewCard/ReviewCard";
 import { getViewerContext } from "../../utils/viewerContext";
-import CourseSummary from "../../components/CourseSummary/CourseSummary";
+import "./CourseDetails.css";
+import Row from "react-bootstrap/Row";
+import Col from "react-bootstrap/Col";
+import Image from "react-bootstrap/Image";
+import Stack from "react-bootstrap/Stack";
+import RatingCard from "../../components/RatingCard/RatingCard";
+
 const CourseDetails = () => {
   const { courseId } = useParams();
   const [course, setCourse] = useState({});
@@ -34,6 +40,7 @@ const CourseDetails = () => {
       console.log(err);
     }
   };
+
   useEffect(() => {
     fetchCourse();
   }, []);
@@ -41,10 +48,56 @@ const CourseDetails = () => {
   useEffect(() => {
     fetchPrice();
   }, [ReactSession.get("country"), course]);
-
   return (
     <div>
-      <CourseSummary course={course} price={price} vc={vc} />
+      <>
+        <Row id="courseCardContainer">
+          <Col md={2}>
+            <Image width={250} src={course.image} thumbnail />
+          </Col>
+          <Col>
+            <Row>
+              <h1 id="courseName">{course.name}</h1>
+            </Row>
+            <Row>
+              <Col>
+                <Stack gap={4} id="courseInfo">
+                  <div id="courseRating">
+                    <Stack direction="horizontal" gap={3}>
+                      <h3>{course.reviews?.length ?? 0} reviews</h3>
+                    </Stack>
+                  </div>
+                  <div id="courseRating">
+                    <Stack direction="horizontal" gap={3}>
+                      <h3>{course.subtitles?.length ?? 0} subtitles</h3>
+                    </Stack>
+                  </div>
+                  <div id="courseRating">
+                    <Stack direction="horizontal" gap={3}>
+                      <h3>Price: {price ?? 0}</h3>
+                    </Stack>
+                  </div>
+                </Stack>
+              </Col>
+              <Col>
+                <Stack>
+                  <div id="courseRating">
+                    <Stack direction="horizontal" gap={3}>
+                      <h3>Total duration: {course.duration ?? 0} hours</h3>
+                    </Stack>
+                  </div>
+                  <div id="courseRating">
+                    <Stack direction="horizontal" gap={3}>
+                      <h3>Subject: {course.subject ?? ""}</h3>
+                    </Stack>
+                  </div>
+                  <RatingCard courseId={courseId} vc={vc} />
+                </Stack>
+              </Col>
+            </Row>
+          </Col>
+        </Row>
+      </>
       <ul>
         {subtitles.map((subtitleId) => (
           <SubtitleCard subtitleId={subtitleId} />
@@ -60,5 +113,4 @@ const CourseDetails = () => {
     </div>
   );
 };
-
 export default CourseDetails;
