@@ -105,11 +105,14 @@ const CourseDetails = () => {
                       <h3>{course.subtitles?.length ?? 0} subtitles</h3>
                     </Stack>
                   </div>
-                  <div id="courseRating">
-                    <Stack direction="horizontal" gap={3}>
-                      <h3>Price: {price ?? 0}</h3>
-                    </Stack>
-                  </div>
+                  {vc !== ViewerContexts.nonEnrolledCorporateTrainee &&
+                  vc !== ViewerContexts.enrolledTrainee ? (
+                    <div id="courseRating">
+                      <Stack direction="horizontal" gap={3}>
+                        <h3>Price: {price ?? 0}</h3>
+                      </Stack>
+                    </div>
+                  ) : null}
                   <div id="courseRating">
                     <Stack direction="horizontal" gap={3}>
                       <RatingCard courseId={courseId} vc={vc} />
