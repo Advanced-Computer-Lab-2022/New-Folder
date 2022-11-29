@@ -12,6 +12,10 @@ import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
 import Stack from "react-bootstrap/Stack";
 import RatingCard from "../../components/RatingCard/RatingCard";
+import CourseSummary from "../../components/CourseSummary/CourseSummary";
+import Button from "react-bootstrap/Button";
+import ViewerContexts from "../../constants/ViewerContexts.json";
+import Accordion from "react-bootstrap/Accordion";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -20,10 +24,13 @@ const CourseDetails = () => {
   const [subtitles, setSubtitles] = useState([]);
   const [price, setPrice] = useState("");
   const [vc, setVc] = useState("");
+  const [durationMap, setDurationMap] = useState(new Map());
+  const [duration, setDuration] = useState(0);
   const fetchCourse = async () => {
     try {
       const fetchedCourse = await fetchCourseDetails(courseId);
       const fetchedVc = getViewerContext(fetchedCourse);
+      console.log(fetchedVc);
       setVc(fetchedVc);
       setCourse(fetchedCourse);
       setReviews(fetchedCourse.reviews);
@@ -38,6 +45,18 @@ const CourseDetails = () => {
       setPrice(fetchedPrice);
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  const claculateDuration = () => {
+    if (durationMap.size > 0) {
+      let d = 0;
+      for (let [key, value] of durationMap) {
+        if (!isNaN(value)) {
+          d = parseInt(d) + parseInt(value ?? 0);
+        }
+      }
+      setDuration(d);
     }
   };
 

@@ -12,6 +12,7 @@ const {
   getVideo,
   addRating,
   deleteRating,
+  updateIntroVideo,
 } = require("../controllers/course/courseDetails.controller");
 
 router.get("/subtitle/video/:id", isEnrolled, getVideo);
@@ -19,4 +20,5 @@ router.get("/subtitle/:id", isEnrolled, getSubtitle);
 router.get("/:id", getCourseDetails);
 router.post("/addRating", canRateCourse, addRating);
 router.post("/deleteRating", canDeleteRating, deleteRating);
+router.patch("/:id", updateIntroVideo)
 module.exports = router;
