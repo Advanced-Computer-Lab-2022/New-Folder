@@ -19,32 +19,20 @@ ReactSession.setStoreType("sessionStorage");
 
 function App() {
   const [country, setCountry] = useState(ReactSession.get("country") ?? "EG");
-  const [searchResults, setSearchResults] = useState([]);
   const [userType, setUserType] = useState(ReactSession.get("userType") ?? "");
   ReactSession.set("country", country);
   ReactSession.set("userType", userType);
   return (
     <>
       {ReactSession.get("userType") === UserTypes.admin ? (
-        <AdminNavbar
-          setSearchResults={setSearchResults}
-          setCountry={setCountry}
-        />
+        <AdminNavbar setCountry={setCountry} />
       ) : (
-        <Navbar setSearchResults={setSearchResults} setCountry={setCountry} />
+        <Navbar setCountry={setCountry} />
       )}
       <Routes>
         <Route path="/" element={<Explore />} />
         <Route path="/myCourses" element={<MyCourses />} />
-        <Route
-          path="/search"
-          element={
-            <Search
-              searchResults={searchResults}
-              setSearchResults={setSearchResults}
-            />
-          }
-        />
+        <Route path="/search/:searchQuery" element={<Search />} />
 
         <Route path="/course/:courseId" element={<CourseDetails />} />
         <Route path="/addAdmin" element={<AddAdmin />} />
