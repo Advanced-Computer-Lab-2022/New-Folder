@@ -202,7 +202,18 @@ const updateIntroVideo = async (req, res) => {
     console.log(err);
   }
 };
-
+const addPromotion = async (req, res) => {
+  try {
+    const updatedCourse = await Course.findByIdAndUpdate(
+      req.body.id,
+      { promotion: req.body.promotion },
+      { new: true }
+    );
+    res.json(updatedCourse);
+  } catch (err) {
+    console.log(err);
+  }
+};
 module.exports = {
   getCourseDetails,
   getSubtitle,
@@ -210,4 +221,5 @@ module.exports = {
   addRating,
   deleteRating,
   updateIntroVideo,
+  addPromotion,
 };
