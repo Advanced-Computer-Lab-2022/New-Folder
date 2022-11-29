@@ -189,11 +189,9 @@ export const deleteRating = async (data) => {
   const res = await instance.post("/course/deleteRating", data);
   return res;
 };
-// update course video preview
-export const updateIntroVideo = async (data) => {
-  const res = await instance.patch(`course/${data.courseId}`, {
-    videoLink: data.videoLink,
-  });
-  console.log(res.data);
+
+export const updateCourse = async (courseId, data) => {
+  const res = await instance.patch(`course/${courseId}`, data);
   return res.data;
-};
+}
+

@@ -14,8 +14,9 @@ import Stack from "react-bootstrap/Stack";
 import RatingCard from "../../components/RatingCard/RatingCard";
 import Button from "react-bootstrap/Button";
 import ViewerContexts from "../../constants/ViewerContexts.json";
-import { updateIntroVideo } from "../../network";
+import { updateCourse } from "../../network";
 import Form from "react-bootstrap/Form";
+import Accordion from "react-bootstrap/Accordion";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -29,8 +30,9 @@ const CourseDetails = () => {
   const [newVideo, setNewVideo] = useState();
   const uploadIntroVideo = async () => {
     try {
-      const data = { courseId: course._id, videoLink: newVideo };
-      const newCourse = await updateIntroVideo(data);
+      const newCourse = await updateCourse(course._id, {
+        introVideo: newVideo,
+      });
       setCourse(newCourse);
       setNewVideo("");
     } catch (err) {
@@ -80,7 +82,7 @@ const CourseDetails = () => {
   }, [ReactSession.get("country"), course]);
   useEffect(() => {
     claculateDuration();
-  }, [durationMap]);
+  }, [durationMap, course]);
   return (
     <div>
       <>
@@ -149,19 +151,25 @@ const CourseDetails = () => {
                       <Form.Group>
                         <Form.Control
                           type="text"
-                          placeHolder="Upload Course Preview"
+                          placeHolder={
+                            (course.introVideo === "" ? "Upload" : "Update") +
+                            " Course Preview"
+                          }
                           value={newVideo}
                           onChange={(e) => {
                             setNewVideo(e.target.value);
                           }}
                         ></Form.Control>
-                        <Button
-                          onClick={(e) => {
-                            uploadIntroVideo();
-                          }}
-                        >
-                          upload
-                        </Button>
+                        <div className="text-center">
+                          <Button
+                            className="m-2"
+                            onClick={(e) => {
+                              uploadIntroVideo();
+                            }}
+                          >
+                            upload
+                          </Button>
+                        </div>
                       </Form.Group>
                     ) : null}
                   </div>
@@ -174,9 +182,13 @@ const CourseDetails = () => {
       {vc === ViewerContexts.enrolledTrainee ? (
         <Button>Go to Course</Button>
       ) : null}
-      <ul>
-        {subtitles.map((subtitleId) => (
+      <Accordion>
+        {subtitles.map((subtitleId, index) => (
           <SubtitleCard
+            subtitles={subtitles}
+            setSubtitles={setSubtitles}
+            courseId={course._id}
+            index={index}
             subtitleId={subtitleId}
             durationMap={durationMap}
             setDurationMap={setDurationMap}
@@ -184,7 +196,7 @@ const CourseDetails = () => {
           />
         ))}
         {vc === ViewerContexts.author ? <Button>Add Subtitle</Button> : null}
-      </ul>
+      </Accordion>
       <ReviewsCard reviews={reviews} />
     </div>
   );

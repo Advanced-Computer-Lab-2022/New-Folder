@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { fetchSubtitle } from "../../network";
+import { fetchSubtitle, updateCourse } from "../../network";
 import VideoPreview from "./VideoPreview";
 import Accordion from "react-bootstrap/Accordion";
 import { MdOutlineOndemandVideo } from "react-icons/md";
@@ -19,6 +19,19 @@ function SubtitleCard(props) {
     }
   };
 
+  const deleteSubtitle = async () => {
+    try{
+      const updatedSubtitles = [...props.subtitles];
+      updatedSubtitles.splice(props.index, 1);
+      console.log(updatedSubtitles);
+      const updatedCourse = await updateCourse(props.courseId, {subtitles: updatedSubtitles});
+      console.log(updatedCourse);
+      props.setSubtitles(updatedCourse.subtitles);
+    }catch (err){
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     getSubtitle();
   }, []);
@@ -28,9 +41,10 @@ function SubtitleCard(props) {
       <Accordion.Item eventKey={props.index}>
         <Accordion.Header>
           {"section " + subtitle.subtitleNumber + ": "}
-          {props.vc === ViewerContexts.author ? <Button>edit</Button> : null}
         </Accordion.Header>
         <Accordion.Body>
+          {props.vc === ViewerContexts.author ? <Button>edit</Button> : null}
+          {props.vc === ViewerContexts.author ? <Button variant="danger" onClick={deleteSubtitle}>delete</Button> : null}
           <p>{"Title: " + (subtitle.title ?? "")}</p>
           <ol style={{ border: "1px dotted black" }}>
             {subtitle.subTitle_Content.map((content, index) => {

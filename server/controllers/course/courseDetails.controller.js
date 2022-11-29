@@ -190,11 +190,11 @@ const deleteRating = async (req, res) => {
     console.log(err);
   }
 };
-const updateIntroVideo = async (req, res) => {
+const updateCourse = async (req, res) => {
   try {
     const updatedCourse = await Course.findByIdAndUpdate(
       req.params.id,
-      { introVideo: req.body.videoLink },
+      req.body,
       { new: true }
     );
     res.json(updatedCourse);
@@ -209,5 +209,5 @@ module.exports = {
   getVideo,
   addRating,
   deleteRating,
-  updateIntroVideo,
+  updateCourse,
 };
