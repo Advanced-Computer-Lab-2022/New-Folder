@@ -20,6 +20,7 @@ import ChangePassword from "./pages/user/ChangePassword";
 import Container from "react-bootstrap/Container";
 import MyProfile from "./pages/user/instructor/MyProfile";
 import ResetPassword from "./pages/user/ResetPassword";
+import EditSubtitle from "./pages/user/instructor/EditSubtitle";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -39,7 +40,7 @@ function App() {
         <Route path="/myCourses" element={<MyCourses />} />
         <Route path="/search/:searchQuery" element={<Search />} />
 
-        <Route path="/courses" element={<CourseDetails />} />
+        <Route path="/course/:courseId" element={<CourseDetails />} />
         <Route path="/addAdmin" element={<AddAdmin />} />
         <Route path="/AddInstructor" element={<AddInstructor />} />
         <Route path="/AddCorporateTrainee" element={<AddCorporateTrainee />} />
@@ -55,6 +56,10 @@ function App() {
         <Route
           path="/resetPassword/:userID/:token"
           element={<ResetPassword />}
+        />
+        <Route
+          path="/editSubtitle/:courseID/:subtitleID"
+          element={<EditSubtitle />}
         />
       </Routes>
     </>

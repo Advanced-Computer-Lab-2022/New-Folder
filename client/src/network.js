@@ -1,6 +1,10 @@
 import axios from "axios";
 import countryCurrency from "./constants/CountryCurrency.json";
 import { ReactSession } from "react-client-session";
+import {
+  getDurationInMinutes,
+  getYoutubeVideoID,
+} from "./utils/getVideoDurationUtils";
 
 // if you delete this part ghosts will haunt you at night
 const instance = axios.create({
@@ -19,7 +23,7 @@ export const fetchExploreData = async () => {
   return res.data;
 };
 
-export const fetchcCourseDetils = async (id) => {
+export const fetchCourseDetails = async (id) => {
   const res = await instance.get("/course/" + id, {
     timeout: MAX_TIMEOUT,
   });
@@ -131,4 +135,65 @@ export const getMyProfile = async () => {
 export const editMyProfile = async (data) => {
   const res = await instance.post("/instructor/editMyProfile", data);
   return res;
+};
+// get subtitle
+export const fetchSubtitle = async (id) => {
+  const res = await instance.get("/course/subtitle/" + id);
+  return res.data;
+};
+
+// get video duration in minutes
+export const getVideoDuration = async (url) => {
+  const videoID = getYoutubeVideoID(url);
+  if (!videoID) return 0;
+
+  const res = await axios.get(
+    `https://www.googleapis.com/youtube/v3/videos?id=${videoID}&part=contentDetails&key=AIzaSyDFV_VGCr9gLfuxpkbuFv3klrd3LiafWXc`
+  );
+
+  const duration = res.data.items[0].contentDetails.duration;
+
+  return getDurationInMinutes(duration);
+};
+
+// instructor add video data:{ courseID, subtitleID ,....}
+export const addVideo = async (data) => {
+  const { videoURL } = data;
+  const duration = await getVideoDuration(videoURL);
+  const res = await instance.post("/instructor/addVideo", {
+    duration,
+    ...data,
+  });
+  return res;
+};
+
+// instructor create exam data:{courseID , subtitleID,......}
+export const createExam = async (data) => {
+  const res = await instance.post("/instructor/createExam", data);
+  return res;
+};
+
+// get Video
+export const fetchVideoContent = async (id) => {
+  const res = await instance.get("/course/subtitle/video/" + id);
+  return res.data;
+};
+
+//addRating
+export const addRating = async (data) => {
+  const res = await instance.post("/course/addRating", data);
+  return res;
+};
+//addRating
+export const deleteRating = async (data) => {
+  const res = await instance.post("/course/deleteRating", data);
+  return res;
+};
+// update course video preview
+export const updateIntroVideo = async (data) => {
+  const res = await instance.patch(`course/${data.courseId}`, {
+    videoLink: data.videoLink,
+  });
+  console.log(res.data);
+  return res.data;
 };

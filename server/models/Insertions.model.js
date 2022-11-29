@@ -1,12 +1,13 @@
 // don't run the data already on the db
 const mongoose = require("mongoose");
-const Content = require("./Content");
-const Course = require("./Course");
-const Exercises = require("./Exercises");
-const Instructor = require("./Instructor");
-const Subtitle = require("./Subtitle");
-const Trainee = require("./Trainee");
+const Content = require("./Content.model");
+const Course = require("./Course.model");
+const Exercises = require("./Exercises.model");
+const Instructor = require("./Instructor.model");
+const Subtitle = require("./Subtitle.model");
+const Trainee = require("./Trainee.model");
 const bodyParser = require("body-parser");
+const constants = require('../constants.json');
 
 mongoose
   .connect(
@@ -55,6 +56,7 @@ async function insertCourse(
     },
     trainees: trainees,
     subtitles: subtitles,
+    
   });
 
   console.log(c.name + "COURSE has been added ✔️");
@@ -97,7 +99,7 @@ async function insertInstructor(
   return c;
 }
 
-//insert new Trainee (individual or corporate)
+// insert new Trainee (individual or corporate)
 async function insertTrainee(
   email,
   username,
@@ -155,6 +157,19 @@ async function insertExcercises(
         choices: [firstAns, secondAns, thirdAns, forthAns],
         correctIdx: correctIdx,
       },
+      {
+        statement: statement,
+        choices: [firstAns, secondAns, thirdAns, forthAns],
+        correctIdx: correctIdx,
+
+      },
+      {
+        statement: statement,
+        choices: [firstAns, secondAns, thirdAns, forthAns],
+        correctIdx: correctIdx,
+
+      },
+
     ],
   });
   console.log("Excercise has been added ✔️");
@@ -165,29 +180,28 @@ async function insertExcercises(
 async function insertSubtitle(subtitleNumber, Contents, exercises) {
   let c = await Subtitle.create({
     subtitleNumber: subtitleNumber,
-    Contents: Contents,
-    exercises: exercises,
+    subTitle_Content : [{subTitle_Content_id  : Contents._id, type : constants.Content} , {subTitle_Content_id  : Contents._id, type : constants.Content} , {subTitle_Content_id  : exercises._id, type : constants.excercise}]
   });
   console.log("Subtitle has been added ✔️");
   return c;
 }
 
 // insert a new trainee to a course
-async function insertTraineeToCourse(courseID, traineeID) {
-  let courseReq = await Course.find({ _id: courseID });
-  courseReq[0].trainees.push(traineeID);
+// async function insertTraineeToCourse(courseID, traineeID) {
+//   let courseReq = await Course.find({ _id: courseID });
+//   courseReq[0].trainees.push(traineeID);
 
-  await Course.updateMany(
-    {
-      _id: courseID,
-    },
-    {
-      trainees: courseReq[0].trainees,
-    }
-  );
+//   await Course.updateMany(
+//     {
+//       _id: courseID,
+//     },
+//     {
+//       trainees: courseReq[0].trainees,
+//     }
+//   );
 
-  console.log("DONE INSERTION of trainee to course");
-}
+//   console.log("DONE INSERTION of trainee to course");
+// }
 
 // insert a new subtitle into this course
 
@@ -210,7 +224,7 @@ async function insertSubtitleToCourse(courseID, subtitle) {
 async function populate() {
   let soubra = await insertInstructor(
     "soubra@gmail.com",
-    "soubraJokexD",
+    "7omos",
     "0000",
     "Male",
     "Hassan Hassona",
@@ -225,49 +239,42 @@ async function populate() {
   );
 
   let java = await insertCourse(
-    "Java OOP",
-    "Computer Science",
+    "shashet mobile",
+    "shsha md8d8a",
     18,
     "USA",
-    "This course introduces computer programming using the JAVA programming language with object-oriented programming principles",
+    "This courasdasdas dasd asd the JAVA programming language with object-oriented programming principles",
     "https://www.aacomputercollege.com/wp-content/uploads/2018/08/java-1030x579.jpg",
     "",
     5,
     5,
-    [],
-    soubra._id,
+    [{trainee : soubra._id, review : "ragl tmam"}],
+    [{trainee : soubra._id, review : "ragl tmam"}],
     "Hassan Soubra",
     [],
     []
   );
 
-  let sokk = await insertTrainee(
-    "alyhassan123456@gmail.com",
-    "Elsokkary101",
-    "1234",
-    ["Computer Science"],
-    "Male",
-    "Aly Hassan",
-    "Elsokkary",
-    "",
-    "",
-    [java._id],
-    false
-  );
+
 
   let questionaya = await insertExcercises(
-    "masr gabl el goal el wa7eed fe kas el 3ala sanet kam ?",
-    "1900",
-    "4526",
+    "masr gablmas r masr m,as rmasrrrr rrrrrr kam ?",
+    "19dasdasdasd",
+    "45sasdas6",
     "2001",
     "1920",
     3
   );
   let contentaya = await insertContent(java._id, "masr masr masrrrr", "", "");
 
-  let Subtitlaya = await insertSubtitle(1, [contentaya], [questionaya]);
+  let Subtitlaya = await insertSubtitle(1, contentaya, questionaya);
 
-  await insertTraineeToCourse(java._id, sokk._id);
+  // await insertTraineeToCourse(java._id, sokk._id);
+  await insertSubtitleToCourse(java._id, Subtitlaya);
+  await insertSubtitleToCourse(java._id, Subtitlaya);
+  await insertSubtitleToCourse(java._id, Subtitlaya);
+  await insertSubtitleToCourse(java._id, Subtitlaya);
+  await insertSubtitleToCourse(java._id, Subtitlaya);
   await insertSubtitleToCourse(java._id, Subtitlaya);
 
   console.log("Relation has been done ✔️ ");

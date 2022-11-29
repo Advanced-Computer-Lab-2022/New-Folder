@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Reviews = require("./Reviews.schema");
 const Subtitle = require("./Subtitle.model");
 
 const Course = mongoose.Schema({
@@ -26,18 +25,39 @@ const Course = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  rating: {
+  ratings: {
+    type: [
+      {
+        trainee: {
+          type: mongoose.Types.ObjectId,
+          ref: "Trainee",
+        },
+        rating: {
+          type: Number,
+          min: 1,
+          max: 5,
+        },
+      },
+    ],
+    default: [],
+  },
+  totalRating: {
     type: Number,
     min: 0,
     max: 5,
     default: 0,
   },
-  ratingNo: {
-    type: Number,
-    default: 0,
-  },
   reviews: {
-    type: [Reviews],
+    type: [
+      {
+        traineeName: {
+          type: String,
+        },
+        review: {
+          type: String,
+        },
+      },
+    ],
     default: [],
   },
   instructorInfo: {
@@ -50,7 +70,7 @@ const Course = mongoose.Schema({
     default: [],
   },
   subtitles: {
-    type: [{ type: mongoose.Schema.Types.Mixed, ref: "Subtitle" }],
+    type: [{ type: mongoose.Schema.Types.Mixed }],
     default: [],
   },
 });
