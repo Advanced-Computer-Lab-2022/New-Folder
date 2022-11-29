@@ -51,7 +51,22 @@ const canDeleteRating = asyncHandler(async (req, res, next) => {
     throw new Error("You have not rated this course before");
   }
 });
+const isEnrolled = asyncHandler(async (req, res, next) => {
+  if (!req.session.userId) {
+    throw new Error("you are not logged in");
+  }
+  const vc = await getVC(
+    req.session.userId,
+    req.session.userType,
+    req.body.courseId
+  );
+  if (vc !== viewerContexts.enrolledTrainee) {
+    throw new Error("You are not enrolled in this course");
+  }
+  next();
+});
 module.exports = {
   canRateCourse,
   canDeleteRating,
+  isEnrolled,
 };
