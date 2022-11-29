@@ -1,0 +1,22 @@
+#editMyProfileMain {
+  padding: 2%;
+  padding-left: 3%;
+  padding-right: 3%;
+  margin: 2%;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+
+#editProfileItem {
+  margin: 0%;
+  padding: 0%;
+}
+
+#editMyInformation {
+  margin-left: 15%;
+  margin-top: 1%;
+}
+
+#saveMyProfileChangesBtn {
+  margin-right: 1%;
+}

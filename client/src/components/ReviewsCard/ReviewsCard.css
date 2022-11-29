@@ -1,0 +1,21 @@
+.reviewCard {
+  margin: 0;
+  width: 90%;
+}
+.cardFrame {
+  width: 100%;
+}
+#reviewContainer {
+  margin: 3%;
+  margin-left: 15%;
+  margin-right: 15%;
+}
+#reviewContainer2 {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+#seeMoreBtn {
+  border: none;
+  width: 30%;
+  align-self: center;
+}

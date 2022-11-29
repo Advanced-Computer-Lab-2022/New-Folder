@@ -32,18 +32,39 @@ const Instructor = mongoose.Schema(
       type: [{ type: mongoose.Types.ObjectId, ref: "Course" }],
       default: [],
     },
-    ratingNo: {
-      type: Number,
-      default: 0,
+    ratings: {
+      type: [
+        {
+          trainee: {
+            type: mongoose.Types.ObjectId,
+            ref: "Trainee",
+          },
+          rating: {
+            type: Number,
+            min: 0,
+            max: 5,
+          },
+        },
+      ],
+      default: [],
     },
-    rating: {
+    totalRating: {
       type: Number,
       min: 0,
       max: 5,
       default: 0,
     },
     reviews: {
-      type: [String],
+      type: [
+        {
+          trainee: {
+            type: String,
+          },
+          review: {
+            type: String,
+          },
+        },
+      ],
       default: [],
     },
     userType: {

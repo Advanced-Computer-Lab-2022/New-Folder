@@ -150,13 +150,76 @@ const getVideo = async (req, res) => {
   }
 };
 
-const getExcercise = async (req , res) => {
+const getExcercise = async (req, res) => {
   try {
     const excercise = await Exercise.findById(req.params.id);
     res.json(excercise);
   } catch (err) {
     console.log(err);
   }
-}
+};
 
-module.exports = { getCourseDetails, getSubtitle, getVideo, getExcercise };
+const addRating = async (req, res) => {
+  try {
+    const course = await Course.findById(req.body.courseId);
+    let ratings = course.ratings;
+    const totalRating =
+      (course.totalRating * ratings.length + req.body.rating) /
+      (ratings.length + 1);
+    ratings.push({ trainee: req.session.userId, rating: req.body.rating });
+    await Course.findByIdAndUpdate(course._id, {
+      ratings: ratings,
+      totalRating: totalRating,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+const deleteRating = async (req, res) => {
+  try {
+    const course = await Course.findById(req.body.courseId);
+    let ratings = [];
+    let traineeRating = 0;
+    for (let i = 0; i < course.ratings.length; i++) {
+      if (course.ratings[i].trainee.toString() !== req.session.userId) {
+        ratings.push(course.ratings[i]);
+      } else {
+        traineeRating = course.ratings[i].rating;
+      }
+    }
+    const totalRating =
+      ratings.length == 0
+        ? 0
+        : (course.totalRating * (ratings.length + 1) - traineeRating) /
+          ratings.length;
+    await Course.findByIdAndUpdate(course._id, {
+      ratings: ratings,
+      totalRating: totalRating,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+const updateIntroVideo = async (req, res) => {
+  try {
+    const updatedCourse = await Course.findByIdAndUpdate(
+      req.params.id,
+      { introVideo: req.body.videoLink },
+      { new: true }
+    );
+    res.json(updatedCourse);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+module.exports = {
+  getSubtitle,
+  getVideo,
+  getExcercise,
+  getCourseDetails,
+  getVideo,
+  addRating,
+  deleteRating,
+  updateIntroVideo,
+};

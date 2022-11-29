@@ -1,0 +1,13 @@
+#profileCardContainer {
+  background-color: #a6d1e6;
+  padding: 3%;
+  padding-left: 5%;
+}
+.viewProfileItem {
+  margin: 0;
+}
+#profileInfo {
+  margin: 0;
+  align-items: flex-start;
+  padding: 3%;
+}

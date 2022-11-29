@@ -17,13 +17,7 @@ const AdminNavbar = (props) => {
   const submit = async (e) => {
     e.preventDefault();
     if (searchQuery) {
-      try {
-        const searchResults = await fetchSearchData({ query: searchQuery });
-        props.setSearchResults(searchResults);
-        navigate("/search");
-      } catch (err) {
-        console.log(err);
-      }
+      navigate(`/search/${searchQuery}`);
     }
   };
 
