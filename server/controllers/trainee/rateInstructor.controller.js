@@ -3,15 +3,27 @@ const Instructor = require("../../models/Instructor.model");
 exports.rateInstructor = async (req, res) => {
   const { instructorID, newRating, newReview } = req.body;
   const instructor = await Instructor.findById(instructorID);
-  const rating =
-    (instructor.rating * instructor.ratingNo + newRating) /
-    (instructor.ratingNo + 1);
+  let ratings = instructor.ratings;
+  ratings = ratings.filter(
+    (rating) => rating.trainee.toString() == req.session.userId
+  );
+  const ratingNo = ratings.length;
+  let rating = (instructor.totalRating * ratingNo + newRating) / (ratingNo + 1);
+  if (ratings.length > 0) {
+    rating =
+      (instructor.totalRating * ratingNo - ratings[0].rating + newRating) /
+      ratingNo;
+    let newRatings = instructor.ratings.filter(
+      (rating) => rating.trainee.toString() != req.session.userId
+    );
+    await Instructor.findByIdAndUpdate(instructorID, { ratings: newRatings });
+  }
   await Instructor.findByIdAndUpdate(instructorID, {
-    rating: rating,
-    ratingNo: instructor.ratingNo + 1,
+    totalRating: rating,
   });
+  instructor.ratings.push({ trainee: req.session.userId, rating: newRating });
+  await instructor.save();
   if (newReview) {
-    // what a review should be?
     const review = {
       trainee: req.session.userName,
       review: newReview,

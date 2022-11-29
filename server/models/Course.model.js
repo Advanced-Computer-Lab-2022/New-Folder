@@ -50,7 +50,7 @@ const Course = mongoose.Schema({
   reviews: {
     type: [
       {
-        traineeName: {
+        trainee: {
           type: String,
         },
         review: {

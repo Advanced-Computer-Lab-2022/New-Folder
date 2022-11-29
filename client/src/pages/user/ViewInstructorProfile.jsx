@@ -13,6 +13,7 @@ const ViewInstructorProfile = () => {
   const [rating, setRating] = useState(0);
   const [ratingNo, setRatingNo] = useState(0);
   const [coursesCount, setCoursesCount] = useState(0);
+  const [myRating, setMyRating] = useState(null);
   const { instructorID } = useParams();
 
   const fetchData = async () => {
@@ -23,9 +24,10 @@ const ViewInstructorProfile = () => {
       );
       setImg(fetchedInstructorData.image);
       setAbout(fetchedInstructorData.about);
-      setRating(fetchedInstructorData.rating);
+      setRating(fetchedInstructorData.totalRating);
       setRatingNo(fetchedInstructorData.ratingNo);
       setCoursesCount(fetchedInstructorData.coursesCount);
+      setMyRating(fetchedInstructorData.myRating);
     } catch (err) {
       console.log(err);
     }
@@ -49,7 +51,10 @@ const ViewInstructorProfile = () => {
           coursesCount={coursesCount}
           ratingNo={ratingNo}
         />
-        <RateAndReviewInstructor instructorID={instructorID} />
+        <RateAndReviewInstructor
+          instructorID={instructorID}
+          myRating={myRating}
+        />
       </div>
     );
   }

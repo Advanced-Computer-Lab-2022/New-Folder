@@ -1,12 +1,12 @@
 import "./RateAndReviewInstructor.css";
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { rateInstructor } from "../../network";
 
 const RateAndReviewInstructor = (props) => {
-  const [newRating, setNewRating] = useState(0);
+  const [newRating, setNewRating] = useState(props.myRating);
   const [newReview, setNewReview] = useState("");
 
   const submitReview = async () => {
@@ -18,18 +18,25 @@ const RateAndReviewInstructor = (props) => {
     });
   };
 
+  let Stars = useMemo(() => {
+    return () => (
+      <ReactStars
+        count={5}
+        size={50}
+        isHalf={true}
+        activeColor="#ffd700"
+        value={props.myRating}
+        edit={true}
+        onChange={(rating) => setNewRating(rating)}
+      />
+    );
+  }, [props.myRating]);
+
   return (
     <div id="rateInstructorMain">
       <h3 id="ratingLabel">Rate this instructor </h3>
       <div id="ratingStars">
-        <ReactStars
-          count={5}
-          size={50}
-          isHalf={true}
-          activeColor="#ffd700"
-          value={newRating}
-          onChange={(rating) => setNewRating(rating)}
-        />
+        <Stars />
       </div>
       <h3>Write a review (optional)</h3>
       <div id="reviewBox">
@@ -40,7 +47,7 @@ const RateAndReviewInstructor = (props) => {
         />
       </div>
       <Button variant="dark" id="submitReviewBtn" onClick={submitReview}>
-        Submit
+        {props.myRating ? "Update" : "Submit"}
       </Button>
     </div>
   );

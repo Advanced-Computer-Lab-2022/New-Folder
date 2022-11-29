@@ -21,17 +21,10 @@ const MyProfile = () => {
       setName(`${myProfileData.firstName} ${myProfileData.lastName}`);
       setImg(myProfileData.image);
       setAbout(myProfileData.about);
-      setRating(myProfileData.rating);
-      setRatingNo(myProfileData.ratingNo);
+      setRating(myProfileData.totalRating);
+      setRatingNo(myProfileData.ratings.length);
       setEmail(myProfileData.email);
       setReviews(myProfileData.reviews);
-      setReviews([
-        { trainee: "Aya", review: "Great gaf bvawyt jagusb" },
-        { trainee: "Aya", review: "Great gaf bvawyt jagusb" },
-        { trainee: "Aya", review: "Great gaf bvawyt jagusb" },
-        { trainee: "Aya", review: "Great gaf bvawyt jagusb" },
-        { trainee: "Aya", review: "Great gaf bvawyt jagusb" },
-      ]);
     } catch (err) {
       console.log(err);
     }

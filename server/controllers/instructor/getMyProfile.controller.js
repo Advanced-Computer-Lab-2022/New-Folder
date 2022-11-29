@@ -9,8 +9,8 @@ exports.getMyProfile = async (req, res) => {
     image,
     about,
     email,
-    rating,
-    ratingNo,
+    ratings,
+    totalRating,
     reviews,
   } = myInfo;
 
@@ -20,8 +20,8 @@ exports.getMyProfile = async (req, res) => {
     image,
     about,
     email,
-    rating,
-    ratingNo,
+    ratings,
+    totalRating,
     reviews,
   });
 };
