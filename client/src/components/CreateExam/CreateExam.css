@@ -1,0 +1,27 @@
+.create-exam  {
+    margin: 4em;
+    margin-top: 0;
+}
+.btn-addmore button {
+    width: 20%;
+}
+
+.create-exam-header {
+    margin-bottom: 3em;
+}
+
+.create-exam-header button{
+    float: right;
+}
+
+.btn-addmore {
+    display: flex;
+    text-align: center;
+     
+}
+
+.form-area.row.row-cols-lg-1 {
+    display: block;
+    align-items: center;
+}
+
