@@ -1,6 +1,12 @@
 #courseStars {
   margin-left: 0;
-  margin-right: -100%;
-  width: 10px;
-  height: 1px;
+}
+#starsWrapper {
+  margin-top: -10%;
+  margin-left: -5%;
+}
+#deleteRating {
+  width: max-content;
+  margin: 0;
+  margin-right: 55%;
 }

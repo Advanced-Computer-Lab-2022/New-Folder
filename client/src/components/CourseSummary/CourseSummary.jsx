@@ -94,7 +94,7 @@ function CourseSummary(props) {
               <div id="introVideo">
                 {props.course.introVideo !== "" && (
                   <iframe
-                    style={{ height: 300, width: 500 }}
+                    style={{ height: 300, width: 500, marginLeft: 200 }}
                     src={props.course.introVideo}
                   ></iframe>
                 )}

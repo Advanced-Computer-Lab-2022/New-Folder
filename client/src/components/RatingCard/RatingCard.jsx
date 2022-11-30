@@ -8,7 +8,7 @@ import { useState, useEffect, useMemo } from "react";
 import { addRating, deleteRating, fetchCourseDetails } from "../../network";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import ReactStars from "react-rating-stars-component";
-
+import "./RatingCard.css";
 function RatingCard(props) {
   const { courseId, vc, totalRating, setTotalRating } = props;
   const [traineeRating, setTraineeRating] = useState(null);
@@ -28,15 +28,17 @@ function RatingCard(props) {
   };
   let AddRatingStars = useMemo(() => {
     return () => (
-      <ReactStars
-        count={5}
-        size={50}
-        isHalf={true}
-        activeColor="#ffd700"
-        value={traineeRating ?? 0}
-        edit={true}
-        onChange={(rating) => rate(rating)}
-      />
+      <div id="starsWrapper">
+        <ReactStars
+          count={5}
+          size={50}
+          isHalf={true}
+          activeColor="#ffd700"
+          value={traineeRating ?? 0}
+          edit={true}
+          onChange={(rating) => rate(rating)}
+        />
+      </div>
     );
   }, [traineeRating]);
   useEffect(() => {
@@ -78,15 +80,21 @@ function RatingCard(props) {
   return (
     <div>
       {vc === ViewerContexts.enrolledTrainee ? (
-        <Stack>
-          <h4>
-            <b>Your course rating:</b>
-          </h4>
+        <Stack direction="horizontal">
           <div id="courseStars">
+            <h4>
+              <b>Your course rating:</b>
+            </h4>
             <AddRatingStars />
           </div>
           {traineeRating !== null ? (
-            <Button onClick={() => removeRating()}>Delete rating</Button>
+            <Button
+              onClick={() => removeRating()}
+              id="deleteRating"
+              variant="danger"
+            >
+              Delete rating
+            </Button>
           ) : null}
         </Stack>
       ) : null}
