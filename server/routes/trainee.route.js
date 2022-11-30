@@ -10,6 +10,7 @@ const {
 } = require("../controllers/trainee/changePassword.controller");
 const {
   rateInstructor,
+  reviewInstructor,
 } = require("../controllers/trainee/rateInstructor.controller");
 
 // import middlewares
@@ -25,6 +26,11 @@ router.post(
   "/rateInstructor",
   authUserTakeCourseWithInstructor,
   rateInstructor
+);
+router.post(
+  "/reviewInstructor",
+  authUserTakeCourseWithInstructor,
+  reviewInstructor
 );
 
 module.exports = router;

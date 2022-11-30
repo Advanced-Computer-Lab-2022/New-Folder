@@ -1,6 +1,6 @@
 const Instructor = require("../../models/Instructor.model");
 
-exports.rateInstructor = async (req, res) => {
+const rateInstructor = async (req, res) => {
   const { instructorID, newRating, newReview } = req.body;
   const instructor = await Instructor.findById(instructorID);
   let ratings = instructor.ratings;
@@ -33,3 +33,19 @@ exports.rateInstructor = async (req, res) => {
   }
   res.status(200).json();
 };
+
+const reviewInstructor = async (req, res) => {
+  const { instructorID, newReview } = req.body;
+  const instructor = await Instructor.findById(instructorID);
+  if (newReview) {
+    const review = {
+      trainee: req.session.userName,
+      review: newReview,
+    };
+    instructor.reviews.push(review);
+    await instructor.save();
+  }
+  res.status(200).json();
+};
+
+module.exports = { rateInstructor, reviewInstructor };

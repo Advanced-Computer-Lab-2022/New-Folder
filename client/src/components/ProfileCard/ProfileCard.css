@@ -2,6 +2,7 @@
   background-color: #a6d1e6;
   padding: 3%;
   padding-left: 5%;
+  --bs-gutter-x: 0;
 }
 .viewProfileItem {
   margin: 0;

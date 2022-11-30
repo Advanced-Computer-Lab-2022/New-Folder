@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import { rateInstructor } from "../../network";
+import { rateInstructor, reviewInstructor } from "../../network";
 
 const RateAndReviewInstructor = (props) => {
   const [newRating, setNewRating] = useState(props.myRating);
