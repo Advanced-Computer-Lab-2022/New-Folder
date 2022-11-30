@@ -111,7 +111,7 @@ const CourseDetails = () => {
       />
       <Accordion>
         <div id="subtitles">
-          <h2>Subtitles ({subtitles.length})</h2>
+          <h3>Subtitles ({subtitles.length})</h3>
           {subtitles.map((subtitleId, index) => (
             <SubtitleCard
               subtitles={subtitles}

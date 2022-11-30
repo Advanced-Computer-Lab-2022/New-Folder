@@ -82,9 +82,9 @@ function RatingCard(props) {
       {vc === ViewerContexts.enrolledTrainee ? (
         <Stack direction="horizontal">
           <div id="courseStars">
-            <h4>
+            <h5>
               <b>Your course rating:</b>
-            </h4>
+            </h5>
             <AddRatingStars />
           </div>
           {traineeRating !== null ? (

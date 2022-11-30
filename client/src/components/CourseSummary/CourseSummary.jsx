@@ -11,6 +11,7 @@ import "./CourseSummary.css";
 import ReactStars from "react-rating-stars-component";
 import { useState } from "react";
 import AddPromotion from "../Course/AddPromotion/AddPromotion";
+import Container from "react-bootstrap/esm/Container";
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(props.course.totalRating);
   let Stars = useMemo(() => {
@@ -42,43 +43,44 @@ function CourseSummary(props) {
                 </div>
               </Stack>
             </Col>
-            <Col>
-              <Stack id="priceEnroll">
-                {props.vc !== ViewerContexts.nonEnrolledCorporateTrainee &&
-                props.vc !== ViewerContexts.enrolledTrainee ? (
-                  <h4 id="coursePrice">Price: {props.price ?? 0}</h4>
-                ) : null}
-                {props.vc === ViewerContexts.guest ? (
-                  <Button id="enrollButton" variant="dark">
-                    Enroll
-                  </Button>
-                ) : (
-                  <>
-                    {props.vc === ViewerContexts.enrolledTrainee ? (
-                      <Button id="goToCourse" variant="dark">
-                        Go to course
-                      </Button>
-                    ) : null}
-                  </>
-                )}
-              </Stack>
-            </Col>
+            <Col></Col>
           </Row>
         </div>
         <div id="courseSummarySecondRow">
           <Row>
             <Col>
               <Stack gap={3}>
-                <h4 className="courseInfo">
+                <div id="priceEnroll">
+                  {props.vc === ViewerContexts.guest ? (
+                    <Button id="enrollButton" variant="dark">
+                      Enroll
+                    </Button>
+                  ) : (
+                    <>
+                      {props.vc === ViewerContexts.enrolledTrainee ? (
+                        <Button id="goToCourse" variant="dark">
+                          Go to course
+                        </Button>
+                      ) : null}
+                    </>
+                  )}
+                </div>
+                {props.vc !== ViewerContexts.nonEnrolledCorporateTrainee &&
+                props.vc !== ViewerContexts.enrolledTrainee ? (
+                  <h5 className="courseInfo">
+                    <b>Price:</b> {props.price ?? ""}
+                  </h5>
+                ) : null}
+                <h5 className="courseInfo">
                   <b>Total duration:</b> {props.duration ?? 0} hours
-                </h4>
-                <h4 className="courseInfo">
+                </h5>
+                <h5 className="courseInfo">
                   <strong>Subject:</strong> {props.course.subject ?? ""}
-                </h4>
-                <h4 className="courseInfo">
+                </h5>
+                <h5 className="courseInfo">
                   <strong>Summary:</strong>
                   <br /> {props.course.description ?? ""}
-                </h4>
+                </h5>
                 <div id="addRating">
                   <RatingCard
                     courseId={props.courseId}
@@ -94,28 +96,36 @@ function CourseSummary(props) {
               <div id="introVideo">
                 {props.course.introVideo !== "" && (
                   <iframe
-                    style={{ height: 300, width: 500, marginLeft: 200 }}
+                    style={{
+                      height: 300,
+                      width: 500,
+                      marginLeft: 175,
+                      borderRadius: 8,
+                    }}
                     src={props.course.introVideo}
                   ></iframe>
                 )}
                 {props.vc === ViewerContexts.author ? (
-                  <Form.Group>
-                    <Form.Control
-                      type="text"
-                      placeHolder="Upload Course Preview"
-                      value={props.newVideo}
-                      onChange={(e) => {
-                        props.setNewVideo(e.target.value);
-                      }}
-                    ></Form.Control>
-                    <Button
-                      onClick={(e) => {
-                        props.uploadIntroVideo();
-                      }}
-                    >
-                      upload
-                    </Button>
-                  </Form.Group>
+                  <Form onSubmit={props.uploadIntroVideo}>
+                    <Container className="mt-4">
+                      <Form.Group className="mt-3">
+                        <Form.Control
+                          type="text"
+                          placeholder="Video url"
+                          value={props.newVideo}
+                          required
+                          onChange={(e) => {
+                            props.setNewVideo(e.target.value);
+                          }}
+                        ></Form.Control>
+                      </Form.Group>
+                      <div className="text-center">
+                        <Button className="mt-3" type="submit">
+                          Add video
+                        </Button>
+                      </div>
+                    </Container>
+                  </Form>
                 ) : null}
               </div>
             </Col>
