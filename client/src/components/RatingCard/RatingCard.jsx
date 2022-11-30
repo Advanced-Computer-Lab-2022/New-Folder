@@ -10,9 +10,15 @@ import ViewerContexts from "../../constants/ViewerContexts.json";
 import ReactStars from "react-rating-stars-component";
 import "./RatingCard.css";
 function RatingCard(props) {
-  const { courseId, vc, totalRating, setTotalRating } = props;
+  const {
+    courseId,
+    vc,
+    totalRating,
+    setTotalRating,
+    ratingsCount,
+    setRatingsCount,
+  } = props;
   const [traineeRating, setTraineeRating] = useState(null);
-  const [ratingsCount, setRatingsCount] = useState(0);
   const initializeRatings = async () => {
     const fetchedCourse = await fetchCourseDetails(courseId);
     setTotalRating(fetchedCourse.totalRating);
@@ -83,7 +89,7 @@ function RatingCard(props) {
         <Stack direction="horizontal">
           <div id="courseStars">
             <h5>
-              <b>Your course rating:</b>
+              <b>{traineeRating ? "Your course rating" : "Rate this course"}</b>
             </h5>
             <AddRatingStars />
           </div>

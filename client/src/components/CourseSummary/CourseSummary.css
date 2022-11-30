@@ -12,8 +12,11 @@
 }
 #courseRatingStars {
   margin: 0;
-  width: 167px;
+  width: 300px;
   height: 1px;
+  margin-left: -3%;
+  display: inline-flex;
+  align-items: center;
 }
 #courseInstructorName {
   margin: 0;
@@ -65,4 +68,8 @@
 #courseSummaryContainer {
   padding: 0.3%;
   background-color: #a6d1e6;
+}
+#ratingsCount {
+  margin-top: 24%;
+  margin-left: -5%;
 }
