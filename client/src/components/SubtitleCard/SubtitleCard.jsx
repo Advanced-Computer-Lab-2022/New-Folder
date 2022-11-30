@@ -1,6 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { fetchSubtitle, updateCourse } from "../../network";
+import { useNavigate } from "react-router-dom";
 import VideoPreview from "./VideoPreview";
 import Accordion from "react-bootstrap/Accordion";
 import { MdOutlineOndemandVideo } from "react-icons/md";
@@ -9,6 +10,7 @@ import ViewerContexts from "../../constants/ViewerContexts.json";
 import Button from "react-bootstrap/Button";
 import "./SubtitleCard.css";
 function SubtitleCard(props) {
+  const navigate = useNavigate();
   const [subtitle, setSubtitle] = useState({ subTitle_Content: [] });
   const getSubtitle = async () => {
     try {
@@ -47,7 +49,15 @@ function SubtitleCard(props) {
           </div>
         </Accordion.Header>
         <Accordion.Body>
-          {props.vc === ViewerContexts.author ? <Button>edit</Button> : null}
+          {props.vc === ViewerContexts.author ? (
+            <Button
+              onClick={() =>
+                navigate(`/editSubtitle/${props.courseId}/${props.subtitleId}`)
+              }
+            >
+              edit
+            </Button>
+          ) : null}
           {props.vc === ViewerContexts.author ? (
             <Button variant="danger" onClick={deleteSubtitle}>
               delete
