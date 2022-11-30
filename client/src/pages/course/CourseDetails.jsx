@@ -4,21 +4,16 @@ import { useParams } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import { getPrice, fetchCourseDetails } from "../../network";
 import SubtitleCard from "../../components/SubtitleCard/SubtitleCard";
-import ReviewsCard from "../../components/ReviewsCard/ReviewsCard";
 import { getViewerContext } from "../../utils/viewerContext";
 import "./CourseDetails.css";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
 import Container from "react-bootstrap/esm/Container";
-import Stack from "react-bootstrap/Stack";
-import RatingCard from "../../components/RatingCard/RatingCard";
 import Button from "react-bootstrap/Button";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import { updateCourse, createNewSubtitle } from "../../network";
 import Form from "react-bootstrap/Form";
 import CourseSummary from "../../components/CourseSummary/CourseSummary";
 import Accordion from "react-bootstrap/Accordion";
+import CourseReviewCard from "../../components/Course/CourseReviewCard/CourseReviewCard";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -109,48 +104,48 @@ const CourseDetails = () => {
         setNewVideo={setNewVideo}
         uploadIntroVideo={uploadIntroVideo}
       />
-      <Accordion>
-        <div id="subtitles">
-          <h3>Subtitles ({subtitles.length})</h3>
-          {subtitles.map((subtitleId, index) => (
-            <SubtitleCard
-              subtitles={subtitles}
-              setSubtitles={setSubtitles}
-              courseId={course._id}
-              index={index}
-              subtitleId={subtitleId}
-              durationMap={durationMap}
-              setDurationMap={setDurationMap}
-              vc={vc}
-            />
-          ))}
-        </div>
-        {vc === ViewerContexts.author ? (
-          <Form onSubmit={addSubtitle}>
-            <Container className="mt-4">
-              <Form.Group className="mt-3">
-                <Form.Control
-                  type="text"
-                  placeholder="Add Subtitle"
-                  value={newSubtitle}
-                  required
-                  onChange={(e) => {
-                    setNewSubtitle(e.target.value);
-                  }}
-                ></Form.Control>
-              </Form.Group>
-              <div className="text-center">
-                <Button className="mt-3" type="submit">
-                  Add Subtitle
-                </Button>
-              </div>
-            </Container>
-          </Form>
-        ) : null}
-      </Accordion>
-      <div id="reviews">
-        <ReviewsCard reviews={reviews} />
+      <div>
+        <Accordion>
+          <div id="subtitlesWrapper">
+            <h3 className="mb-4">Subtitles ({subtitles.length})</h3>
+            {subtitles.map((subtitleId, index) => (
+              <SubtitleCard
+                subtitles={subtitles}
+                setSubtitles={setSubtitles}
+                courseId={course._id}
+                index={index}
+                subtitleId={subtitleId}
+                durationMap={durationMap}
+                setDurationMap={setDurationMap}
+                vc={vc}
+              />
+            ))}
+          </div>
+          {vc === ViewerContexts.author ? (
+            <Form onSubmit={addSubtitle}>
+              <Container className="mt-4">
+                <Form.Group className="mt-3">
+                  <Form.Control
+                    type="text"
+                    placeholder="Add Subtitle"
+                    value={newSubtitle}
+                    required
+                    onChange={(e) => {
+                      setNewSubtitle(e.target.value);
+                    }}
+                  ></Form.Control>
+                </Form.Group>
+                <div className="text-center">
+                  <Button className="mt-3" type="submit">
+                    Add Subtitle
+                  </Button>
+                </div>
+              </Container>
+            </Form>
+          ) : null}
+        </Accordion>
       </div>
+      <CourseReviewCard reviews={reviews} />
     </div>
   );
 };

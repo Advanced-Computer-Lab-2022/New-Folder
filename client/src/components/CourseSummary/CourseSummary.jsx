@@ -99,7 +99,7 @@ function CourseSummary(props) {
                     style={{
                       height: 300,
                       width: 500,
-                      marginLeft: 175,
+                      marginLeft: 190,
                       borderRadius: 8,
                     }}
                     src={props.course.introVideo}

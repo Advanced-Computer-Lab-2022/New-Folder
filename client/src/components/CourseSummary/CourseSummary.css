@@ -1,10 +1,8 @@
 #courseSummaryFirstRow {
-  background-color: #e1f4f3;
   padding: 1%;
   padding-left: 2%;
 }
 #courseSummarySecondRow {
-  background-color: #e1f4f3;
   padding: 1%;
   padding-left: 2%;
 }
@@ -63,4 +61,8 @@
 }
 #introVideo {
   margin-top: -15%;
+}
+#courseSummaryContainer {
+  padding: 0.3%;
+  background-color: #a6d1e6;
 }
