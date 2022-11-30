@@ -109,22 +109,22 @@ const CourseDetails = () => {
         setNewVideo={setNewVideo}
         uploadIntroVideo={uploadIntroVideo}
       />
-      {vc === ViewerContexts.enrolledTrainee ? (
-        <Button>Go to Course</Button>
-      ) : null}
       <Accordion>
-        {subtitles.map((subtitleId, index) => (
-          <SubtitleCard
-            subtitles={subtitles}
-            setSubtitles={setSubtitles}
-            courseId={course._id}
-            index={index}
-            subtitleId={subtitleId}
-            durationMap={durationMap}
-            setDurationMap={setDurationMap}
-            vc={vc}
-          />
-        ))}
+        <div id="subtitles">
+          <h2>Subtitles ({subtitles.length})</h2>
+          {subtitles.map((subtitleId, index) => (
+            <SubtitleCard
+              subtitles={subtitles}
+              setSubtitles={setSubtitles}
+              courseId={course._id}
+              index={index}
+              subtitleId={subtitleId}
+              durationMap={durationMap}
+              setDurationMap={setDurationMap}
+              vc={vc}
+            />
+          ))}
+        </div>
         {vc === ViewerContexts.author ? (
           <Form onSubmit={addSubtitle}>
             <Container className="mt-4">
@@ -148,7 +148,9 @@ const CourseDetails = () => {
           </Form>
         ) : null}
       </Accordion>
-      <ReviewsCard reviews={reviews} />
+      <div id="reviews">
+        <ReviewsCard reviews={reviews} />
+      </div>
     </div>
   );
 };

@@ -1,19 +1,18 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
+
+import Stack from "react-bootstrap/Stack";
+
 import { ReactSession } from "react-client-session";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { addRating, deleteRating, fetchCourseDetails } from "../../network";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import ReactStars from "react-rating-stars-component";
 
 function RatingCard(props) {
-  const { courseId, vc } = props;
-  const [totalRating, setTotalRating] = useState(0);
-  const [traineeRating, setTraineeRating] = useState(0);
+  const { courseId, vc, totalRating, setTotalRating } = props;
+  const [traineeRating, setTraineeRating] = useState(null);
   const [ratingsCount, setRatingsCount] = useState(0);
-  const [isShown, setShown] = useState(false);
   const initializeRatings = async () => {
     const fetchedCourse = await fetchCourseDetails(courseId);
     setTotalRating(fetchedCourse.totalRating);
@@ -27,15 +26,34 @@ function RatingCard(props) {
       }
     }
   };
+  let AddRatingStars = useMemo(() => {
+    return () => (
+      <ReactStars
+        count={5}
+        size={50}
+        isHalf={true}
+        activeColor="#ffd700"
+        value={traineeRating ?? 0}
+        edit={true}
+        onChange={(rating) => rate(rating)}
+      />
+    );
+  }, [traineeRating]);
   useEffect(() => {
     initializeRatings();
   }, []);
   const rate = async (newRating) => {
+    if (traineeRating == null) {
+      const newTotalRating =
+        (totalRating * ratingsCount + newRating) / (ratingsCount + 1);
+      setTotalRating(newTotalRating);
+      setRatingsCount(ratingsCount + 1);
+    } else {
+      const newTotalRating =
+        (totalRating * ratingsCount + newRating - traineeRating) / ratingsCount;
+      setTotalRating(newTotalRating);
+    }
     setTraineeRating(newRating);
-    const newTotalRating =
-      (totalRating * ratingsCount + newRating) / (ratingsCount + 1);
-    setTotalRating(newTotalRating);
-    setRatingsCount(ratingsCount + 1);
     await addRating({
       courseId: courseId,
       rating: newRating,
@@ -50,9 +68,8 @@ function RatingCard(props) {
           (totalRating * ratingsCount - traineeRating) / (ratingsCount - 1);
         setTotalRating(newTotalRating);
       }
-      setTraineeRating(0);
+      setTraineeRating(null);
       setRatingsCount(ratingsCount - 1);
-      setShown(false);
       await deleteRating({ courseId: courseId });
     } catch (err) {
       console.log(err);
@@ -61,85 +78,18 @@ function RatingCard(props) {
   return (
     <div>
       {vc === ViewerContexts.enrolledTrainee ? (
-        <>
-          {traineeRating !== 0 ? (
-            <>
-              <h4>Course rating:</h4>
-              <ReactStars
-                count={5}
-                size={50}
-                isHalf={true}
-                activeColor="#ffd700"
-                value={totalRating}
-                edit={false}
-              />
-              <h4>Your course rating:</h4>
-              <ReactStars
-                count={5}
-                size={50}
-                isHalf={true}
-                activeColor="#ffd700"
-                value={traineeRating}
-                edit={false}
-              />
-              <Button onClick={() => removeRating()}>Delete rating</Button>
-            </>
-          ) : (
-            <>
-              <h4>Course rating:</h4>
-              <ReactStars
-                count={5}
-                size={50}
-                isHalf={true}
-                activeColor="#ffd700"
-                value={totalRating}
-                edit={false}
-              />
-              {isShown ? (
-                <ReactStars
-                  count={5}
-                  size={50}
-                  isHalf={true}
-                  activeColor="#ffd700"
-                  value={traineeRating}
-                  onChange={(rating) => rate(rating)}
-                />
-              ) : null}
-              {isShown ? (
-                <Button
-                  onClick={() => {
-                    setShown(false);
-                  }}
-                >
-                  Cancel
-                </Button>
-              ) : (
-                <Button
-                  onClick={() => {
-                    setShown(true);
-                  }}
-                >
-                  Add rating
-                </Button>
-              )}
-            </>
-          )}
-        </>
-      ) : (
-        <>
-          <h4>Course rating:</h4>
-          <ReactStars
-            count={5}
-            size={50}
-            isHalf={true}
-            activeColor="#ffd700"
-            value={totalRating}
-            edit={false}
-          />
-        </>
-      )}
-      <h4>{totalRating}</h4>
-      <h4>{traineeRating}</h4>
+        <Stack>
+          <h4>
+            <b>Your course rating:</b>
+          </h4>
+          <div id="courseStars">
+            <AddRatingStars />
+          </div>
+          {traineeRating !== null ? (
+            <Button onClick={() => removeRating()}>Delete rating</Button>
+          ) : null}
+        </Stack>
+      ) : null}
     </div>
   );
 }

@@ -17,12 +17,6 @@ const canRateCourse = asyncHandler(async (req, res, next) => {
   if (vc !== viewerContexts.enrolledTrainee) {
     throw new Error("You are not enrolled in this course");
   }
-  const course = await Course.findById(req.body.courseId);
-  for (let i = 0; i < course.ratings.length; i++) {
-    if (course.ratings[i].trainee.toString() === req.session.userId) {
-      throw new Error("You have already rated this course");
-    }
-  }
   next();
 });
 

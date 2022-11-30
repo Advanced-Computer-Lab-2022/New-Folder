@@ -163,14 +163,39 @@ const addRating = async (req, res) => {
   try {
     const course = await Course.findById(req.body.courseId);
     let ratings = course.ratings;
-    const totalRating =
-      (course.totalRating * ratings.length + req.body.rating) /
-      (ratings.length + 1);
-    ratings.push({ trainee: req.session.userId, rating: req.body.rating });
-    await Course.findByIdAndUpdate(course._id, {
-      ratings: ratings,
-      totalRating: totalRating,
-    });
+    let traineeRating = -1;
+    let newRatings = [];
+    for (let i = 0; i < ratings.length; i++) {
+      if (ratings[i].trainee.toString() === req.session.userId) {
+        traineeRating = ratings[i].rating;
+        newRatings.push({
+          trainee: ratings[i].trainee,
+          rating: req.body.rating,
+        });
+      } else {
+        newRatings.push(ratings[i]);
+      }
+    }
+    if (traineeRating != -1) {
+      const totalRating =
+        (course.totalRating * ratings.length -
+          traineeRating +
+          req.body.rating) /
+        ratings.length;
+      await Course.findByIdAndUpdate(course._id, {
+        ratings: newRatings,
+        totalRating: totalRating,
+      });
+    } else {
+      const totalRating =
+        (course.totalRating * ratings.length + req.body.rating) /
+        (ratings.length + 1);
+      newRatings.push({ trainee: req.session.userId, rating: req.body.rating });
+      await Course.findByIdAndUpdate(course._id, {
+        ratings: newRatings,
+        totalRating: totalRating,
+      });
+    }
   } catch (err) {
     console.log(err);
   }

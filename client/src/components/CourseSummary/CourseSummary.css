@@ -3,6 +3,11 @@
   padding: 1%;
   padding-left: 2%;
 }
+#courseSummarySecondRow {
+  background-color: #e1f4f3;
+  padding: 1%;
+  padding-left: 2%;
+}
 #courseTitle {
   margin: 0;
   margin-left: 5px;
@@ -25,6 +30,11 @@
   font-size: 23px;
   padding: 2%;
 }
+#goToCourse {
+  font-size: 24px;
+  padding: 2%;
+  width: 200px;
+}
 #coursePrice {
   font-weight: 400;
 }
@@ -32,4 +42,11 @@
   width: max-content;
   margin-left: 65%;
   margin-top: 3%;
+}
+.courseInfo {
+  margin: 0;
+  font-weight: 400;
+}
+#addRating {
+  margin: 0;
 }

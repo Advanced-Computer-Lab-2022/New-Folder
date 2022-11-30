@@ -14,3 +14,10 @@
   align-items: flex-start;
   padding: 3%;
 }
+#reviews {
+  margin-left: -15%;
+}
+#subtitles {
+  margin-left: 2.5%;
+  margin-right: 1%;
+}
