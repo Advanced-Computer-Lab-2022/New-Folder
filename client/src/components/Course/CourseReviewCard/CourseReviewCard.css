@@ -1,0 +1,21 @@
+.courseReviewCard {
+  margin: 0;
+  width: 90%;
+}
+.courseCardFrame {
+  width: 100%;
+}
+#courseReviewContainer {
+  margin: 3%;
+  margin-left: 2.6%;
+  margin-right: 5%;
+}
+#courseReviewInnerContainer {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}
+#courseSeeMoreBtn {
+  border: none;
+  width: 30%;
+  align-self: center;
+}
