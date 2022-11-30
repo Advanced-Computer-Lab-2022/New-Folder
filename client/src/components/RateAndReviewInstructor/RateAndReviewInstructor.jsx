@@ -11,7 +11,7 @@ const RateAndReviewInstructor = (props) => {
   const [newReview, setNewReview] = useState("");
 
   const review = async () => {
-    await rateInstructor({
+    await reviewInstructor({
       instructorID: props.instructorID,
       newReview,
     });
@@ -40,7 +40,7 @@ const RateAndReviewInstructor = (props) => {
         activeColor="#ffd700"
         value={props.myRating}
         edit={true}
-        onChange={rate}
+        onChange={(val) => rate(val)}
       />
     );
   }, [props.myRating]);
@@ -58,6 +58,7 @@ const RateAndReviewInstructor = (props) => {
         <Form.Control
           size="lg"
           as="textarea"
+          value={newReview}
           onChange={(e) => setNewReview(e.target.value)}
         />
       </div>
@@ -66,7 +67,7 @@ const RateAndReviewInstructor = (props) => {
           <Button
             className="submitReviewBtn"
             variant="outline-dark"
-            onClick={() => setNewRating("")}
+            onClick={() => setNewReview("")}
           >
             cancel changes
           </Button>

@@ -42,14 +42,7 @@ const ViewInstructorProfile = () => {
 
   return (
     <div>
-      <ProfileCard
-        name={name}
-        img={img}
-        rating={rating}
-        about={about}
-        coursesCount={coursesCount}
-        ratingNo={ratingNo}
-      />
+      <ProfileCard name={name} img={img} rating={rating} ratingNo={ratingNo} />
       {ReactSession.get("userType") === userTypes.trainee ||
       ReactSession.get("userType") === userTypes.corporateTrainee ? (
         <RateAndReviewInstructor

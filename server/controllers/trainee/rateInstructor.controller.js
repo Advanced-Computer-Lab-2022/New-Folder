@@ -1,7 +1,7 @@
 const Instructor = require("../../models/Instructor.model");
 
 const rateInstructor = async (req, res) => {
-  const { instructorID, newRating, newReview } = req.body;
+  const { instructorID, newRating } = req.body;
   const instructor = await Instructor.findById(instructorID);
   let ratings = instructor.ratings;
   ratings = ratings.filter(
@@ -23,14 +23,6 @@ const rateInstructor = async (req, res) => {
   });
   instructor.ratings.push({ trainee: req.session.userId, rating: newRating });
   await instructor.save();
-  if (newReview) {
-    const review = {
-      trainee: req.session.userName,
-      review: newReview,
-    };
-    instructor.reviews.push(review);
-    await instructor.save();
-  }
   res.status(200).json();
 };
 
