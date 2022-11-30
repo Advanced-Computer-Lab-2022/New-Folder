@@ -1,0 +1,35 @@
+#courseSummaryFirstRow {
+  background-color: #e1f4f3;
+  padding: 1%;
+  padding-left: 2%;
+}
+#courseTitle {
+  margin: 0;
+  margin-left: 5px;
+}
+#courseRatingStars {
+  margin: 0;
+  width: 167px;
+  height: 1px;
+}
+#courseInstructorName {
+  margin: 0;
+  margin-bottom: -10px;
+  margin-left: 5px;
+}
+#courseHeader {
+  margin: 5px;
+  margin-top: 13px;
+}
+#enrollButton {
+  font-size: 23px;
+  padding: 2%;
+}
+#coursePrice {
+  font-weight: 400;
+}
+#priceEnroll {
+  width: max-content;
+  margin-left: 65%;
+  margin-top: 3%;
+}
