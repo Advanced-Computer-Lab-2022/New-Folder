@@ -16,13 +16,15 @@ const rateInstructor = async (req, res) => {
     let newRatings = instructor.ratings.filter(
       (rating) => rating.trainee.toString() != req.session.userId
     );
+    newRatings.push({ trainee: req.session.userId, rating: newRating });
     await Instructor.findByIdAndUpdate(instructorID, { ratings: newRatings });
+  } else {
+    instructor.ratings.push({ trainee: req.session.userId, rating: newRating });
+    await instructor.save();
   }
   await Instructor.findByIdAndUpdate(instructorID, {
     totalRating: rating,
   });
-  instructor.ratings.push({ trainee: req.session.userId, rating: newRating });
-  await instructor.save();
   res.status(200).json();
 };
 

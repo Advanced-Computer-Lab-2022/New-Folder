@@ -50,14 +50,14 @@ const ViewInstructorProfile = () => {
           rating={rating}
           ratingNo={ratingNo}
           setRating={setRating}
+          setRatingNo={setRatingNo}
+          setMyRating={setMyRating}
           myRating={myRating}
         />
       ) : null}
       <ReviewCard reviews={reviews} />
     </div>
   );
-
-  return null;
 };
 
 export default ViewInstructorProfile;

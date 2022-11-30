@@ -19,15 +19,18 @@ const RateAndReviewInstructor = (props) => {
   };
 
   const rate = async (rating) => {
+    console.log(rating);
     setNewRating(rating);
     await rateInstructor({
       instructorID: props.instructorID,
-      newRating,
+      newRating: rating,
     });
     let updatedRating = props.myRating
-      ? (props.rating * props.ratingNo - props.myRating + newRating) /
+      ? (props.rating * props.ratingNo - props.myRating + rating) /
         props.ratingNo
-      : (props.rating * props.ratingNo + newRating) / (props.ratingNo + 1);
+      : (props.rating * props.ratingNo + rating) / (props.ratingNo + 1);
+    if (!props.myRating) props.setRatingNo(props.ratingNo + 1);
+    props.setMyRating(rating);
     props.setRating(updatedRating);
   };
 
