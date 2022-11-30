@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Image from "react-bootstrap/Image";
@@ -13,7 +13,11 @@ import { useState } from "react";
 import AddPromotion from "../Course/AddPromotion/AddPromotion";
 import Container from "react-bootstrap/esm/Container";
 function CourseSummary(props) {
-  const [totalRating, setTotalRating] = useState(props.course.totalRating);
+  const [totalRating, setTotalRating] = useState(null);
+  const [ratingsCount, setRatingsCount] = useState(0);
+  useEffect(() => {
+    setTotalRating(props.course.totalRating);
+  }, []);
   let Stars = useMemo(() => {
     return () => (
       <ReactStars
@@ -40,6 +44,7 @@ function CourseSummary(props) {
                 <h5 id="courseInstructorName">By: Instructor</h5>
                 <div id="courseRatingStars">
                   <Stars />
+                  <h6 id="ratingsCount">({ratingsCount} ratings)</h6>
                 </div>
               </Stack>
             </Col>
@@ -87,6 +92,8 @@ function CourseSummary(props) {
                     vc={props.vc}
                     totalRating={totalRating}
                     setTotalRating={setTotalRating}
+                    ratingsCount={ratingsCount}
+                    setRatingsCount={setRatingsCount}
                   />
                   {props.vc === ViewerContexts.author ? <AddPromotion /> : null}
                 </div>
