@@ -7,7 +7,6 @@ import Card from "react-bootstrap/Card";
 import { rateInstructor, reviewInstructor } from "../../network";
 
 const RateAndReviewInstructor = (props) => {
-  const [newRating, setNewRating] = useState(props.myRating);
   const [newReview, setNewReview] = useState("");
 
   const review = async () => {
@@ -19,8 +18,6 @@ const RateAndReviewInstructor = (props) => {
   };
 
   const rate = async (rating) => {
-    console.log(rating);
-    setNewRating(rating);
     await rateInstructor({
       instructorID: props.instructorID,
       newRating: rating,

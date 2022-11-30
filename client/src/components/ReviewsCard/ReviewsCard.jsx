@@ -41,7 +41,7 @@ const ReviewCard = (props) => {
   };
   return (
     <div id="reviewContainer">
-      <h3>Reviews ({reviews.length})</h3>
+      <h3>Reviews ({props.reviews.length})</h3>
       <div id="reviewContainer2">
         <Stack gap={3}>
           {reviews}{" "}
