@@ -10,19 +10,19 @@
 #ratingStars {
   margin: 0%;
   padding: 0%;
-  width: 210px;
+  width: 170px;
   height: 90px;
 }
 
 #reviewBox {
-  width: 50%;
   margin: 0%;
   margin-top: 2%;
   margin-bottom: 2%;
 }
 
-#submitReviewBtn {
-  margin-left: 1%;
+.submitReviewBtn {
+  width: 150px;
+  margin: 10px;
 }
 
 #ratingLabel {
@@ -30,4 +30,9 @@
 }
 #reviewLabel {
   margin: 0%;
+}
+#reviewButtonsContainer {
+  display: flex;
+  justify-content: flex-end;
+  margin: 0;
 }

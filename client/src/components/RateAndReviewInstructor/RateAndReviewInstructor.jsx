@@ -10,21 +10,16 @@ const RateAndReviewInstructor = (props) => {
   const [newRating, setNewRating] = useState(props.myRating);
   const [newReview, setNewReview] = useState("");
 
-  const submitReview = async () => {
-    setNewReview(newReview.trim());
+  const review = async () => {
     await rateInstructor({
       instructorID: props.instructorID,
-      newRating,
       newReview,
     });
-    let updatedRating = props.myRating
-      ? (props.rating * props.ratingNo - props.myRating + newRating) /
-        props.ratingNo
-      : (props.rating * props.ratingNo + newRating) / (props.ratingNo + 1);
-    props.setRating(updatedRating);
+    setNewReview("");
   };
 
-  const rateInstructor = async () => {
+  const rate = async (rating) => {
+    setNewRating(rating);
     await rateInstructor({
       instructorID: props.instructorID,
       newRating,
@@ -45,7 +40,7 @@ const RateAndReviewInstructor = (props) => {
         activeColor="#ffd700"
         value={props.myRating}
         edit={true}
-        onChange={(rating) => setNewRating(rating)}
+        onChange={rate}
       />
     );
   }, [props.myRating]);
@@ -66,9 +61,20 @@ const RateAndReviewInstructor = (props) => {
           onChange={(e) => setNewReview(e.target.value)}
         />
       </div>
-      <Button variant="dark" id="submitReviewBtn" onClick={submitReview}>
-        {props.myRating ? "Update" : "Submit"}
-      </Button>
+      {newReview.length > 0 ? (
+        <div id="reviewButtonsContainer">
+          <Button
+            className="submitReviewBtn"
+            variant="outline-dark"
+            onClick={() => setNewRating("")}
+          >
+            cancel changes
+          </Button>
+          <Button variant="dark" className="submitReviewBtn" onClick={review}>
+            Add review
+          </Button>
+        </div>
+      ) : null}
     </Card>
   );
 };

@@ -91,14 +91,14 @@ const EditMyProfileForm = (props) => {
             {allowEdit ? (
               <div class="text-end">
                 <Button
-                  id="saveMyProfileChangesBtn"
+                  className="saveMyProfileChangesBtn"
                   variant="outline-dark"
                   onClick={cancelChanges}
                 >
                   cancel changes
                 </Button>
                 <Button
-                  id="saveMyProfileChangesBtn"
+                    className="saveMyProfileChangesBtn"
                   variant="dark"
                   type="submit"
                 >

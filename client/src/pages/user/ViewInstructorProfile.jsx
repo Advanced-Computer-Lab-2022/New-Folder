@@ -40,20 +40,18 @@ const ViewInstructorProfile = () => {
     fetchData();
   }, []);
 
-  if (
-    ReactSession.get("userType") === userTypes.trainee ||
-    ReactSession.get("userType") === userTypes.corporateTrainee
-  ) {
-    return (
-      <div>
-        <ProfileCard
-          name={name}
-          img={img}
-          rating={rating}
-          about={about}
-          coursesCount={coursesCount}
-          ratingNo={ratingNo}
-        />
+  return (
+    <div>
+      <ProfileCard
+        name={name}
+        img={img}
+        rating={rating}
+        about={about}
+        coursesCount={coursesCount}
+        ratingNo={ratingNo}
+      />
+      {ReactSession.get("userType") === userTypes.trainee ||
+      ReactSession.get("userType") === userTypes.corporateTrainee ? (
         <RateAndReviewInstructor
           instructorID={instructorID}
           rating={rating}
@@ -61,10 +59,11 @@ const ViewInstructorProfile = () => {
           setRating={setRating}
           myRating={myRating}
         />
-        <ReviewCard reviews={reviews} />
-      </div>
-    );
-  }
+      ) : null}
+      <ReviewCard reviews={reviews} />
+    </div>
+  );
+
   return null;
 };
 
