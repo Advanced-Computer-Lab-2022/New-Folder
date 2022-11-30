@@ -10,6 +10,7 @@ import Button from "react-bootstrap/Button";
 import "./CourseSummary.css";
 import ReactStars from "react-rating-stars-component";
 import { useState } from "react";
+import AddPromotion from "../Course/AddPromotion/AddPromotion";
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(props.course.totalRating);
   let Stars = useMemo(() => {
@@ -85,6 +86,7 @@ function CourseSummary(props) {
                     totalRating={totalRating}
                     setTotalRating={setTotalRating}
                   />
+                  {props.vc === ViewerContexts.author ? <AddPromotion /> : null}
                 </div>
               </Stack>
             </Col>
