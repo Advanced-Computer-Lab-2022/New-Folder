@@ -1,14 +1,39 @@
-#profileCardContainer {
+#profileCardTop {
   background-color: #a6d1e6;
-  padding: 3%;
-  padding-left: 5%;
+  overflow: visible;
+  max-height: 250px;
+  align-items: center;
+  display: flex;
+}
+
+#instructorImg {
+  margin: auto;
+  margin-top: 5%;
+}
+
+#instructorName {
+  margin: auto;
+  margin-top: 105px;
+  align-items: center;
+  display: flex;
+}
+
+#instructorRating {
+  display: inline-flex;
+  align-items: center;
+}
+
+#instructorRatingStars {
+  width: 190px;
+  margin-right: 0;
+  padding-right: 0;
+}
+
+#instructorRatingNo {
+  font-weight: 300;
+  margin-top: 12px;
+  margin-left: 0;
+}
+#profileCardMain {
   --bs-gutter-x: 0;
-}
-.viewProfileItem {
-  margin: 0;
-}
-#profileInfo {
-  margin: 0;
-  align-items: flex-start;
-  padding: 3%;
 }

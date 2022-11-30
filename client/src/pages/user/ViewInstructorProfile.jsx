@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import RateAndReviewInstructor from "../../components/RateAndReviewInstructor/RateAndReviewInstructor";
+import ReviewCard from "../../components/ReviewsCard/ReviewsCard";
 import { fetchInstructorData } from "../../network";
 import userTypes from "../../constants/UserTypes.json";
 import { ReactSession } from "react-client-session";
@@ -11,6 +12,7 @@ const ViewInstructorProfile = () => {
   const [img, setImg] = useState("");
   const [about, setAbout] = useState("");
   const [rating, setRating] = useState(0);
+  const [reviews, setReviews] = useState([]);
   const [ratingNo, setRatingNo] = useState(0);
   const [coursesCount, setCoursesCount] = useState(0);
   const [myRating, setMyRating] = useState(null);
@@ -28,6 +30,7 @@ const ViewInstructorProfile = () => {
       setRatingNo(fetchedInstructorData.ratingNo);
       setCoursesCount(fetchedInstructorData.coursesCount);
       setMyRating(fetchedInstructorData.myRating);
+      setReviews(fetchedInstructorData.reviews);
     } catch (err) {
       console.log(err);
     }
@@ -58,6 +61,7 @@ const ViewInstructorProfile = () => {
           setRating={setRating}
           myRating={myRating}
         />
+        <ReviewCard reviews={reviews} />
       </div>
     );
   }

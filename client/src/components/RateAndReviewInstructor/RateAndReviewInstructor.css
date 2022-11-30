@@ -1,7 +1,10 @@
 #rateInstructorMain {
-  margin: 3%;
-  margin-left: 8%;
-  margin-right: 8%;
+  padding: 2%;
+  padding-left: 3%;
+  padding-right: 3%;
+  margin: 2%;
+  margin-left: 15%;
+  margin-right: 15%;
 }
 
 #ratingStars {
@@ -23,5 +26,8 @@
 }
 
 #ratingLabel {
+  margin: 0%;
+}
+#reviewLabel {
   margin: 0%;
 }

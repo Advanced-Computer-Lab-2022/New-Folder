@@ -3,6 +3,7 @@ import { useMemo, useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
+import Card from "react-bootstrap/Card";
 import { rateInstructor, reviewInstructor } from "../../network";
 
 const RateAndReviewInstructor = (props) => {
@@ -23,11 +24,23 @@ const RateAndReviewInstructor = (props) => {
     props.setRating(updatedRating);
   };
 
+  const rateInstructor = async () => {
+    await rateInstructor({
+      instructorID: props.instructorID,
+      newRating,
+    });
+    let updatedRating = props.myRating
+      ? (props.rating * props.ratingNo - props.myRating + newRating) /
+        props.ratingNo
+      : (props.rating * props.ratingNo + newRating) / (props.ratingNo + 1);
+    props.setRating(updatedRating);
+  };
+
   let Stars = useMemo(() => {
     return () => (
       <ReactStars
         count={5}
-        size={50}
+        size={40}
         isHalf={true}
         activeColor="#ffd700"
         value={props.myRating}
@@ -38,12 +51,14 @@ const RateAndReviewInstructor = (props) => {
   }, [props.myRating]);
 
   return (
-    <div id="rateInstructorMain">
-      <h3 id="ratingLabel">Rate this instructor </h3>
+    <Card id="rateInstructorMain">
+      <h3 id="ratingLabel">
+        {props.myRating ? "Your rating" : "Rate this instructor"}
+      </h3>
       <div id="ratingStars">
         <Stars />
       </div>
-      <h3>Write a review (optional)</h3>
+      <h3 id="reviewLabel">Write a review (optional)</h3>
       <div id="reviewBox">
         <Form.Control
           size="lg"
@@ -54,7 +69,7 @@ const RateAndReviewInstructor = (props) => {
       <Button variant="dark" id="submitReviewBtn" onClick={submitReview}>
         {props.myRating ? "Update" : "Submit"}
       </Button>
-    </div>
+    </Card>
   );
 };
 

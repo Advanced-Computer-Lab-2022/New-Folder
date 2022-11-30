@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import ReviewCard from "../../../components/ReviewsCard/ReviewsCard";
-import MyProfileCard from "../../../components/MyProfileCard/MyProfileCard";
+import ProfileCard from "../../../components/ProfileCard/ProfileCard";
 import { getMyProfile } from "../../../network";
 import EditMyProfileForm from "../../../components/EditMyProfileForm/EditMyProfileForm";
 import userTypes from "../../../constants/UserTypes.json";
@@ -37,7 +37,7 @@ const MyProfile = () => {
   if (ReactSession.get("userType") === userTypes.instructor) {
     return (
       <div>
-        <MyProfileCard
+        <ProfileCard
           name={name}
           img={img}
           rating={rating}
