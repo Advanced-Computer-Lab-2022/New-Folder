@@ -8,6 +8,7 @@ import Container from "react-bootstrap/esm/Container";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/Row";
 import CloseButton from "react-bootstrap/CloseButton";
+import ContractCard from "../../../components/ContractCard/ContractCard";
 
 const countries = CountryCurrency.getAllISOCodes();
 
@@ -21,6 +22,9 @@ function CreateCourse() {
   const [subtitles, setSubtitles] = useState([""]);
   const [introVideo, setIntroVideo] = useState("");
 
+  //terms and conditions
+  const [show, setShow] = useState(false);
+
   const removeSubtitle = (index) => {
     const temp = [...subtitles];
 
@@ -31,7 +35,7 @@ function CreateCourse() {
     setSubtitles(temp);
   };
 
-  const onSubmit = (e) => {
+  const submit = () => {
     const data = {
       name: name,
       field: field,
@@ -42,8 +46,12 @@ function CreateCourse() {
       introVideo: introVideo,
     };
     postCourse(data);
-    e.preventDefault();
     navigate("/");
+  };
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    setShow(true);
   };
 
   return (
@@ -51,14 +59,10 @@ function CreateCourse() {
       <Form onSubmit={onSubmit}>
         <Container className="mt-4">
           <Col lg="5">
-            <Form.Group className="">
-              <Form.Label>Create Course</Form.Label>
-            </Form.Group>
+            <h3>Create Course</h3>
             <Form.Group className="mb-3">
               <Form.Control
                 type="text"
-                id="name"
-                name="name"
                 value={name}
                 placeholder="Enter Course Name"
                 onChange={(e) => setName(e.target.value)}
@@ -68,8 +72,6 @@ function CreateCourse() {
             <Form.Group className="mb-3">
               <Form.Control
                 type="text"
-                id="field"
-                name="field"
                 value={field}
                 placeholder="Enter Course Field"
                 onChange={(e) => setField(e.target.value)}
@@ -79,8 +81,6 @@ function CreateCourse() {
             <Form.Group className="mb-3">
               <Form.Control
                 type="text"
-                id="introVideo"
-                name="introVideo"
                 value={introVideo}
                 placeholder="add course preview link"
                 onChange={(e) => setIntroVideo(e.target.value)}
@@ -90,8 +90,6 @@ function CreateCourse() {
               <Form.Control
                 as="textarea"
                 rows={3}
-                id="description"
-                name="description"
                 value={description}
                 placeholder="Enter Course Description"
                 onChange={(e) => setDescription(e.target.value)}
@@ -130,6 +128,7 @@ function CreateCourse() {
             })}
             <Form.Group className="mb-3">
               <Button
+                variant="dark"
                 onClick={(e) => {
                   setSubtitles([...subtitles, ""]);
                 }}
@@ -171,6 +170,7 @@ function CreateCourse() {
               <Button variant="dark" type="submit">
                 submit
               </Button>
+              <ContractCard submit={submit} show={show} setShow={setShow} />
             </Form.Group>
           </Col>
         </Container>
