@@ -59,7 +59,7 @@ function CreateCourse() {
       <Form onSubmit={onSubmit}>
         <Container className="mt-4">
           <Col lg="5">
-            <h3>Create Course</h3>
+            <h3 className="mb-3">Create Course</h3>
             <Form.Group className="mb-3">
               <Form.Control
                 type="text"
