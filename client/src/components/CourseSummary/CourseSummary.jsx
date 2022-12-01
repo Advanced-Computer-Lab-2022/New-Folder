@@ -95,7 +95,9 @@ function CourseSummary(props) {
                     ratingsCount={ratingsCount}
                     setRatingsCount={setRatingsCount}
                   />
-                  {props.vc === ViewerContexts.author ? <AddPromotion /> : null}
+                  {props.vc === ViewerContexts.author ? (
+                    <AddPromotion promotion={props.course.promotion} />
+                  ) : null}
                 </div>
               </Stack>
             </Col>
