@@ -55,7 +55,9 @@ function CourseSummary(props) {
                 <h5 id="courseInstructorName">By: Instructor</h5>
                 <div id="courseRatingStars">
                   <Stars />
-                  <h6 id="ratingsCount">({ratingsCount} ratings)</h6>
+                  <h6 id="ratingsCount">
+                    ({ratingsCount} {ratingsCount == 1 ? "rating" : "rating"})
+                  </h6>
                 </div>
               </Stack>
             </Col>
