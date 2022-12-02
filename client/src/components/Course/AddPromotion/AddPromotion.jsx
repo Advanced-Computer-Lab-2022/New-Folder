@@ -17,11 +17,10 @@ function AddPromotion(props) {
   const [valid, setValid] = useState(false);
   const [error, setError] = useState(null);
   useEffect(() => {
-    const { startDate, endDate, percentage } = promotion;
     if (
-      startDate <= endDate &&
-      new Date(endDate).getTime() >= Date.now() &&
-      percentage > 0
+      promotion?.startDate <= promotion?.endDate &&
+      new Date(promotion?.endDate).getTime() >= Date.now() &&
+      promotion?.percentage > 0
     ) {
       setValid(true);
     } else {
@@ -45,6 +44,10 @@ function AddPromotion(props) {
     }
     if (endDate < Date.now()) {
       setError("This promotion is in the past");
+      return;
+    }
+    if (!newPercentage) {
+      setError("Please add a percentage");
       return;
     }
     setError(null);
