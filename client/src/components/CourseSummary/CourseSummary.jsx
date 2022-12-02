@@ -15,20 +15,22 @@ import Container from "react-bootstrap/esm/Container";
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
   const [ratingsCount, setRatingsCount] = useState(0);
+  const [validPromotion, setValidPromotion] = useState(false);
   const promotion = props.promotion;
   const setPromotion = props.setPromotion;
   useEffect(() => {
     setTotalRating(props.course.totalRating);
   }, []);
-  const isPromotionValid = () => {
+  useEffect(() => {
     const startDate = new Date(promotion?.startDate).getTime();
     const endDate = new Date(promotion?.endDate).getTime();
     const now = Date.now();
-    if (now <= endDate && now >= startDate && promotion?.percentage !== 0) {
-      return true;
+    if (now <= endDate && now >= startDate && promotion?.percentage > 0) {
+      setValidPromotion(true);
+    } else {
+      setValidPromotion(false);
     }
-    return false;
-  };
+  }, [props.promotion]);
   let Stars = useMemo(() => {
     return () => (
       <ReactStars
@@ -85,10 +87,26 @@ function CourseSummary(props) {
                 </div>
                 {props.vc !== ViewerContexts.nonEnrolledCorporateTrainee &&
                 props.vc !== ViewerContexts.enrolledTrainee ? (
-                  <h5 className="courseInfo">
-                    <b>Price:</b> {props.price ?? ""}
-                    {isPromotionValid() ? promotion?.percentage ?? "" : ""}
-                  </h5>
+                  <>
+                    {validPromotion ? (
+                      <>
+                        <h5 className="courseInfo">
+                          <b>Price:</b>{" "}
+                          <del>{props.price.split(" ")[0] ?? ""}</del>{" "}
+                          {(
+                            parseFloat(props.price.split(" ")[0]) *
+                            (1 - promotion.percentage / 100)
+                          ).toFixed(2)}{" "}
+                          {props.price.split(" ")[1]}
+                          {`(-${promotion.percentage}%)`}
+                        </h5>
+                      </>
+                    ) : (
+                      <h5 className="courseInfo">
+                        <b>Price:</b> {props.price ?? ""}
+                      </h5>
+                    )}
+                  </>
                 ) : null}
                 <h5 className="courseInfo">
                   <b>Total duration:</b> {props.duration ?? 0} hours
