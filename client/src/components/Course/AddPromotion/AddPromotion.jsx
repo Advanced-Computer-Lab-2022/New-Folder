@@ -4,7 +4,7 @@ import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 import Stack from "react-bootstrap/esm/Stack";
 import DatePicker from "react-datepicker";
-
+import { postPromotion } from "../../../network";
 import "react-datepicker/dist/react-datepicker.css";
 import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
@@ -26,6 +26,11 @@ function AddPromotion(props) {
     setStartDate(selectedStartDate);
     setEndDate(selectedEndDate);
     setPercentage(newPercentage);
+    await postPromotion(props.courseId, {
+      startDate: selectedStartDate,
+      endDate: selectedEndDate,
+      percentage: newPercentage,
+    });
     setNewPercentage(null);
     setSelectedEndDate(null);
     setSelectedStartDate(null);

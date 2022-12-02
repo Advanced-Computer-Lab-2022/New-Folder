@@ -240,12 +240,13 @@ const updateCourse = async (req, res) => {
 const addPromotion = async (req, res) => {
   try {
     const updatedCourse = await Course.findByIdAndUpdate(
-      req.body.id,
+      req.body.courseId,
       { promotion: req.body.promotion },
       { new: true }
     );
     res.json(updatedCourse);
   } catch (err) {
+    console.log(req.body);
     console.log(err);
   }
 };

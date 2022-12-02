@@ -8,7 +8,7 @@ const getVC = async (userId, userType, courseId) => {
   if (!userId) {
     return viewerContexts.guest;
   }
-  if (course.instructorInfo?.instructorId === userId) {
+  if (course.instructorInfo?.instructorId == userId) {
     return viewerContexts.author;
   }
   if (!course.trainees.includes(userId)) {
