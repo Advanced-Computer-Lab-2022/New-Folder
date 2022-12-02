@@ -38,20 +38,13 @@ const CreateExam = (props) => {
     setIsSubmitted(true);
     setQuestionComponentArr([{statement: "none", choices:['none','none','none','none'], correctIdx:0}]);
     setQuestionRecord([null]);
-    
   }
-
-  // for testing questionComponentArr
-  // useEffect (()=>{
-  //   console.log(questionComponentArr);
-  // },[questionComponentArr])
 
   return (
     <div className='create-exam'>
       <Row className="create-exam-header">
         <Col><h4>Create New Quiz</h4></Col>
         <Col>
-          <span>Quiz has been Submitted Successfully</span>
           <button type="button" class="btn btn-primary" onClick={handleSubmit}>Add Quiz</button>
         </Col>
       </Row>
