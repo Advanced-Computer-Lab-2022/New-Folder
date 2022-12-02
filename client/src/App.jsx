@@ -1,7 +1,7 @@
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { ReactSession } from "react-client-session";
-import Explore from "./pages/user/Explore";
+import Explore from "./pages/user/Explore/Explore";
 import Search from "./pages/user/Search";
 import CreateCourse from "./pages/user/instructor/CreateCourse";
 import Login from "./pages/Login";
