@@ -7,23 +7,47 @@ import DatePicker from "react-datepicker";
 import { postPromotion } from "../../../network";
 import "react-datepicker/dist/react-datepicker.css";
 import Form from "react-bootstrap/Form";
+import { useEffect } from "react";
 function AddPromotion(props) {
   const { promotion, setPromotion, courseId } = props;
   const [isEditing, setEditing] = useState(false);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [newPercentage, setNewPercentage] = useState(null);
+  const [valid, setValid] = useState(false);
+  const [error, setError] = useState(null);
+  useEffect(() => {
+    const { startDate, endDate, percentage } = promotion;
+    if (
+      startDate <= endDate &&
+      new Date(endDate).getTime() >= Date.now() &&
+      percentage > 0
+    ) {
+      setValid(true);
+    } else {
+      setValid(false);
+    }
+  }, [promotion]);
   const save = async () => {
     const startDate = new Date(selectedStartDate).getTime();
     const endDate = new Date(selectedEndDate).getTime();
+    if (!startDate) {
+      setError("Start date is missing");
+      return;
+    }
+    if (!endDate) {
+      setError("End date is missing");
+      return;
+    }
     if (startDate > endDate) {
-      //display error message
+      setError("End date can not be before start date");
       return;
     }
     if (endDate < Date.now()) {
-      //display error message;
+      setError("This promotion is in the past");
       return;
     }
+    setError(null);
     setEditing(false);
     const addedPromotion = {
       startDate: new Date(selectedStartDate).getTime(),
@@ -37,6 +61,7 @@ function AddPromotion(props) {
     await postPromotion(courseId, addedPromotion);
   };
   const cancel = async () => {
+    setError(null);
     setEditing(false);
     setNewPercentage(null);
     setSelectedEndDate(null);
@@ -55,6 +80,9 @@ function AddPromotion(props) {
               showMonthDropdown={true}
               onSelect={(date) => setSelectedStartDate(date)}
               value={selectedStartDate}
+              adjustDateOnChange={true}
+              selected={selectedStartDate}
+              placeholderText={"Select start date"}
             />
             <DatePicker
               scrollableYearDropdown={true}
@@ -62,33 +90,43 @@ function AddPromotion(props) {
               showMonthDropdown={true}
               onSelect={(date) => setSelectedEndDate(date)}
               value={selectedEndDate}
+              adjustDateOnChange={true}
+              selected={selectedEndDate}
+              placeholderText={"Select end date"}
             />
           </Stack>
           <Form.Group as={Col}>
             <Form.Control
               type="number"
-              placeholder="promotion %"
-              value={newPercentage ?? promotion?.percentage ?? 0}
+              placeholder="Promotion %"
+              value={newPercentage}
               onChange={(e) => setNewPercentage(e.target.value)}
             />
           </Form.Group>
         </>
       ) : (
-        <div>
-          <h5>
-            <b>Course promotion: </b> {promotion?.percentage ?? 0}%
-          </h5>
-          <h5>
-            <b>Start Date: </b>{" "}
-            {new Date(promotion?.startDate).toDateString() ?? ""}
-          </h5>
-          <h5>
-            <b>End Date: </b>{" "}
-            {new Date(promotion?.endDate).toDateString() ?? ""}
-          </h5>
-          <Button onClick={() => setEditing(true)}>Change promotion</Button>
-        </div>
+        <>
+          {valid ? (
+            <div>
+              <h5>
+                <b>Course promotion: </b> {promotion?.percentage ?? 0}%
+              </h5>
+              <h5>
+                <b>Start Date: </b>{" "}
+                {new Date(promotion?.startDate).toDateString() ?? ""}
+              </h5>
+              <h5>
+                <b>End Date: </b>{" "}
+                {new Date(promotion?.endDate).toDateString() ?? ""}
+              </h5>
+              <Button onClick={() => setEditing(true)}>Change promotion</Button>
+            </div>
+          ) : (
+            <Button onClick={() => setEditing(true)}>Add promotion</Button>
+          )}
+        </>
       )}
+      {error ? <h6>Error: {error}</h6> : null}
     </div>
   );
 }

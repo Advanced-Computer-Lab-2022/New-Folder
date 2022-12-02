@@ -24,7 +24,7 @@ function CourseSummary(props) {
     const startDate = new Date(promotion?.startDate).getTime();
     const endDate = new Date(promotion?.endDate).getTime();
     const now = Date.now();
-    if (now <= endDate && now >= startDate) {
+    if (now <= endDate && now >= startDate && promotion?.percentage !== 0) {
       return true;
     }
     return false;

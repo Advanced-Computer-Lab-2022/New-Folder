@@ -9,10 +9,6 @@ const Exercise = require("../../models/Exercises.model");
 const getCourseDetails = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
-    const endDate = new Date(course.promotion?.endDate).getTime();
-    if (endDate < Date().now || course.promotion?.percentage === 0) {
-      delete course["promotion"];
-    }
     res.json(course);
   } catch (err) {
     console.log(err);
