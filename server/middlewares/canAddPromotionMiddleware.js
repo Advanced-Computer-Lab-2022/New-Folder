@@ -9,6 +9,14 @@ const canAddPromotion = asyncHandler(async (req, res, next) => {
   if (!req.session.userId) {
     throw new Error("you are not logged in");
   }
+  const startDate = new Date(req.body.promotion?.startDate).getTime();
+  const endDate = new Date(req.body.promotion?.endDate).getTime();
+  if (startDate > endDate) {
+    throw new Error("End date must be after start date");
+  }
+  if (endDate < Date().now) {
+    throw new Error("End date must be before today");
+  }
   const vc = await getVC(
     req.session.userId,
     req.session.userType,

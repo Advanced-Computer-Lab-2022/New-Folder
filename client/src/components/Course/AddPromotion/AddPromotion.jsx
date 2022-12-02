@@ -14,6 +14,16 @@ function AddPromotion(props) {
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [newPercentage, setNewPercentage] = useState(null);
   const save = async () => {
+    const startDate = new Date(selectedStartDate).getTime();
+    const endDate = new Date(selectedEndDate).getTime();
+    if (startDate > endDate) {
+      //display error message
+      return;
+    }
+    if (endDate < Date.now()) {
+      //display error message;
+      return;
+    }
     setEditing(false);
     const addedPromotion = {
       startDate: new Date(selectedStartDate).getTime(),
@@ -57,7 +67,7 @@ function AddPromotion(props) {
           <Form.Group as={Col}>
             <Form.Control
               type="number"
-              placeholder="min price"
+              placeholder="promotion %"
               value={newPercentage ?? promotion?.percentage ?? 0}
               onChange={(e) => setNewPercentage(e.target.value)}
             />

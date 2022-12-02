@@ -220,9 +220,13 @@ export const createNewSubtitle = async (courseId, subtitle) => {
 
 //Add promotion
 export const postPromotion = async (courseId, promotion) => {
-  const res = await instance.patch("course/addPromotion", {
-    courseId: courseId,
-    promotion: promotion,
-  });
-  return res.data;
+  try {
+    const res = await instance.patch("course/addPromotion", {
+      courseId: courseId,
+      promotion: promotion,
+    });
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
 };
