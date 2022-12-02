@@ -15,9 +15,20 @@ import Container from "react-bootstrap/esm/Container";
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
   const [ratingsCount, setRatingsCount] = useState(0);
+  const promotion = props.promotion;
+  const setPromotion = props.setPromotion;
   useEffect(() => {
     setTotalRating(props.course.totalRating);
   }, []);
+  const isPromotionValid = () => {
+    const startDate = new Date(promotion?.startDate).getTime();
+    const endDate = new Date(promotion?.endDate).getTime();
+    const now = Date.now();
+    if (now <= endDate && now >= startDate) {
+      return true;
+    }
+    return false;
+  };
   let Stars = useMemo(() => {
     return () => (
       <ReactStars
@@ -74,6 +85,7 @@ function CourseSummary(props) {
                 props.vc !== ViewerContexts.enrolledTrainee ? (
                   <h5 className="courseInfo">
                     <b>Price:</b> {props.price ?? ""}
+                    {isPromotionValid() ? promotion?.percentage ?? "" : ""}
                   </h5>
                 ) : null}
                 <h5 className="courseInfo">
@@ -97,7 +109,8 @@ function CourseSummary(props) {
                   />
                   {props.vc === ViewerContexts.author ? (
                     <AddPromotion
-                      promotion={props.course.promotion}
+                      promotion={promotion}
+                      setPromotion={setPromotion}
                       courseId={props.course._id}
                     />
                   ) : null}

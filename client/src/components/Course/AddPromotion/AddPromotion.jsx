@@ -7,33 +7,24 @@ import DatePicker from "react-datepicker";
 import { postPromotion } from "../../../network";
 import "react-datepicker/dist/react-datepicker.css";
 import Form from "react-bootstrap/Form";
-import { useEffect } from "react";
 function AddPromotion(props) {
+  const { promotion, setPromotion, courseId } = props;
   const [isEditing, setEditing] = useState(false);
   const [selectedStartDate, setSelectedStartDate] = useState(null);
   const [selectedEndDate, setSelectedEndDate] = useState(null);
   const [newPercentage, setNewPercentage] = useState(null);
-  const [startDate, setStartDate] = useState(null);
-  const [endDate, setEndDate] = useState(null);
-  const [percentage, setPercentage] = useState(null);
-  useEffect(() => {
-    setPercentage(props.promotion?.percentage);
-    setStartDate(props.promotion?.startDate);
-    setEndDate(props.promotion?.endDate);
-  }, []);
   const save = async () => {
     setEditing(false);
-    setStartDate(selectedStartDate);
-    setEndDate(selectedEndDate);
-    setPercentage(newPercentage);
-    await postPromotion(props.courseId, {
-      startDate: selectedStartDate,
-      endDate: selectedEndDate,
+    const addedPromotion = {
+      startDate: new Date(selectedStartDate).getTime(),
+      endDate: new Date(selectedEndDate).getTime(),
       percentage: newPercentage,
-    });
+    };
+    setPromotion(addedPromotion);
     setNewPercentage(null);
     setSelectedEndDate(null);
     setSelectedStartDate(null);
+    await postPromotion(courseId, addedPromotion);
   };
   const cancel = async () => {
     setEditing(false);
@@ -67,7 +58,7 @@ function AddPromotion(props) {
             <Form.Control
               type="number"
               placeholder="min price"
-              value={newPercentage ?? percentage ?? 0}
+              value={newPercentage ?? promotion?.percentage ?? 0}
               onChange={(e) => setNewPercentage(e.target.value)}
             />
           </Form.Group>
@@ -75,13 +66,15 @@ function AddPromotion(props) {
       ) : (
         <div>
           <h5>
-            <b>Course promotion: </b> {percentage ?? 0}%
+            <b>Course promotion: </b> {promotion?.percentage ?? 0}%
           </h5>
           <h5>
-            <b>Start Date: </b> {startDate?.toDateString() ?? ""}
+            <b>Start Date: </b>{" "}
+            {new Date(promotion?.startDate).toDateString() ?? ""}
           </h5>
           <h5>
-            <b>End Date: </b> {endDate?.toDateString() ?? ""}
+            <b>End Date: </b>{" "}
+            {new Date(promotion?.endDate).toDateString() ?? ""}
           </h5>
           <Button onClick={() => setEditing(true)}>Change promotion</Button>
         </div>

@@ -26,6 +26,7 @@ const CourseDetails = () => {
   const [duration, setDuration] = useState(0);
   const [newVideo, setNewVideo] = useState();
   const [newSubtitle, setNewSubtitle] = useState("");
+  const [promotion, setPromotion] = useState(null);
 
   const uploadIntroVideo = async () => {
     try {
@@ -47,6 +48,7 @@ const CourseDetails = () => {
       setCourse(fetchedCourse);
       setReviews(fetchedCourse.reviews);
       setSubtitles(fetchedCourse.subtitles);
+      setPromotion(fetchedCourse.promotion);
     } catch (err) {
       console.log(err);
     }
@@ -103,6 +105,8 @@ const CourseDetails = () => {
         newVideo={newVideo}
         setNewVideo={setNewVideo}
         uploadIntroVideo={uploadIntroVideo}
+        promotion={promotion}
+        setPromotion={setPromotion}
       />
       <div>
         <Accordion>
