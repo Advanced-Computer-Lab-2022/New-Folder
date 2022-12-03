@@ -8,6 +8,12 @@ import { postPromotion } from "../../../network";
 import "react-datepicker/dist/react-datepicker.css";
 import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
+import "./AddPromotion.css";
+import Modal from "react-bootstrap/Modal";
+import { format } from "date-fns";
+import { DayPicker } from "react-day-picker";
+
+import "react-day-picker/dist/style.css";
 function AddPromotion(props) {
   const { promotion, setPromotion, courseId } = props;
   const [isEditing, setEditing] = useState(false);
@@ -50,6 +56,10 @@ function AddPromotion(props) {
       setError("Please add a percentage");
       return;
     }
+    if (newPercentage > 100 || newPercentage < 0) {
+      setError("Percentage must be between 0-100");
+      return;
+    }
     setError(null);
     setEditing(false);
     const addedPromotion = {
@@ -72,64 +82,71 @@ function AddPromotion(props) {
   };
   return (
     <div>
-      {isEditing ? (
-        <>
-          <Button onClick={() => save()}>Save Changes</Button>
-          <Button onClick={() => cancel()}>Discard changes</Button>
-          <Stack direction="horizontal" gap={1}>
-            <DatePicker
-              scrollableYearDropdown={true}
-              showYearDropdown={true}
-              showMonthDropdown={true}
-              onSelect={(date) => setSelectedStartDate(date)}
-              value={selectedStartDate}
-              adjustDateOnChange={true}
-              selected={selectedStartDate}
-              placeholderText={"Select start date"}
-            />
-            <DatePicker
-              scrollableYearDropdown={true}
-              showYearDropdown={true}
-              showMonthDropdown={true}
-              onSelect={(date) => setSelectedEndDate(date)}
-              value={selectedEndDate}
-              adjustDateOnChange={true}
-              selected={selectedEndDate}
-              placeholderText={"Select end date"}
-            />
-          </Stack>
-          <Form.Group as={Col}>
-            <Form.Control
-              type="number"
-              placeholder="Promotion %"
-              value={newPercentage}
-              onChange={(e) => setNewPercentage(e.target.value)}
-            />
-          </Form.Group>
-        </>
-      ) : (
-        <>
-          {valid ? (
-            <div>
-              <h5>
-                <b>Course promotion: </b> {promotion?.percentage ?? 0}%
-              </h5>
-              <h5>
-                <b>Start Date: </b>{" "}
-                {new Date(promotion?.startDate).toDateString() ?? ""}
-              </h5>
-              <h5>
-                <b>End Date: </b>{" "}
-                {new Date(promotion?.endDate).toDateString() ?? ""}
-              </h5>
-              <Button onClick={() => setEditing(true)}>Change promotion</Button>
-            </div>
-          ) : (
-            <Button onClick={() => setEditing(true)}>Add promotion</Button>
-          )}
-        </>
-      )}
-      {error ? <h6>Error: {error}</h6> : null}
+      <>
+        <Modal show={isEditing} onHide={() => setEditing(false)} size={"lg"}>
+          <Modal.Header>
+            <Modal.Title>Add promotion</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <h6>Start date</h6>
+            <h6>End date</h6>
+            <Stack direction="horizontal" gap={1}>
+              <DayPicker
+                mode="single"
+                selected={selectedStartDate}
+                onSelect={(date) => setSelectedStartDate(date)}
+              />
+              <DayPicker
+                mode="single"
+                selected={selectedEndDate}
+                onSelect={(date) => setSelectedEndDate(date)}
+              />
+            </Stack>
+            <Form.Group as={Col}>
+              <Form.Control
+                type="number"
+                placeholder="Promotion %"
+                value={newPercentage}
+                onChange={(e) => setNewPercentage(e.target.value)}
+              />
+            </Form.Group>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={cancel}>
+              Close
+            </Button>
+            <Button variant="primary" onClick={save}>
+              Save Changes
+            </Button>
+            {error ? <h6>Error: {error}</h6> : null}
+          </Modal.Footer>
+        </Modal>
+      </>
+
+      <>
+        {valid ? (
+          <div>
+            <h5>
+              <b>Course promotion: </b> {promotion?.percentage ?? 0}%
+            </h5>
+            <h5>
+              <b>Promotion Start Date: </b>{" "}
+              {new Date(promotion?.startDate).toDateString() ?? ""}
+            </h5>
+            <h5>
+              <b>Promotion End Date: </b>{" "}
+              {new Date(promotion?.endDate).toDateString() ?? ""}
+            </h5>
+            <Button variant="primary" onClick={() => setEditing(true)}>
+              Cahnge promotion
+            </Button>
+          </div>
+        ) : (
+          <Button variant="primary" onClick={() => setEditing(true)}>
+            Add promotion
+          </Button>
+        )}
+      </>
     </div>
   );
 }
