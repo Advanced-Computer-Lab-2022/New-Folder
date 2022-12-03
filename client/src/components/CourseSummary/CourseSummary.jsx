@@ -30,6 +30,18 @@ function CourseSummary(props) {
       />
     );
   }, [totalRating]);
+
+  const totalDuration = () => {
+    let res = "";
+    let hours = parseInt(props.duration / 3600);
+    if(hours !== 0 ){
+      res += hours +" hr(s) "
+    }
+    let mins = parseInt((props.duration % 3600) / 60);
+    res += mins+" min(s)";
+    return res;
+  }
+
   return (
     <>
       <div id="courseSummaryContainer">
@@ -77,7 +89,7 @@ function CourseSummary(props) {
                   </h5>
                 ) : null}
                 <h5 className="courseInfo">
-                  <b>Total duration:</b> {props.duration ?? 0} hours
+                  <b>Total duration:</b> {totalDuration()} 
                 </h5>
                 <h5 className="courseInfo">
                   <strong>Subject:</strong> {props.course.subject ?? ""}

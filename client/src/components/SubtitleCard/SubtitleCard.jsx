@@ -30,7 +30,14 @@ function SubtitleCard(props) {
         subtitles: updatedSubtitles,
       });
       console.log(updatedCourse);
+      props.setCourse(updatedCourse);
       props.setSubtitles(updatedCourse.subtitles);
+      const map = new Map(props.durationMap);
+      for (let i = 0; i < subtitle.subTitle_Content.length; i++) {
+        map.delete(subtitle.subTitle_Content[i].subTitle_Content_id);
+      }
+      props.setDurationMap(map);
+      props.claculateDuration();
     } catch (err) {
       console.log(err);
     }
