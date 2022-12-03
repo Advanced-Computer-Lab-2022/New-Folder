@@ -17,7 +17,7 @@ const ViewInstructorProfile = () => {
   const [coursesCount, setCoursesCount] = useState(0);
   const [myRating, setMyRating] = useState(null);
   const [hasNewReview, setHasNewReview] = useState(false);
-  const { instructorID } = useParams();
+  const { isEnrolled, instructorID } = useParams();
 
   const fetchData = async () => {
     try {
@@ -39,6 +39,7 @@ const ViewInstructorProfile = () => {
 
   useEffect(() => {
     fetchData();
+    console.log(isEnrolled);
   }, []);
 
   useEffect(() => {
@@ -48,8 +49,7 @@ const ViewInstructorProfile = () => {
   return (
     <div>
       <ProfileCard name={name} img={img} rating={rating} ratingNo={ratingNo} />
-      {ReactSession.get("userType") === userTypes.trainee ||
-      ReactSession.get("userType") === userTypes.corporateTrainee ? (
+      {isEnrolled === "true" ? (
         <RateAndReviewInstructor
           instructorID={instructorID}
           rating={rating}

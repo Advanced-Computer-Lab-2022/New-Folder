@@ -55,7 +55,18 @@ function CourseSummary(props) {
             <Col>
               <Stack gap={1} id="courseHeader">
                 <h2 id="courseTitle">{props.course.name}</h2>
-                <h5 id="courseInstructorName">By: Instructor</h5>
+                <h5 id="courseInstructorName">
+                  By:{" "}
+                  <a
+                    id="courseInstructorNameLink"
+                    href={`/viewInstructorProfile/${
+                      props.vc === ViewerContexts.enrolledTrainee
+                    }/${props.course.instructorInfo?.instructorId}`}
+                  >
+                    {props.course.instructorInfo?.instructorName ??
+                      "Instructor"}
+                  </a>
+                </h5>
                 <div id="courseRatingStars">
                   <Stars />
                   <h6 id="ratingsCount">
