@@ -52,7 +52,7 @@ function App() {
         <Route path="/excercise/:excerciseID" element={<Excercise />} />
 
         <Route
-          path="/viewInstructorProfile/:instructorID"
+          path="/viewInstructorProfile/:isEnrolled/:instructorID"
           element={<ViewInstructorProfile />}
         />
         <Route path="/forgetPassword" element={<ForgetPassword />} />

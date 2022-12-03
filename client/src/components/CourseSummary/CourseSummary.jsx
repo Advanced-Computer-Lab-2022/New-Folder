@@ -44,6 +44,18 @@ function CourseSummary(props) {
       />
     );
   }, [totalRating]);
+
+  const totalDuration = () => {
+    let res = "";
+    let hours = parseInt(props.duration / 3600);
+    if(hours !== 0 ){
+      res += hours +" hr(s) "
+    }
+    let mins = parseInt((props.duration % 3600) / 60);
+    res += mins+" min(s)";
+    return res;
+  }
+
   return (
     <>
       <div id="courseSummaryContainer">
@@ -55,7 +67,18 @@ function CourseSummary(props) {
             <Col>
               <Stack gap={1} id="courseHeader">
                 <h2 id="courseTitle">{props.course.name}</h2>
-                <h5 id="courseInstructorName">By: Instructor</h5>
+                <h5 id="courseInstructorName">
+                  By:{" "}
+                  <a
+                    id="courseInstructorNameLink"
+                    href={`/viewInstructorProfile/${
+                      props.vc === ViewerContexts.enrolledTrainee
+                    }/${props.course.instructorInfo?.instructorId}`}
+                  >
+                    {props.course.instructorInfo?.instructorName ??
+                      "Instructor"}
+                  </a>
+                </h5>
                 <div id="courseRatingStars">
                   <Stars />
                   <h6 id="ratingsCount">
@@ -110,7 +133,7 @@ function CourseSummary(props) {
                   </>
                 ) : null}
                 <h5 className="courseInfo">
-                  <b>Total duration:</b> {props.duration ?? 0} hours
+                  <b>Total duration:</b> {totalDuration()} 
                 </h5>
                 <h5 className="courseInfo">
                   <strong>Subject:</strong> {props.course.subject ?? ""}

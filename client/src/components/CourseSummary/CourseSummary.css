@@ -81,3 +81,7 @@
   margin-top: 3%;
   margin-left: 8%;
 }
+#courseInstructorNameLink {
+  text-decoration: none;
+  color: #0d5c84;
+}
