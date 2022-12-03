@@ -18,12 +18,14 @@ const Content = () => {
    
  
   // get course ID to get Course Object
-  // get index of specific subtitle index (sId) and content that will be displayed (c)
+  // get index of specific subtitle index (sId) and content that will be displayed (cId)
   const { courseId } = useParams();
   const params = new URLSearchParams(window.location.search);
   const indexOfSubtitle = params.get('sId');
   const indexOfContent = params.get('cId');
 
+
+// fetch course on page loading
   useEffect(  () => {
     fetchCourse();
  }, []);
@@ -38,6 +40,10 @@ const Content = () => {
     }
   };
 
+
+// this page will return two kind of components
+// first part which is on the left of the screen includes the required ContentID with required video (ContentDisplay component)
+// second part which is the accordion shows all subtitle_content to let the user choose desired excercise or content Video
   return (
     <Row>
         {subtitleID != "" && <ContentDisplay subtitleContentDisplay={subtitleID} cID={indexOfContent}/>}
