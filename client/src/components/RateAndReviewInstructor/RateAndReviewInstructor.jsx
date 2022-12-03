@@ -4,17 +4,31 @@ import ReactStars from "react-rating-stars-component";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
+import Modal from "react-bootstrap/Modal";
 import { rateInstructor, reviewInstructor } from "../../network";
 
 const RateAndReviewInstructor = (props) => {
   const [newReview, setNewReview] = useState("");
+  const [show, setShow] = useState(false);
+  const [confMsg, setConfMsg] = useState("");
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
   const review = async () => {
-    await reviewInstructor({
-      instructorID: props.instructorID,
-      newReview,
-    });
-    setNewReview("");
+    try {
+      await reviewInstructor({
+        instructorID: props.instructorID,
+        newReview,
+      });
+      setNewReview("");
+      setConfMsg("Your review was added successfully.");
+      props.setHasNewReview(!props.hasNewReview);
+      handleShow();
+    } catch {
+      setConfMsg("Something went wrong, try again later.");
+      handleShow();
+    }
   };
 
   const rate = async (rating) => {
@@ -76,6 +90,14 @@ const RateAndReviewInstructor = (props) => {
           </Button>
         </div>
       ) : null}
+      <Modal centered show={show} onHide={handleClose}>
+        <Modal.Body className="mt-3">{confMsg}</Modal.Body>
+        <Modal.Footer>
+          <Button variant="dark" onClick={handleClose}>
+            Close
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </Card>
   );
 };

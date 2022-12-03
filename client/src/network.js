@@ -196,12 +196,12 @@ export const fetchTraineeName = async (id) => {
 };
 //addRating
 export const addRating = async (data) => {
-  const res = await instance.post("/course/addRating", data);
+  const res = await instance.patch("/course/addRating", data);
   return res;
 };
 //addRating
 export const deleteRating = async (data) => {
-  const res = await instance.post("/course/deleteRating", data);
+  const res = await instance.patch("/course/deleteRating", data);
   return res;
 };
 
@@ -216,4 +216,17 @@ export const createNewSubtitle = async (courseId, subtitle) => {
     subtitle: subtitle,
   });
   return res.data;
+};
+
+//Add promotion
+export const postPromotion = async (courseId, promotion) => {
+  try {
+    const res = await instance.patch("course/addPromotion", {
+      courseId: courseId,
+      promotion: promotion,
+    });
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
 };

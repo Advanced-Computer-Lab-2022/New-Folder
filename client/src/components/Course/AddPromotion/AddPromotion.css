@@ -1,0 +1,21 @@
+#addPromotionHeader {
+  margin-bottom: -5%;
+}
+.promotionError {
+  color: red;
+}
+.rdp-day_today:not(.rdp-day_outside) {
+  text-decoration: underline;
+}
+.rdp-day_selected:not(.rdp-day_outside) {
+  background-color: #a6d1e6;
+}
+.rdp-day_range_start:not(.rdp-day_outside) {
+  background-color: #a6d1e6;
+}
+.rdp-day_range_end:not(.rdp-day_outside) {
+  background-color: #a6d1e6;
+}
+.rdp-day_range_middle:not(.rdp-day_outside) {
+  background-color: #a6d1e6;
+}

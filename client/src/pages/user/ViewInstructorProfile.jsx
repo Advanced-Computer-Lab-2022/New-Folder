@@ -16,6 +16,7 @@ const ViewInstructorProfile = () => {
   const [ratingNo, setRatingNo] = useState(0);
   const [coursesCount, setCoursesCount] = useState(0);
   const [myRating, setMyRating] = useState(null);
+  const [hasNewReview, setHasNewReview] = useState(false);
   const { instructorID } = useParams();
 
   const fetchData = async () => {
@@ -40,6 +41,10 @@ const ViewInstructorProfile = () => {
     fetchData();
   }, []);
 
+  useEffect(() => {
+    fetchData();
+  }, [hasNewReview]);
+
   return (
     <div>
       <ProfileCard name={name} img={img} rating={rating} ratingNo={ratingNo} />
@@ -53,6 +58,8 @@ const ViewInstructorProfile = () => {
           setRatingNo={setRatingNo}
           setMyRating={setMyRating}
           myRating={myRating}
+          hasNewReview={hasNewReview}
+          setHasNewReview={setHasNewReview}
         />
       ) : null}
       <ReviewCard reviews={reviews} />
