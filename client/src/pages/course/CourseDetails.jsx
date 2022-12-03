@@ -114,8 +114,10 @@ const CourseDetails = () => {
             <h3 className="mb-4">Subtitles ({subtitles.length})</h3>
             {subtitles.map((subtitleId, index) => (
               <SubtitleCard
+                setCourse={setCourse}
                 subtitles={subtitles}
                 setSubtitles={setSubtitles}
+                claculateDuration={claculateDuration}
                 courseId={course._id}
                 index={index}
                 subtitleId={subtitleId}
