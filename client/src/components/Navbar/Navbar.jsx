@@ -22,7 +22,7 @@ const MainNavbar = (props) => {
   };
 
   return (
-    <Navbar bg="dark" variant="dark">
+    <Navbar sticky="top" bg="dark" variant="dark">
       <Container>
         <Nav className="me-auto">
           <Nav.Link href="/">Explore</Nav.Link>

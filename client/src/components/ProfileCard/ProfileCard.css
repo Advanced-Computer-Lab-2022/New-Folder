@@ -13,7 +13,7 @@
 
 #instructorName {
   margin: auto;
-  margin-top: 105px;
+  margin-top: 70px;
   align-items: center;
   display: flex;
 }
@@ -25,6 +25,7 @@
 
 #instructorRatingStars {
   width: 190px;
+  margin-top: -10px;
   margin-right: 0;
   padding-right: 0;
 }
