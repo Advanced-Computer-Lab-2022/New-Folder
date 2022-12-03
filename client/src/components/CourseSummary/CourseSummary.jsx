@@ -11,6 +11,7 @@ import "./CourseSummary.css";
 import ReactStars from "react-rating-stars-component";
 import { useState } from "react";
 import AddPromotion from "../Course/AddPromotion/AddPromotion";
+import "react-day-picker/dist/style.css";
 import Container from "react-bootstrap/esm/Container";
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -162,10 +163,11 @@ function CourseSummary(props) {
                           onChange={(e) => {
                             props.setNewVideo(e.target.value);
                           }}
+                          id="urlInput"
                         ></Form.Control>
                       </Form.Group>
                       <div className="text-center">
-                        <Button className="mt-3" type="submit">
+                        <Button id="addVideo" type="submit">
                           Add video
                         </Button>
                       </div>

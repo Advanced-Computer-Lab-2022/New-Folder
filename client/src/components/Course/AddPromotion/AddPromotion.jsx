@@ -3,25 +3,21 @@ import { useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 import Stack from "react-bootstrap/esm/Stack";
-import DatePicker from "react-datepicker";
 import { postPromotion } from "../../../network";
-import "react-datepicker/dist/react-datepicker.css";
+import "react-day-picker/dist/style.css";
 import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
-import "./AddPromotion.css";
 import Modal from "react-bootstrap/Modal";
-import { format } from "date-fns";
 import { DayPicker } from "react-day-picker";
 
-import "react-day-picker/dist/style.css";
 function AddPromotion(props) {
   const { promotion, setPromotion, courseId } = props;
   const [isEditing, setEditing] = useState(false);
-  const [selectedStartDate, setSelectedStartDate] = useState(null);
-  const [selectedEndDate, setSelectedEndDate] = useState(null);
+  const [range, setRange] = useState(null);
   const [newPercentage, setNewPercentage] = useState(null);
   const [valid, setValid] = useState(false);
-  const [error, setError] = useState(null);
+  const [dateError, setDateError] = useState(null);
+  const [percentageError, setPercentageError] = useState(null);
   useEffect(() => {
     if (
       promotion?.startDate <= promotion?.endDate &&
@@ -34,51 +30,51 @@ function AddPromotion(props) {
     }
   }, [promotion]);
   const save = async () => {
-    const startDate = new Date(selectedStartDate).getTime();
-    const endDate = new Date(selectedEndDate).getTime();
+    const startDate = new Date(range?.from).getTime();
+    const endDate = new Date(range?.to).getTime();
     if (!startDate) {
-      setError("Start date is missing");
+      setDateError("Start date is missing!");
       return;
     }
     if (!endDate) {
-      setError("End date is missing");
+      setDateError("End date is missing!");
       return;
     }
     if (startDate > endDate) {
-      setError("End date can not be before start date");
+      setDateError("End date can not be before start date!");
       return;
     }
     if (endDate < Date.now()) {
-      setError("This promotion is in the past");
+      setDateError("This promotion is in the past!");
       return;
     }
+    setDateError(null);
     if (!newPercentage) {
-      setError("Please add a percentage");
+      setPercentageError("Please add a percentage!");
       return;
     }
     if (newPercentage > 100 || newPercentage < 0) {
-      setError("Percentage must be between 0-100");
+      setPercentageError("Percentage must be between 0-100!");
       return;
     }
-    setError(null);
+    setPercentageError(null);
     setEditing(false);
     const addedPromotion = {
-      startDate: new Date(selectedStartDate).getTime(),
-      endDate: new Date(selectedEndDate).getTime(),
+      startDate: new Date(startDate).getTime(),
+      endDate: new Date(endDate).getTime(),
       percentage: newPercentage,
     };
     setPromotion(addedPromotion);
     setNewPercentage(null);
-    setSelectedEndDate(null);
-    setSelectedStartDate(null);
+    setRange(null);
     await postPromotion(courseId, addedPromotion);
   };
   const cancel = async () => {
-    setError(null);
+    setPercentageError(null);
+    setDateError(null);
     setEditing(false);
     setNewPercentage(null);
-    setSelectedEndDate(null);
-    setSelectedStartDate(null);
+    setRange(null);
   };
   return (
     <div>
@@ -88,20 +84,11 @@ function AddPromotion(props) {
             <Modal.Title>Add promotion</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h6>Start date</h6>
-            <h6>End date</h6>
-            <Stack direction="horizontal" gap={1}>
-              <DayPicker
-                mode="single"
-                selected={selectedStartDate}
-                onSelect={(date) => setSelectedStartDate(date)}
-              />
-              <DayPicker
-                mode="single"
-                selected={selectedEndDate}
-                onSelect={(date) => setSelectedEndDate(date)}
-              />
+            <h6 id="addPromotionHeader">Select duration:</h6>
+            <Stack direction="vertical" gap={1}>
+              <DayPicker mode="range" selected={range} onSelect={setRange} />
             </Stack>
+            {dateError ? <p className="promotionError">{dateError}</p> : null}
             <Form.Group as={Col}>
               <Form.Control
                 type="number"
@@ -109,6 +96,9 @@ function AddPromotion(props) {
                 value={newPercentage}
                 onChange={(e) => setNewPercentage(e.target.value)}
               />
+              {percentageError ? (
+                <p className="promotionError">{percentageError}</p>
+              ) : null}
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
@@ -118,7 +108,6 @@ function AddPromotion(props) {
             <Button variant="primary" onClick={save}>
               Save Changes
             </Button>
-            {error ? <h6>Error: {error}</h6> : null}
           </Modal.Footer>
         </Modal>
       </>
