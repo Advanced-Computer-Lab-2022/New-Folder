@@ -11,13 +11,27 @@ import "./CourseSummary.css";
 import ReactStars from "react-rating-stars-component";
 import { useState } from "react";
 import AddPromotion from "../Course/AddPromotion/AddPromotion";
+import "react-day-picker/dist/style.css";
 import Container from "react-bootstrap/esm/Container";
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
   const [ratingsCount, setRatingsCount] = useState(0);
+  const [validPromotion, setValidPromotion] = useState(false);
+  const promotion = props.promotion;
+  const setPromotion = props.setPromotion;
   useEffect(() => {
     setTotalRating(props.course.totalRating);
   }, []);
+  useEffect(() => {
+    const startDate = new Date(promotion?.startDate).getTime();
+    const endDate = new Date(promotion?.endDate).getTime();
+    const now = Date.now();
+    if (now <= endDate && now >= startDate && promotion?.percentage > 0) {
+      setValidPromotion(true);
+    } else {
+      setValidPromotion(false);
+    }
+  }, [props.promotion]);
   let Stars = useMemo(() => {
     return () => (
       <ReactStars
@@ -44,7 +58,9 @@ function CourseSummary(props) {
                 <h5 id="courseInstructorName">By: Instructor</h5>
                 <div id="courseRatingStars">
                   <Stars />
-                  <h6 id="ratingsCount">({ratingsCount} ratings)</h6>
+                  <h6 id="ratingsCount">
+                    ({ratingsCount} {ratingsCount == 1 ? "rating" : "rating"})
+                  </h6>
                 </div>
               </Stack>
             </Col>
@@ -72,9 +88,26 @@ function CourseSummary(props) {
                 </div>
                 {props.vc !== ViewerContexts.nonEnrolledCorporateTrainee &&
                 props.vc !== ViewerContexts.enrolledTrainee ? (
-                  <h5 className="courseInfo">
-                    <b>Price:</b> {props.price ?? ""}
-                  </h5>
+                  <>
+                    {validPromotion ? (
+                      <>
+                        <h5 className="courseInfo">
+                          <b>Price:</b>{" "}
+                          <del>{props.price.split(" ")[0] ?? ""}</del>{" "}
+                          {(
+                            parseFloat(props.price.split(" ")[0]) *
+                            (1 - promotion.percentage / 100)
+                          ).toFixed(2)}{" "}
+                          {props.price.split(" ")[1]}
+                          {`(-${promotion.percentage}%)`}
+                        </h5>
+                      </>
+                    ) : (
+                      <h5 className="courseInfo">
+                        <b>Price:</b> {props.price ?? ""}
+                      </h5>
+                    )}
+                  </>
                 ) : null}
                 <h5 className="courseInfo">
                   <b>Total duration:</b> {props.duration ?? 0} hours
@@ -95,7 +128,13 @@ function CourseSummary(props) {
                     ratingsCount={ratingsCount}
                     setRatingsCount={setRatingsCount}
                   />
-                  {props.vc === ViewerContexts.author ? <AddPromotion /> : null}
+                  {props.vc === ViewerContexts.author ? (
+                    <AddPromotion
+                      promotion={promotion}
+                      setPromotion={setPromotion}
+                      courseId={props.course._id}
+                    />
+                  ) : null}
                 </div>
               </Stack>
             </Col>
@@ -124,10 +163,11 @@ function CourseSummary(props) {
                           onChange={(e) => {
                             props.setNewVideo(e.target.value);
                           }}
+                          id="urlInput"
                         ></Form.Control>
                       </Form.Group>
                       <div className="text-center">
-                        <Button className="mt-3" type="submit">
+                        <Button id="addVideo" type="submit">
                           Add video
                         </Button>
                       </div>
