@@ -9,11 +9,11 @@ function VideoPreview(props) {
     try {
       const fetchedVideo = await fetchVideoContent(props.videoId);
       setVideo(fetchedVideo);
-      
-      await props.setDurationMap(oldMap => {
+
+      await props.setDurationMap((oldMap) => {
         const map = new Map(oldMap);
-        map.set(props.videoId, fetchedVideo.duration??0);
-        return map
+        map.set(props.videoId, fetchedVideo.duration ?? 0);
+        return map;
       });
     } catch (err) {
       console.log(err);
@@ -24,7 +24,7 @@ function VideoPreview(props) {
   }, []);
   return (
     <>
-      <ul style={{border: "1px dotted black"}}>
+      <ul style={{ border: "1px dotted black" }}>
         <li>{"Video Duration: " + video.duration + " hrs"}</li>
         <li>{"Video Description: " + video.description}</li>
       </ul>

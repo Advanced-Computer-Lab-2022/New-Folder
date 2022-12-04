@@ -1,16 +1,15 @@
 .ExamForm {
-    width: 50% !important;
-    padding: 2em;
-    background-color: #f7f7f7;
-    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-    margin-bottom: 2em;
+  width: 50% !important;
+  padding: 2em;
+  background-color: #f7f7f7;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  margin-bottom: 2em;
 }
 
-.ExamForm input{
-    margin: 0.5em;
+.ExamForm input {
+  margin: 0.5em;
 }
 
 .ExamForm label {
-    margin: 0.4em;
+  margin: 0.4em;
 }
-
