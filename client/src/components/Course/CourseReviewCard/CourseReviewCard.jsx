@@ -15,7 +15,7 @@ const CourseReviewCard = (props) => {
       tempReviews.push(
         <Card className="courseCardFrame">
           <Card.Body className="courseReviewCard">
-            <Card.Title>{props.reviews[i].trainee}</Card.Title>
+            <Card.Title>{props.reviews[i].traineeName}</Card.Title>
             <Card.Text>{props.reviews[i].review}</Card.Text>
           </Card.Body>
         </Card>
@@ -30,7 +30,7 @@ const CourseReviewCard = (props) => {
       tempReviews.push(
         <Card className="courseCardFrame">
           <Card.Body className="courseReviewCard">
-            <Card.Title>{props.reviews[i].trainee}</Card.Title>
+            <Card.Title>{props.reviews[i].traineeName}</Card.Title>
             <Card.Text>{props.reviews[i].review}</Card.Text>
           </Card.Body>
         </Card>

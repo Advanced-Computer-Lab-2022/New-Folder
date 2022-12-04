@@ -65,7 +65,6 @@ function RatingCard(props) {
           (newRating ?? traineeRating) -
           traineeRating) /
         ratingsCount;
-      //console.log(newTotalRating);
       setTotalRating(newTotalRating);
     }
     const addedReview = newReview ?? traineeReview;

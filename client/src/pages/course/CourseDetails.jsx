@@ -46,7 +46,19 @@ const CourseDetails = () => {
       console.log(fetchedVc);
       setVc(fetchedVc);
       setCourse(fetchedCourse);
-      setReviews(fetchedCourse.reviews);
+      let fetchedReviews = [];
+      for (let i = 0; i < fetchedCourse.ratings.length; i++) {
+        if (
+          fetchedCourse.ratings[i].review &&
+          fetchedCourse.ratings[i].review !== ""
+        ) {
+          fetchedReviews.push({
+            traineeName: fetchedCourse.ratings[i].traineeName,
+            review: fetchedCourse.ratings[i].review,
+          });
+        }
+      }
+      setReviews(fetchedReviews);
       setSubtitles(fetchedCourse.subtitles);
       setPromotion(fetchedCourse.promotion);
     } catch (err) {
@@ -151,7 +163,7 @@ const CourseDetails = () => {
           ) : null}
         </Accordion>
       </div>
-      {/* <CourseReviewCard reviews={reviews} /> */}
+      <CourseReviewCard reviews={reviews} />
     </div>
   );
 };
