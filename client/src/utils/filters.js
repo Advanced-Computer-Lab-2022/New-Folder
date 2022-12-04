@@ -15,7 +15,11 @@ export const filterCoursesByPrice = async (min, max, courses) => {
 };
 
 export const filterCoursesByRating = (value, courses) => {
-  return courses.filter((course) => course.rating == value);
+  console.log(parseFloat(value).toFixed(1));
+  return courses.filter(
+    (course) =>
+      parseFloat(course.totalRating).toFixed(1) == parseFloat(value).toFixed(1)
+  );
 };
 
 export const filterCoursesBySubject = (value, courses) => {

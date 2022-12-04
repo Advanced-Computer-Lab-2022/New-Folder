@@ -44,7 +44,7 @@ const Search = () => {
   useEffect(() => {
     fetchData();
     clearFilters();
-  }, []);
+  }, [searchQuery]);
 
   useEffect(() => {
     clearFilters();
