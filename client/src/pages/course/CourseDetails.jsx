@@ -56,6 +56,7 @@ const CourseDetails = () => {
             traineeId: fetchedCourse.ratings[i].traineeId,
             traineeName: fetchedCourse.ratings[i].traineeName,
             review: fetchedCourse.ratings[i].review,
+            rating: fetchedCourse.ratings[i].rating,
           });
         }
       }

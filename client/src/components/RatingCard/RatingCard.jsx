@@ -1,6 +1,5 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
-import Modal from "react-bootstrap/Modal";
 import Stack from "react-bootstrap/Stack";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
@@ -78,6 +77,7 @@ function RatingCard(props) {
             traineeName: props.reviews[i].traineeName,
             traineeId: props.reviews[i].traineeId,
             review: addedReview,
+            rating: addedRating,
           });
         }
         found = true;
@@ -90,6 +90,7 @@ function RatingCard(props) {
         traineeName: ReactSession.get("userName"),
         traineeId: ReactSession.get("userId"),
         review: addedReview,
+        rating: addedRating,
       });
     }
     props.setReviews(newReviews);

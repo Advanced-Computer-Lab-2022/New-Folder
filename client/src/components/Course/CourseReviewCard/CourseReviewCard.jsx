@@ -4,6 +4,7 @@ import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
 import { useState } from "react";
 import { useEffect } from "react";
+import ReactStars from "react-rating-stars-component";
 
 const CourseReviewCard = (props) => {
   const [lastReviewIndex, setLastReviewIndex] = useState(3);
@@ -16,6 +17,14 @@ const CourseReviewCard = (props) => {
         <Card className="courseCardFrame">
           <Card.Body className="courseReviewCard">
             <Card.Title>{props.reviews[i].traineeName}</Card.Title>
+            <ReactStars
+              count={5}
+              size={50}
+              isHalf={true}
+              activeColor="#ffd700"
+              value={props.reviews[i].rating ?? 0}
+              edit={false}
+            />
             <Card.Text>{props.reviews[i].review}</Card.Text>
           </Card.Body>
         </Card>
@@ -31,6 +40,14 @@ const CourseReviewCard = (props) => {
         <Card className="courseCardFrame">
           <Card.Body className="courseReviewCard">
             <Card.Title>{props.reviews[i].traineeName}</Card.Title>
+            <ReactStars
+              count={5}
+              size={50}
+              isHalf={true}
+              activeColor="#ffd700"
+              value={props.reviews[i].rating ?? 0}
+              edit={false}
+            />
             <Card.Text>{props.reviews[i].review}</Card.Text>
           </Card.Body>
         </Card>
