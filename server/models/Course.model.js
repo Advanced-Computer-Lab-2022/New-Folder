@@ -34,7 +34,7 @@ const Course = mongoose.Schema({
     type: Number,
     default: 0,
   },
-  reviews: {
+  ratings: {
     type: [
       {
         traineeId: {

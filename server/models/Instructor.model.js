@@ -38,7 +38,7 @@ const Instructor = mongoose.Schema(
       max: 5,
       default: 0,
     },
-    reviews: {
+    ratings: {
       type: [
         {
           traineeId: {
