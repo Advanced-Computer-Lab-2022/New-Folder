@@ -24,6 +24,9 @@ exports.sendPasswordResetLink = asyncHandler(async (req, res) => {
         user: process.env.EMAIL, // ethereal user
         pass: process.env.PASSWORD, // ethereal password
       },
+      tls: {
+        rejectUnauthorized: false,
+      },
     });
 
     const msg = {
