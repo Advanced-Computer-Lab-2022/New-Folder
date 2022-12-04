@@ -1,5 +1,5 @@
 import "./EditMyProfileForm.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { editMyProfile } from "../../network";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
@@ -10,21 +10,26 @@ import { ImPencil } from "react-icons/im";
 
 const EditMyProfileForm = (props) => {
   const [allowEdit, setAllowEdit] = useState(false);
-  const [originalEmail, setOriginalEmail] = useState(props.email);
-  const [originalAbout, setOriginalAbout] = useState(props.about);
+  const [email, setEmail] = useState(props.email);
+  const [about, setAbout] = useState(props.about);
+
+  useEffect(() => {
+    setEmail(props.email);
+    setAbout(props.about);
+  }, [props.email, props.about]);
 
   const submit = async (e) => {
     e.preventDefault();
-    await editMyProfile({ email: props.email, about: props.about });
+    await editMyProfile({ email, about });
     setAllowEdit(false);
-    setOriginalAbout(props.about);
-    setOriginalEmail(props.email);
+    props.setAbout(about);
+    props.setEmail(email);
   };
 
   const cancelChanges = () => {
     setAllowEdit(false);
-    props.setAbout(originalAbout);
-    props.setEmail(originalEmail);
+    setEmail(props.email);
+    setAbout(props.about);
   };
 
   return (
@@ -50,17 +55,15 @@ const EditMyProfileForm = (props) => {
                 >
                   <Form.Control
                     type="email"
-                    value={props.email}
+                    value={email}
                     onChange={(e) => {
-                      props.setEmail(e.target.value);
+                      setEmail(e.target.value);
                     }}
                   />
                 </FloatingLabel>
               ) : (
-                <Card>
-                  <Card.Body className="myInfoStaticCard">
-                    {props.email}
-                  </Card.Body>
+                <Card onClick={() => setAllowEdit(true)}>
+                  <Card.Body className="myInfoStaticCard">{email}</Card.Body>
                 </Card>
               )}
             </Form.Group>
@@ -74,17 +77,15 @@ const EditMyProfileForm = (props) => {
                 >
                   <Form.Control
                     as="textarea"
-                    value={props.about}
+                    value={about}
                     onChange={(e) => {
-                      props.setAbout(e.target.value);
+                      setAbout(e.target.value);
                     }}
                   />
                 </FloatingLabel>
               ) : (
-                <Card>
-                  <Card.Body className="myInfoStaticCard">
-                    {props.about}
-                  </Card.Body>
+                <Card onClick={() => setAllowEdit(true)}>
+                  <Card.Body className="myInfoStaticCard">{about}</Card.Body>
                 </Card>
               )}
             </Form.Group>
