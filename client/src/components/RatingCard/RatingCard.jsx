@@ -69,6 +69,30 @@ function RatingCard(props) {
     }
     const addedReview = newReview ?? traineeReview;
     const addedRating = newRating ?? traineeRating;
+    let newReviews = [];
+    let found = false;
+    for (let i = 0; i < props.reviews.length; i++) {
+      if (props.reviews[i].traineeId === ReactSession.get("userId")) {
+        if (addedReview && addedReview !== "") {
+          newReviews.push({
+            traineeName: props.reviews[i].traineeName,
+            traineeId: props.reviews[i].traineeId,
+            review: addedReview,
+          });
+        }
+        found = true;
+      } else {
+        newReviews.push(props.reviews[i]);
+      }
+    }
+    if (!found && addedReview && addedReview !== "") {
+      newReviews.push({
+        traineeName: ReactSession.get("userName"),
+        traineeId: ReactSession.get("userId"),
+        review: addedReview,
+      });
+    }
+    props.setReviews(newReviews);
     setTraineeRating(addedRating);
     setTraineeReview(addedReview);
     setNewRating(null);
@@ -89,6 +113,13 @@ function RatingCard(props) {
           (totalRating * ratingsCount - traineeRating) / (ratingsCount - 1);
         setTotalRating(newTotalRating);
       }
+      let newReviews = [];
+      for (let i = 0; i < props.reviews.length; i++) {
+        if (props.reviews[i].traineeId !== ReactSession.get("userId")) {
+          newReviews.push(props.reviews[i]);
+        }
+      }
+      props.setReviews(newReviews);
       setTraineeRating(null);
       setTraineeReview(null);
       setNewRating(null);

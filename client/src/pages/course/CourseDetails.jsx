@@ -53,6 +53,7 @@ const CourseDetails = () => {
           fetchedCourse.ratings[i].review !== ""
         ) {
           fetchedReviews.push({
+            traineeId: fetchedCourse.ratings[i].traineeId,
             traineeName: fetchedCourse.ratings[i].traineeName,
             review: fetchedCourse.ratings[i].review,
           });
@@ -119,6 +120,8 @@ const CourseDetails = () => {
         uploadIntroVideo={uploadIntroVideo}
         promotion={promotion}
         setPromotion={setPromotion}
+        reviews={reviews}
+        setReviews={setReviews}
       />
       <div>
         <Accordion>
