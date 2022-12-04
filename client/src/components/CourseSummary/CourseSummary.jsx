@@ -73,9 +73,13 @@ function CourseSummary(props) {
                   By:{" "}
                   <a
                     id="courseInstructorNameLink"
-                    href={`/viewInstructorProfile/${
-                      props.vc === ViewerContexts.enrolledTrainee
-                    }/${props.course.instructorInfo?.instructorId}`}
+                    href={
+                      props.vc === ViewerContexts.author
+                        ? "/myProfile"
+                        : `/viewInstructorProfile/${
+                            props.vc === ViewerContexts.enrolledTrainee
+                          }/${props.course.instructorInfo?.instructorId}`
+                    }
                   >
                     {props.course.instructorInfo?.instructorName ??
                       "Instructor"}
