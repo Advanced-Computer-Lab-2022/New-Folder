@@ -8,6 +8,8 @@ import { useState, useEffect, useMemo } from "react";
 import { addRating, deleteRating, fetchCourseDetails } from "../../network";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import ReactStars from "react-rating-stars-component";
+import Modal from "react-bootstrap/Modal";
+
 import "./RatingCard.css";
 function RatingCard(props) {
   const {
@@ -105,33 +107,6 @@ function RatingCard(props) {
       review: addedReview,
     });
   };
-  const removeRating = async () => {
-    try {
-      if (ratingsCount - 1 == 0) {
-        setTotalRating(0);
-      } else {
-        const newTotalRating =
-          (totalRating * ratingsCount - traineeRating) / (ratingsCount - 1);
-        setTotalRating(newTotalRating);
-      }
-      let newReviews = [];
-      for (let i = 0; i < props.reviews.length; i++) {
-        if (props.reviews[i].traineeId !== ReactSession.get("userId")) {
-          newReviews.push(props.reviews[i]);
-        }
-      }
-      props.setReviews(newReviews);
-      setTraineeRating(null);
-      setTraineeReview(null);
-      setNewRating(null);
-      setNewReview(null);
-      setRatingsCount(ratingsCount - 1);
-      setEditing(false);
-      await deleteRating({ courseId: courseId });
-    } catch (err) {
-      console.log(err);
-    }
-  };
   const cancel = async () => {
     setEditing(false);
     setNewRating(null);
@@ -141,35 +116,14 @@ function RatingCard(props) {
     <div>
       {vc === ViewerContexts.enrolledTrainee ? (
         <Stack direction="horizontal">
-          {traineeRating !== null && !editing ? (
-            <>
-              <Stack direction="vertical">
-                <div id="courseStars">
-                  <h5>
-                    <b>Your course rating</b>
-                  </h5>
-                  <AddRatingStars />
-                </div>
-                <div id="courseStars">
-                  <h5>
-                    <b>Your course review</b>
-                  </h5>
-                  <p>{traineeReview}</p>
-                </div>
-                <Button
-                  onClick={() => removeRating()}
-                  id="deleteRating"
-                  variant="danger"
+          <>
+            {editing ? (
+              <>
+                <Modal
+                  show={editing}
+                  onHide={() => setEditing(false)}
+                  size={"lg"}
                 >
-                  Delete rating
-                </Button>
-                <Button onClick={() => setEditing(true)}>Edit rating</Button>
-              </Stack>
-            </>
-          ) : (
-            <>
-              {editing ? (
-                <>
                   <Stack direction="vertical">
                     <div id="courseStars">
                       <h5>
@@ -182,7 +136,7 @@ function RatingCard(props) {
                         <Form.Control
                           type="text"
                           placeholder="Your review"
-                          value={newReview ?? traineeReview}
+                          value={newReview}
                           onChange={(e) => setNewReview(e.target.value)}
                         />
                       </Form.Group>
@@ -194,12 +148,12 @@ function RatingCard(props) {
                       Cancel
                     </Button>
                   </Stack>
-                </>
-              ) : (
-                <Button onClick={() => setEditing(true)}>Add rating</Button>
-              )}
-            </>
-          )}
+                </Modal>
+              </>
+            ) : (
+              <Button onClick={() => setEditing(true)}>Add rating</Button>
+            )}
+          </>
         </Stack>
       ) : null}
     </div>
