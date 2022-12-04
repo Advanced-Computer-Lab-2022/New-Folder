@@ -13,12 +13,14 @@ import { useState } from "react";
 import AddPromotion from "../Course/AddPromotion/AddPromotion";
 import "react-day-picker/dist/style.css";
 import Container from "react-bootstrap/esm/Container";
+import { useNavigate } from "react-router-dom";
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
   const [ratingsCount, setRatingsCount] = useState(0);
   const [validPromotion, setValidPromotion] = useState(false);
   const promotion = props.promotion;
   const setPromotion = props.setPromotion;
+  const navigate = useNavigate();
   useEffect(() => {
     setTotalRating(props.course.totalRating);
   }, []);
@@ -102,7 +104,15 @@ function CourseSummary(props) {
                   ) : (
                     <>
                       {props.vc === ViewerContexts.enrolledTrainee ? (
-                        <Button id="goToCourse" variant="dark">
+                        <Button
+                          id="goToCourse"
+                          variant="dark"
+                          onClick={() =>
+                            navigate(
+                              "/watch/" + props.courseId + "?sId=0&cId=0"
+                            )
+                          }
+                        >
                           Go to course
                         </Button>
                       ) : null}
