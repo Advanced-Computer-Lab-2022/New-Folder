@@ -24,9 +24,9 @@ const addExam = async (req, res) => {
   const questions = req.body.questionComponentArr;
   const { subtitleID } = req.body;
   const excercise = await Exercises.create({
-    Questions : questions,
-    Mark : []
-  })
+    Questions: questions,
+    Mark: [],
+  });
   const subtitle = await Subtitle.findById(subtitleID);
   subtitle.subTitle_Content.push({
     subTitle_Content_id: excercise._id,

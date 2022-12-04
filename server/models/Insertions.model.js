@@ -7,7 +7,7 @@ const Instructor = require("./Instructor.model");
 const Subtitle = require("./Subtitle.model");
 const Trainee = require("./Trainee.model");
 const bodyParser = require("body-parser");
-const constants = require('../constants.json');
+const constants = require("../constants.json");
 
 mongoose
   .connect(
@@ -56,7 +56,6 @@ async function insertCourse(
     },
     trainees: trainees,
     subtitles: subtitles,
-    
   });
 
   console.log(c.name + "COURSE has been added ✔️");
@@ -161,15 +160,12 @@ async function insertExcercises(
         statement: statement,
         choices: [firstAns, secondAns, thirdAns, forthAns],
         correctIdx: correctIdx,
-
       },
       {
         statement: statement,
         choices: [firstAns, secondAns, thirdAns, forthAns],
         correctIdx: correctIdx,
-
       },
-
     ],
   });
   console.log("Excercise has been added ✔️");
@@ -180,7 +176,11 @@ async function insertExcercises(
 async function insertSubtitle(subtitleNumber, Contents, exercises) {
   let c = await Subtitle.create({
     subtitleNumber: subtitleNumber,
-    subTitle_Content : [{subTitle_Content_id  : Contents._id, type : constants.Content} , {subTitle_Content_id  : Contents._id, type : constants.Content} , {subTitle_Content_id  : exercises._id, type : constants.excercise}]
+    subTitle_Content: [
+      { subTitle_Content_id: Contents._id, type: constants.Content },
+      { subTitle_Content_id: Contents._id, type: constants.Content },
+      { subTitle_Content_id: exercises._id, type: constants.excercise },
+    ],
   });
   console.log("Subtitle has been added ✔️");
   return c;
@@ -248,14 +248,12 @@ async function populate() {
     "",
     5,
     5,
-    [{trainee : soubra._id, review : "ragl tmam"}],
-    [{trainee : soubra._id, review : "ragl tmam"}],
+    [{ trainee: soubra._id, review: "ragl tmam" }],
+    [{ trainee: soubra._id, review: "ragl tmam" }],
     "Hassan Soubra",
     [],
     []
   );
-
-
 
   let questionaya = await insertExcercises(
     "masr gablmas r masr m,as rmasrrrr rrrrrr kam ?",

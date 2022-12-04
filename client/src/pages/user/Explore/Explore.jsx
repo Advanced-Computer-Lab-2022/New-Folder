@@ -10,7 +10,7 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import './Explore.css'
+import "./Explore.css";
 const Explore = () => {
   const [courses, setCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState(courses);
@@ -102,21 +102,16 @@ const Explore = () => {
         </Form.Group>
       </Row>
 
-
       <div className="explore__content">
-      <div className="explore__header">
-        <p className="header">Featured Courses</p>
-      </div>
-      <div className="wrapper">
-        
-        {filteredCourses.map((course) => (
+        <div className="explore__header">
+          <p className="header">Featured Courses</p>
+        </div>
+        <div className="wrapper">
+          {filteredCourses.map((course) => (
             <CourseCard course={course} />
           ))}
         </div>
-  
       </div>
-
-    
     </Row>
   );
 };

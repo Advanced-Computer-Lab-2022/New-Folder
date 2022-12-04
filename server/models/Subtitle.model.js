@@ -16,20 +16,23 @@ const Subtitle = mongoose.Schema({
   // exercises: {
   //   type: [{ type: mongoose.Types.ObjectId, ref: "Exercises" }],
   // },
-  subTitle_Content : {
-    type : [   { subTitle_Content_id : {
-      type : mongoose.Types.ObjectId,
-      required : true
+  subTitle_Content: {
+    type: [
+      {
+        subTitle_Content_id: {
+          type: mongoose.Types.ObjectId,
+          required: true,
+        },
+        type: {
+          type: String,
+          enum: [constants.content, constants.excercise],
+          default: constants.content,
+          required: true,
+        },
+      },
+    ],
+    default: [],
   },
-  type : {
-      type  : String,
-      enum : [constants.content , constants.excercise],
-      default : constants.content,
-      required : true
-  }
-}],
-    default:[]
-  }
 });
 
 module.exports = mongoose.model("Subtitle", Subtitle);

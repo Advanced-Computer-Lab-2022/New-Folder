@@ -3,6 +3,6 @@
   "admin": "admin",
   "instructor": "instructor",
   "trainee": "trainee",
-  "content" : "content",
-  "excercise" : "excercise"
+  "content": "content",
+  "excercise": "excercise"
 }

@@ -98,7 +98,7 @@ const EditMyProfileForm = (props) => {
                   cancel changes
                 </Button>
                 <Button
-                    className="saveMyProfileChangesBtn"
+                  className="saveMyProfileChangesBtn"
                   variant="dark"
                   type="submit"
                 >

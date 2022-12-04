@@ -1,15 +1,14 @@
 .submit-quiz {
-    width: 55%;
-    padding-bottom:4em ;
+  width: 55%;
+  padding-bottom: 4em;
 }
-.submit-quiz button{
-    float: right;
-    margin-left: 1em;
+.submit-quiz button {
+  float: right;
+  margin-left: 1em;
 }
 
 .mark-quiz {
-    /* float: left; */
-    text-align: right;
-    width: 57% !important;
-    padding: 1em;
+  text-align: right;
+  width: 57% !important;
+  padding: 1em;
 }
