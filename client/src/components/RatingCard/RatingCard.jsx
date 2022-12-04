@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { ReactSession } from "react-client-session";
 import { useState, useEffect, useMemo } from "react";
-import { addRating, deleteRating, fetchCourseDetails } from "../../network";
+import { addRating, fetchCourseDetails } from "../../network";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import ReactStars from "react-rating-stars-component";
 import Modal from "react-bootstrap/Modal";
@@ -81,19 +81,35 @@ function RatingCard(props) {
             review: addedReview,
             rating: addedRating,
           });
+        } else {
+          newReviews.push({
+            traineeName: props.reviews[i].traineeName,
+            traineeId: props.reviews[i].traineeId,
+            review: props.reviews[i].review,
+            rating: addedRating,
+          });
         }
         found = true;
       } else {
         newReviews.push(props.reviews[i]);
       }
     }
-    if (!found && addedReview && addedReview !== "") {
-      newReviews.push({
-        traineeName: ReactSession.get("userName"),
-        traineeId: ReactSession.get("userId"),
-        review: addedReview,
-        rating: addedRating,
-      });
+    if (!found) {
+      if (addedReview && addedReview !== "") {
+        newReviews.push({
+          traineeName: ReactSession.get("userName"),
+          traineeId: ReactSession.get("userId"),
+          review: addedReview,
+          rating: addedRating,
+        });
+      } else {
+        newReviews.push({
+          traineeName: ReactSession.get("userName"),
+          traineeId: ReactSession.get("userId"),
+          review: null,
+          rating: addedRating,
+        });
+      }
     }
     props.setReviews(newReviews);
     setTraineeRating(addedRating);
@@ -115,46 +131,38 @@ function RatingCard(props) {
   return (
     <div>
       {vc === ViewerContexts.enrolledTrainee ? (
-        <Stack direction="horizontal">
+        <>
           <>
-            {editing ? (
-              <>
-                <Modal
-                  show={editing}
-                  onHide={() => setEditing(false)}
-                  size={"lg"}
-                >
-                  <Stack direction="vertical">
-                    <div id="courseStars">
-                      <h5>
-                        <b>Rate the course</b>
-                      </h5>
-                      <AddRatingStars />
-                    </div>
-                    <div id="courseStars">
-                      <Form.Group as={Col}>
-                        <Form.Control
-                          type="text"
-                          placeholder="Your review"
-                          value={newReview}
-                          onChange={(e) => setNewReview(e.target.value)}
-                        />
-                      </Form.Group>
-                    </div>
-                    <Button onClick={() => rate()} id="deleteRating">
-                      Save changes
-                    </Button>
-                    <Button onClick={() => cancel()} variant="secondary">
-                      Cancel
-                    </Button>
-                  </Stack>
-                </Modal>
-              </>
-            ) : (
-              <Button onClick={() => setEditing(true)}>Add rating</Button>
-            )}
+            <Modal show={editing} onHide={() => setEditing(false)} size={"lg"}>
+              <Stack direction="vertical">
+                <div id="courseStars">
+                  <h5>
+                    <b>Rate the course</b>
+                  </h5>
+                  <AddRatingStars />
+                </div>
+                <div id="courseStars">
+                  <Form.Group as={Col}>
+                    <Form.Control
+                      type="text"
+                      placeholder="Your review"
+                      value={newReview}
+                      onChange={(e) => setNewReview(e.target.value)}
+                    />
+                  </Form.Group>
+                </div>
+                <Button onClick={() => rate()} id="deleteRating">
+                  Save changes
+                </Button>
+                <Button onClick={() => cancel()} variant="secondary">
+                  Cancel
+                </Button>
+              </Stack>
+            </Modal>
           </>
-        </Stack>
+
+          <Button onClick={() => setEditing(true)}>Add rating</Button>
+        </>
       ) : null}
     </div>
   );
