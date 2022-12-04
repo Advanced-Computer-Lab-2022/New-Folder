@@ -31,16 +31,11 @@ const ViewInstructorProfile = () => {
       setRatingNo(fetchedInstructorData.ratingNo);
       setCoursesCount(fetchedInstructorData.coursesCount);
       setMyRating(fetchedInstructorData.myRating);
-      setReviews(fetchedInstructorData.reviews);
+      setReviews(fetchedInstructorData.ratings);
     } catch (err) {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    fetchData();
-    console.log(isEnrolled);
-  }, []);
 
   useEffect(() => {
     fetchData();
