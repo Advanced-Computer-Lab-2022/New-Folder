@@ -14,7 +14,7 @@ import Form from "react-bootstrap/Form";
 import CourseSummary from "../../components/CourseSummary/CourseSummary";
 import Accordion from "react-bootstrap/Accordion";
 import CourseReviewCard from "../../components/Course/CourseReviewCard/CourseReviewCard";
-
+import { getYoutubeVideoID } from "../../utils/getVideoDurationUtils";
 const CourseDetails = () => {
   const { courseId } = useParams();
   const [course, setCourse] = useState({});

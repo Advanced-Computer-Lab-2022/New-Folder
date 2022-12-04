@@ -36,3 +36,17 @@ export const getYoutubeVideoID = (url) => {
   var match = url.match(regExp);
   return match && match[7].length == 11 ? match[7] : false;
 };
+
+export const totalDuration = (duration) => {
+  let res = "";
+  let hours = parseInt(duration / 3600);
+  if (hours !== 0) {
+    res += hours + " hr(s) ";
+  }
+  let mins = parseInt((duration % 3600) / 60);
+  if((duration % 3600) % 60 >= 30){
+    mins++;
+  }
+  res += mins + " min(s)";
+  return res;
+};

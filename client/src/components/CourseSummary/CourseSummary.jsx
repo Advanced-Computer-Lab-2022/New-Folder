@@ -14,6 +14,8 @@ import AddPromotion from "../Course/AddPromotion/AddPromotion";
 import "react-day-picker/dist/style.css";
 import Container from "react-bootstrap/esm/Container";
 import { useNavigate } from "react-router-dom";
+import {getYoutubeVideoID, totalDuration} from "../../utils/getVideoDurationUtils"
+
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
   const [ratingsCount, setRatingsCount] = useState(0);
@@ -46,17 +48,6 @@ function CourseSummary(props) {
       />
     );
   }, [totalRating]);
-
-  const totalDuration = () => {
-    let res = "";
-    let hours = parseInt(props.duration / 3600);
-    if (hours !== 0) {
-      res += hours + " hr(s) ";
-    }
-    let mins = parseInt((props.duration % 3600) / 60);
-    res += mins + " min(s)";
-    return res;
-  };
 
   return (
     <>
@@ -147,7 +138,7 @@ function CourseSummary(props) {
                   </>
                 ) : null}
                 <h5 className="courseInfo">
-                  <b>Total duration:</b> {totalDuration()}
+                  <b>Total duration:</b> {totalDuration(props.duration)}
                 </h5>
                 <h5 className="courseInfo">
                   <strong>Subject:</strong> {props.course.subject ?? ""}
@@ -185,11 +176,14 @@ function CourseSummary(props) {
                       marginLeft: 190,
                       borderRadius: 8,
                     }}
-                    src={props.course.introVideo}
+                    src={
+                      "https://www.youtube.com/embed/" +
+                      getYoutubeVideoID(props.course.introVideo??"")
+                    }
                   ></iframe>
                 )}
                 {props.vc === ViewerContexts.author ? (
-                  <Form onSubmit={props.uploadIntroVideo}>
+                  <Form>
                     <Container className="mt-4">
                       <Form.Group className="mt-3">
                         <Form.Control
@@ -204,7 +198,7 @@ function CourseSummary(props) {
                         ></Form.Control>
                       </Form.Group>
                       <div className="text-center">
-                        <Button id="addVideo" type="submit">
+                        <Button id="addVideo" onClick={props.uploadIntroVideo}>
                           Add video
                         </Button>
                       </div>

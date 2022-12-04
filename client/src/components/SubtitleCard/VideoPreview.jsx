@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { fetchVideoContent } from "../../network";
-
+import {totalDuration} from "../../utils/getVideoDurationUtils";
 function VideoPreview(props) {
   const [video, setVideo] = useState({});
 
@@ -25,7 +25,7 @@ function VideoPreview(props) {
   return (
     <>
       <ul style={{ border: "1px dotted black" }}>
-        <li>{"Video Duration: " + video.duration + " hrs"}</li>
+        <li>{"Video Duration: " + totalDuration(video.duration)}</li>
         <li>{"Video Description: " + video.description}</li>
       </ul>
     </>
