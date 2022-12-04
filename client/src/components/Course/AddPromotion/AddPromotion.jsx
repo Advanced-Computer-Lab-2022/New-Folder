@@ -9,6 +9,7 @@ import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { DayPicker } from "react-day-picker";
+import "./AddPromotion.css";
 
 function AddPromotion(props) {
   const { promotion, setPromotion, courseId } = props;
