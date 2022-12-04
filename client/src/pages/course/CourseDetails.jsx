@@ -151,7 +151,7 @@ const CourseDetails = () => {
           ) : null}
         </Accordion>
       </div>
-      <CourseReviewCard reviews={reviews} />
+      {/* <CourseReviewCard reviews={reviews} /> */}
     </div>
   );
 };
