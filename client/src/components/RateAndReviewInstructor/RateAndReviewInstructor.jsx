@@ -45,6 +45,7 @@ const RateAndReviewInstructor = (props) => {
     if (!props.myRating) props.setRatingNo(props.ratingNo + 1);
     props.setMyRating(rating);
     props.setRating(updatedRating);
+    props.setHasNewReview(!props.hasNewReview);
   };
 
   let Stars = useMemo(() => {

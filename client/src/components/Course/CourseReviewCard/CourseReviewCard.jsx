@@ -17,14 +17,16 @@ const CourseReviewCard = (props) => {
         <Card className="courseCardFrame">
           <Card.Body className="courseReviewCard">
             <Card.Title>{props.reviews[i].traineeName}</Card.Title>
-            <ReactStars
-              count={5}
-              size={50}
-              isHalf={true}
-              activeColor="#ffd700"
-              value={props.reviews[i].rating ?? 0}
-              edit={false}
-            />
+            <div id="reviewCardStars">
+              <ReactStars
+                count={5}
+                size={25}
+                isHalf={true}
+                activeColor="#ffd700"
+                value={props.reviews[i].rating ?? 0}
+                edit={false}
+              />
+            </div>
             <Card.Text>{props.reviews[i].review}</Card.Text>
           </Card.Body>
         </Card>
