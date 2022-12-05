@@ -11,7 +11,7 @@ const {
   getSubtitle,
   getVideo,
   getExcercise,
-  addRating,
+  addReview,
   deleteRating,
   addPromotion,
   updateCourse,
@@ -22,7 +22,7 @@ router.get("/subtitle/excercise/:id", getExcercise);
 router.get("/subtitle/video/:id", getVideo);
 router.get("/subtitle/:id", getSubtitle);
 router.get("/:id", getCourseDetails);
-router.patch("/addRating", canRateCourse, addRating);
+router.patch("/addRating", canRateCourse, addReview);
 router.patch("/deleteRating", canDeleteRating, deleteRating);
 router.patch("/addPromotion", canAddPromotion, addPromotion);
 router.patch("/:id", updateCourse);

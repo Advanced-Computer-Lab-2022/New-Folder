@@ -2,12 +2,23 @@ import "./ReviewsCard.css";
 import Card from "react-bootstrap/Card";
 import Stack from "react-bootstrap/Stack";
 import Button from "react-bootstrap/Button";
-import { useState } from "react";
-import { useEffect } from "react";
+import ReactStars from "react-rating-stars-component";
+import { useState, useEffect } from "react";
 
 const ReviewCard = (props) => {
   const [lastReviewIndex, setLastReviewIndex] = useState(3);
   const [reviews, setReviews] = useState([]);
+
+  let Stars = (prop) => (
+    <ReactStars
+      count={5}
+      size={25}
+      isHalf={true}
+      activeColor="#ffd700"
+      value={prop.rating}
+      edit={false}
+    />
+  );
 
   useEffect(() => {
     const tempReviews = [];
@@ -15,7 +26,10 @@ const ReviewCard = (props) => {
       tempReviews.push(
         <Card className="cardFrame">
           <Card.Body className="reviewCard">
-            <Card.Title>{props.reviews[i].trainee}</Card.Title>
+            <Card.Title>{props.reviews[i].traineeName}</Card.Title>
+            <div id="reviewCardStars">
+              <Stars rating={props.reviews[i].rating} />
+            </div>
             <Card.Text>{props.reviews[i].review}</Card.Text>
           </Card.Body>
         </Card>
@@ -30,7 +44,10 @@ const ReviewCard = (props) => {
       tempReviews.push(
         <Card className="cardFrame">
           <Card.Body className="reviewCard">
-            <Card.Title>{props.reviews[i].trainee}</Card.Title>
+            <Card.Title>{props.reviews[i].traineeName}</Card.Title>
+            <div id="reviewCardStars">
+              <Stars rating={props.reviews[i].rating} />
+            </div>
             <Card.Text>{props.reviews[i].review}</Card.Text>
           </Card.Body>
         </Card>

@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Card from "react-bootstrap/Card";
 import Modal from "react-bootstrap/Modal";
-import { rateInstructor, reviewInstructor } from "../../network";
+import { rateInstructor } from "../../network";
 
 const RateAndReviewInstructor = (props) => {
   const [newReview, setNewReview] = useState("");
@@ -17,8 +17,9 @@ const RateAndReviewInstructor = (props) => {
 
   const review = async () => {
     try {
-      await reviewInstructor({
+      await rateInstructor({
         instructorID: props.instructorID,
+        newRating: props.myRating,
         newReview,
       });
       setNewReview("");
@@ -35,6 +36,7 @@ const RateAndReviewInstructor = (props) => {
     await rateInstructor({
       instructorID: props.instructorID,
       newRating: rating,
+      newReview: "",
     });
     let updatedRating = props.myRating
       ? (props.rating * props.ratingNo - props.myRating + rating) /
@@ -43,6 +45,7 @@ const RateAndReviewInstructor = (props) => {
     if (!props.myRating) props.setRatingNo(props.ratingNo + 1);
     props.setMyRating(rating);
     props.setRating(updatedRating);
+    props.setHasNewReview(!props.hasNewReview);
   };
 
   let Stars = useMemo(() => {

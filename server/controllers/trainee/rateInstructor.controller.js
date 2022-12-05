@@ -1,11 +1,11 @@
 const Instructor = require("../../models/Instructor.model");
 
 const rateInstructor = async (req, res) => {
-  const { instructorID, newRating } = req.body;
+  const { instructorID, newRating, newReview } = req.body;
   const instructor = await Instructor.findById(instructorID);
   let ratings = instructor.ratings;
   ratings = ratings.filter(
-    (rating) => rating.trainee.toString() == req.session.userId
+    (rating) => rating.traineeId.toString() == req.session.userId
   );
   const ratingNo = ratings.length;
   let rating = (instructor.totalRating * ratingNo + newRating) / (ratingNo + 1);
@@ -14,12 +14,32 @@ const rateInstructor = async (req, res) => {
       (instructor.totalRating * ratingNo - ratings[0].rating + newRating) /
       ratingNo;
     let newRatings = instructor.ratings.filter(
-      (rating) => rating.trainee.toString() != req.session.userId
+      (rating) => rating.traineeId.toString() != req.session.userId
     );
-    newRatings.push({ trainee: req.session.userId, rating: newRating });
+
+    if (newReview.length > 0) {
+      newRatings.push({
+        traineeId: req.session.userId,
+        traineeName: req.session.userName,
+        rating: newRating,
+        review: newReview,
+      });
+    } else {
+      newRatings.push({
+        traineeId: req.session.userId,
+        traineeName: req.session.userName,
+        rating: newRating,
+        review: ratings[0].review,
+      });
+    }
     await Instructor.findByIdAndUpdate(instructorID, { ratings: newRatings });
   } else {
-    instructor.ratings.push({ trainee: req.session.userId, rating: newRating });
+    instructor.ratings.push({
+      traineeId: req.session.userId,
+      traineeName: req.session.userName,
+      rating: newRating,
+      review: newReview,
+    });
     await instructor.save();
   }
   await Instructor.findByIdAndUpdate(instructorID, {
@@ -28,18 +48,4 @@ const rateInstructor = async (req, res) => {
   res.status(200).json();
 };
 
-const reviewInstructor = async (req, res) => {
-  const { instructorID, newReview } = req.body;
-  const instructor = await Instructor.findById(instructorID);
-  if (newReview) {
-    const review = {
-      trainee: req.session.userName,
-      review: newReview,
-    };
-    instructor.reviews.push(review);
-    await instructor.save();
-  }
-  res.status(200).json();
-};
-
-module.exports = { rateInstructor, reviewInstructor };
+module.exports = { rateInstructor };

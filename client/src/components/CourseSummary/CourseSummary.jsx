@@ -155,6 +155,8 @@ function CourseSummary(props) {
                     setTotalRating={setTotalRating}
                     ratingsCount={ratingsCount}
                     setRatingsCount={setRatingsCount}
+                    reviews={props.reviews}
+                    setReviews={props.setReviews}
                   />
                   {props.vc === ViewerContexts.author ? (
                     <AddPromotion

@@ -4,8 +4,6 @@ import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import RateAndReviewInstructor from "../../components/RateAndReviewInstructor/RateAndReviewInstructor";
 import ReviewCard from "../../components/ReviewsCard/ReviewsCard";
 import { fetchInstructorData } from "../../network";
-import userTypes from "../../constants/UserTypes.json";
-import { ReactSession } from "react-client-session";
 
 const ViewInstructorProfile = () => {
   const [name, setName] = useState("");
@@ -31,16 +29,11 @@ const ViewInstructorProfile = () => {
       setRatingNo(fetchedInstructorData.ratingNo);
       setCoursesCount(fetchedInstructorData.coursesCount);
       setMyRating(fetchedInstructorData.myRating);
-      setReviews(fetchedInstructorData.reviews);
+      setReviews(fetchedInstructorData.ratings ?? []);
     } catch (err) {
       console.log(err);
     }
   };
-
-  useEffect(() => {
-    fetchData();
-    console.log(isEnrolled);
-  }, []);
 
   useEffect(() => {
     fetchData();

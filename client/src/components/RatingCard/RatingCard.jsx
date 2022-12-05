@@ -1,13 +1,15 @@
 import React from "react";
 import Button from "react-bootstrap/Button";
-
 import Stack from "react-bootstrap/Stack";
-
+import Col from "react-bootstrap/Col";
+import Form from "react-bootstrap/Form";
 import { ReactSession } from "react-client-session";
 import { useState, useEffect, useMemo } from "react";
-import { addRating, deleteRating, fetchCourseDetails } from "../../network";
+import { addRating, fetchCourseDetails } from "../../network";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import ReactStars from "react-rating-stars-component";
+import Modal from "react-bootstrap/Modal";
+
 import "./RatingCard.css";
 function RatingCard(props) {
   const {
@@ -19,16 +21,18 @@ function RatingCard(props) {
     setRatingsCount,
   } = props;
   const [traineeRating, setTraineeRating] = useState(null);
+  const [traineeReview, setTraineeReview] = useState(null);
+  const [newRating, setNewRating] = useState(null);
+  const [newReview, setNewReview] = useState(null);
+  const [editing, setEditing] = useState(false);
   const initializeRatings = async () => {
     const fetchedCourse = await fetchCourseDetails(courseId);
     setTotalRating(fetchedCourse.totalRating);
     setRatingsCount(fetchedCourse.ratings.length);
     for (let i = 0; i < fetchedCourse.ratings.length; i++) {
-      if (fetchedCourse.ratings[i].trainee === ReactSession.get("userId")) {
-        console.log(
-          fetchedCourse.ratings[i].trainee + " " + ReactSession.get("userId")
-        );
+      if (fetchedCourse.ratings[i].traineeId === ReactSession.get("userId")) {
         setTraineeRating(fetchedCourse.ratings[i].rating);
+        setTraineeReview(fetchedCourse.ratings[i].review);
       }
     }
   };
@@ -40,72 +44,127 @@ function RatingCard(props) {
           size={50}
           isHalf={true}
           activeColor="#ffd700"
-          value={traineeRating ?? 0}
-          edit={true}
-          onChange={(rating) => rate(rating)}
+          value={newRating ?? traineeRating ?? 0}
+          edit={editing}
+          onChange={(r) => setNewRating(r)}
         />
       </div>
     );
-  }, [traineeRating]);
+  }, [traineeRating, editing]);
   useEffect(() => {
     initializeRatings();
   }, []);
-  const rate = async (newRating) => {
+  const rate = async () => {
     if (traineeRating == null) {
       const newTotalRating =
-        (totalRating * ratingsCount + newRating) / (ratingsCount + 1);
+        (totalRating * ratingsCount + (newRating ?? 0)) / (ratingsCount + 1);
       setTotalRating(newTotalRating);
       setRatingsCount(ratingsCount + 1);
     } else {
       const newTotalRating =
-        (totalRating * ratingsCount + newRating - traineeRating) / ratingsCount;
+        (totalRating * ratingsCount +
+          (newRating ?? traineeRating) -
+          traineeRating) /
+        ratingsCount;
       setTotalRating(newTotalRating);
     }
-    setTraineeRating(newRating);
+    const addedReview = newReview ?? traineeReview;
+    const addedRating = newRating ?? traineeRating;
+    let newReviews = [];
+    let found = false;
+    for (let i = 0; i < props.reviews.length; i++) {
+      if (props.reviews[i].traineeId === ReactSession.get("userId")) {
+        if (addedReview && addedReview !== "") {
+          newReviews.push({
+            traineeName: props.reviews[i].traineeName,
+            traineeId: props.reviews[i].traineeId,
+            review: addedReview,
+            rating: addedRating,
+          });
+        } else {
+          newReviews.push({
+            traineeName: props.reviews[i].traineeName,
+            traineeId: props.reviews[i].traineeId,
+            review: props.reviews[i].review,
+            rating: addedRating,
+          });
+        }
+        found = true;
+      } else {
+        newReviews.push(props.reviews[i]);
+      }
+    }
+    if (!found) {
+      if (addedReview && addedReview !== "") {
+        newReviews.push({
+          traineeName: ReactSession.get("userName"),
+          traineeId: ReactSession.get("userId"),
+          review: addedReview,
+          rating: addedRating,
+        });
+      } else {
+        newReviews.push({
+          traineeName: ReactSession.get("userName"),
+          traineeId: ReactSession.get("userId"),
+          review: null,
+          rating: addedRating,
+        });
+      }
+    }
+    props.setReviews(newReviews);
+    setTraineeRating(addedRating);
+    setTraineeReview(addedReview);
+    setNewRating(null);
+    setNewReview(null);
+    setEditing(false);
     await addRating({
       courseId: courseId,
-      rating: newRating,
+      rating: addedRating ?? 0,
+      review: addedReview,
     });
   };
-  const removeRating = async () => {
-    try {
-      if (ratingsCount - 1 == 0) {
-        setTotalRating(0);
-      } else {
-        const newTotalRating =
-          (totalRating * ratingsCount - traineeRating) / (ratingsCount - 1);
-        setTotalRating(newTotalRating);
-      }
-      setTraineeRating(null);
-      setRatingsCount(ratingsCount - 1);
-      await deleteRating({ courseId: courseId });
-    } catch (err) {
-      console.log(err);
-    }
+  const cancel = async () => {
+    setEditing(false);
+    setNewRating(null);
+    setNewReview(null);
   };
   return (
     <div>
       {vc === ViewerContexts.enrolledTrainee ? (
-        <Stack direction="horizontal">
-          <div id="courseStars">
-            <h5>
-              <b>{traineeRating ? "Your course rating" : "Rate this course"}</b>
-            </h5>
-            <AddRatingStars />
-          </div>
-          {traineeRating !== null ? (
-            <Button
-              onClick={() => removeRating()}
-              id="deleteRating"
-              variant="danger"
-            >
-              Delete rating
-            </Button>
-          ) : null}
-        </Stack>
+        <>
+          <>
+            <Modal show={editing} onHide={() => setEditing(false)} size={"lg"}>
+              <Stack direction="vertical">
+                <div id="courseStars">
+                  <h5>
+                    <b>Rate the course</b>
+                  </h5>
+                  <AddRatingStars />
+                </div>
+                <div id="courseStars">
+                  <Form.Group as={Col}>
+                    <Form.Control
+                      type="text"
+                      placeholder="Your review"
+                      value={newReview}
+                      onChange={(e) => setNewReview(e.target.value)}
+                    />
+                  </Form.Group>
+                </div>
+                <Button onClick={() => rate()} id="deleteRating">
+                  Save changes
+                </Button>
+                <Button onClick={() => cancel()} variant="secondary">
+                  Cancel
+                </Button>
+              </Stack>
+            </Modal>
+          </>
+
+          <Button onClick={() => setEditing(true)}>Add rating</Button>
+        </>
       ) : null}
     </div>
   );
 }
-
 export default RatingCard;

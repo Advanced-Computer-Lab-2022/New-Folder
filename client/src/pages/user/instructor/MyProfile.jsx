@@ -24,7 +24,7 @@ const MyProfile = () => {
       setRating(myProfileData.totalRating);
       setRatingNo(myProfileData.ratings.length);
       setEmail(myProfileData.email);
-      setReviews(myProfileData.reviews);
+      setReviews(myProfileData.ratings ?? []);
     } catch (err) {
       console.log(err);
     }

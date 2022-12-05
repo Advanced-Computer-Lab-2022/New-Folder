@@ -10,7 +10,16 @@ const Course = mongoose.Schema({
     type: String,
   },
   price: {
-    type: mongoose.Schema.Types.Mixed,
+    type: {
+      magnitude: {
+        type: Number,
+        required: true,
+      },
+      currency: {
+        type: String,
+        required: true,
+      },
+    },
   },
   description: {
     type: String,
@@ -28,14 +37,23 @@ const Course = mongoose.Schema({
   ratings: {
     type: [
       {
-        trainee: {
+        traineeId: {
           type: mongoose.Types.ObjectId,
           ref: "Trainee",
+          required: true,
+        },
+        traineeName: {
+          type: String,
+          required: true,
         },
         rating: {
           type: Number,
-          min: 1,
+          min: 0,
           max: 5,
+          required: true,
+        },
+        review: {
+          type: String,
         },
       },
     ],
@@ -47,30 +65,25 @@ const Course = mongoose.Schema({
     max: 5,
     default: 0,
   },
-  reviews: {
-    type: [
-      {
-        trainee: {
-          type: String,
-        },
-        review: {
-          type: String,
-        },
-      },
-    ],
-    default: [],
-  },
   instructorInfo: {
-    type: mongoose.Schema.Types.Mixed, // {insId, insName}
-    ref: "Instructor",
-    required: true,
+    type: {
+      instructorId: {
+        type: mongoose.Types.ObjectId,
+        ref: "Instructor",
+        required: true,
+      },
+      instructorName: {
+        type: String,
+        required: true,
+      },
+    },
   },
   trainees: {
     type: [{ type: mongoose.Types.ObjectId, ref: "Trainee" }],
     default: [],
   },
   subtitles: {
-    type: [{ type: mongoose.Schema.Types.Mixed }],
+    type: [{ type: mongoose.Types.ObjectId, ref: "Subtitle" }],
     default: [],
   },
   promotion: {

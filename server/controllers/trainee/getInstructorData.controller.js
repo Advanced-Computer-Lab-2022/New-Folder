@@ -4,19 +4,11 @@ exports.getInstructorData = async (req, res) => {
   const { instructorID } = req.query;
   const instructorInfo = await Instructor.findById(instructorID);
 
-  const {
-    firstName,
-    lastName,
-    image,
-    about,
-    ratings,
-    courses,
-    totalRating,
-    reviews,
-  } = instructorInfo;
+  const { firstName, lastName, image, about, ratings, courses, totalRating } =
+    instructorInfo;
 
   let myRating = ratings.filter(
-    (rating) => rating.trainee.toString() == req.session.userId
+    (rating) => rating.traineeId.toString() == req.session.userId
   );
 
   myRating = myRating.length > 0 ? myRating[0].rating : null;
@@ -33,6 +25,6 @@ exports.getInstructorData = async (req, res) => {
     coursesCount,
     totalRating,
     myRating,
-    reviews,
+    ratings,
   });
 };

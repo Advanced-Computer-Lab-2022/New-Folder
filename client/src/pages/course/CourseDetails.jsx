@@ -1,5 +1,5 @@
 import React from "react";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useParams } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import { getPrice, fetchCourseDetails } from "../../network";
@@ -27,7 +27,9 @@ const CourseDetails = () => {
   const [newVideo, setNewVideo] = useState();
   const [newSubtitle, setNewSubtitle] = useState("");
   const [promotion, setPromotion] = useState(null);
-
+  let ReviewCards = useMemo(() => {
+    return () => <CourseReviewCard reviews={reviews} />;
+  }, [reviews]);
   const uploadIntroVideo = async () => {
     try {
       const newCourse = await updateCourse(course._id, {
@@ -46,7 +48,21 @@ const CourseDetails = () => {
       console.log(fetchedVc);
       setVc(fetchedVc);
       setCourse(fetchedCourse);
-      setReviews(fetchedCourse.reviews);
+      let fetchedReviews = [];
+      for (let i = 0; i < fetchedCourse.ratings.length; i++) {
+        if (
+          fetchedCourse.ratings[i].review &&
+          fetchedCourse.ratings[i].review !== ""
+        ) {
+          fetchedReviews.push({
+            traineeId: fetchedCourse.ratings[i].traineeId,
+            traineeName: fetchedCourse.ratings[i].traineeName,
+            review: fetchedCourse.ratings[i].review,
+            rating: fetchedCourse.ratings[i].rating,
+          });
+        }
+      }
+      setReviews(fetchedReviews);
       setSubtitles(fetchedCourse.subtitles);
       setPromotion(fetchedCourse.promotion);
     } catch (err) {
@@ -107,6 +123,8 @@ const CourseDetails = () => {
         uploadIntroVideo={uploadIntroVideo}
         promotion={promotion}
         setPromotion={setPromotion}
+        reviews={reviews}
+        setReviews={setReviews}
       />
       <div>
         <Accordion>
@@ -151,7 +169,7 @@ const CourseDetails = () => {
           ) : null}
         </Accordion>
       </div>
-      <CourseReviewCard reviews={reviews} />
+      <ReviewCards />
     </div>
   );
 };

@@ -117,15 +117,9 @@ export const fetchInstructorData = async (instructorID) => {
   return res.data;
 };
 
-// rate instructor
+// rate and review instructor
 export const rateInstructor = async (data) => {
   const res = await instance.post("/trainee/rateInstructor", data);
-  return res;
-};
-
-// review instructor
-export const reviewInstructor = async (data) => {
-  const res = await instance.post("/trainee/reviewInstructor", data);
   return res;
 };
 

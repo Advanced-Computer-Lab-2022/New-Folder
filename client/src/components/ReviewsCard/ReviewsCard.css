@@ -19,3 +19,8 @@
   width: 30%;
   align-self: center;
 }
+#reviewCardStars {
+  margin: -2px;
+  margin-top: -10px;
+  width: 105px;
+}

@@ -1,11 +1,10 @@
 const { default: mongoose } = require("mongoose");
 const Content = require("../../models/Content.model");
 const Course = require("../../models/Course.model");
-const Exercises = require("../../models/Exercises.model");
 const Subtitle = require("../../models/Subtitle.model");
 const constant = require("../../constants.json");
 const Exercise = require("../../models/Exercises.model");
-
+const Trainee = require("../../models/Trainee.model");
 const getCourseDetails = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
@@ -42,18 +41,20 @@ const getExcercise = async (req, res) => {
   }
 };
 
-const addRating = async (req, res) => {
+const addReview = async (req, res) => {
   try {
     const course = await Course.findById(req.body.courseId);
     let ratings = course.ratings;
     let traineeRating = -1;
     let newRatings = [];
     for (let i = 0; i < ratings.length; i++) {
-      if (ratings[i].trainee.toString() === req.session.userId) {
+      if (ratings[i].traineeId.toString() === req.session.userId) {
         traineeRating = ratings[i].rating;
         newRatings.push({
-          trainee: ratings[i].trainee,
+          traineeId: ratings[i].traineeId,
+          traineeName: ratings[i].traineeName,
           rating: req.body.rating,
+          review: req.body.review,
         });
       } else {
         newRatings.push(ratings[i]);
@@ -73,7 +74,13 @@ const addRating = async (req, res) => {
       const totalRating =
         (course.totalRating * ratings.length + req.body.rating) /
         (ratings.length + 1);
-      newRatings.push({ trainee: req.session.userId, rating: req.body.rating });
+      const trainee = await Trainee.findById(req.session.userId);
+      newRatings.push({
+        traineeId: req.session.userId,
+        traineeName: trainee.firstName + " " + trainee.lastName,
+        rating: req.body.rating,
+        review: req.body.review,
+      });
       await Course.findByIdAndUpdate(course._id, {
         ratings: newRatings,
         totalRating: totalRating,
@@ -89,7 +96,7 @@ const deleteRating = async (req, res) => {
     let ratings = [];
     let traineeRating = 0;
     for (let i = 0; i < course.ratings.length; i++) {
-      if (course.ratings[i].trainee.toString() !== req.session.userId) {
+      if (course.ratings[i].traineeId.toString() !== req.session.userId) {
         ratings.push(course.ratings[i]);
       } else {
         traineeRating = course.ratings[i].rating;
@@ -155,7 +162,7 @@ module.exports = {
   getExcercise,
   getCourseDetails,
   getVideo,
-  addRating,
+  addReview,
   deleteRating,
   addPromotion,
   updateCourse,

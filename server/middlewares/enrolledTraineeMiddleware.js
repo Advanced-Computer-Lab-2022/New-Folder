@@ -35,7 +35,7 @@ const canDeleteRating = asyncHandler(async (req, res, next) => {
   const course = await Course.findById(req.body.courseId);
   let alreadyRated = false;
   for (let i = 0; i < course.ratings.length; i++) {
-    if (course.ratings[i].trainee.toString() === req.session.userId) {
+    if (course.ratings[i].traineeId.toString() === req.session.userId) {
       alreadyRated = true;
       break;
     }

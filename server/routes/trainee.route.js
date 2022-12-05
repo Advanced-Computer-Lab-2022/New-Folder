@@ -10,7 +10,6 @@ const {
 } = require("../controllers/trainee/changePassword.controller");
 const {
   rateInstructor,
-  reviewInstructor,
 } = require("../controllers/trainee/rateInstructor.controller");
 
 // import middlewares
@@ -21,16 +20,11 @@ const {
 
 // api routes
 router.post("/changePassword", authUser, changePassword);
-router.get("/instructorInfo", authUser, getInstructorData);
+router.get("/instructorInfo", getInstructorData);
 router.post(
   "/rateInstructor",
   authUserTakeCourseWithInstructor,
   rateInstructor
-);
-router.post(
-  "/reviewInstructor",
-  authUserTakeCourseWithInstructor,
-  reviewInstructor
 );
 
 module.exports = router;
