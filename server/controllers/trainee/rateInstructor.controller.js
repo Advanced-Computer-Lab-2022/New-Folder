@@ -4,10 +4,10 @@ const rateInstructor = async (req, res) => {
   const { instructorID, newRating, newReview } = req.body;
   const instructor = await Instructor.findById(instructorID);
   let ratings = instructor.ratings;
+  const ratingNo = ratings.length;
   ratings = ratings.filter(
     (rating) => rating.traineeId.toString() == req.session.userId
   );
-  const ratingNo = ratings.length;
   let rating = (instructor.totalRating * ratingNo + newRating) / (ratingNo + 1);
   if (ratings.length > 0) {
     rating =
