@@ -17,6 +17,8 @@ const CreateExam = (props) => {
   ]);
   const [questionRecord, setQuestionRecord] = useState([null]);
   const [isSubmitted, setIsSubmitted] = useState(false);
+
+  // add more question forms
   const addAnotherQuestion = () => {
     setQuestionRecord((oldstate) => {
       const temp = [...oldstate, null];
@@ -32,6 +34,8 @@ const CreateExam = (props) => {
     setQuestionComponentArr(arr);
   };
 
+
+// handleSubmit is used for passing examContent as it is into the database
   const handleSubmit = async () => {
     const examContent = {
       subtitleID: subtitleID,
