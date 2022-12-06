@@ -1,16 +1,17 @@
 import { useState, useEffect } from "react";
-import CourseCard from "../../../components/CourseCard/CourseCard";
-import { fetchMyCourses } from "../../../network";
+import CourseCard from "../../../../components/CourseCard/CourseCard";
+import { fetchMyCourses } from "../../../../network";
 import {
   filterCoursesBySubject,
   filterCoursesByPrice,
   filterCoursesByRating,
-} from "../../../utils/filters";
+} from "../../../../utils/filters";
 
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
+import './MyCourses.css';
 
 const MyCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -56,7 +57,7 @@ const MyCourses = () => {
   }, []);
 
   return (
-    <>
+    <Row>
       <Row className="m-4">
         <Form.Group as={Col}>
           <Form.Control
@@ -99,12 +100,18 @@ const MyCourses = () => {
           </Button>
         </Form.Group>
       </Row>
-      <ul>
-        {filteredCourses.map((course) => (
-          <li> {<CourseCard course={course} />} </li>
-        ))}
-      </ul>
-    </>
+
+      <div className="myCourses__content">
+        <div className="myCourses__header">
+          <p className="header">My Courses</p>
+        </div>
+        <div className="wrapper">
+            {filteredCourses.map((course) => (
+              <CourseCard course={course} />
+            ))}
+        </div>
+      </div>
+    </Row>
   );
 };
 

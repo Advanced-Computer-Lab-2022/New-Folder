@@ -32,7 +32,6 @@ const Explore = () => {
   useEffect(() => {
     fetchData();
     clearFilters();
-    console.log("masr");
   }, []);
 
   const clearFilters = () => {
