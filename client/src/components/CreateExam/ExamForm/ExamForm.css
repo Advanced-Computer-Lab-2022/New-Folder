@@ -1,9 +1,39 @@
 .ExamForm {
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  
   width: 50% !important;
-  padding: 2em;
+  padding: 2em !important; 
   background-color: #f7f7f7;
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   margin-bottom: 2em;
+}
+
+.ExamForm.NotCompleted {
+  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+  box-shadow: rgba(255, 238, 0, 0.658) 4px 11px 41px;
+
+}
+
+.questionStatement-header {
+  display: inline-flex;
+  margin-bottom: 0.7em;
+  width: 100%;
+  flex-direction: row;
+  align-items: stretch;
+  justify-content: space-between;
+}
+
+.question-number {
+  margin: 0;
+  text-align: left;
+}
+
+.alert-IsRequired {
+  margin: 0;
+  text-align: right;
+  font-size: 1em;
+  color: red;
 }
 
 .ExamForm input {
@@ -12,4 +42,9 @@
 
 .ExamForm label {
   margin: 0.4em;
+}
+
+
+.chooseCorrectAnswer {
+  margin-left: 0.5em;
 }

@@ -15,6 +15,7 @@ const CreateExam = (props) => {
       correctIdx: 0,
     },
   ]);
+  let questionRequired = [];
   const [questionRecord, setQuestionRecord] = useState([null]);
   const [isSubmitted, setIsSubmitted] = useState(false);
 
@@ -35,27 +36,60 @@ const CreateExam = (props) => {
   };
 
 
-// handleSubmit is used for passing examContent as it is into the database
-  const handleSubmit = async () => {
-    const examContent = {
-      subtitleID: subtitleID,
-      questionComponentArr,
-    };
-    try {
-      await addExam(examContent);
-    } catch (err) {
-      console.log(err);
+
+  // check that everything in the exam content is modified and done
+  // if an examForm is not completed ? then : it will be included in array to know which corresponding examForm is not yet done
+  const handleNotCompletedQuestions = () => {
+    for (let i = 0; i < questionComponentArr.length; i++) {
+      let isChoiceNone = false;
+      for (
+        let choice = 0;
+        choice < questionComponentArr[i].choices.length;
+        choice++
+      ) {
+        if (questionComponentArr[i].choices[choice] === "none") {
+          isChoiceNone = true;
+          break;
+        }
+      }
+      if (questionComponentArr[i].statement == "none" || isChoiceNone) {
+        questionRequired.push(i);
+      }
     }
-    setIsSubmitted(true);
-    setQuestionComponentArr([
-      {
-        statement: "none",
-        choices: ["none", "none", "none", "none"],
-        correctIdx: 0,
-      },
-    ]);
-    setQuestionRecord([null]);
   };
+
+  // handleSubmit is used for passing examContent as it is into the database
+  const handleSubmit = async () => {
+    questionRequired = [];
+
+    handleNotCompletedQuestions();
+
+
+    if (questionRequired.length === 0) {
+      const examContent = {
+        subtitleID: subtitleID,
+        questionComponentArr,
+      };
+      try {
+        await addExam(examContent);
+      } catch (err) {
+        console.log(err);
+      }
+      setIsSubmitted(true);
+      setQuestionComponentArr([
+        {
+          statement: "none",
+          choices: ["none", "none", "none", "none"],
+          correctIdx: 0,
+        },
+      ]);
+      setQuestionRecord([null]);
+    }
+  };
+
+  useEffect(()=>{
+    console.log(questionComponentArr);
+  },[questionComponentArr]);
 
   return (
     <div className="create-exam">
@@ -74,6 +108,7 @@ const CreateExam = (props) => {
           {questionRecord.map((questionComponent, index) => {
             return (
               <ExamForm
+                // isCompleted={}
                 key={index}
                 questionIdx={index}
                 questionComponentArr={questionComponentArr}

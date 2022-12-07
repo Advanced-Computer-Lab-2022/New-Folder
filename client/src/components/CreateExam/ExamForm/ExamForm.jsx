@@ -12,6 +12,7 @@ const ExamForm = (props) => {
   const [thirdChoice, setThirdChoice] = useState("[ None ]");
   const [forthChoice, setForthChoice] = useState("[ None ]");
   const [correctAns, setCorrectAns] = useState(0);
+  const [isCompleted, setIsCompleted] = useState(false);
 
   const updateCorrectAnsData = (ans) => {
     const temp = [...questionComponentArr];
@@ -23,17 +24,41 @@ const ExamForm = (props) => {
     const temp = [...questionComponentArr];
     temp[questionIdx].choices[index] = answer;
     setQuestionComponentArr(temp);
+    updateIsCompleted();
   };
 
   const updateStatement = (statement) => {
     const temp = [...questionComponentArr];
     temp[questionIdx].statement = statement;
     setQuestionComponentArr(temp);
+    updateIsCompleted();
   };
 
+  const updateIsCompleted = () => {
+    const temp = [...questionComponentArr];
+    const statementQuestion = temp[questionIdx].statement;
+    let ischoicesNone = false;
+    for (let i = 0; i < temp[questionIdx].choices.length; i++) {
+      if (temp[questionIdx].choices[i] === "none" || temp[questionIdx].choices[i] === "")  {
+        ischoicesNone = true;
+        break;
+      }
+    }
+    if (statementQuestion == "none" || statementQuestion == "" || ischoicesNone)
+      setIsCompleted(false);
+    else setIsCompleted(true);
+  };
+
+
   return (
-    <div className="ExamForm">
-      <h4 className="question-number">Question {questionIdx + 1}</h4>
+    <div className={isCompleted ? "ExamForm" :  "ExamForm NotCompleted"}>
+      <div className="questionStatement-header">
+        <h4 className="question-number">Question {questionIdx + 1}</h4>
+        {!isCompleted && <div className="alert-IsRequired">
+          <p >* please fill in all the fields</p>
+        </div> }
+      </div>
+      
       <Form.Group>
         <Form.Label>Statement</Form.Label>
         <Form.Control
@@ -49,8 +74,8 @@ const ExamForm = (props) => {
             type="text"
             placeholder="First Choice"
             onChange={(e) => {
-              updateChoiceArray(e.target.value, 0);
               setFirstChoice(e.target.value);
+              updateChoiceArray(e.target.value, 0);
             }}
           />
           <Form.Control
@@ -58,8 +83,8 @@ const ExamForm = (props) => {
             type="text"
             placeholder="Second Choice"
             onChange={(e) => {
-              updateChoiceArray(e.target.value, 1);
               setSecondChoice(e.target.value);
+              updateChoiceArray(e.target.value, 1);
             }}
           />
           <Form.Control
@@ -67,8 +92,9 @@ const ExamForm = (props) => {
             type="text"
             placeholder="Third Choice"
             onChange={(e) => {
-              updateChoiceArray(e.target.value, 2);
               setThirdChoice(e.target.value);
+              updateChoiceArray(e.target.value, 2);
+              
             }}
           />
           <Form.Control
@@ -76,12 +102,12 @@ const ExamForm = (props) => {
             type="text"
             placeholder="Forth Choice"
             onChange={(e) => {
-              updateChoiceArray(e.target.value, 3);
               setForthChoice(e.target.value);
+              updateChoiceArray(e.target.value, 3);
             }}
           />
           <Form.Label>Correct Answer</Form.Label>
-          <div>
+          <div className="chooseCorrectAnswer">
             <Form.Check
               checked={correctAns == 0}
               type="radio"
