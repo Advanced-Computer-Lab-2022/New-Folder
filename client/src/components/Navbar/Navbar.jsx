@@ -10,7 +10,7 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import ReactCountryFlag from "react-country-flag";
 import userTypes from "../../constants/UserTypes.json";
-
+import { networkLogout } from "../../network";
 const MainNavbar = (props) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
@@ -20,11 +20,18 @@ const MainNavbar = (props) => {
       navigate(`/search/${searchQuery}`);
     }
   };
-
+  const logout = async () => {
+    await networkLogout();
+    sessionStorage.clear();
+    navigate("/login");
+  };
   return (
     <Navbar sticky="top" bg="dark" variant="dark">
       <Container>
         <Nav className="me-auto">
+          <Button variant="dark" onClick={logout}>
+            Log out
+          </Button>
           <Nav.Link href="/">Explore</Nav.Link>
           {ReactSession.get("userType") === "instructor" ? (
             <Nav.Link href="/myCourses">My Courses</Nav.Link>
