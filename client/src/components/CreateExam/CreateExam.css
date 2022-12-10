@@ -23,3 +23,7 @@
   display: block;
   align-items: center;
 }
+
+#Modal-header {
+  margin: 0 !important;
+}

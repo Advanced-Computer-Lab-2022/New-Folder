@@ -2,9 +2,12 @@ import React, { useEffect } from "react";
 import { useState } from "react";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/esm/Row";
+import Modal from "react-bootstrap/Modal";
+import Button from "react-bootstrap/Button";
 import { addExam } from "../../network";
 import "./CreateExam.css";
 import ExamForm from "./ExamForm/ExamForm";
+import { useNavigate } from "react-router-dom";
 
 const CreateExam = (props) => {
   const subtitleID = props.subtitleID;
@@ -15,9 +18,17 @@ const CreateExam = (props) => {
       correctIdx: 0,
     },
   ]);
-  let questionRequired = [];
+
   const [questionRecord, setQuestionRecord] = useState([null]);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [headerMsg, setHeaderMsg] = useState("");
+  const [configMsg, setConfigMsg] = useState("");
+  const [show, setShow] = useState(false);
+  const navigate = useNavigate();
+
+  const handleShow = () => setShow(true);
+  const handleClose = () => setShow(false);
+  const goBack = () => navigate(-1);
 
   // add more question forms
   const addAnotherQuestion = () => {
@@ -35,10 +46,8 @@ const CreateExam = (props) => {
     setQuestionComponentArr(arr);
   };
 
-
-
   // check that everything in the exam content is modified and done
-  // if an examForm is not completed ? then : it will be included in array to know which corresponding examForm is not yet done
+  // if an examForm is not completed return true otherwise false
   const handleNotCompletedQuestions = () => {
     for (let i = 0; i < questionComponentArr.length; i++) {
       let isChoiceNone = false;
@@ -47,25 +56,38 @@ const CreateExam = (props) => {
         choice < questionComponentArr[i].choices.length;
         choice++
       ) {
-        if (questionComponentArr[i].choices[choice] === "none") {
+        console.log(questionComponentArr[i].choices[choice]);
+        if (
+          questionComponentArr[i].choices[choice] === "none" ||
+          questionComponentArr[i].choices[choice] === ""
+        ) {
           isChoiceNone = true;
           break;
         }
       }
-      if (questionComponentArr[i].statement == "none" || isChoiceNone) {
-        questionRequired.push(i);
+      console.log("statement : " + questionComponentArr[i].statement);
+      if (
+        questionComponentArr[i].statement === "none" ||
+        questionComponentArr[i].statement === "" ||
+        isChoiceNone
+      ) {
+        return true;
       }
     }
+    return false;
   };
 
   // handleSubmit is used for passing examContent as it is into the database
   const handleSubmit = async () => {
-    questionRequired = [];
-
-    handleNotCompletedQuestions();
-
-
-    if (questionRequired.length === 0) {
+    console.log("from handleNotComlete" + handleNotCompletedQuestions());
+    if (handleNotCompletedQuestions()) {
+      setIsSubmitted(false);
+      setHeaderMsg("Fields are not completed");
+      setConfigMsg(
+        "Please fill all required fields including question statement and choices"
+      );
+      handleShow();
+    } else {
       const examContent = {
         subtitleID: subtitleID,
         questionComponentArr,
@@ -76,6 +98,9 @@ const CreateExam = (props) => {
         console.log(err);
       }
       setIsSubmitted(true);
+      setHeaderMsg("Excercise Created");
+      setConfigMsg("Excercise has been created and submitted successfully");
+      handleShow();
       setQuestionComponentArr([
         {
           statement: "none",
@@ -87,9 +112,9 @@ const CreateExam = (props) => {
     }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     console.log(questionComponentArr);
-  },[questionComponentArr]);
+  }, [questionComponentArr]);
 
   return (
     <div className="create-exam">
@@ -130,6 +155,21 @@ const CreateExam = (props) => {
           </button>
         </Col>
       </Row>
+
+      <Modal centered show={show} onHide={handleClose}>
+        <Modal.Header closeButton id="Modal-header">
+          <Modal.Title id="Modal-header">{headerMsg}</Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="mt-3">{configMsg}</Modal.Body>
+        <Modal.Footer id="Modal-header">
+          <Button
+            variant={isSubmitted ? "success" : "dark"}
+            onClick={ isSubmitted ? goBack : handleClose}
+          >
+            {isSubmitted ? "Return to Course Content" : "close"}
+          </Button>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };
