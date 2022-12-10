@@ -70,6 +70,10 @@ export const login = async (loginData) => {
   return res;
 };
 
+// Login
+export const networkLogout = async () => {
+  await instance.post("/logout");
+};
 // Change password
 export const changePassword = async (data) => {
   const res = await instance.post("/trainee/changePassword", data);
