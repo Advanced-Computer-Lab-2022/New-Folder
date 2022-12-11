@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("./User.model");
+const Report = require("./Report.model");
 const constants = require("../constants.json");
 
 // email gender firstName lastName image country courses
@@ -33,6 +34,10 @@ const Trainee = mongoose.Schema(
     },
     courses: {
       type: [{ type: mongoose.Types.ObjectId, ref: "Course" }],
+      default: [],
+    },
+    reports: {
+      type: [Report],
       default: [],
     },
     userType: {

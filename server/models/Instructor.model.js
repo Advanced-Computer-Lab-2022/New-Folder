@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const User = require("./User.model");
 const constants = require("../constants.json");
+const Report = require("./Report.model");
 // email gender firstName lastName image country courses
 // inherits from User
 const Instructor = mongoose.Schema(
@@ -61,6 +62,10 @@ const Instructor = mongoose.Schema(
           },
         },
       ],
+      default: [],
+    },
+    reports: {
+      type: [Report],
       default: [],
     },
     userType: {
