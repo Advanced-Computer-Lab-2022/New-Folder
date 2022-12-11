@@ -215,7 +215,7 @@ function CourseSummary(props) {
             </Col>
           </Row>
         </div>
-        <ReportCourse />
+        <ReportCourse courseId={props.courseId} />
       </div>
     </>
   );

@@ -2,7 +2,7 @@ const { default: mongoose } = require("mongoose");
 const Content = require("../../models/Content.model");
 const Course = require("../../models/Course.model");
 const Subtitle = require("../../models/Subtitle.model");
-const constant = require("../../constants.json");
+const Report = require("../../models/Report.model");
 const Exercise = require("../../models/Exercises.model");
 const Trainee = require("../../models/Trainee.model");
 const User = require("../../models/User.model");
@@ -159,7 +159,7 @@ const createSubtitle = async (req, res) => {
 
 const submitReport = async (req, res) => {
   try {
-    const report = await Subtitle.create({
+    const report = await Report.create({
       userId: req.session.userId,
       courseId: req.body.courseId,
       problemType: req.body.problemType,

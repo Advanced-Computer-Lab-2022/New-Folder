@@ -232,7 +232,7 @@ export const postPromotion = async (courseId, promotion) => {
 //Add promotion
 export const postReport = async (data) => {
   try {
-    const res = await instance.patch("course/report", data);
+    const res = await instance.post("course/report", data);
     return res.data;
   } catch (err) {
     console.log(err);

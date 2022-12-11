@@ -32,4 +32,4 @@ const Report = mongoose.Schema({
   },
 });
 
-module.exports = Report;
+module.exports = mongoose.model("Report", Report);
