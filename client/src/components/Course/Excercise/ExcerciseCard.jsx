@@ -22,7 +22,7 @@ const ExcerciseCard = (props) => {
     <div
       className={
         !isSubmitted
-          ? "question-main"
+          ? answerSelected !== -1 ? "question-main"  : "question-main required"
           : answerSelected == correctIDx
           ? "question-main correct"
           : "question-main wrong"
