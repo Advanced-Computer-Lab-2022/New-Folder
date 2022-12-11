@@ -65,7 +65,7 @@ const Instructor = mongoose.Schema(
       default: [],
     },
     reports: {
-      type: [Report],
+      type: [{ type: mongoose.Types.ObjectId, ref: "Report" }],
       default: [],
     },
     userType: {

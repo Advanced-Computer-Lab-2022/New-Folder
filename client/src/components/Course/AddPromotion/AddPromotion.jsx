@@ -80,7 +80,12 @@ function AddPromotion(props) {
   return (
     <div>
       <>
-        <Modal show={isEditing} onHide={() => setEditing(false)} size={"lg"}>
+        <Modal
+          show={isEditing}
+          onHide={() => setEditing(false)}
+          size={"lg"}
+          centered
+        >
           <Modal.Header>
             <Modal.Title>Add promotion</Modal.Title>
           </Modal.Header>

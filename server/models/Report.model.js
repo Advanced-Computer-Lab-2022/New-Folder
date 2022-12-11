@@ -6,11 +6,13 @@ const problemType = require("../problem-types.json");
 
 const Report = mongoose.Schema({
   userId: {
-    type: User,
+    type: mongoose.Types.ObjectId,
+    ref: "User",
     required: true,
   },
   courseId: {
-    type: Course,
+    type: mongoose.Types.ObjectId,
+    ref: "Course",
     required: true,
   },
   problemType: {

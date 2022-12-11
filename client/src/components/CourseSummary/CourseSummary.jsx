@@ -14,7 +14,11 @@ import AddPromotion from "../Course/AddPromotion/AddPromotion";
 import "react-day-picker/dist/style.css";
 import Container from "react-bootstrap/esm/Container";
 import { useNavigate } from "react-router-dom";
-import {getYoutubeVideoID, totalDuration} from "../../utils/getVideoDurationUtils"
+import {
+  getYoutubeVideoID,
+  totalDuration,
+} from "../../utils/getVideoDurationUtils";
+import ReportCourse from "../Course/ReportCourse/ReportCourse";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -180,7 +184,7 @@ function CourseSummary(props) {
                     }}
                     src={
                       "https://www.youtube.com/embed/" +
-                      getYoutubeVideoID(props.course.introVideo??"")
+                      getYoutubeVideoID(props.course.introVideo ?? "")
                     }
                   ></iframe>
                 )}
@@ -211,6 +215,7 @@ function CourseSummary(props) {
             </Col>
           </Row>
         </div>
+        <ReportCourse />
       </div>
     </>
   );

@@ -133,7 +133,12 @@ function RatingCard(props) {
       {vc === ViewerContexts.enrolledTrainee ? (
         <>
           <>
-            <Modal show={editing} onHide={() => setEditing(false)} size={"lg"}>
+            <Modal
+              show={editing}
+              onHide={() => setEditing(false)}
+              size={"lg"}
+              centered
+            >
               <Stack direction="vertical">
                 <div id="courseStars">
                   <h5>
