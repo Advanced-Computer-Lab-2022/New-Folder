@@ -215,7 +215,9 @@ function CourseSummary(props) {
             </Col>
           </Row>
         </div>
-        <ReportCourse courseId={props.courseId} />
+        {props.vc !== ViewerContexts.guest ? (
+          <ReportCourse courseId={props.courseId} />
+        ) : null}
       </div>
     </>
   );
