@@ -8,7 +8,58 @@
 }
 
 .mark-quiz {
-  text-align: right;
-  width: 57% !important;
-  padding: 1em;
+  display: flex;
+
+  width: 58% !important;
+  padding: 2em;
+  justify-content: space-between;
+}
+
+.mark-quiz p {
+  margin: 0;
+  float: left;
+  font-size: 2em;
+  color: rgba(0, 0, 0, 0.3);
+}
+
+.mark-quiz h4 {
+  margin: 0;
+  float: right;
+  font-size: 2em;
+}
+
+#quiz-reaction {
+  margin: 0;
+}
+
+#quiz-reaction-body {
+  text-align: center;
+}
+
+#quiz-reaction-body p {
+  font-size: 1.3em;
+}
+
+#notSubmitted {
+  font-size: 6em;
+  margin-bottom: 1em;
+  color: red;
+}
+
+#quiz-reaction-result {
+  font-size: 2.5em;
+  font-weight: bold;
+}
+
+
+#quiz-reaction-result-main {
+  font-size: 1.5em;
+  font-weight: 600;
+}
+
+#quiz-reaction-confirmation {
+  margin: 0;
+  margin-bottom: 0 !important;
+  font-size: 1.3em;
+  font-weight: 600;
 }
