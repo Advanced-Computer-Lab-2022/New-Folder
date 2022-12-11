@@ -5,6 +5,7 @@ const Subtitle = require("../../models/Subtitle.model");
 const constant = require("../../constants.json");
 const Exercise = require("../../models/Exercises.model");
 const Trainee = require("../../models/Trainee.model");
+const User = require("../../models/User.model");
 const getCourseDetails = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
@@ -156,6 +157,23 @@ const createSubtitle = async (req, res) => {
   }
 };
 
+const submitReport = async (req, res) => {
+  try {
+    const report = await Subtitle.create({
+      userId: req.session.userId,
+      courseId: req.body.courseId,
+      problemType: req.body.problemType,
+      body: req.body.problemBody,
+    });
+    const user = await User.findById(req.session.userId);
+    user.reports.push(report._id);
+    user.save();
+    res.status(201).json(report);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getSubtitle,
   getVideo,
@@ -167,4 +185,5 @@ module.exports = {
   addPromotion,
   updateCourse,
   createSubtitle,
+  submitReport,
 };

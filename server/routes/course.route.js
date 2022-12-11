@@ -3,8 +3,8 @@ const router = express.Router();
 const {
   canRateCourse,
   canDeleteRating,
-  isEnrolled,
 } = require("../middlewares/enrolledTraineeMiddleware");
+const { canReport } = require("../middlewares/reportsMiddleware");
 const { canAddPromotion } = require("../middlewares/canAddPromotionMiddleware");
 const {
   getCourseDetails,
@@ -16,6 +16,7 @@ const {
   addPromotion,
   updateCourse,
   createSubtitle,
+  submitReport,
 } = require("../controllers/course/courseDetails.controller");
 
 router.get("/subtitle/excercise/:id", getExcercise);
@@ -27,4 +28,5 @@ router.patch("/deleteRating", canDeleteRating, deleteRating);
 router.patch("/addPromotion", canAddPromotion, addPromotion);
 router.patch("/:id", updateCourse);
 router.patch("/:id/newsubtitle", createSubtitle);
+router.post("/report", canReport, submitReport);
 module.exports = router;
