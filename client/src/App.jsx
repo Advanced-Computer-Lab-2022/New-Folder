@@ -19,7 +19,6 @@ import Excercise from "./pages/course/Excercise/Excercise";
 import ViewInstructorProfile from "./pages/user/ViewInstructorProfile";
 import ForgetPassword from "./pages/user/ForgetPassword";
 import ChangePassword from "./pages/user/ChangePassword";
-import Container from "react-bootstrap/Container";
 import MyProfile from "./pages/user/instructor/MyProfile";
 import ResetPassword from "./pages/user/ResetPassword";
 import EditSubtitle from "./pages/user/instructor/EditSubtitle";

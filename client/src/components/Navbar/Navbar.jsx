@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import { countries } from "country-list-json";
 import Container from "react-bootstrap/Container";

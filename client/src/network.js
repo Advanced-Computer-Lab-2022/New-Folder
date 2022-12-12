@@ -229,10 +229,20 @@ export const postPromotion = async (courseId, promotion) => {
   }
 };
 
-//Add promotion
+//Add report
 export const postReport = async (data) => {
   try {
     const res = await instance.post("course/report", data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//Get problems
+export const getMyProblems = async () => {
+  try {
+    const res = await instance.get("trainee/myProblems");
     return res.data;
   } catch (err) {
     console.log(err);
