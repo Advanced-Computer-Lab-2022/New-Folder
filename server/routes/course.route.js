@@ -16,8 +16,10 @@ const {
   addPromotion,
   updateCourse,
   createSubtitle,
+  UpdateMark
 } = require("../controllers/course/courseDetails.controller");
 
+router.patch("/subtitle/excercise/:id/addMark",UpdateMark);
 router.get("/subtitle/excercise/:id", getExcercise);
 router.get("/subtitle/video/:id", getVideo);
 router.get("/subtitle/:id", getSubtitle);

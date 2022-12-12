@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import ExcerciseCard from "../../../components/Course/Excercise/ExcerciseCard";
-import { fetchExcercise } from "../../../network";
+import { fetchExcercise, postMark } from "../../../network";
 import "./Excercise.css";
 
 const Excercise = () => {
@@ -29,8 +29,9 @@ const Excercise = () => {
   const handleShowConfirmation = () => setShowConfirmation(true);
   const handleCloseConfirmation = ()=> setShowConfirmation(false);
 
-  const handleConfirm = () => {
+  const handleConfirm = async () => {
     handleCloseConfirmation();
+    const exer = await postMark(excerciseID , correctAns);
     setIsSubmitted(true);
     handleShow();
   }

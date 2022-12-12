@@ -228,3 +228,15 @@ export const postPromotion = async (courseId, promotion) => {
     console.log(err);
   }
 };
+
+//Add and update Exercise Mark
+export const postMark = async (exerciseID , mark) => {
+  try {
+    const res = await instance.patch("course/subtitle/excercise/"+ exerciseID + "/addMark", {
+      Mark: mark,
+    });
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+}

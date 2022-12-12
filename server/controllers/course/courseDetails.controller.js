@@ -140,6 +140,40 @@ const addPromotion = async (req, res) => {
     console.log(err);
   }
 };
+
+const UpdateMark = async (req, res) => {
+  try {
+    let exercise = await Exercise.findById(req.params.id);
+    let arrMark = exercise.Mark;
+    const traineeId = req.session.userId;
+    const mark = req.body.Mark;
+    let index = -1;
+
+    for (let i = 0; i < arrMark.length; i++) {
+      if (traineeId === arrMark[i].Trainee_ID) {
+        index = i;
+        break;
+      }
+    }
+
+    if (index === -1) arrMark.push({ Trainee_ID: traineeId, Mark: mark });
+    else {
+      arrMark[index].Mark =
+        arrMark[index].Mark > mark ? arrMark[index].Mark : mark;
+    }
+
+    console.log(arrMark);
+    const exerciseNew = await Exercise.findByIdAndUpdate(
+      req.params.id,
+      { Mark: arrMark },
+      { new: true }
+    );
+    res.json(exerciseNew);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const createSubtitle = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
@@ -165,6 +199,7 @@ module.exports = {
   addReview,
   deleteRating,
   addPromotion,
+  UpdateMark,
   updateCourse,
   createSubtitle,
 };
