@@ -23,6 +23,7 @@ import Container from "react-bootstrap/Container";
 import MyProfile from "./pages/user/instructor/MyProfile";
 import ResetPassword from "./pages/user/ResetPassword";
 import EditSubtitle from "./pages/user/instructor/EditSubtitle";
+import MyProblems from "./pages/user/MyProblems";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -66,6 +67,7 @@ function App() {
           path="/editSubtitle/:courseID/:subtitleID"
           element={<EditSubtitle />}
         />
+        <Route path="/myProblems" element={<MyProblems />} />
       </Routes>
     </>
   );

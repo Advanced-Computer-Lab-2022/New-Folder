@@ -39,7 +39,6 @@ const MainNavbar = (props) => {
           {ReactSession.get("userType") === "instructor" ? (
             <Nav.Link href="/createCourse">Create Course</Nav.Link>
           ) : null}
-
           <Nav.Link href="/login">Login</Nav.Link>
           {ReactSession.get("userType") ? (
             <Nav.Link href="/changePassword">Change password</Nav.Link>
@@ -77,6 +76,13 @@ const MainNavbar = (props) => {
               </Button>
             </InputGroup>
           </Form>
+          {[
+            userTypes.instructor,
+            userTypes.trainee,
+            userTypes.corporateTrainee,
+          ].includes(ReactSession.get("userType")) ? (
+            <Nav.Link href="/myProblems">My problems</Nav.Link>
+          ) : null}
         </Nav>
       </Container>
     </Navbar>
