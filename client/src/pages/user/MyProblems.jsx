@@ -15,18 +15,7 @@ function MyProblems() {
   return (
     <div>
       {problems.map((problem) => (
-        <>
-          <div>
-            {problem.body +
-              " " +
-              problem.problemType +
-              " " +
-              problem.status +
-              " " +
-              problem.courseId}
-          </div>
-          <br />
-        </>
+        <ProblemCard problem={problem} />
       ))}
     </div>
   );
