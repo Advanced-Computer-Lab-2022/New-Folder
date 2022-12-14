@@ -15,15 +15,20 @@ function MyProblems() {
     setProblems(fetchedProblems);
   };
   return (
-    <div id="gridContainer">
-      <Row xs={1} md={2}>
-        {problems.map((problem) => (
-          <Col>
-            <ProblemCard problem={problem} />
-          </Col>
-        ))}
-      </Row>
-    </div>
+    <>
+      <div id="problemsPageHeader">
+        <h1>Previously reported problems</h1>
+      </div>
+      <div id="gridContainer">
+        <Row xs={1} md={2}>
+          {problems.map((problem) => (
+            <Col>
+              <ProblemCard problem={problem} />
+            </Col>
+          ))}
+        </Row>
+      </div>
+    </>
   );
 }
 

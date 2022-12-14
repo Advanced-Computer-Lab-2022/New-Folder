@@ -5,7 +5,8 @@ import Modal from "react-bootstrap/Modal";
 import { postReport } from "../../../network";
 import ProblemTypes from "../../../constants/ProblemTypes.json";
 import { ReactSession } from "react-client-session";
-
+import "./ReportCourse.css";
+import { Row } from "react-bootstrap";
 function ReportCourse(props) {
   const [show, setShow] = useState(false);
   const [validated, setValidated] = useState(false);
@@ -49,7 +50,12 @@ function ReportCourse(props) {
           <Modal.Title>Report course</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Form
+            noValidate
+            validated={validated}
+            onSubmit={handleSubmit}
+            id="reportProblemForm"
+          >
             <Form.Group className="mb-3">
               <Form.Label>Problem type</Form.Label>
               <Form.Select
@@ -91,12 +97,18 @@ function ReportCourse(props) {
                 Please state the problem you want to report
               </Form.Control.Feedback>
             </Form.Group>
-            <Button variant="secondary" onClick={cancel}>
-              Close
-            </Button>
-            <Button variant="primary" type="submit">
-              Submit
-            </Button>
+            <div id="reportFormFooter">
+              <Button
+                variant="secondary"
+                onClick={cancel}
+                className="reportFormButton"
+              >
+                Close
+              </Button>
+              <Button variant="primary" type="submit" className="reportFormButton">
+                Submit
+              </Button>
+            </div>
           </Form>
         </Modal.Body>
         <Modal.Footer></Modal.Footer>

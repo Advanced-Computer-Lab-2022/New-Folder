@@ -42,3 +42,7 @@
   justify-content: flex-end;
   text-align-last: right;
 }
+#problemCourseNameLink {
+  text-decoration: none;
+  color: #0d5c84;
+}

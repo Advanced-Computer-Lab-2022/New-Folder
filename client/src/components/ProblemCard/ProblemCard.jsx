@@ -30,8 +30,15 @@ function ProblemCard(props) {
             )}
           </div>
           <small>
-            <b>Course: </b>
-            <a href={"/course/" + problem.courseId}>{problem.courseName}</a>
+            <b>
+              {"Course: "}
+              <a
+                href={"/course/" + problem.courseId}
+                id="problemCourseNameLink"
+              >
+                {problem.courseName}
+              </a>
+            </b>
             <br />
             {ReactSession.get("userType") === UserTypes.admin ? (
               <>
@@ -44,7 +51,8 @@ function ProblemCard(props) {
             {ReactSession.get("userType") !== UserTypes.admin ? (
               <>
                 {problem.status !== ProblemStatus.resolved ? (
-                  <Button>Add follow up</Button>
+                  // <Button>Add follow up</Button>
+                  <></>
                 ) : null}
               </>
             ) : null}

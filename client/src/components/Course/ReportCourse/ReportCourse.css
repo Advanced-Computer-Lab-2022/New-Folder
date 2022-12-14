@@ -1,0 +1,11 @@
+#reportProblemForm {
+  margin-left: -50%;
+  margin-right: -50%;
+}
+#reportFormFooter {
+  display: flex;
+  justify-content: space-around;
+}
+.reportFormButton {
+  width: 40%;
+}
