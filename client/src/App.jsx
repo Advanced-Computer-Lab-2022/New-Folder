@@ -24,6 +24,7 @@ import ResetPassword from "./pages/user/ResetPassword";
 import EditSubtitle from "./pages/user/instructor/EditSubtitle";
 import MyProblems from "./pages/user/MyProblems/MyProblems";
 import Reports from "./pages/admin/Reports";
+import AddUser from "./pages/admin/AddUser";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -44,9 +45,7 @@ function App() {
         <Route path="/search/:searchQuery" element={<Search />} />
 
         <Route path="/course/:courseId" element={<CourseDetails />} />
-        <Route path="/addAdmin" element={<AddAdmin />} />
-        <Route path="/AddInstructor" element={<AddInstructor />} />
-        <Route path="/AddCorporateTrainee" element={<AddCorporateTrainee />} />
+        <Route path="/addUser" element={<AddUser />} />
         <Route path="/CreateCourse" element={<CreateCourse />} />
         <Route path="/login" element={<Login setUserType={setUserType} />} />
         <Route path="/watch/:courseId" element={<Content />} />

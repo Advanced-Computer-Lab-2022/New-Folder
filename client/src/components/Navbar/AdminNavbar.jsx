@@ -27,8 +27,7 @@ const AdminNavbar = (props) => {
         <Nav className="me-auto">
           <Nav.Link href="/">Explore</Nav.Link>
           <Nav.Link href="/addAdmin">Add Admin</Nav.Link>
-          <Nav.Link href="/addInstructor">Add instructor</Nav.Link>
-          <Nav.Link href="/addCorporateTrainee">Add Corporate Trainee</Nav.Link>
+          <Nav.Link href="/addUser"> Add User</Nav.Link>
           <Nav.Link href="/login">Login</Nav.Link>
           <Nav.Link href="/reports">Reports</Nav.Link>
           <ReactCountryFlag countryCode={ReactSession.get("country")} svg />

@@ -6,6 +6,8 @@ import {
   getYoutubeVideoID,
 } from "./utils/getVideoDurationUtils";
 
+import UserTypes from "../src/constants/UserTypes.json";
+
 // if you delete this part ghosts will haunt you at night
 const instance = axios.create({
   withCredentials: true,
@@ -38,24 +40,35 @@ export const postCourse = async (data) => {
 };
 
 // Add Admin
-export const postAddadmin = async (data) => {
+const postAddadmin = async (data) => {
   const res = await instance.post("/admin/addAdmin", data);
   console.log(res.data);
   return res.data;
 };
 
 // Add Instructor
-export const postAddInstructor = async (data) => {
+const postAddInstructor = async (data) => {
   const res = await instance.post("/admin/addInstructor", data);
   console.log(res.data);
   return res.data;
 };
 
 // Add Corporate Trainee
-export const postAddCorporateTrainee = async (data) => {
+const postAddCorporateTrainee = async (data) => {
   const res = await instance.post("/admin/addCorporateTrainee", data);
   console.log(res.data);
   return res.data;
+};
+// post Add User
+export const postAddUser = async (userType, data) => {
+  if (userType === UserTypes.admin) {
+    return postAddadmin(data);
+  } else if (userType === UserTypes.instructor) {
+    return postAddInstructor(data);
+  } else if (userType === UserTypes.corporateTrainee) {
+    return postAddCorporateTrainee(data);
+  }
+  return {};
 };
 
 // Search results
