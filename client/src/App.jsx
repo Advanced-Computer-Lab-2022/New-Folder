@@ -23,6 +23,7 @@ import MyProfile from "./pages/user/instructor/MyProfile";
 import ResetPassword from "./pages/user/ResetPassword";
 import EditSubtitle from "./pages/user/instructor/EditSubtitle";
 import MyProblems from "./pages/user/MyProblems/MyProblems";
+import Reports from "./pages/admin/Reports";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
           element={<EditSubtitle />}
         />
         <Route path="/myProblems" element={<MyProblems />} />
+        <Route path="/reports" element={<Reports />} />
       </Routes>
     </>
   );

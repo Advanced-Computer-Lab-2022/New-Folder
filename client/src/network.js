@@ -248,3 +248,9 @@ export const getMyProblems = async () => {
     console.log(err);
   }
 };
+
+// get all reports
+export const fetchReports = async () => {
+  const res = await instance.get("admin/reports");
+  return res.data;
+};

@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 
 // import controllers
-const { getHome } = require("../controllers/admin/home.controller");
+const { getReports } = require("../controllers/admin/reports.controller");
 const {
   addInstructor,
 } = require("../controllers/admin/addInstructor.controller");
@@ -16,12 +16,12 @@ const { authAdmin } = require("../middlewares/authUserMiddleware");
 
 // api routes
 // admin/
-router.get("/", authAdmin, getHome);
-
 router.post("/addInstructor", authAdmin, addInstructor);
 
 router.post("/addCorporateTrainee", authAdmin, addCorpTrainee);
 
 router.post("/addAdmin", authAdmin, addAdmin);
+
+router.get("/reports", authAdmin, getReports);
 
 module.exports = router;
