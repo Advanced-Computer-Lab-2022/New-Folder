@@ -10,9 +10,14 @@ const Report = mongoose.Schema({
     ref: "User",
     required: true,
   },
+  userName: { type: String, required: true },
   courseId: {
     type: mongoose.Types.ObjectId,
     ref: "Course",
+    required: true,
+  },
+  courseName: {
+    type: String,
     required: true,
   },
   problemType: {
@@ -29,6 +34,14 @@ const Report = mongoose.Schema({
   body: {
     type: String,
     required: true,
+  },
+  summary: {
+    type: String,
+    required: true,
+  },
+  followups: {
+    type: [{ type: mongoose.Types.ObjectId, ref: "Followup" }],
+    default: [],
   },
 });
 
