@@ -176,8 +176,14 @@ const UpdateMark = async (req, res) => {
 const getMark = async (req, res) => {
   try {
     let exercise = await Exercise.findById(req.params.id);
-    let arrMark = exercise.Mark;
-    let QuestionsExcerciseLength = exercise.Questions.length;
+    let arrMark = [];
+    let QuestionsExcerciseLength = -1;
+    
+    if (exercise !== null) {
+      arrMark = exercise.Mark;
+      QuestionsExcerciseLength = exercise.Questions.length;
+    } 
+
     const traineeId = req.session.userId;
 
     let index = -1;

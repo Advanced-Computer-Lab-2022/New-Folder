@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { fetchVideoContent } from "../../../network";
+import { FetchMark, fetchVideoContent } from "../../../network";
 import "./SubtitleTypeCard.css";
 import constants from "../../../constants/SubtitlesTypes.json";
 import { useEffect } from "react";
@@ -18,6 +18,8 @@ const SubtitleTypeCard = (props) => {
   const [duration, setDuration] = useState("");
   const [description, setDescription] = useState("");
   const [conID, setConID] = useState("");
+  const [traineeMark , setTraineeMark] = useState("");
+  const [excerciseMark ,setExcerciseMark ] = useState("");
 
   const fetchingContent = async () => {
     setType(contentType);
@@ -26,6 +28,11 @@ const SubtitleTypeCard = (props) => {
       const fetchedContent = await fetchVideoContent(contentID);
       setDescription(fetchedContent.description);
       setDuration(fetchedContent.duration);
+    } else {
+      const fetchedMark = await FetchMark(contentID);
+      setTraineeMark(fetchedMark.Mark);
+      setExcerciseMark(fetchedMark.ExerciseLength);
+
     }
   };
 
@@ -58,14 +65,14 @@ const SubtitleTypeCard = (props) => {
           : "Excercise "}{" "}
       </span>
 
-      {type === constants.content && (
+      
         <div class="content-duration">
-          <i class="bi bi-clock-fill"></i>
-          <span>{duration} min</span>
+         {type === constants.content ? (<i class="bi bi-clock-fill"></i>) : (<i>Score : </i>)}
+          {type === constants.content ? <span>{duration} min</span> : <span>{traineeMark === -1 ? "-"  : traineeMark} / {excerciseMark}</span>}
         </div>
-      )}
+   
     </div>
   );
-};
+};<i class="bi bi-clock-fill"></i>
 
 export default SubtitleTypeCard;

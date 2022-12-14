@@ -240,3 +240,13 @@ export const postMark = async (exerciseID , mark) => {
     console.log(err);
   }
 }
+
+// get Excercise mark of trainee
+export const FetchMark  = async (exerciseID) => {
+  try {
+    const res = await instance.get("course/subtitle/excercise/"+exerciseID+"/getMark");
+    return res.data;
+  }catch (err) {
+    console.log(err);
+  }
+}

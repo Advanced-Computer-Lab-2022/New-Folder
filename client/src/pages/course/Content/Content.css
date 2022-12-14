@@ -1,4 +1,8 @@
 .sideBar {
-  width: 85%;
-  float: left;
-}
+    width: 98%;
+    float: left;
+  }
+  
+  #sideBar-parent {
+    padding-left: 0 !important;
+  }

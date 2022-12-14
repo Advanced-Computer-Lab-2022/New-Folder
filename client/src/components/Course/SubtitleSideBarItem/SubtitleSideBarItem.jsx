@@ -9,7 +9,9 @@ const SubtitleSideBarItem = (props) => {
   const subtitleID = props.subtitleContent;
   const courseID = props.cid;
   const subIDx = props.sidx;
-  const [open, setOpen] = useState(false);
+  const opened = props.opened;
+  const isOpenedSubtitle = props.isOpenedSubtitle;
+  // const [open, setOpen] = useState(false);
   const [subtitleContent, setSubtitleContent] = useState([]);
   const [subtitleNumber, setSubtitleNumber] = useState([]);
 
@@ -24,11 +26,11 @@ const SubtitleSideBarItem = (props) => {
   }, []);
 
   return (
-    <div className={open ? "sidebar-item open" : "sidebar-item"}>
+    <div className={isOpenedSubtitle[subIDx] ? "sidebar-item open" : "sidebar-item"}>
       <div
         className="sidebar-title"
         onClick={() => {
-          setOpen(!open);
+          opened(subIDx);
         }}
       >
         <i class="bi bi-chevron-compact-down toggle-btn"></i>

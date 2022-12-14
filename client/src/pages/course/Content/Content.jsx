@@ -12,6 +12,7 @@ const Content = () => {
   // States of subtitle Array , Video will be displayed, and content description
   const [subtitles, setSubtitles] = useState([]);
   const [subtitleID, setSubtitleID] = useState("");
+  const [isOpenedSubtitle , setIsOpenedSubtitle] = useState([]);
 
   // get course ID to get Course Object
   // get index of specific subtitle index (sId) and content that will be displayed (cId)
@@ -19,6 +20,7 @@ const Content = () => {
   const params = new URLSearchParams(window.location.search);
   const indexOfSubtitle = params.get("sId");
   const indexOfContent = params.get("cId");
+
 
   // fetch course on page loading
   useEffect(() => {
@@ -30,11 +32,26 @@ const Content = () => {
       const fetchedCourse = await fetchCourseDetails(courseId);
       setSubtitles(fetchedCourse.subtitles);
       setSubtitleID(fetchedCourse.subtitles[indexOfSubtitle]);
+      InitializeIsOpenedSubtitle(fetchedCourse.subtitles);
     } catch (err) {
       console.log(err);
     }
   };
 
+  const InitializeIsOpenedSubtitle = (arr) => {
+    let ans = [];
+    for (let i = 0 ; i  < arr.length ; i++) ans.push(false); 
+    setIsOpenedSubtitle(arr);
+  }
+
+  const changeIsOpened = (subIndex) => {
+    let arr = [...isOpenedSubtitle];
+    let temp  = arr[subIndex];
+    for (let i = 0 ; i  < arr.length ; i++) arr[i] = false;
+    arr[subIndex] = ! temp;
+    console.log(arr);
+    setIsOpenedSubtitle(arr); 
+  }
   // this page will return two kind of components
   // first part which is on the left of the screen includes the required ContentID with required video (ContentDisplay component)
   // second part which is the accordion shows all subtitle_content to let the user choose desired excercise or content Video
@@ -46,7 +63,7 @@ const Content = () => {
           cID={indexOfContent}
         />
       )}
-      <Col lg={4}>
+      <Col lg={4} id="sideBar-parent">
         <div className="sideBar">
           {/* array of subtitles of the course and pass each subtitle to SubtitleSideBarItem  */}
           {subtitles.map((subtitle, index) => (
@@ -54,6 +71,8 @@ const Content = () => {
               subtitleContent={subtitle}
               cid={courseId}
               sidx={index}
+              opened = {(subIndex)=> changeIsOpened(subIndex)}
+              isOpenedSubtitle = {isOpenedSubtitle}
             />
           ))}
         </div>

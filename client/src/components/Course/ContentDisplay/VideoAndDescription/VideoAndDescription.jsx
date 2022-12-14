@@ -35,7 +35,7 @@ const VideoAndDescription = (props) => {
   // only video and video title are dislayed here
   // there is a button for next video is commented till further discussions
   return (
-    <Col lg={8}>
+    <Col lg={8} id="videaAndDescription" >
       <div className="watchScreen__player">
         <iframe
           src={video}
