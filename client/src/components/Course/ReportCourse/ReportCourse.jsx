@@ -4,10 +4,13 @@ import Form from "react-bootstrap/Form";
 import Modal from "react-bootstrap/Modal";
 import { postReport } from "../../../network";
 import ProblemTypes from "../../../constants/ProblemTypes.json";
+import { ReactSession } from "react-client-session";
+
 function ReportCourse(props) {
   const [show, setShow] = useState(false);
   const [validated, setValidated] = useState(false);
   const [problemBody, setProblemBody] = useState(null);
+  const [problemSummary, setProblemSummary] = useState(null);
   const [problemType, setProblemType] = useState(null);
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -18,13 +21,17 @@ function ReportCourse(props) {
       setValidated(true);
     } else {
       await postReport({
-        courseId: props.courseId,
+        courseId: props.course._id,
         problemType: problemType,
         problemBody: problemBody,
+        problemSummary: problemSummary,
+        courseName: props.course.name,
+        userName: ReactSession.get("userName"),
       });
       setValidated(false);
       setProblemBody(null);
       setProblemType(null);
+      setProblemSummary(null);
       setShow(false);
     }
   };
@@ -32,6 +39,7 @@ function ReportCourse(props) {
     setValidated(false);
     setProblemBody(null);
     setProblemType(null);
+    setProblemSummary(null);
     setShow(false);
   };
   return (
@@ -61,7 +69,18 @@ function ReportCourse(props) {
               className="mb-3"
               controlId="exampleForm.ControlTextarea1"
             >
-              <Form.Label>What is your problem?</Form.Label>
+              <Form.Label>Problem summary (maximum 50 characters)</Form.Label>
+              <Form.Control
+                as="textarea"
+                rows={1}
+                required
+                maxLength={50}
+                onChange={(e) => setProblemSummary(e.target.value)}
+              />
+              <Form.Control.Feedback type="invalid">
+                Please state the problem summary
+              </Form.Control.Feedback>
+              <Form.Label>Problem details</Form.Label>
               <Form.Control
                 as="textarea"
                 rows={3}

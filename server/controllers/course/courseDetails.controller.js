@@ -164,6 +164,9 @@ const submitReport = async (req, res) => {
       courseId: req.body.courseId,
       problemType: req.body.problemType,
       body: req.body.problemBody,
+      userName: req.body.userName,
+      courseName: req.body.courseName,
+      summary: req.body.problemSummary,
     });
     const user = await User.findById(req.session.userId);
     user.reports.push(report._id);
