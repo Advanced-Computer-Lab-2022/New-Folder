@@ -178,7 +178,7 @@ const getMark = async (req, res) => {
     let exercise = await Exercise.findById(req.params.id);
     let arrMark = exercise.Mark;
     let QuestionsExcerciseLength = exercise.Questions.length;
-    const traineeId = "2";
+    const traineeId = req.session.userId;
 
     let index = -1;
 
