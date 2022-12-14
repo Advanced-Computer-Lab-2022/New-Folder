@@ -40,7 +40,7 @@ const Report = mongoose.Schema({
     required: true,
   },
   followups: {
-    type: [{ type: mongoose.Types.ObjectId, ref: "Followup" }],
+    type: [String],
     default: [],
   },
 });
