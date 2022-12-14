@@ -1,12 +1,19 @@
 #courseStars {
-  margin-left: 0;
+  padding-top: 5%;
 }
 #starsWrapper {
   margin-top: -10%;
   margin-left: -5%;
 }
-#deleteRating {
-  width: max-content;
-  margin: 0;
-  margin-right: 55%;
+.rateCourseFormButton {
+  width: 40%;
+}
+#rateCourseFooter {
+  display: flex;
+  justify-content: space-around;
+  padding: 10%;
+}
+.courseRatingForm {
+  margin-left: -50%;
+  margin-right: -50%;
 }
