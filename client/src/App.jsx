@@ -22,7 +22,7 @@ import ChangePassword from "./pages/user/ChangePassword";
 import MyProfile from "./pages/user/instructor/MyProfile";
 import ResetPassword from "./pages/user/ResetPassword";
 import EditSubtitle from "./pages/user/instructor/EditSubtitle";
-import MyProblems from "./pages/user/MyProblems";
+import MyProblems from "./pages/user/MyProblems/MyProblems";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {

@@ -1,5 +1,5 @@
 {
-  "pending": "pending",
-  "resolved": "resolved",
-  "unseen": "unseen"
+  "pending": "Pending",
+  "resolved": "Resolved",
+  "unseen": "Unseen"
 }

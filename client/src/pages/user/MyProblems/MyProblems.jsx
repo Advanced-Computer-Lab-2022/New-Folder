@@ -1,8 +1,10 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import ProblemCard from "../../components/ProblemCard/ProblemCard";
-import { getMyProblems } from "../../network";
+import { Col, Row } from "react-bootstrap";
+import ProblemCard from "../../../components/ProblemCard/ProblemCard";
+import { getMyProblems } from "../../../network";
+import "./MyProblems.css";
 function MyProblems() {
   const [problems, setProblems] = useState([]);
   useEffect(() => {
@@ -13,10 +15,14 @@ function MyProblems() {
     setProblems(fetchedProblems);
   };
   return (
-    <div>
-      {problems.map((problem) => (
-        <ProblemCard problem={problem} />
-      ))}
+    <div id="gridContainer">
+      <Row xs={1} md={2}>
+        {problems.map((problem) => (
+          <Col>
+            <ProblemCard problem={problem} />
+          </Col>
+        ))}
+      </Row>
     </div>
   );
 }

@@ -1,19 +1,27 @@
 import React from "react";
-import { Card } from "react-bootstrap";
-
-function ProblemCard() {
+import { Button, Card } from "react-bootstrap";
+import { useNavigate } from "react-router-dom";
+import "./ProblemCard.css";
+function ProblemCard(props) {
+  const { problem } = props;
+  const navigate = useNavigate();
   return (
     <>
-      <Card border="primary" style={{ width: "18rem" }}>
-        <Card.Header>Header</Card.Header>
-        <Card.Body>
-          <Card.Title>Primary Card Title</Card.Title>
-          <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
-          </Card.Text>
+      <div id="problemContainer">
+        <Card.Body id="problemCard">
+          <Card.Title>
+            <div id="problemSummary">Problem summary</div>
+          </Card.Title>
+          <Card.Subtitle>{problem.problemType}</Card.Subtitle>
+          <Card.Text>{problem.body}</Card.Text>
+          <Button
+            variant="primary"
+            onClick={(e) => navigate("/course/" + problem.courseId)}
+          >
+            Go to reported course
+          </Button>
         </Card.Body>
-      </Card>
+      </div>
     </>
   );
 }

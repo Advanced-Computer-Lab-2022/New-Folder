@@ -1,0 +1,14 @@
+#problemSummary {
+  margin-left: 0px;
+}
+#problemCard {
+  margin-left: 0px;
+}
+#problemContainer {
+  width: 100%;
+  margin: 0%;
+  padding: 1%;
+  border-radius: 1em;
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
+    rgba(0, 0, 0, 0.1) 0px 10px 15px -3px;
+}
