@@ -1,10 +1,12 @@
 import React from "react";
-import { Button, Card, Row } from "react-bootstrap";
-import { useNavigate } from "react-router-dom";
+import { Button, Row } from "react-bootstrap";
 import { MdOutlinePending } from "react-icons/md";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { FiCheckCircle } from "react-icons/fi";
-import ReportStatus from "../../constants/ReportStatus.json";
+import ProblemStatus from "../../constants/ProblemStatus.json";
+import { ReactSession } from "react-client-session";
+import UserTypes from "../../constants/UserTypes.json";
+
 import "./ProblemCard.css";
 function ProblemCard(props) {
   const { problem } = props;
@@ -15,11 +17,11 @@ function ProblemCard(props) {
           <h4 id="problemSummary">{problem.summary}</h4>
           <div id="problemStatus">
             {problem.status + " "}
-            {problem.status === ReportStatus.unseen ? (
+            {problem.status === ProblemStatus.unseen ? (
               <AiOutlineEyeInvisible />
             ) : (
               <>
-                {problem.status === ReportStatus.pending ? (
+                {problem.status === ProblemStatus.pending ? (
                   <MdOutlinePending />
                 ) : (
                   <FiCheckCircle />
@@ -28,10 +30,25 @@ function ProblemCard(props) {
             )}
           </div>
           <small>
-            <b>Reported course:</b>{" "}
+            <b>Course: </b>
             <a href={"/course/" + problem.courseId}>{problem.courseName}</a>
+            <br />
+            {ReactSession.get("userType") === UserTypes.admin ? (
+              <>
+                <b>Reported by: </b>
+                {problem.userName}
+              </>
+            ) : null}
           </small>
-          <div></div>
+          <div>
+            {ReactSession.get("userType") !== UserTypes.admin ? (
+              <>
+                {problem.status !== ProblemStatus.resolved ? (
+                  <Button>Add follow up</Button>
+                ) : null}
+              </>
+            ) : null}
+          </div>
         </Row>
         <div id="problemCard">{problem.body}</div>
       </div>
