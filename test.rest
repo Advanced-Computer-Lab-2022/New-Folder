@@ -1,9 +1,8 @@
-PATCH  http://localhost:8080/course/subtitle/excercise/639479d4a4edb459d83baa4c/addMark HTTP/1.1
-Content-Type: application/json
+GET  http://localhost:8080/course/subtitle/excercise/639479d4a4edb459d83baa4c/getMark HTTP/1.1
 
+Content-Type: application/json
 
 {
     "Trainee_ID" : "2",
-    "Mark" : 13
 }
 

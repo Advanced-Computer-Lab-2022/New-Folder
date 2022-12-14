@@ -161,14 +161,38 @@ const UpdateMark = async (req, res) => {
       arrMark[index].Mark =
         arrMark[index].Mark > mark ? arrMark[index].Mark : mark;
     }
-
-    console.log(arrMark);
     const exerciseNew = await Exercise.findByIdAndUpdate(
       req.params.id,
       { Mark: arrMark },
       { new: true }
     );
     res.json(exerciseNew);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// get mark of the trainee in addition to exercise total Score
+const getMark = async (req, res) => {
+  try {
+    let exercise = await Exercise.findById(req.params.id);
+    let arrMark = exercise.Mark;
+    let QuestionsExcerciseLength = exercise.Questions.length;
+    const traineeId = "2";
+
+    let index = -1;
+
+    for (let i = 0; i < arrMark.length; i++) {
+      if (traineeId === arrMark[i].Trainee_ID) {
+        index = i;
+        break;
+      }
+    }
+
+    res.json({
+      Mark: index === -1 ? -1 : arrMark[index].Mark,
+      ExerciseLength: QuestionsExcerciseLength,
+    });
   } catch (err) {
     console.log(err);
   }
@@ -200,6 +224,7 @@ module.exports = {
   deleteRating,
   addPromotion,
   UpdateMark,
+  getMark,
   updateCourse,
   createSubtitle,
 };
