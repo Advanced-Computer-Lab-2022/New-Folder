@@ -119,10 +119,10 @@ function ReportCourse(props) {
         <Modal.Footer></Modal.Footer>
       </Modal>
       <Card onClick={() => setShow(true)} id="reportButton">
-        <div>
-          {"Report problem "}
+        <div id="reportIconWrapper">
           <FiAlertCircle />
         </div>
+        &nbsp;Report problem
       </Card>
     </>
   );
