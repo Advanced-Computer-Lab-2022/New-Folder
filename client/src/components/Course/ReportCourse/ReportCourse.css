@@ -6,6 +6,20 @@
   display: flex;
   justify-content: space-around;
 }
+#reportButton {
+  background-color: rgb(0, 0, 0, 0);
+  box-shadow: none;
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  border: none;
+  margin-left: 2%;
+  margin-top: -0.5%;
+}
 .reportFormButton {
   width: 40%;
+}
+#reportIconWrapper {
+  width: fit-content;
+  margin-top: -1.5%;
 }

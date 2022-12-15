@@ -6,7 +6,8 @@ import { postReport } from "../../../network";
 import ProblemTypes from "../../../constants/ProblemTypes.json";
 import { ReactSession } from "react-client-session";
 import "./ReportCourse.css";
-import { Row } from "react-bootstrap";
+import { FiAlertCircle } from "react-icons/fi";
+import { Card } from "react-bootstrap";
 function ReportCourse(props) {
   const [show, setShow] = useState(false);
   const [validated, setValidated] = useState(false);
@@ -105,7 +106,11 @@ function ReportCourse(props) {
               >
                 Close
               </Button>
-              <Button variant="primary" type="submit" className="reportFormButton">
+              <Button
+                variant="primary"
+                type="submit"
+                className="reportFormButton"
+              >
                 Submit
               </Button>
             </div>
@@ -113,7 +118,12 @@ function ReportCourse(props) {
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>
-      <Button onClick={() => setShow(true)}>Report</Button>
+      <Card onClick={() => setShow(true)} id="reportButton">
+        <div id="reportIconWrapper">
+          <FiAlertCircle />
+        </div>
+        &nbsp;Report problem
+      </Card>
     </>
   );
 }
