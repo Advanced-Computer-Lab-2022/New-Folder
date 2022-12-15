@@ -45,7 +45,7 @@ function AddUser() {
             </Form.Group>
             <Form.Group className="mb-3">
               {Object.values(UserTypes).map((type) => {
-                return (
+                return ( type !== UserTypes.trainee &&
                   <Form.Check
                     type="radio"
                     checked={userType == type}

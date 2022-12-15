@@ -26,7 +26,6 @@ const AdminNavbar = (props) => {
       <Container>
         <Nav className="me-auto">
           <Nav.Link href="/">Explore</Nav.Link>
-          <Nav.Link href="/addAdmin">Add Admin</Nav.Link>
           <Nav.Link href="/addUser"> Add User</Nav.Link>
           <Nav.Link href="/login">Login</Nav.Link>
           <Nav.Link href="/reports">Reports</Nav.Link>
