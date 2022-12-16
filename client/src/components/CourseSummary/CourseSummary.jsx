@@ -19,6 +19,7 @@ import {
   totalDuration,
 } from "../../utils/getVideoDurationUtils";
 import ReportCourse from "../Course/ReportCourse/ReportCourse";
+import RequestAccess from "../Course/RequestAccess/RequestAccess";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -116,21 +117,15 @@ function CourseSummary(props) {
                         </Button>
                       ) : (
                         <>
-                          {props.vc ===
-                          ViewerContexts.nonEnrolledCorporateTrainee ? (
-                            <Button id="enrollButton" variant="dark">
-                              Request access
-                            </Button>
-                          ) : (
-                            <>
-                              {props.vc ===
-                              ViewerContexts.pendingCorporateTrainee ? (
-                                <Button id="enrollButton" variant="danger">
-                                  Cancel access request
-                                </Button>
-                              ) : null}
-                            </>
-                          )}
+                          {[
+                            ViewerContexts.pendingCorporateTrainee,
+                            ViewerContexts.nonEnrolledCorporateTrainee,
+                          ].includes(props.vc) ? (
+                            <RequestAccess
+                              vc={props.vc}
+                              course={props.course}
+                            />
+                          ) : null}
                         </>
                       )}
                     </>
