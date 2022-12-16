@@ -19,6 +19,7 @@ const Login = (props) => {
     };
     try {
       const userData = await login(loginData);
+      ReactSession.set("userType", userData.data.userType);
       props.setUserType(userData.data.userType);
       ReactSession.set("userId", userData.data.userId);
       if (userData.data.userType !== userTypes.corporateTrainee) {
