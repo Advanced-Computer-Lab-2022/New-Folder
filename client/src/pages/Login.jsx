@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/esm/Container";
 import Col from "react-bootstrap/esm/Col";
 import { ReactSession } from "react-client-session";
-
+import userTypes from "../constants/UserTypes.json";
 const Login = (props) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -21,10 +21,15 @@ const Login = (props) => {
       const userData = await login(loginData);
       props.setUserType(userData.data.userType);
       ReactSession.set("userId", userData.data.userId);
-      ReactSession.set(
-        "userName",
-        userData.data.firstName + " " + userData.data.lastName
-      );
+      if (userData.data.userType !== userTypes.corporateTrainee) {
+        ReactSession.set(
+          "userName",
+          userData.data.firstName + " " + userData.data.lastName
+        );
+      } else {
+        ReactSession.set("userName", userData.data.userName);
+      }
+
       navigate("/");
     } catch (err) {
       console.log(err);

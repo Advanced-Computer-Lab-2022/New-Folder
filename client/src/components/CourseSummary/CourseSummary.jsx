@@ -123,6 +123,7 @@ function CourseSummary(props) {
                           ].includes(props.vc) ? (
                             <RequestAccess
                               vc={props.vc}
+                              setVc={props.setVc}
                               course={props.course}
                             />
                           ) : null}

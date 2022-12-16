@@ -12,14 +12,13 @@ exports.login = asyncHandler(async (req, res) => {
     req.session.userId = user._id;
     req.session.userType = user.userType;
     req.session.userName = user.firstName + " " + user.lastName;
-    res
-      .status(201)
-      .json({
-        userType: user.userType ?? "admin",
-        userId: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-      });
+    res.status(201).json({
+      userType: user.userType ?? "admin",
+      userId: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      userName: user.username,
+    });
   } else {
     res.status(400);
     throw new Error("invalid credintials");
