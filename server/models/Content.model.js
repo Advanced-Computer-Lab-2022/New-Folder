@@ -14,6 +14,9 @@ const Content = mongoose.Schema({
   video: {
     type: String,
   },
+  Note : {
+    type : [mongoose.Schema.Types.Mixed] //Trainee_id , note 
+  }
 });
 
 module.exports = mongoose.model("Content", Content);

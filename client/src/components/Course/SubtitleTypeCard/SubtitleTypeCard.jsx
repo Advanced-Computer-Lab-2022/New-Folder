@@ -18,8 +18,8 @@ const SubtitleTypeCard = (props) => {
   const [duration, setDuration] = useState("");
   const [description, setDescription] = useState("");
   const [conID, setConID] = useState("");
-  const [traineeMark , setTraineeMark] = useState("");
-  const [excerciseMark ,setExcerciseMark ] = useState("");
+  const [traineeMark, setTraineeMark] = useState("");
+  const [excerciseMark, setExcerciseMark] = useState("");
 
   const fetchingContent = async () => {
     setType(contentType);
@@ -32,14 +32,12 @@ const SubtitleTypeCard = (props) => {
       const fetchedMark = await FetchMark(contentID);
       setTraineeMark(fetchedMark.Mark);
       setExcerciseMark(fetchedMark.ExerciseLength);
-
     }
   };
 
   useEffect(() => {
     fetchingContent();
   }, []);
-
 
   return (
     <div
@@ -53,26 +51,34 @@ const SubtitleTypeCard = (props) => {
           : navigate("/excercise/" + conID);
       }}
     >
-      <i
-        class={
-          type === constants.content ? "bi bi-play-circle" : "bi-card-checklist"
-        }
-      ></i>
-      <span>
-        {" "}
-        {type === constants.content
-          ? "Content : " + description
-          : "Excercise "}{" "}
-      </span>
 
-      
+      <div className="Content-card-details">
+        <i class={type === constants.content ? "bi bi-play-circle" : "bi-card-checklist"}></i>
+        <span>{type === constants.content ? "Content : " + description : "Excercise "} </span>
+
         <div class="content-duration">
-         {type === constants.content ? (<i class="bi bi-clock-fill"></i>) : (<i>Score : </i>)}
-          {type === constants.content ? <span>{duration} min</span> : <span>{traineeMark === -1 ? "-"  : traineeMark} / {excerciseMark}</span>}
+          {type === constants.content ? (
+            <i class="bi bi-clock-fill"></i>
+          ) : (
+            <i>Score : </i>
+          )}
+          {type === constants.content ? (
+            <span>{duration} min</span>
+          ) : (
+            <span>
+              {traineeMark === -1 ? "-" : traineeMark} / {excerciseMark}
+            </span>
+          )}
         </div>
-   
+      </div>
+
+      <div className="Content-card-visit">
+        <i class="bi bi-dot"></i>
+      </div>
+
     </div>
   );
-};<i class="bi bi-clock-fill"></i>
+};
+<i class="bi bi-clock-fill"></i>;
 
 export default SubtitleTypeCard;

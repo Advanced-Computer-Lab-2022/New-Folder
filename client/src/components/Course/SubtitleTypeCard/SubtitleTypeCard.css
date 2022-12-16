@@ -1,10 +1,14 @@
 .Content-card {
-  /* display: flex; */
+  display: flex;
   font-size: 1.2em;
-  justify-content: space-between;
-  padding: 0.75em;
+  padding: 0.6em;
   transition: background-color 0.1ms;
   border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  font-weight: bolder;
 }
 
 .Content-card:hover {
@@ -30,6 +34,26 @@
 .content-duration i {
   margin-right: 0.4em;
 }
+
+.Content-card-details {
+  margin: 0;
+  padding-left: 1.3em;
+}
+
+.Content-card-visit {
+  margin: 0;
+  padding: 0;
+  height: 4em;
+  width: 3em;
+}
+
+.Content-card-visit i {
+  padding: 0;
+  margin: 0;
+  font-size: 3em;
+  color: #f0ad4e;
+}
+
 
 .content-description {
   text-overflow: ellipsis;
