@@ -267,3 +267,13 @@ export const fetchReports = async () => {
   const res = await instance.get("admin/reports");
   return res.data;
 };
+
+//Add report
+export const postAccessRequest = async (data) => {
+  try {
+    const res = await instance.post("course/requestAccess", data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

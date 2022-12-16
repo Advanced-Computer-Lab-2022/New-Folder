@@ -101,6 +101,10 @@ const Course = mongoose.Schema({
       },
     },
   },
+  pendingTrainees: {
+    type: [{ type: mongoose.Types.ObjectId, ref: "Trainee" }],
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("Course", Course);

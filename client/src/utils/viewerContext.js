@@ -15,6 +15,9 @@ export const getViewerContext = (course) => {
     return ViewerContexts.enrolledTrainee;
   }
   if (userType === UserTypes.corporateTrainee) {
+    if (course.pendingTrainees?.includes(userId)) {
+      return ViewerContexts.pendingCorporateTrainee;
+    }
     return ViewerContexts.nonEnrolledCorporateTrainee;
   }
   return ViewerContexts.guest;

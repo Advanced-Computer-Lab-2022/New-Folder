@@ -114,7 +114,25 @@ function CourseSummary(props) {
                         >
                           Go to course
                         </Button>
-                      ) : null}
+                      ) : (
+                        <>
+                          {props.vc ===
+                          ViewerContexts.nonEnrolledCorporateTrainee ? (
+                            <Button id="enrollButton" variant="dark">
+                              Request access
+                            </Button>
+                          ) : (
+                            <>
+                              {props.vc ===
+                              ViewerContexts.pendingCorporateTrainee ? (
+                                <Button id="enrollButton" variant="danger">
+                                  Cancel access request
+                                </Button>
+                              ) : null}
+                            </>
+                          )}
+                        </>
+                      )}
                     </>
                   )}
                 </div>
