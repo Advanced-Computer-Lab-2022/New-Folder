@@ -1,5 +1,5 @@
 const Course = require("../models/Course.model");
-const User = require("../models/User.model");
+const AccessRequest = require("../models/Course.model");
 const viewerContexts = require("../viewer-contexts.json");
 const constants = require("../constants.json");
 
@@ -13,7 +13,12 @@ const getVC = async (userId, userType, courseId) => {
   }
   if (!course.trainees.includes(userId)) {
     if (userType === constants.corporateTrainee) {
-      return viewerContexts.nonEnrolledCorporateTrainee;
+      const request = await AccessRequest.findOne({ userId: userId });
+      if (!request) {
+        return viewerContexts.nonEnrolledCorporateTrainee;
+      } else {
+        return viewerContexts.pendingCorporateTrainee;
+      }
     } else {
       return viewerContexts.guest;
     }
