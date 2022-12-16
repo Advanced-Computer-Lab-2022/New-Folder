@@ -5,6 +5,9 @@ const {
   canDeleteRating,
 } = require("../middlewares/enrolledTraineeMiddleware");
 const { canReport } = require("../middlewares/reportsMiddleware");
+const {
+  canRequestAccess,
+} = require("../middlewares/corporateTraineeMiddleware");
 const { canAddPromotion } = require("../middlewares/canAddPromotionMiddleware");
 const {
   getCourseDetails,
@@ -17,6 +20,7 @@ const {
   updateCourse,
   createSubtitle,
   submitReport,
+  requestAccess,
 } = require("../controllers/course/courseDetails.controller");
 
 router.get("/subtitle/excercise/:id", getExcercise);
@@ -29,4 +33,5 @@ router.patch("/addPromotion", canAddPromotion, addPromotion);
 router.patch("/:id", updateCourse);
 router.patch("/:id/newsubtitle", createSubtitle);
 router.post("/report", canReport, submitReport);
+router.post("/requestAccess", canRequestAccess, requestAccess);
 module.exports = router;
