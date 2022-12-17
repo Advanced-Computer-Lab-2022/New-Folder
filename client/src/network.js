@@ -268,7 +268,13 @@ export const fetchReports = async () => {
   return res.data;
 };
 
-//Request access to course
+// enroll in a course (payment)
+export const payForCourse = async (data) => {
+  const res = await instance.post("/trainee/payForCourse", data);
+  return res.data;
+};
+
+//Add report
 export const postAccessRequest = async (data) => {
   try {
     const res = await instance.post("course/requestAccess", data);
@@ -287,7 +293,6 @@ export const addFollowup = async (data) => {
     console.log(err);
   }
 };
-
 
 // cancel request access
 export const deleteAccessRequest = async (courseId) => {

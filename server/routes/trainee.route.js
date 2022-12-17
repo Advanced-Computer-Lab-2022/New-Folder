@@ -14,12 +14,16 @@ const {
 const {
   getMyProblems,
 } = require("../controllers/trainee/getMyProblems.controller");
+const { payForCourse } = require("../controllers/trainee/payment.controller");
+
 // import middlewares
 const { authUser } = require("../middlewares/authUserMiddleware");
 const {
   authUserTakeCourseWithInstructor,
 } = require("../middlewares/authUserTakeCourseWithInstructorMiddleware");
 const { canReport } = require("../middlewares/reportsMiddleware");
+const { canEnroll } = require("../middlewares/enrollmentMiddleware");
+
 // api routes
 router.post("/changePassword", authUser, changePassword);
 router.get("/instructorInfo", getInstructorData);
@@ -29,5 +33,6 @@ router.post(
   authUserTakeCourseWithInstructor,
   rateInstructor
 );
+router.post("/payForCourse", canEnroll, payForCourse);
 
 module.exports = router;

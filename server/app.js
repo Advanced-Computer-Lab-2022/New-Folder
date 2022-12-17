@@ -8,9 +8,15 @@ require("dotenv").config();
 
 // app
 const app = express();
+app.use("/stripe/webhook", express.raw({ type: "*/*" }));
 app.use(json());
 app.use(urlencoded({ extended: false }));
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://checkout.stripe.com"],
+    credentials: true,
+  })
+);
 app.use(
   session({
     secret: process.env.SECRET,
@@ -45,6 +51,10 @@ app.use("/course", courseRoutes);
 // trainee routes
 const traineeRoutes = require("./routes/trainee.route");
 app.use("/trainee", traineeRoutes);
+
+// stripe routes
+const stripeRoutes = require("./routes/stripe.route");
+app.use("/stripe", stripeRoutes);
 
 // guest routes
 const guestRoutes = require("./routes/guest.route");
