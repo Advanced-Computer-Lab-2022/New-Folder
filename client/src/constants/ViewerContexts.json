@@ -2,5 +2,6 @@
   "author": "author",
   "guest": "guest",
   "enrolledTrainee": "enrolledTrainee",
-  "nonEnrolledCorporateTrainee": "nonEnrolledCorporateTrainee"
+  "nonEnrolledCorporateTrainee": "nonEnrolledCorporateTrainee",
+  "pendingCorporateTrainee": "pendingCorporateTrainee"
 }

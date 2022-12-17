@@ -272,4 +272,12 @@ export const fetchReports = async () => {
 export const payForCourse = async (data) => {
   const res = await instance.post("/trainee/payForCourse", data);
   return res.data;
+//Add report
+export const postAccessRequest = async (data) => {
+  try {
+    const res = await instance.post("course/requestAccess", data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
 };

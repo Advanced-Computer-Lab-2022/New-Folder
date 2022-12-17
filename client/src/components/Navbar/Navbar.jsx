@@ -22,7 +22,10 @@ const MainNavbar = (props) => {
   };
   const logout = async () => {
     await networkLogout();
+    const country = ReactSession.get("country");
     sessionStorage.clear();
+    ReactSession.set("country", country);
+    props.setCountry(country);
     navigate("/login");
   };
   return (

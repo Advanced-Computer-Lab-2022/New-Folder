@@ -22,6 +22,7 @@ import ReportCourse from "../Course/ReportCourse/ReportCourse";
 import { ReactSession } from "react-client-session";
 import countryCurrency from "../../constants/CountryCurrency.json";
 import { payForCourse } from "../../network";
+import RequestAccess from "../Course/RequestAccess/RequestAccess";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -130,7 +131,20 @@ function CourseSummary(props) {
                         >
                           Go to course
                         </Button>
-                      ) : null}
+                      ) : (
+                        <>
+                          {[
+                            ViewerContexts.pendingCorporateTrainee,
+                            ViewerContexts.nonEnrolledCorporateTrainee,
+                          ].includes(props.vc) ? (
+                            <RequestAccess
+                              vc={props.vc}
+                              setVc={props.setVc}
+                              course={props.course}
+                            />
+                          ) : null}
+                        </>
+                      )}
                     </>
                   )}
                 </div>

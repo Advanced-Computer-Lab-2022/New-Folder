@@ -6,6 +6,8 @@ const Report = require("../../models/Report.model");
 const Exercise = require("../../models/Exercises.model");
 const Trainee = require("../../models/Trainee.model");
 const User = require("../../models/User.model");
+const AccessRequest = require("../../models/AccessRequest.model");
+
 const getCourseDetails = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
@@ -177,6 +179,24 @@ const submitReport = async (req, res) => {
   }
 };
 
+const requestAccess = async (req, res) => {
+  try {
+    const request = await AccessRequest.create({
+      userId: req.session.userId,
+      courseId: req.body.courseId,
+      userName: req.body.userName,
+      courseName: req.body.courseName,
+      reason: req.body.reason,
+    });
+    const course = await Course.findById(req.body.courseId);
+    course.pendingTrainees.push(req.session.userId);
+    course.save();
+    res.status(201).json(request);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getSubtitle,
   getVideo,
@@ -189,4 +209,5 @@ module.exports = {
   updateCourse,
   createSubtitle,
   submitReport,
+  requestAccess,
 };
