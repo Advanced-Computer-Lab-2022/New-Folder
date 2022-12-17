@@ -111,9 +111,7 @@ export const getPrice = async (price) => {
     oldCurrency: price.currency,
     newCurrency: countryCurrency.country_currency[ReactSession.get("country")],
   };
-  console.log(data);
   const res = await instance.post("/convertCurrency", data);
-  console.log(res.data);
   return res.data.magnitude.toFixed(2) + " " + res.data.currency;
 };
 
