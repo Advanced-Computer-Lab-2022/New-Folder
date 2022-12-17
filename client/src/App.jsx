@@ -20,7 +20,6 @@ import MyProfile from "./pages/user/instructor/MyProfile";
 import ResetPassword from "./pages/user/ResetPassword";
 import EditSubtitle from "./pages/user/instructor/EditSubtitle";
 import MyProblems from "./pages/user/MyProblems/MyProblems";
-import PaymentSuccess from "./pages/user/PaymentSuccess";
 import Reports from "./pages/admin/Reports";
 import AddUser from "./pages/admin/AddUser";
 ReactSession.setStoreType("sessionStorage");
@@ -66,7 +65,6 @@ function App() {
         />
         <Route path="/myProblems" element={<MyProblems />} />
         <Route path="/reports" element={<Reports />} />
-        <Route path="/paymentSuccessful" element={<PaymentSuccess />} />
       </Routes>
     </>
   );
