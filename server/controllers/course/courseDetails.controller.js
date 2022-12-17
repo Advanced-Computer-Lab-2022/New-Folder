@@ -197,6 +197,16 @@ const requestAccess = async (req, res) => {
   }
 };
 
+const addFollowup = async (req, res) => {
+  try {
+    const report = await Report.findById(req.body.problemId);
+    report.followups.push(req.body.followup);
+    report.save();
+    res.status(201).json(report);
+  } catch (err) {
+    console.log(err);
+  }
+};
 module.exports = {
   getSubtitle,
   getVideo,
@@ -210,4 +220,5 @@ module.exports = {
   createSubtitle,
   submitReport,
   requestAccess,
+  addFollowup,
 };

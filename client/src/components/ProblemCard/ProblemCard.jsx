@@ -17,6 +17,7 @@ import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AiOutlinePlusCircle } from "react-icons/ai";
 import "./ProblemCard.css";
 import { useEffect } from "react";
+import { addFollowup } from "../../network";
 function ProblemCard(props) {
   const { problem } = props;
   const [followups, setFollowups] = useState([]);
@@ -34,6 +35,7 @@ function ProblemCard(props) {
       event.stopPropagation();
       setValidated(true);
     } else {
+      await addFollowup({ problemId: problem._id, followup: newFollowup });
       setFollowups([...followups, newFollowup]);
       setValidated(false);
       setNewFollowup(null);

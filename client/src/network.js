@@ -268,10 +268,20 @@ export const fetchReports = async () => {
   return res.data;
 };
 
-//Add report
+//Request access to course
 export const postAccessRequest = async (data) => {
   try {
     const res = await instance.post("course/requestAccess", data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//Add followup on a report
+export const addFollowup = async (data) => {
+  try {
+    const res = await instance.post("course/addFollowup", data);
     return res.data;
   } catch (err) {
     console.log(err);
