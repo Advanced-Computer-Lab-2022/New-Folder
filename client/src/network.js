@@ -250,3 +250,24 @@ export const FetchMark  = async (exerciseID) => {
     console.log(err);
   }
 }
+
+// add trainee's note
+export const postNote = async (contentID , note) => {
+  try {
+    const res = await instance.patch("course/subtitle/video/"+contentID+"/addNote", {
+      Note: note,
+    });
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+export const FetchNote  = async (contentId) => {
+  try {
+    const res = await instance.get("course/subtitle/video/"+contentId+"/getNote");
+    return res.data;
+  }catch (err) {
+    console.log(err);
+  }
+}

@@ -3,9 +3,10 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Button, Col, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
+import Note from "../../../components/Course/AddNote/Note";
 import ContentDisplay from "../../../components/Course/ContentDisplay/ContentDisplay";
 import SubtitleSideBarItem from "../../../components/Course/SubtitleSideBarItem/SubtitleSideBarItem";
-import { fetchCourseDetails } from "../../../network";
+import { fetchCourseDetails, FetchNote, postNote } from "../../../network";
 import "./Content.css";
 
 const Content = () => {
@@ -13,6 +14,7 @@ const Content = () => {
   const [subtitles, setSubtitles] = useState([]);
   const [subtitleID, setSubtitleID] = useState("");
   const [isOpenedSubtitle, setIsOpenedSubtitle] = useState([]);
+  const [parentContentID , setParentContentID] = useState(""); 
 
   // get course ID to get Course Object
   // get index of specific subtitle index (sId) and content that will be displayed (cId)
@@ -36,6 +38,7 @@ const Content = () => {
       console.log(err);
     }
   };
+
 
   const InitializeIsOpenedSubtitle = (arr) => {
     let ans = [];
@@ -61,6 +64,7 @@ const Content = () => {
           <ContentDisplay
             subtitleContentDisplay={subtitleID}
             cID={indexOfContent}
+            setParentContentID = {setParentContentID}
           />
         )}
         <div className="subtitle-Content-sideBar-parent">
@@ -85,20 +89,8 @@ const Content = () => {
         </div>
       </Col>
 
-      <Col lg={4} id="sideBar-parent">
-        <h2 className="Notes-header">Notes</h2>
-        <textarea
-          name="the-textarea"
-          id="the-textarea"
-          placeholder="Take your own notes here ..."
-          autofocus
-        ></textarea>
-        <div className="note-buttons">
-          <Button variant="success">Save</Button>
-          <Button variant="success">Download as <strong>PDF</strong></Button>  
-        </div>
-       
-      </Col>
+      {parentContentID !== "" && <Note conID={parentContentID} />}
+
     </Row>
   );
 };

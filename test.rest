@@ -1,8 +1,8 @@
-GET  http://localhost:8080/course/subtitle/excercise/639479d4a4edb459d83baa4c/getMark HTTP/1.1
-
+PATCH  http://localhost:8080/course//subtitle/video/635e6026f86a4e355820979e/addNote HTTP/1.1
 Content-Type: application/json
 
 {
-    "Trainee_ID" : "2",
+    "Trainee_ID" : "458",
+    "Note" : "ah  ya MARTENELLI ah .."
 }
 

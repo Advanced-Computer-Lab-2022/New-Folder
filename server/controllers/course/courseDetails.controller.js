@@ -178,11 +178,11 @@ const getMark = async (req, res) => {
     let exercise = await Exercise.findById(req.params.id);
     let arrMark = [];
     let QuestionsExcerciseLength = -1;
-    
+
     if (exercise !== null) {
       arrMark = exercise.Mark;
       QuestionsExcerciseLength = exercise.Questions.length;
-    } 
+    }
 
     const traineeId = req.session.userId;
 
@@ -198,6 +198,63 @@ const getMark = async (req, res) => {
     res.json({
       Mark: index === -1 ? -1 : arrMark[index].Mark,
       ExerciseLength: QuestionsExcerciseLength,
+    });
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const updateNote = async (req, res) => {
+  try {
+    const content = await Content.findById(req.params.id);
+    let arrNote = content.Note;
+    let traineeId = req.session.userId;
+    let note = req.body.Note;
+    let index = -1;
+
+    for (let i = 0; i < arrNote.length; i++) {
+      if (arrNote[i].Trainee_ID === traineeId) {
+        index = i;
+        break;
+      }
+    }
+
+    if (index === -1) arrNote.push({ Trainee_ID: traineeId, note: note });
+    else {
+      arrNote[index].note = note;
+    }
+
+    await Content.findByIdAndUpdate(
+      req.params.id,
+      { Note: arrNote },
+      { new: true }
+    );
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const getNote = async (req, res) => {
+  try {
+    const content = await Content.findById(req.params.id);
+    let arrNote = [];
+
+    if (content !== null) {
+      arrNote = content.Note;
+    }
+
+    const traineeId = req.session.userId;
+    let index = -1;
+
+    for (let i = 0; i < arrNote.length; i++) {
+      if (traineeId === arrNote[i].Trainee_ID) {
+        index = i;
+        break;
+      }
+    }
+
+    res.json({
+      TraineeNote: index === -1 ? "" : arrNote[index].note,
     });
   } catch (err) {
     console.log(err);
@@ -231,6 +288,8 @@ module.exports = {
   addPromotion,
   UpdateMark,
   getMark,
+  updateNote,
+  getNote,
   updateCourse,
   createSubtitle,
 };

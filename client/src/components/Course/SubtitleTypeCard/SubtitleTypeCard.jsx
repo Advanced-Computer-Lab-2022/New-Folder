@@ -79,6 +79,6 @@ const SubtitleTypeCard = (props) => {
     </div>
   );
 };
-<i class="bi bi-clock-fill"></i>;
+
 
 export default SubtitleTypeCard;

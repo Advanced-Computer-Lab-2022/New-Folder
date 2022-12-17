@@ -17,12 +17,16 @@ const {
   updateCourse,
   createSubtitle,
   UpdateMark,
-  getMark
+  getMark,
+  updateNote,
+  getNote
 } = require("../controllers/course/courseDetails.controller");
 
 router.get("/subtitle/excercise/:id/getMark",getMark);
 router.patch("/subtitle/excercise/:id/addMark",UpdateMark);
 router.get("/subtitle/excercise/:id", getExcercise);
+router.patch("/subtitle/video/:id/addNote", updateNote);
+router.get("/subtitle/video/:id/getNote", getNote);
 router.get("/subtitle/video/:id", getVideo);
 router.get("/subtitle/:id", getSubtitle);
 router.get("/:id", getCourseDetails);
