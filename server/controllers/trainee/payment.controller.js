@@ -4,29 +4,31 @@ const Trainee = require("../../models/Trainee.model");
 const Instructor = require("../../models/Instructor.model");
 const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const CC = require("currency-converter-lt");
-let currencyConverter = new CC();
 
 const convertCurrency = async (req, res) => {
   const { magnitude, oldCurrency, newCurrency } = req.body;
-  const priceMagnitude = await currencyConverter
-    .from(oldCurrency)
-    .to(newCurrency)
-    .amount(magnitude)
-    .convert();
+  let converter = new CC({
+    from: oldCurrency,
+    to: newCurrency,
+    amount: magnitude,
+  });
+  const priceMagnitude = await converter.convert();
   res.send({
-    magnitude: Math.round(100 * priceMagnitude) / 100,
+    magnitude: priceMagnitude,
     currency: newCurrency,
+    oldMagnitude: magnitude,
   });
 };
 
 const payForCourse = async (req, res) => {
   const { courseID, userCurrency } = req.body;
   const course = await Course.findById(courseID);
-  const priceMagnitude = await currencyConverter
-    .from(course.price.currency)
-    .to(userCurrency)
-    .amount(course.price.magnitude)
-    .convert();
+  let converter = new CC({
+    from: course.price.currency,
+    to: userCurrency,
+    amount: course.price.magnitude,
+  });
+  const priceMagnitude = await converter.convert();
   let discount = course.promotion;
   let coupon = null;
   if (discount) {
