@@ -261,6 +261,86 @@ const getNote = async (req, res) => {
   }
 };
 
+const updateVisits = async (req, res) => {
+  try {
+    const contentID = req.params.conID;
+    const traineeID = req.session.userId;
+    const contentType = req.body.contentType;
+
+    let contentObj = null;
+
+    if (contentType === constant.content) {
+      contentObj = await Content.findById(contentID);
+    } else {
+      contentObj = await Exercise.findById(contentID);
+    }
+
+    let visitArr = contentObj.Visits;
+
+    let index = false;
+
+    for (let i = 0; i < visitArr.length; i++) {
+
+      if (visitArr[i] === traineeID) {
+        index = true;
+        break;
+      }
+    }
+
+    let x = null;
+    if (!index) {
+      visitArr.push(traineeID);
+      if (contentType === constant.content)
+        x =  await Content.findByIdAndUpdate(
+          contentID,
+          { Visits: visitArr },
+          { new: true }
+      );
+      else
+        x = await Exercise.findByIdAndUpdate(
+          contentID,
+          { Visits: visitArr },
+          { new: true }
+        );
+    }
+
+    res.json(x);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const getVisits = async (req, res) => {
+  try {
+    const contentID = req.params.conID;
+    const traineeID = req.body.userId;
+    const contentType = req.body.contentType;
+
+    let contentObj = null;
+
+    if (contentType === constant.content) {
+      contentObj = await Content.findById(contentID);
+    } else {
+      contentObj = await Exercise.findById(contentID);
+    }
+
+    let visitArr = contentObj.Visits;
+
+    let index = false;
+
+    for (let i = 0; i < visitArr.length; i++) {
+
+      if (visitArr[i] === traineeID) {
+        index = true;
+        break;
+      }
+    }
+    res.json(index);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const createSubtitle = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
@@ -292,4 +372,6 @@ module.exports = {
   getNote,
   updateCourse,
   createSubtitle,
+  updateVisits,
+  getVisits
 };

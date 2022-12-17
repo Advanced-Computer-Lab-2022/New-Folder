@@ -41,6 +41,7 @@ const SubtitleSideBarItem = (props) => {
         {subtitleContent.map((subtitleContent, index) => {
           return (
             <SubtitleTypeCard
+              subtitleID={subtitleID}
               contentID={subtitleContent.subTitle_Content_id}
               contentType={subtitleContent.type}
               cid={courseID}

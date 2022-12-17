@@ -23,12 +23,7 @@ const Subtitle = mongoose.Schema({
           default: constants.content,
           required: true,
         },
-        Visits: {
-          // if the traineeId exists here in this array means that he/she has opened it before
-          // once a trainee has visited one of the contents it be included in the corresponding Visits array
-          type: [{ type: mongoose.Types.ObjectId, ref: "Trainee" }],
-          default: [],
-        },
+
       },
     ],
     default: [],

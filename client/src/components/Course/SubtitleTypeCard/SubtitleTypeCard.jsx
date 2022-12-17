@@ -13,6 +13,7 @@ const SubtitleTypeCard = (props) => {
 
   const contentType = props.contentType;
   const contentID = props.contentID;
+  const subtitleID = props.subtitleID;
 
   const [type, setType] = useState("");
   const [duration, setDuration] = useState("");

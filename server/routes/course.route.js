@@ -19,7 +19,9 @@ const {
   UpdateMark,
   getMark,
   updateNote,
-  getNote
+  getNote,
+  updateVisits,
+  getVisits
 } = require("../controllers/course/courseDetails.controller");
 
 router.get("/subtitle/excercise/:id/getMark",getMark);
@@ -29,6 +31,8 @@ router.patch("/subtitle/video/:id/addNote", updateNote);
 router.get("/subtitle/video/:id/getNote", getNote);
 router.get("/subtitle/video/:id", getVideo);
 router.get("/subtitle/:id", getSubtitle);
+router.patch("/isVisited/:conID" , updateVisits);
+router.get("/isVisited/:conID" , getVisits);
 router.get("/:id", getCourseDetails);
 router.patch("/addRating", canRateCourse, addReview);
 router.patch("/deleteRating", canDeleteRating, deleteRating);

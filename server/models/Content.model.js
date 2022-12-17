@@ -16,7 +16,13 @@ const Content = mongoose.Schema({
   },
   Note : {
     type : [mongoose.Schema.Types.Mixed] //Trainee_id , note 
-  }
+  },
+  Visits: {
+    // if the traineeId exists here in this array means that he/she has opened it before
+    // once a trainee has visited one of the contents it be included in the corresponding Visits array
+    type: [{ type: String }],
+    default: [],
+  },
 });
 
 module.exports = mongoose.model("Content", Content);
