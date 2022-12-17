@@ -267,3 +267,9 @@ export const fetchReports = async () => {
   const res = await instance.get("admin/reports");
   return res.data;
 };
+
+// enroll in a course (payment)
+export const payForCourse = async (data) => {
+  const res = await instance.post("/trainee/payForCourse", data);
+  return res.data;
+};

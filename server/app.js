@@ -10,7 +10,12 @@ require("dotenv").config();
 const app = express();
 app.use(json());
 app.use(urlencoded({ extended: false }));
-app.use(cors({ origin: "http://localhost:3000", credentials: true }));
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://checkout.stripe.com"],
+    credentials: true,
+  })
+);
 app.use(
   session({
     secret: process.env.SECRET,

@@ -19,6 +19,9 @@ import {
   totalDuration,
 } from "../../utils/getVideoDurationUtils";
 import ReportCourse from "../Course/ReportCourse/ReportCourse";
+import { ReactSession } from "react-client-session";
+import countryCurrency from "../../constants/CountryCurrency.json";
+import { payForCourse } from "../../network";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -52,6 +55,19 @@ function CourseSummary(props) {
       />
     );
   }, [totalRating]);
+
+  const enroll = async () => {
+    try {
+      const checkout = await payForCourse({
+        courseID: props.courseId,
+        userCurrency:
+          countryCurrency.country_currency[ReactSession.get("country")],
+      });
+      window.location.href = checkout.url;
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <>
@@ -97,7 +113,7 @@ function CourseSummary(props) {
               <Stack gap={3}>
                 <div id="priceEnroll">
                   {props.vc === ViewerContexts.guest ? (
-                    <Button id="enrollButton" variant="dark">
+                    <Button id="enrollButton" variant="dark" onClick={enroll}>
                       Enroll
                     </Button>
                   ) : (
