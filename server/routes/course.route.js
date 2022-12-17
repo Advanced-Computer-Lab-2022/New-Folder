@@ -7,6 +7,7 @@ const {
 const { canReport } = require("../middlewares/reportsMiddleware");
 const {
   canRequestAccess,
+  canDeleteRequestAccess,
 } = require("../middlewares/corporateTraineeMiddleware");
 const { canAddPromotion } = require("../middlewares/canAddPromotionMiddleware");
 const {
@@ -21,8 +22,14 @@ const {
   createSubtitle,
   submitReport,
   requestAccess,
+  deleteAccessRequest,
 } = require("../controllers/course/courseDetails.controller");
 
+router.delete(
+  "/:id/cancelAccessRequest",
+  canDeleteRequestAccess,
+  deleteAccessRequest
+);
 router.get("/subtitle/excercise/:id", getExcercise);
 router.get("/subtitle/video/:id", getVideo);
 router.get("/subtitle/:id", getSubtitle);

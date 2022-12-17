@@ -133,7 +133,8 @@ function CourseSummary(props) {
                   )}
                 </div>
                 {props.vc !== ViewerContexts.nonEnrolledCorporateTrainee &&
-                props.vc !== ViewerContexts.enrolledTrainee ? (
+                props.vc !== ViewerContexts.enrolledTrainee &&
+                props.vc != ViewerContexts.pendingCorporateTrainee ? (
                   <>
                     {validPromotion ? (
                       <>

@@ -21,6 +21,18 @@ const canRequestAccess = asyncHandler(async (req, res, next) => {
   next();
 });
 
+const canDeleteRequestAccess = asyncHandler(async (req, res, next) => {
+  const vc = await getVC(
+    req.session.userId,
+    req.session.userType,
+    req.params.id
+  );
+  if (vc !== viewerContexts.pendingCorporateTrainee) {
+    throw new Error("You are not a corporate trainee");
+  }
+  next();
+});
 module.exports = {
   canRequestAccess,
+  canDeleteRequestAccess,
 };

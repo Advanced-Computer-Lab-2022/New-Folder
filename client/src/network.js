@@ -268,10 +268,20 @@ export const fetchReports = async () => {
   return res.data;
 };
 
-//Add report
+//Request access for course
 export const postAccessRequest = async (data) => {
   try {
     const res = await instance.post("course/requestAccess", data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// cancel request access
+export const deleteAccessRequest = async (courseId) => {
+  try {
+    const res = await instance.delete(`course/${courseId}/cancelAccessRequest`);
     return res.data;
   } catch (err) {
     console.log(err);
