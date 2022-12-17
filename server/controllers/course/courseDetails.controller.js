@@ -265,7 +265,7 @@ const updateVisits = async (req, res) => {
   try {
     const contentID = req.params.conID;
     const traineeID = req.session.userId;
-    const contentType = req.body.contentType;
+    const contentType = req.params.contentType;
 
     let contentObj = null;
 
@@ -314,7 +314,7 @@ const getVisits = async (req, res) => {
   try {
     const contentID = req.params.conID;
     const traineeID = req.session.userId;
-    const contentType = req.body.contentType;
+    const contentType = req.params.contentType;
 
     let contentObj = null;
 
@@ -323,7 +323,7 @@ const getVisits = async (req, res) => {
     } else {
       contentObj = await Exercise.findById(contentID);
     }
-
+  
     let visitArr = contentObj.Visits;
 
     let index = false;

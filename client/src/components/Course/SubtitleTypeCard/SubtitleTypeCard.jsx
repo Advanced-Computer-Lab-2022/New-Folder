@@ -1,9 +1,10 @@
 import React, { useState } from "react";
-import { FetchMark, fetchVideoContent } from "../../../network";
+import { FetchMark, fetchVideoContent, UpdateContentVisit } from "../../../network";
 import "./SubtitleTypeCard.css";
 import constants from "../../../constants/SubtitlesTypes.json";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import VisitedCard from "./VisitedCard/VisitedCard";
 
 const SubtitleTypeCard = (props) => {
   const navigate = useNavigate();
@@ -21,6 +22,7 @@ const SubtitleTypeCard = (props) => {
   const [conID, setConID] = useState("");
   const [traineeMark, setTraineeMark] = useState("");
   const [excerciseMark, setExcerciseMark] = useState("");
+  const [isVisited , setIsVisited] = useState(true);
 
   const fetchingContent = async () => {
     setType(contentType);
@@ -42,8 +44,9 @@ const SubtitleTypeCard = (props) => {
 
   return (
     <div
-      className="Content-card"
-      onClick={(e) => {
+      className={isVisited ? "Content-card visited" : "Content-card" }
+      onClick={async (e) => {
+        await UpdateContentVisit(contentID , contentType);
         type == constants.content
           ? navigate(
               "/watch/" + courseID + "?sId=" + subIDx + "&cId=" + contentIDx,
@@ -73,9 +76,7 @@ const SubtitleTypeCard = (props) => {
         </div>
       </div>
 
-      <div className="Content-card-visit">
-        <i class="bi bi-dot"></i>
-      </div>
+      <VisitedCard isVisited={isVisited} setIsVisited={setIsVisited} contentID={contentID} contentType={contentType}/>
 
     </div>
   );

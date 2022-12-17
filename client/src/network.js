@@ -271,3 +271,23 @@ export const FetchNote  = async (contentId) => {
     console.log(err);
   }
 }
+
+export const FetchContentVisit  = async (contentId , contentType) => {
+  try {
+    console.log(contentType);
+    const res = await instance.get("course/subtitle/isVisited/"+contentId+"/"+contentType);
+    return res.data;
+  }catch (err) {
+    console.log(err);
+  }
+}
+
+export const UpdateContentVisit  = async (contentId , contentType) => {
+  try {
+    console.log(contentType);
+    const res = await instance.patch("course/subtitle/isVisited/"+contentId+"/"+contentType);
+    return res.data;
+  }catch (err) {
+    console.log(err);
+  }
+}

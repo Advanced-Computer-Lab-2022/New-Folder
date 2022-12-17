@@ -11,6 +11,21 @@
   font-weight: bolder;
 }
 
+.Content-card.visited {
+  display: flex;
+  font-size: 1.2em;
+  padding: 0.6em;
+  transition: background-color 0.1ms;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  justify-content: space-between;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  background-color: #eff2f5;
+  color: rgba(0, 0, 0, 0.5) ;
+  font-weight: bolder;
+}
+
 .Content-card:hover {
   background-color: #d0d7dc;
   cursor: pointer;
@@ -51,7 +66,7 @@
   padding: 0;
   margin: 0;
   font-size: 3em;
-  color: #f0ad4e;
+  color: #007bff;
 }
 
 

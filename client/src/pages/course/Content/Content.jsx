@@ -1,12 +1,12 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import {  Col, Row } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import Note from "../../../components/Course/AddNote/Note";
 import ContentDisplay from "../../../components/Course/ContentDisplay/ContentDisplay";
 import SubtitleSideBarItem from "../../../components/Course/SubtitleSideBarItem/SubtitleSideBarItem";
-import { fetchCourseDetails, FetchNote, postNote } from "../../../network";
+import { fetchCourseDetails } from "../../../network";
 import "./Content.css";
 
 const Content = () => {
@@ -61,7 +61,7 @@ const Content = () => {
   return (
     <Row>
       <Col lg={8} >
-        {subtitleID != "" && (
+        {subtitleID !== "" && (
           <ContentDisplay
             subtitleContentDisplay={subtitleID}
             cID={indexOfContent}
