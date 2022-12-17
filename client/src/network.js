@@ -287,3 +287,14 @@ export const addFollowup = async (data) => {
     console.log(err);
   }
 };
+
+
+// cancel request access
+export const deleteAccessRequest = async (courseId) => {
+  try {
+    const res = await instance.delete(`course/${courseId}/cancelAccessRequest`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

@@ -207,6 +207,27 @@ const addFollowup = async (req, res) => {
     console.log(err);
   }
 };
+const deleteAccessRequest = async (req, res) => {
+  try {
+    await AccessRequest.findOneAndDelete({
+      userId: req.session.userId,
+      courseId: req.params.id,
+    });
+    const course = await Course.findById(req.params.id);
+    let pendingTrainees = [];
+    for (let i = 0; i < course.pendingTrainees.length; i++) {
+      if (course.pendingTrainees[i].toString() !== req.session.userId) {
+        pendingTrainees.push(course.pendingTrainees[i]);
+      }
+    }
+    await Course.findByIdAndUpdate(req.params.id, {
+      pendingTrainees: pendingTrainees,
+    });
+    res.status(201);
+  } catch (err) {
+    console.log(err);
+  }
+};
 module.exports = {
   getSubtitle,
   getVideo,
@@ -221,4 +242,5 @@ module.exports = {
   submitReport,
   requestAccess,
   addFollowup,
+  deleteAccessRequest,
 };
