@@ -13,12 +13,8 @@ function AddUser() {
   const navigate = useNavigate();
   const { username, password } = data;
   const onSubmit = (e) => {
-    if (userType == "") {
-      alert("Must check some option!");
-    } else {
-      postAddUser(userType, data);
-      navigate("/");
-    }
+    postAddUser(userType, data);
+    navigate("/");
   };
 
   const onChange = (e) => {
@@ -45,15 +41,19 @@ function AddUser() {
             </Form.Group>
             <Form.Group className="mb-3">
               {Object.values(UserTypes).map((type) => {
-                return ( type !== UserTypes.trainee &&
-                  <Form.Check
-                    type="radio"
-                    checked={userType == type}
-                    onChange={(e) => {
-                      setUserType(type);
-                    }}
-                    label={type}
-                  ></Form.Check>
+                return (
+                  type !== UserTypes.trainee && (
+                    <Form.Check
+                      type="radio"
+                      name="type"
+                      checked={userType == type}
+                      onChange={(e) => {
+                        setUserType(type);
+                      }}
+                      label={type}
+                      required
+                    ></Form.Check>
+                  )
                 );
               })}
             </Form.Group>
