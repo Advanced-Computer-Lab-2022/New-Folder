@@ -313,7 +313,7 @@ const updateVisits = async (req, res) => {
 const getVisits = async (req, res) => {
   try {
     const contentID = req.params.conID;
-    const traineeID = req.body.userId;
+    const traineeID = req.session.userId;
     const contentType = req.body.contentType;
 
     let contentObj = null;
