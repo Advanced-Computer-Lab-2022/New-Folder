@@ -14,8 +14,8 @@ const canAddPromotion = asyncHandler(async (req, res, next) => {
   if (startDate > endDate) {
     throw new Error("End date must be after start date");
   }
-  if (endDate < Date().now) {
-    throw new Error("End date must be before today");
+  if (startDate < Date().now) {
+    throw new Error("Start date cannot be in the past");
   }
   const vc = await getVC(
     req.session.userId,
