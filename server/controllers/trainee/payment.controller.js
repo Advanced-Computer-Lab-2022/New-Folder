@@ -6,6 +6,19 @@ const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const CC = require("currency-converter-lt");
 let currencyConverter = new CC();
 
+const convertCurrency = async (req, res) => {
+  const { magnitude, oldCurrency, newCurrency } = req.body;
+  const priceMagnitude = await currencyConverter
+    .from(oldCurrency)
+    .to(newCurrency)
+    .amount(magnitude)
+    .convert();
+  res.send({
+    magnitude: Math.round(100 * priceMagnitude) / 100,
+    currency: newCurrency,
+  });
+};
+
 const payForCourse = async (req, res) => {
   const { courseID, userCurrency } = req.body;
   const course = await Course.findById(courseID);
@@ -84,4 +97,4 @@ const enrollInCourse = async (userId, courseId, paid, amount, currency) => {
   await instructor.save();
 };
 
-module.exports = { payForCourse, enrollInCourse };
+module.exports = { payForCourse, enrollInCourse, convertCurrency };
