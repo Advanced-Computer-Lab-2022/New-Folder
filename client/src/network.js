@@ -272,6 +272,8 @@ export const fetchReports = async () => {
 export const payForCourse = async (data) => {
   const res = await instance.post("/trainee/payForCourse", data);
   return res.data;
+};
+
 //Add report
 export const postAccessRequest = async (data) => {
   try {

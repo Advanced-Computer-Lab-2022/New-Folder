@@ -29,6 +29,11 @@ const Instructor = mongoose.Schema(
     about: {
       type: String,
     },
+    wallet: {
+      type: Map,
+      of: String,
+      default: {},
+    },
     courses: {
       type: [{ type: mongoose.Types.ObjectId, ref: "Course" }],
       default: [],

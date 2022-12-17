@@ -14,7 +14,27 @@ const payForCourse = async (req, res) => {
     .to(userCurrency)
     .amount(course.price.magnitude)
     .convert();
+  let discount = course.promotion;
+  let coupon = null;
+  if (discount) {
+    let now = Date.now();
+    if (discount.startDate <= now && discount.endDate > now) {
+      coupon = await stripe.coupons.create({
+        percent_off: discount.percentage,
+      });
+      discount = (discount.percentage / 100) * course.price.magnitude;
+    } else {
+      discount = null;
+    }
+  }
   try {
+    const customer = await stripe.customers.create({
+      metadata: {
+        userId: req.session.userId,
+        courseId: courseID,
+        paid: discount ?? course.price.magnitude,
+      },
+    });
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ["card"],
       mode: "payment",
@@ -22,7 +42,6 @@ const payForCourse = async (req, res) => {
         {
           price_data: {
             currency: userCurrency,
-            // amount_discount: course.promotion?.percentage,
             product_data: {
               name: course.name,
               images: [course.image],
@@ -33,8 +52,13 @@ const payForCourse = async (req, res) => {
           quantity: 1,
         },
       ],
-      client_reference_id: req.session.userId,
-      success_url: `${process.env.CLIENT_URL}/paymentSuccessful`,
+      customer: customer.id,
+      discounts: [
+        {
+          coupon: coupon?.id,
+        },
+      ],
+      success_url: `${process.env.CLIENT_URL}/course/${courseID}`,
       cancel_url: `${process.env.CLIENT_URL}/course/${courseID}`,
     });
     res.json({ url: session.url });
@@ -43,6 +67,21 @@ const payForCourse = async (req, res) => {
   }
 };
 
-const enrollInCourse = async (courseID) => {};
+const enrollInCourse = async (userId, courseId, paid, amount, currency) => {
+  const course = await Course.findById(courseId);
+  const trainee = await Trainee.findById(userId);
+  const instructor = await Instructor.findById(
+    course.instructorInfo.instructorId
+  );
+  course.trainees.push(userId);
+  await course.save();
+  trainee.courses.push(courseId);
+  await trainee.save();
+  trainee.payments.push({ courseId, amount, currency });
+  await trainee.save();
+  const prevWalletAmount = instructor.wallet.get(course.price.currency) ?? 0;
+  instructor.wallet.set(course.price.currency, prevWalletAmount + paid);
+  await instructor.save();
+};
 
-module.exports = { payForCourse };
+module.exports = { payForCourse, enrollInCourse };
