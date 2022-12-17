@@ -106,14 +106,15 @@ export const sendPasswordResetLink = async (data) => {
 };
 
 export const getPrice = async (price) => {
-  const rates = await axios.get("https://api.exchangerate.host/latest");
-  const currCurrency =
-    countryCurrency.country_currency[ReactSession.get("country")];
-  const courseCurrency = price.currency;
-  var magnitude = price.magnitude;
-  const ratio =
-    rates.data.rates[currCurrency] / rates.data.rates[courseCurrency];
-  return (magnitude * ratio).toFixed(2) + " " + currCurrency;
+  const data = {
+    magnitude: price.magnitude,
+    oldCurrency: price.currency,
+    newCurrency: countryCurrency.country_currency[ReactSession.get("country")],
+  };
+  console.log(data);
+  const res = await instance.post("/convertCurrency", data);
+  console.log(res.data);
+  return res.data.magnitude.toFixed(2) + " " + res.data.currency;
 };
 
 export const fetchMyCourses = async () => {
