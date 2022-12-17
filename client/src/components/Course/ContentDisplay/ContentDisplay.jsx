@@ -9,6 +9,7 @@ const ContentDisplay = (props) => {
   const subtitleID = props.subtitleContentDisplay;
   const [contentID, setContentID] = useState("");
   const setParentContentID = props.setParentContentID;
+  const setParentContentTitle = props.setParentContentTitle;
 
   // get the subtitle from data base and then get the index of desired content from subtitle_content
   const fetchingSubtitle = async () => {
@@ -33,7 +34,7 @@ const ContentDisplay = (props) => {
 
   // pass contentID to VideoAndDescription component
   return (
-    <>{contentID != "" && <VideoAndDescription contentFetched={contentID} />}</>
+    <>{contentID != "" && <VideoAndDescription setParentContentTitle={setParentContentTitle} contentFetched={contentID} />}</>
   );
 };
 

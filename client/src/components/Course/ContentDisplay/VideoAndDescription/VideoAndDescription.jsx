@@ -9,6 +9,7 @@ const VideoAndDescription = (props) => {
   const contentID = props.contentFetched;
   const [video, setVideo] = useState("");
   const [description, setDescription] = useState("");
+  const setParentContentTitle = props.setParentContentTitle;
 
   // get content from database and then display video and title
   const fetchingContent = async () => {
@@ -31,6 +32,10 @@ const VideoAndDescription = (props) => {
   useEffect(() => {
     fetchingContent();
   }, []);
+
+  useEffect (()=>{
+    setParentContentTitle(description);
+  },[description])
 
   // only video and video title are dislayed here
   // there is a button for next video is commented till further discussions

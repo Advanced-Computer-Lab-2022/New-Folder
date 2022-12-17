@@ -3,27 +3,32 @@ import { useEffect } from "react";
 import { useState } from "react";
 import { Button, Col } from "react-bootstrap";
 import { FetchNote, postNote } from "../../../network";
+import { PDFDownloadLink } from "@react-pdf/renderer";
 import "./Note.css";
+import PDFnote from "../../PDF/PDFnote";
 const Note = (props) => {
-    const conID  = props.conID;
-  
-    
-    const [noteValue , setNoteValue] = useState("");
+  const conID = props.conID;
+  const conTitle = props.conTitle;
 
-    const getNote = async ()=> {
-        const traineeNote = await FetchNote(conID);
-        setNoteValue(traineeNote.TraineeNote)
-    }
+  const [noteValue, setNoteValue] = useState("");
 
-    const handleSubmitNote = async () => {
-        await postNote(conID , noteValue);
-    }
+//   not used but could be used anytime later
+  const [download, setDownload] = useState(false);
 
-    useEffect (()=> {
-        getNote();
-    },[]);
+  const getNote = async () => {
+    const traineeNote = await FetchNote(conID);
+    setNoteValue(traineeNote.TraineeNote);
+  };
 
-    return (
+  const handleSubmitNote = async () => {
+    await postNote(conID, noteValue);
+  };
+
+  useEffect(() => {
+    getNote();
+  }, []);
+
+  return (
     <Col lg={4} id="sideBar-parent">
       <h2 className="Notes-header">Notes</h2>
       <textarea
@@ -37,12 +42,25 @@ const Note = (props) => {
         }}
       ></textarea>
       <div className="note-buttons">
-        <Button variant="success" onClick={(e)=> handleSubmitNote()}>
+        <Button variant="success" onClick={(e) => handleSubmitNote()}>
           Save
         </Button>
-        <Button variant="success">
-          Download as <strong>PDF</strong>
-        </Button>
+        <PDFDownloadLink
+          document={<PDFnote conTitle={conTitle} notes={noteValue} />}
+          fileName={conTitle + " notes"}
+        >
+          {({ loading }) =>
+            loading ? (
+              <Button disabled={true} variant="success" onClick={(e) => setDownload(true)}>
+                Download as <strong>PDF</strong>
+              </Button>
+            ) : (
+              <Button variant="success" onClick={(e) => setDownload(true)}>
+                Download as <strong>PDF</strong>
+              </Button>
+            )
+          }
+        </PDFDownloadLink>
       </div>
     </Col>
   );

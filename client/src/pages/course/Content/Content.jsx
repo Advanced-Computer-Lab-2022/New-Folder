@@ -15,6 +15,7 @@ const Content = () => {
   const [subtitleID, setSubtitleID] = useState("");
   const [isOpenedSubtitle, setIsOpenedSubtitle] = useState([]);
   const [parentContentID , setParentContentID] = useState(""); 
+  const [parentContentTitle , setParentContentTitle] = useState("");
 
   // get course ID to get Course Object
   // get index of specific subtitle index (sId) and content that will be displayed (cId)
@@ -65,6 +66,7 @@ const Content = () => {
             subtitleContentDisplay={subtitleID}
             cID={indexOfContent}
             setParentContentID = {setParentContentID}
+            setParentContentTitle={setParentContentTitle}
           />
         )}
         <div className="subtitle-Content-sideBar-parent">
@@ -89,7 +91,7 @@ const Content = () => {
         </div>
       </Col>
 
-      {parentContentID !== "" && <Note conID={parentContentID} />}
+      {parentContentID !== "" && <Note conID={parentContentID} conTitle={parentContentTitle}/>}
 
     </Row>
   );
