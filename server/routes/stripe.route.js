@@ -30,12 +30,13 @@ router.post(
       const customer = await stripe(
         process.env.STRIPE_PRIVATE_KEY
       ).customers.retrieve(data.customer);
-      enrollInCourse(
+      await enrollInCourse(
         customer.metadata.userId,
         customer.metadata.courseId,
         customer.metadata.paid,
         data.amount / 100,
-        data.currency
+        data.currency,
+        customer.metadata.walletPayments
       );
     }
 
