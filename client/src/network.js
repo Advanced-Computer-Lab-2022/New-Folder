@@ -302,3 +302,11 @@ export const deleteAccessRequest = async (courseId) => {
     console.log(err);
   }
 };
+
+// trainee get amount in wallet
+export const getAmountInWallet = async () => {
+  const res = await instance.get("/trainee/wallet", {
+    timeout: MAX_TIMEOUT,
+  });
+  return res.data;
+};
