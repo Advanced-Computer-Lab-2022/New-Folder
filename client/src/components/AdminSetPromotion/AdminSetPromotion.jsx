@@ -3,7 +3,7 @@ import { useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Col from "react-bootstrap/esm/Col";
 import Stack from "react-bootstrap/esm/Stack";
-import { postPromotion, fetchExploreData } from "../../network";
+import { postMultiPromotion, fetchExploreData } from "../../network";
 import "react-day-picker/dist/style.css";
 import Form from "react-bootstrap/Form";
 import { useEffect } from "react";
@@ -69,6 +69,8 @@ function AdminSetPromotion(props) {
     };
     setNewPercentage(null);
     setRange(null);
+    const coursesIds = selectedCourses.map((course) => course._id);
+    await postMultiPromotion(coursesIds, addedPromotion);
   };
   const cancel = async () => {
     setPercentageError(null);
@@ -76,6 +78,7 @@ function AdminSetPromotion(props) {
     setShow(false);
     setNewPercentage(null);
     setRange(null);
+    setSelectedCourses([]);
   };
   return (
     <div>
