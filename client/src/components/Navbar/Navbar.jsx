@@ -70,17 +70,17 @@ const MainNavbar = (props) => {
             ) : null}
 
             {ReactSession.get("userType") === userTypes.trainee ? (
-              <Nav.Link href="/">Wallet</Nav.Link>
+              <Nav.Link href="/wallet">Wallet</Nav.Link>
             ) : null}
 
             {ReactSession.get("userType") === userTypes.instructor ? (
-              <Nav.Link href="/">Earnings</Nav.Link>
+              <Nav.Link href="/earnings">Earnings</Nav.Link>
             ) : null}
 
             {[userTypes.trainee, userTypes.corporateTrainee].includes(
               ReactSession.get("userType")
             ) ? (
-              <Nav.Link href="/">Enrolled Courses</Nav.Link>
+              <Nav.Link href="/enrolledCourses">Enrolled Courses</Nav.Link>
             ) : null}
 
             <NavDropdown
