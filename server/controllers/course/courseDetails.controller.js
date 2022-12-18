@@ -228,6 +228,18 @@ const deleteAccessRequest = async (req, res) => {
     console.log(err);
   }
 };
+
+const updateStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedReport = await Report.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    res.status(200).json(updatedReport);
+  } catch (err) {
+    console.log(err);
+  }
+};
 module.exports = {
   getSubtitle,
   getVideo,
@@ -243,4 +255,5 @@ module.exports = {
   requestAccess,
   addFollowup,
   deleteAccessRequest,
+  updateStatus,
 };

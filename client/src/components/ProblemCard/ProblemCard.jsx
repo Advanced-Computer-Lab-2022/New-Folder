@@ -15,11 +15,12 @@ import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import { updateReportStatus } from "../../network";
 import "./ProblemCard.css";
 import { useEffect } from "react";
 import { addFollowup } from "../../network";
 function ProblemCard(props) {
-  const { problem } = props;
+  const { problem, getReports } = props;
   const [followups, setFollowups] = useState([]);
   const [editing, setEditing] = useState(false);
   const [validated, setValidated] = useState(false);
@@ -47,6 +48,17 @@ function ProblemCard(props) {
     setNewFollowup(null);
     setEditing(false);
   };
+
+  const changeStatus = async (status) => {
+    try {
+      const id = problem._id;
+      const updatedProplem = await updateReportStatus(id, { status: status });
+      getReports();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <div id="problemContainer">
@@ -100,16 +112,34 @@ function ProblemCard(props) {
                 </>
               )}
             </div>
-            {/*
-            
-
-
-            Add resolved and pending buttons here for admin and add followup button for trainee
-            
-
-
-
-            */}
+            <div id="problemStatus">
+              {ReactSession.get("userType") == UserTypes.admin && (
+                <Col className="mb-1">
+                  {problem.status === ProblemStatus.unseen && (
+                    <Col className="mb-1">
+                      <Button
+                        variant="warning"
+                        size="sm"
+                        onClick={(e) => changeStatus(ProblemStatus.pending)}
+                      >
+                        mark as pending
+                      </Button>
+                    </Col>
+                  )}
+                  {problem.status !== ProblemStatus.resolved && (
+                    <Col className="mb-1">
+                      <Button
+                        variant="success"
+                        size="sm"
+                        onClick={(e) => changeStatus(ProblemStatus.resolved)}
+                      >
+                        mark as resolved
+                      </Button>
+                    </Col>
+                  )}
+                </Col>
+              )}
+            </div>
           </Col>
         </Row>
         <div id="problemCard">{problem.body}</div>

@@ -302,3 +302,10 @@ export const deleteAccessRequest = async (courseId) => {
     console.log(err);
   }
 };
+
+// update Report status
+export const updateReportStatus = async (id, data) => {
+  const res = await instance.patch(`course/report/${id}`, data);
+  // updatedData
+  return res.data;
+};
