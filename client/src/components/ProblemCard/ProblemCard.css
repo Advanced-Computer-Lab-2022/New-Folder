@@ -4,6 +4,7 @@
 #problemCard {
   margin-left: 0px;
   padding: 1%;
+  border-radius: 1em;
 }
 #problemContainer {
   width: 100%;
@@ -45,4 +46,38 @@
 #problemCourseNameLink {
   text-decoration: none;
   color: #0d5c84;
+}
+#panel1a-header {
+  background-color: white;
+  border-radius: 1em;
+}
+#reportAccordionWrapper {
+  border-radius: 1em;
+}
+#reportAccordionWrapper::before {
+  content: none;
+}
+#followupsList {
+  border-radius: 1em;
+}
+#addFollowupButton {
+  background-color: rgb(0, 0, 0, 0);
+  box-shadow: none;
+  display: flex;
+  flex-direction: row;
+  width: fit-content;
+  border: none;
+  margin-left: 1.6%;
+  margin-top: -0.5%;
+}
+#addIconWrapper {
+  width: fit-content;
+  margin-top: -1.5%;
+}
+#followupFormFooter {
+  display: flex;
+  justify-content: space-around;
+}
+.followupFormButton {
+  width: 30%;
 }

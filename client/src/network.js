@@ -106,14 +106,13 @@ export const sendPasswordResetLink = async (data) => {
 };
 
 export const getPrice = async (price) => {
-  const rates = await axios.get("https://api.exchangerate.host/latest");
-  const currCurrency =
-    countryCurrency.country_currency[ReactSession.get("country")];
-  const courseCurrency = price.currency;
-  var magnitude = price.magnitude;
-  const ratio =
-    rates.data.rates[currCurrency] / rates.data.rates[courseCurrency];
-  return (magnitude * ratio).toFixed(2) + " " + currCurrency;
+  const data = {
+    magnitude: price.magnitude,
+    oldCurrency: price.currency,
+    newCurrency: countryCurrency.country_currency[ReactSession.get("country")],
+  };
+  const res = await instance.post("/convertCurrency", data);
+  return res.data.magnitude.toFixed(2) + " " + res.data.currency;
 };
 
 export const fetchMyCourses = async () => {
@@ -268,6 +267,12 @@ export const fetchReports = async () => {
   return res.data;
 };
 
+// enroll in a course (payment)
+export const payForCourse = async (data) => {
+  const res = await instance.post("/trainee/payForCourse", data);
+  return res.data;
+};
+
 //Add report
 export const postAccessRequest = async (data) => {
   try {
@@ -276,4 +281,31 @@ export const postAccessRequest = async (data) => {
   } catch (err) {
     console.log(err);
   }
+};
+
+//Add followup on a report
+export const addFollowup = async (data) => {
+  try {
+    const res = await instance.post("course/addFollowup", data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// cancel request access
+export const deleteAccessRequest = async (courseId) => {
+  try {
+    const res = await instance.delete(`course/${courseId}/cancelAccessRequest`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// update Report status
+export const updateReportStatus = async (id, data) => {
+  const res = await instance.patch(`course/report/${id}`, data);
+  // updatedData
+  return res.data;
 };

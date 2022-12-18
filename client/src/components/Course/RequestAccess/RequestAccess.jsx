@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Button, Modal } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import ViewerContexts from "../../../constants/ViewerContexts.json";
-import { postAccessRequest } from "../../../network";
+import { postAccessRequest, deleteAccessRequest } from "../../../network";
 import { ReactSession } from "react-client-session";
 import "./RequestAccess.css";
 function RequestAccess(props) {
@@ -34,6 +34,11 @@ function RequestAccess(props) {
       setReason(null);
       setShow(false);
     }
+  };
+  const cancelRequest = async (event) => {
+    event.preventDefault();
+    props.setVc(ViewerContexts.nonEnrolledCorporateTrainee);
+    await deleteAccessRequest(props.course._id);
   };
   const cancel = () => {
     setValidated(false);
@@ -86,19 +91,22 @@ function RequestAccess(props) {
           </Form>
         </Modal.Body>
       </Modal>
-      {pending ? (
-        <Button className="accessButton" variant="danger">
-          Cancel access request
-        </Button>
-      ) : (
-        <Button
-          className="accessButton"
-          variant="dark"
-          onClick={() => setShow(true)}
-        >
-          Request access
-        </Button>
-      )}
+      <Button
+        className="accessButton"
+        variant="danger"
+        onClick={cancelRequest}
+        hidden={!pending}
+      >
+        Cancel access request
+      </Button>
+      <Button
+        className="accessButton"
+        variant="dark"
+        onClick={() => setShow(true)}
+        hidden={pending}
+      >
+        Request access
+      </Button>
     </>
   );
 }

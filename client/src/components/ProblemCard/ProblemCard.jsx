@@ -1,5 +1,5 @@
-import React from "react";
-import { Button, Col, Row } from "react-bootstrap";
+import React, { useState } from "react";
+import { Form, Button, Card, Col, Row } from "react-bootstrap";
 import { MdOutlinePending } from "react-icons/md";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { FiCheckCircle } from "react-icons/fi";
@@ -9,9 +9,56 @@ import UserTypes from "../../constants/UserTypes.json";
 import ProblemTypes from "../../constants/ProblemTypes.json";
 import { HiOutlineWrenchScrewdriver } from "react-icons/hi2";
 import { GiTwoCoins } from "react-icons/gi";
+import Accordion from "@mui/material/Accordion";
+import AccordionSummary from "@mui/material/AccordionSummary";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import Typography from "@mui/material/Typography";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import { updateReportStatus } from "../../network";
 import "./ProblemCard.css";
+import { useEffect } from "react";
+import { addFollowup } from "../../network";
 function ProblemCard(props) {
-  const { problem } = props;
+  const { problem, getReports } = props;
+  const [followups, setFollowups] = useState([]);
+  const [editing, setEditing] = useState(false);
+  const [validated, setValidated] = useState(false);
+  const [newFollowup, setNewFollowup] = useState(null);
+  useEffect(() => {
+    setFollowups(problem.followups ?? []);
+  }, []);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      setValidated(true);
+    } else {
+      await addFollowup({ problemId: problem._id, followup: newFollowup });
+      setFollowups([...followups, newFollowup]);
+      setValidated(false);
+      setNewFollowup(null);
+      setEditing(false);
+    }
+  };
+  const cancel = () => {
+    setValidated(false);
+    setNewFollowup(null);
+    setEditing(false);
+  };
+
+  const changeStatus = async (status) => {
+    try {
+      const id = problem._id;
+      const updatedProplem = await updateReportStatus(id, { status: status });
+      getReports();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <div id="problemContainer">
@@ -65,19 +112,102 @@ function ProblemCard(props) {
                 </>
               )}
             </div>
-            {/*
-            
-
-
-            Add resolved and pending buttons here for admin and add followup button for trainee
-            
-
-
-
-            */}
+            <div id="problemStatus">
+              {ReactSession.get("userType") == UserTypes.admin && (
+                <Col className="mb-1">
+                  {problem.status === ProblemStatus.unseen && (
+                    <Col className="mb-1">
+                      <Button
+                        variant="warning"
+                        size="sm"
+                        onClick={(e) => changeStatus(ProblemStatus.pending)}
+                      >
+                        mark as pending
+                      </Button>
+                    </Col>
+                  )}
+                  {problem.status !== ProblemStatus.resolved && (
+                    <Col className="mb-1">
+                      <Button
+                        variant="success"
+                        size="sm"
+                        onClick={(e) => changeStatus(ProblemStatus.resolved)}
+                      >
+                        mark as resolved
+                      </Button>
+                    </Col>
+                  )}
+                </Col>
+              )}
+            </div>
           </Col>
         </Row>
         <div id="problemCard">{problem.body}</div>
+        <Accordion id="reportAccordionWrapper">
+          <AccordionSummary
+            expandIcon={<ExpandMoreIcon />}
+            aria-controls="panel1a-content"
+            id="panel1a-header"
+          >
+            <Typography>Followups ({followups.length ?? 0})</Typography>
+          </AccordionSummary>
+          <AccordionDetails id="followupsList">
+            <ol>
+              {followups.map((followup) => {
+                return <li>{followup}</li>;
+              })}
+            </ol>
+            {editing ? (
+              <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                <Form.Group
+                  className="mb-3"
+                  controlId="exampleForm.ControlTextarea1"
+                >
+                  <Form.Label as={"h6"}>Add a followup</Form.Label>
+                  <Form.Control
+                    as="textarea"
+                    required
+                    onChange={(e) => setNewFollowup(e.target.value)}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Followup cannot be empty
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <div id="followupFormFooter">
+                  <Button
+                    variant="secondary"
+                    onClick={cancel}
+                    className="followupFormButton"
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    variant="primary"
+                    type="submit"
+                    className="followupFormButton"
+                  >
+                    Add
+                  </Button>
+                </div>
+              </Form>
+            ) : null}
+            {problem.status !== ProblemStatus.resolved &&
+            !editing &&
+            ReactSession.get("userType") !== UserTypes.admin ? (
+              <Card
+                id="addFollowupButton"
+                onClick={() => {
+                  setEditing(true);
+                }}
+              >
+                <div id="addIconWrapper">
+                  <AiOutlinePlusCircle />
+                </div>
+                &nbsp;Add a followup
+              </Card>
+            ) : null}
+          </AccordionDetails>
+        </Accordion>
       </div>
     </>
   );

@@ -32,12 +32,41 @@ const Trainee = mongoose.Schema(
       type: String,
       default: "Egypt",
     },
+    wallet: {
+      type: Map,
+      of: String,
+      default: {},
+    },
     courses: {
       type: [{ type: mongoose.Types.ObjectId, ref: "Course" }],
       default: [],
     },
     reports: {
       type: [{ type: mongoose.Types.ObjectId, ref: "Report" }],
+      default: [],
+    },
+    payments: {
+      type: [
+        {
+          courseId: {
+            type: mongoose.Types.ObjectId,
+            ref: "Course",
+            required: true,
+          },
+          amount: {
+            type: {
+              magnitude: {
+                type: Number,
+                required: true,
+              },
+              currency: {
+                type: String,
+                required: true,
+              },
+            },
+          },
+        },
+      ],
       default: [],
     },
     userType: {

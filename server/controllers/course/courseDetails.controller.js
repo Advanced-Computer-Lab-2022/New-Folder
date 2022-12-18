@@ -197,6 +197,49 @@ const requestAccess = async (req, res) => {
   }
 };
 
+const addFollowup = async (req, res) => {
+  try {
+    const report = await Report.findById(req.body.problemId);
+    report.followups.push(req.body.followup);
+    report.save();
+    res.status(201).json(report);
+  } catch (err) {
+    console.log(err);
+  }
+};
+const deleteAccessRequest = async (req, res) => {
+  try {
+    await AccessRequest.findOneAndDelete({
+      userId: req.session.userId,
+      courseId: req.params.id,
+    });
+    const course = await Course.findById(req.params.id);
+    let pendingTrainees = [];
+    for (let i = 0; i < course.pendingTrainees.length; i++) {
+      if (course.pendingTrainees[i].toString() !== req.session.userId) {
+        pendingTrainees.push(course.pendingTrainees[i]);
+      }
+    }
+    await Course.findByIdAndUpdate(req.params.id, {
+      pendingTrainees: pendingTrainees,
+    });
+    res.status(201);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const updateStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedReport = await Report.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    res.status(200).json(updatedReport);
+  } catch (err) {
+    console.log(err);
+  }
+};
 module.exports = {
   getSubtitle,
   getVideo,
@@ -210,4 +253,7 @@ module.exports = {
   createSubtitle,
   submitReport,
   requestAccess,
+  addFollowup,
+  deleteAccessRequest,
+  updateStatus,
 };
