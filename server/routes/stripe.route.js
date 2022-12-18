@@ -34,7 +34,7 @@ router.post(
       await enrollInCourse(
         customer.metadata.userId,
         customer.metadata.courseId,
-        customer.metadata.paid,
+        customer.metadata.coursePrice,
         data.amount / 100,
         data.currency,
         customer.metadata.walletPayments

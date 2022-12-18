@@ -7,7 +7,7 @@ const { login } = require("../controllers/guest/login.controller");
 const { logout } = require("../controllers/guest/logout.controller");
 const {
   convertCurrency,
-} = require("../controllers/trainee/payment.controller");
+} = require("../controllers/guest/currencyConverter.controller");
 
 const {
   resetPassword,
