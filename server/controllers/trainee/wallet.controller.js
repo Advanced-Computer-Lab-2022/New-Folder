@@ -3,7 +3,12 @@ const { currencyConverter } = require("../guest/currencyConverter.controller");
 
 const getWallet = async (req, res) => {
   const trainee = await Trainee.findById(req.session.userId);
-  res.send(trainee.wallet);
+  const wallet = trainee.wallet;
+  const arrayOfAmounts = [];
+  for (let [currency, magnitude] of wallet) {
+    arrayOfAmounts.push(`${magnitude}  ${currency.toUpperCase()}`);
+  }
+  res.send(arrayOfAmounts);
 };
 
 const payByWallet = async (userId, amount, currency) => {

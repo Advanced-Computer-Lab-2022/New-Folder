@@ -309,3 +309,11 @@ export const updateReportStatus = async (id, data) => {
   // updatedData
   return res.data;
 };
+
+// trainee get amount in wallet
+export const getAmountInWallet = async () => {
+  const res = await instance.get("/trainee/wallet", {
+    timeout: MAX_TIMEOUT,
+  });
+  return res.data;
+};

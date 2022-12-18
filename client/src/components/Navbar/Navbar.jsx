@@ -11,6 +11,7 @@ import Button from "react-bootstrap/Button";
 import ReactCountryFlag from "react-country-flag";
 import userTypes from "../../constants/UserTypes.json";
 import NavDropdown from "react-bootstrap/NavDropdown";
+import Wallet from "../Wallet/Wallet";
 import { networkLogout } from "../../network";
 const MainNavbar = (props) => {
   const navigate = useNavigate();
@@ -67,10 +68,6 @@ const MainNavbar = (props) => {
               <Nav.Link href="/myProblems">Reports</Nav.Link>
             ) : null}
 
-            {ReactSession.get("userType") === userTypes.trainee ? (
-              <Nav.Link href="/wallet">Wallet</Nav.Link>
-            ) : null}
-
             {ReactSession.get("userType") === userTypes.instructor ? (
               <Nav.Link href="/earnings">Earnings</Nav.Link>
             ) : null}
@@ -79,6 +76,10 @@ const MainNavbar = (props) => {
               ReactSession.get("userType")
             ) ? (
               <Nav.Link href="/enrolledCourses">Enrolled Courses</Nav.Link>
+            ) : null}
+
+            {ReactSession.get("userType") === userTypes.trainee ? (
+              <Wallet />
             ) : null}
 
             <NavDropdown
