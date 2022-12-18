@@ -91,6 +91,7 @@ function AdminSetPromotion(props) {
     setRange(null);
     setSelectedCourses([]);
     setAllSelected(false);
+    setSelectError(null);
   };
   return (
     <div>
@@ -104,9 +105,14 @@ function AdminSetPromotion(props) {
               multiple
               disabled={allSelected}
               id="checkboxes-tags-demo"
-              value={selectedCourses}
               options={courses}
               disableCloseOnSelect
+              value={allSelected ? [] : selectedCourses}
+              onChange={(event, value) => {
+                setSelectedCourses(value);
+                console.log(value);
+              }}
+              onre
               getOptionLabel={(option) => option.name}
               renderOption={(props, option, { selected }) => (
                 <li {...props}>
@@ -115,15 +121,6 @@ function AdminSetPromotion(props) {
                     checkedIcon={checkedIcon}
                     style={{ marginRight: 8 }}
                     checked={selected}
-                    onChange={() =>
-                      selected
-                        ? setSelectedCourses(
-                            selectedCourses.filter(
-                              (course) => course._id != option._id
-                            )
-                          )
-                        : setSelectedCourses([...selectedCourses, option])
-                    }
                   />
                   {option.name}
                 </li>
@@ -134,7 +131,9 @@ function AdminSetPromotion(props) {
                   {...params}
                   id="standard-basic"
                   variant="standard"
-                  label="Select courses"
+                  label={
+                    allSelected ? "All courses selected" : "Select courses"
+                  }
                 />
               )}
             />
