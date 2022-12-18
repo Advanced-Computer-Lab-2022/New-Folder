@@ -25,6 +25,7 @@ import AddUser from "./pages/admin/AddUser";
 import Wallet from "./pages/user/Wallet";
 import Earnings from "./pages/user/instructor/Earnings";
 import EnrolledCourses from "./pages/user/EnrolledCourses";
+import AdminSetPromotion from "./pages/admin/AdminSetPromotion/AdminSetPromotion";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -71,6 +72,7 @@ function App() {
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/earnings" element={<Earnings />} />
         <Route path="/enrolledCourses" element={<EnrolledCourses />} />
+        <Route path="/setPromotion" element={<AdminSetPromotion />} />
       </Routes>
     </>
   );

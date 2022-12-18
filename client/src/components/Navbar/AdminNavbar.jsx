@@ -28,6 +28,7 @@ const AdminNavbar = (props) => {
         <Nav className="me-auto">
           <Nav.Link href="/">Explore</Nav.Link>
           <Nav.Link href="/addUser"> Add User</Nav.Link>
+          <Nav.Link href="/setPromotion"> Set promotion</Nav.Link>
           <Nav.Link href="/login">Login</Nav.Link>
           <Nav.Link href="/reports">Reports</Nav.Link>
           <NavDropdown

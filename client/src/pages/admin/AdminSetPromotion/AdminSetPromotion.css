@@ -1,0 +1,18 @@
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 18rem));
+  gap: 2rem;
+  justify-content: center;
+}
+
+.explore__content {
+  width: 80% !important;
+}
+
+.explore__header {
+  margin: 0;
+  margin-left: 4em;
+  color: rgba(0, 0, 0, 0.3);
+  font-size: 1.6em;
+  font-weight: 300;
+}
