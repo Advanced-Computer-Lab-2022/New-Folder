@@ -53,17 +53,20 @@ const Trainee = mongoose.Schema(
             ref: "Course",
             required: true,
           },
-          amount: {
-            type: {
-              magnitude: {
-                type: Number,
-                required: true,
+          amounts: {
+            type: [
+              {
+                magnitude: {
+                  type: Number,
+                  required: true,
+                },
+                currency: {
+                  type: String,
+                  required: true,
+                },
               },
-              currency: {
-                type: String,
-                required: true,
-              },
-            },
+            ],
+            default: [],
           },
         },
       ],
