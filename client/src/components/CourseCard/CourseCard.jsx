@@ -7,7 +7,7 @@ import "./CourseCard.css";
 function CourseCard(props) {
   const [price, setPrice] = useState("");
   const [currency, setCurrency] = useState("");
-
+  const [selected, setSelected] = useState(false);
   const navigate = useNavigate();
 
   const fetchPrice = async () => {
@@ -20,16 +20,27 @@ function CourseCard(props) {
       console.log(err);
     }
   };
-
+  const click = () => {
+    if (props.selecting) {
+      if (selected) {
+        setSelected(false);
+        props.setSelectedCourses(
+          props.selectedCourses.filter((name) => name !== props.course.name)
+        );
+      } else {
+        props.setSelectedCourses([...props.selectedCourses, props.course.name]);
+        setSelected(true);
+      }
+    } else {
+      navigate("/course/" + props.course._id);
+    }
+  };
   useEffect(() => {
     fetchPrice();
   }, [ReactSession.get("country"), props.course]);
 
   return (
-    <div
-      className="card"
-      onClick={(e) => navigate("/course/" + props.course._id)}
-    >
+    <div className={selected ? "selectedCard" : "card"} onClick={click}>
       <div className="card__body">
         <img
           className="card__image"
