@@ -16,9 +16,7 @@ const Wallet = () => {
   useEffect(() => {
     fetchWalletData();
   }, []);
-  {
-    wallet.map((item) => <h1>{item}</h1>);
-  }
+
   return (
     <OverlayTrigger
       trigger="click"

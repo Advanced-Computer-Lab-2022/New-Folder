@@ -17,7 +17,9 @@ const {
 const { payForCourse } = require("../controllers/trainee/payment.controller");
 
 const { getWallet } = require("../controllers/trainee/wallet.controller");
-
+const {
+  getEnrolledCourses,
+} = require("../controllers/trainee/getEnrolledCourses.controller");
 // import middlewares
 const { authUser } = require("../middlewares/authUserMiddleware");
 const {
@@ -31,6 +33,7 @@ router.post("/changePassword", authUser, changePassword);
 router.get("/wallet", authUser, getWallet);
 router.get("/instructorInfo", getInstructorData);
 router.get("/myProblems", canReport, getMyProblems);
+router.get("/enrolledCourses", authUser, getEnrolledCourses);
 router.post(
   "/rateInstructor",
   authUserTakeCourseWithInstructor,

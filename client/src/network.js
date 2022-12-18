@@ -317,3 +317,11 @@ export const getAmountInWallet = async () => {
   });
   return res.data;
 };
+
+// trainee get enrolled courses
+export const getEnrolledCourses = async () => {
+  const res = await instance.get("/trainee/enrolledCourses", {
+    timeout: MAX_TIMEOUT,
+  });
+  return res.data;
+};
