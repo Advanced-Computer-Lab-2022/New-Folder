@@ -26,7 +26,7 @@ function Reports() {
           <Row xs={1} md={2}>
             {unresolved.map((report) => (
               <Col>
-                <ProblemCard problem={report} />
+                <ProblemCard problem={report} getReports={getReports} />
               </Col>
             ))}
           </Row>

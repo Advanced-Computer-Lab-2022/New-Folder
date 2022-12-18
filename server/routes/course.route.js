@@ -21,12 +21,14 @@ const {
   createSubtitle,
   submitReport,
   requestAccess,
+  updateStatus,
 } = require("../controllers/course/courseDetails.controller");
 
 router.get("/subtitle/excercise/:id", getExcercise);
 router.get("/subtitle/video/:id", getVideo);
 router.get("/subtitle/:id", getSubtitle);
 router.get("/:id", getCourseDetails);
+router.patch("/report/:id", updateStatus);
 router.patch("/addRating", canRateCourse, addReview);
 router.patch("/deleteRating", canDeleteRating, deleteRating);
 router.patch("/addPromotion", canAddPromotion, addPromotion);

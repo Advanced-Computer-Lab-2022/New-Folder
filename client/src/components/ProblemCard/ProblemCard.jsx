@@ -9,9 +9,21 @@ import UserTypes from "../../constants/UserTypes.json";
 import ProblemTypes from "../../constants/ProblemTypes.json";
 import { HiOutlineWrenchScrewdriver } from "react-icons/hi2";
 import { GiTwoCoins } from "react-icons/gi";
+import { updateReportStatus } from "../../network";
 import "./ProblemCard.css";
 function ProblemCard(props) {
-  const { problem } = props;
+  const { problem, getReports } = props;
+
+  const changeStatus = async (status) => {
+    try {
+      const id = problem._id;
+      const updatedProplem = await updateReportStatus(id, { status: status });
+      getReports();
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
   return (
     <>
       <div id="problemContainer">
@@ -65,16 +77,34 @@ function ProblemCard(props) {
                 </>
               )}
             </div>
-            {/*
-            
-
-
-            Add resolved and pending buttons here for admin and add followup button for trainee
-            
-
-
-
-            */}
+            <div id="problemStatus">
+              {ReactSession.get("userType") == UserTypes.admin && (
+                <Col className="mb-1">
+                  {problem.status === ProblemStatus.unseen && (
+                    <Col className="mb-1">
+                      <Button
+                        variant="warning"
+                        size="sm"
+                        onClick={(e) => changeStatus(ProblemStatus.pending)}
+                      >
+                        mark as pending
+                      </Button>
+                    </Col>
+                  )}
+                  {problem.status !== ProblemStatus.resolved && (
+                    <Col className="mb-1">
+                      <Button
+                        variant="success"
+                        size="sm"
+                        onClick={(e) => changeStatus(ProblemStatus.resolved)}
+                      >
+                        mark as resolved
+                      </Button>
+                    </Col>
+                  )}
+                </Col>
+              )}
+            </div>
           </Col>
         </Row>
         <div id="problemCard">{problem.body}</div>
