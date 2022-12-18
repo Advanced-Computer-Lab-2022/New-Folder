@@ -6,7 +6,7 @@ const getWallet = async (req, res) => {
   const wallet = trainee.wallet;
   const arrayOfAmounts = [];
   for (let [currency, magnitude] of wallet) {
-    arrayOfAmounts.push(`${magnitude} ${currency.toUpperCase()}`);
+    arrayOfAmounts.push(`${magnitude}  ${currency.toUpperCase()}`);
   }
   res.send(arrayOfAmounts);
 };
