@@ -7,26 +7,25 @@ const CC = require("currency-converter-lt");
 
 const convertCurrency = async (req, res) => {
   const { magnitude, oldCurrency, newCurrency } = req.body;
-  let walletPayments = [];
   let converter = new CC({
     from: oldCurrency,
     to: newCurrency,
-    amount: magnitude,
+    amount: parseFloat(magnitude),
   });
   const priceMagnitude = await converter.convert();
   res.send({
     magnitude: priceMagnitude,
     currency: newCurrency,
-    oldMagnitude: magnitude,
   });
 };
 
 const payForCourse = async (req, res) => {
   const { courseID, userCurrency } = req.body;
+  let walletPayment = 0;
   const trainee = await Trainee.findById(req.session.userId);
   const course = await Course.findById(courseID);
   let discount = course.promotion;
-  let finalPrice = course.price.magnitude;
+  let finalPrice = parseFloat(course.price.magnitude);
   let coupon = null;
   if (discount) {
     let now = Date.now();
@@ -34,38 +33,26 @@ const payForCourse = async (req, res) => {
       coupon = await stripe.coupons.create({
         percent_off: discount.percentage,
       });
-      finalPrice *= discount.percentage / 100;
+      finalPrice *= 1 - discount.percentage / 100;
     }
   }
+  let savedPrice = finalPrice;
   let traineeWalletAmount = trainee.wallet?.get(course.price.currency);
   if (traineeWalletAmount) {
     if (traineeWalletAmount >= finalPrice) {
-      trainee.wallet.set(
-        course.price.currency,
-        traineeWalletAmount - finalPrice
-      );
-      await trainee.save();
-      walletPayments.push({
-        magnitude: finalPrice,
-        currency: course.price.currency,
-      });
+      walletPayment += finalPrice;
       await enrollInCourse(
         req.session.userId,
         courseID,
         finalPrice,
         0,
         "USD",
-        walletPayments
+        walletPayment
       );
       res.json({ url: `${process.env.CLIENT_URL}/course/${courseID}` });
       return;
     } else {
-      trainee.wallet.set(course.price.currency, 0);
-      await trainee.save();
-      walletPayments.push({
-        magnitude: traineeWalletAmount,
-        currency: course.price.currency,
-      });
+      walletPayment += traineeWalletAmount;
       finalPrice -= traineeWalletAmount;
     }
   }
@@ -73,37 +60,21 @@ const payForCourse = async (req, res) => {
     let walletConverter = new CC({
       from: currency,
       to: course.price.currency,
-      amount: magnitude,
+      amount: parseFloat(magnitude),
     });
     const newMagnitude = await walletConverter.convert();
     if (newMagnitude < finalPrice) {
-      trainee.wallet.set(currency, 0);
-      await trainee.save();
-      walletPayments.push({
-        magnitude: magnitude,
-        currency: currency,
-      });
+      walletConverter += newMagnitude;
       finalPrice -= newMagnitude;
     } else {
-      walletConverter = new CC({
-        from: course.price.currency,
-        to: currency,
-        amount: finalPrice,
-      });
-      finalPrice = await walletConverter.convert();
-      trainee.wallet.set(currency, magnitude - finalPrice);
-      await trainee.save();
-      walletPayments.push({
-        magnitude: finalPrice,
-        currency: currency,
-      });
+      walletPayment += finalPrice;
       await enrollInCourse(
         req.session.userId,
         courseID,
-        finalPrice,
+        savedPrice,
         0,
         "USD",
-        walletPayments
+        walletPayment
       );
       res.json({ url: `${process.env.CLIENT_URL}/course/${courseID}` });
       return;
@@ -125,7 +96,7 @@ const payForCourse = async (req, res) => {
         userId: req.session.userId,
         courseId: courseID,
         paid: finalPrice,
-        walletPayments: walletPayments,
+        walletPayment: walletPayment,
       },
     });
     const session = await stripe.checkout.sessions.create({
@@ -165,29 +136,99 @@ const getWallet = async (req, res) => {
   res.send(trainee.wallet);
 };
 
+const payByWallet = async (userId, amount, currency) => {
+  amount = parseFloat(amount);
+  const trainee = await Trainee.findById(userId);
+  if (amount == 0) return [];
+  let walletPayments = [];
+  let traineeWalletAmount = trainee.wallet?.get(currency);
+  if (traineeWalletAmount) {
+    traineeWalletAmount = parseFloat(traineeWalletAmount);
+    if (traineeWalletAmount >= amount) {
+      trainee.wallet.set(currency, traineeWalletAmount - amount);
+      await trainee.save();
+      walletPayments.push({
+        magnitude: amount,
+        currency: currency,
+      });
+      return walletPayments;
+    } else {
+      trainee.wallet.set(currency, 0);
+      await trainee.save();
+      walletPayments.push({
+        magnitude: traineeWalletAmount,
+        currency: currency,
+      });
+      amount -= traineeWalletAmount;
+    }
+  }
+  for (let [curr, magnitude] of trainee.wallet) {
+    magnitude = parseFloat(magnitude);
+    let walletConverter = new CC({
+      from: curr,
+      to: currency,
+      amount: magnitude,
+    });
+    const newMagnitude = await walletConverter.convert();
+    if (newMagnitude < amount) {
+      trainee.wallet.set(curr, 0);
+      await trainee.save();
+      walletPayments.push({
+        magnitude: magnitude,
+        currency: curr,
+      });
+      amount -= newMagnitude;
+    } else {
+      walletConverter = new CC({
+        from: currency,
+        to: curr,
+        amount: amount,
+      });
+      amount = await walletConverter.convert();
+      trainee.wallet.set(currency, magnitude - amount);
+      await trainee.save();
+      walletPayments.push({
+        magnitude: amount,
+        currency: curr,
+      });
+
+      return walletPayments;
+    }
+  }
+  return walletPayments;
+};
+
 const enrollInCourse = async (
   userId,
   courseId,
   paid,
   amount,
   currency,
-  walletPayments
+  walletPayment
 ) => {
   const course = await Course.findById(courseId);
   const trainee = await Trainee.findById(userId);
   const instructor = await Instructor.findById(
-    course.instructorInfo.instructorId
+    course.instructorInfo?.instructorId
+  );
+  let walletPayments = await payByWallet(
+    userId,
+    walletPayment,
+    course.price.currency
   );
   course.trainees.push(userId);
   await course.save();
   trainee.courses.push(courseId);
   await trainee.save();
-  walletPayments.push({ magnitude: amount, currency });
+  console.log(amount);
+  if (amount > 0) {
+    walletPayments.push({ magnitude: parseFloat(amount), currency });
+  }
   trainee.payments.push({ courseId, amounts: walletPayments });
   await trainee.save();
   const prevWalletAmount = instructor.wallet.get(course.price.currency) ?? 0;
-  instructor.wallet.set(course.price.currency, prevWalletAmount + paid);
-  await instructor.save();
+  instructor?.wallet.set(course.price.currency, prevWalletAmount + paid);
+  await instructor?.save();
 };
 
 module.exports = { payForCourse, enrollInCourse, convertCurrency, getWallet };
