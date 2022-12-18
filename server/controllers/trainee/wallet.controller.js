@@ -1,8 +1,4 @@
-require("dotenv").config();
-const Course = require("../../models/Course.model");
 const Trainee = require("../../models/Trainee.model");
-const Instructor = require("../../models/Instructor.model");
-const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const { currencyConverter } = require("../guest/currencyConverter.controller");
 
 const getWallet = async (req, res) => {
@@ -12,66 +8,85 @@ const getWallet = async (req, res) => {
 
 const payByWallet = async (userId, amount, currency) => {
   amount = parseFloat(amount);
+  currency = currency.toLowerCase();
   const trainee = await Trainee.findById(userId);
-  if (amount == 0) return [];
   let walletPayments = [];
-  let traineeWalletAmount = trainee.wallet?.get(currency);
-  if (traineeWalletAmount) {
-    traineeWalletAmount = parseFloat(traineeWalletAmount);
-    if (traineeWalletAmount >= amount) {
-      trainee.wallet.set(currency, traineeWalletAmount - amount);
+  if (amount === 0) return walletPayments;
+  let wallet = trainee.wallet;
+  let amountOfSameCurrency = wallet.get(currency);
+  if (amountOfSameCurrency) {
+    amountOfSameCurrency = parseFloat(amountOfSameCurrency);
+    if (amountOfSameCurrency > amount) {
+      wallet.set(currency, amountOfSameCurrency - amount);
       await trainee.save();
-      walletPayments.push({
-        magnitude: amount,
-        currency: currency,
-      });
+      walletPayments.push({ magnitude: amount, currency });
       return walletPayments;
     } else {
-      trainee.wallet.set(currency, 0);
+      wallet.delete(currency);
       await trainee.save();
-      walletPayments.push({
-        magnitude: traineeWalletAmount,
-        currency: currency,
-      });
-      amount -= traineeWalletAmount;
+      walletPayments.push({ magnitude: amountOfSameCurrency, currency });
+      amount -= amountOfSameCurrency;
     }
   }
-  for (let [curr, magnitude] of trainee.wallet) {
-    magnitude = parseFloat(magnitude);
-    let walletConverter = new CC({
-      from: curr,
-      to: currency,
-      amount: magnitude,
-    });
-    const newMagnitude = await walletConverter.convert();
-    if (newMagnitude < amount) {
-      trainee.wallet.set(curr, 0);
+  for (let [walletCurrency, walletMagnitude] of wallet) {
+    let convertedMagnitude = await currencyConverter(
+      walletMagnitude,
+      walletCurrency,
+      currency
+    );
+    if (convertedMagnitude <= amount) {
+      wallet.delete(walletCurrency);
       await trainee.save();
       walletPayments.push({
-        magnitude: magnitude,
-        currency: curr,
+        magnitude: parseFloat(walletMagnitude),
+        currency: walletCurrency,
       });
-      amount -= newMagnitude;
+      amount -= convertedMagnitude;
     } else {
-      walletConverter = new CC({
-        from: currency,
-        to: curr,
-        amount: amount,
-      });
-      amount = await walletConverter.convert();
-      trainee.wallet.set(currency, magnitude - amount);
+      let takenMagnitude = await currencyConverter(
+        amount,
+        currency,
+        walletCurrency
+      );
+      wallet.set(walletCurrency, parseFloat(walletMagnitude) - takenMagnitude);
       await trainee.save();
       walletPayments.push({
-        magnitude: amount,
-        currency: curr,
+        magnitude: parseFloat(takenMagnitude),
+        currency: walletCurrency,
       });
-
+      amount = 0;
+    }
+    if (amount === 0) {
       return walletPayments;
     }
   }
   return walletPayments;
 };
 
-const getAmountPaidByWallet = async (amount, currency) => {};
+const getAmountPaidByWallet = async (userId, amount, currency) => {
+  amount = parseFloat(amount);
+  currency = currency.toLowerCase();
+  let paidByWallet = 0;
+  const trainee = await Trainee.findById(userId);
+  let wallet = trainee.wallet;
+  if (!wallet) return 0;
+  let amountOfSameCurrency = wallet.get(currency);
+  if (amountOfSameCurrency) {
+    amountOfSameCurrency = parseFloat(amountOfSameCurrency);
+    if (amountOfSameCurrency >= amount) return amount;
+    else paidByWallet += amountOfSameCurrency;
+  }
+  for (let [walletCurrency, walletMagnitude] of wallet) {
+    if (walletCurrency === currency) continue;
+    let convertedMagnitude = await currencyConverter(
+      walletMagnitude,
+      walletCurrency,
+      currency
+    );
+    paidByWallet += convertedMagnitude;
+    if (paidByWallet >= amount) return amount;
+  }
+  return paidByWallet;
+};
 
 module.exports = { getWallet, payByWallet, getAmountPaidByWallet };

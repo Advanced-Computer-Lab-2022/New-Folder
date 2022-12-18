@@ -14,10 +14,9 @@ const {
 const {
   getMyProblems,
 } = require("../controllers/trainee/getMyProblems.controller");
-const {
-  payForCourse,
-  getWallet,
-} = require("../controllers/trainee/payment.controller");
+const { payForCourse } = require("../controllers/trainee/payment.controller");
+
+const { getWallet } = require("../controllers/trainee/wallet.controller");
 
 // import middlewares
 const { authUser } = require("../middlewares/authUserMiddleware");

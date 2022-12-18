@@ -23,7 +23,11 @@ const payForCourse = async (req, res) => {
   }
   let coursePrice = finalPrice;
   let walletPayment = parseFloat(
-    getAmountPaidByWallet(finalPrice, course.price.currency)
+    await getAmountPaidByWallet(
+      req.session.userId,
+      finalPrice,
+      course.price.currency
+    )
   );
   finalPrice -= walletPayment;
   if (finalPrice === 0) {
@@ -35,11 +39,11 @@ const payForCourse = async (req, res) => {
       "",
       walletPayment
     );
-    res.redirect(`${process.env.CLIENT_URL}/course/${courseID}`);
+    res.json({ url: `${process.env.CLIENT_URL}/course/${courseID}` });
     return;
   }
   if (coupon) {
-    finalPrice /= discount.percentage / 100;
+    finalPrice /= 1 - discount.percentage / 100;
   }
   const priceMagnitude = await currencyConverter(
     finalPrice,
@@ -103,7 +107,6 @@ const enrollInCourse = async (
     walletPayment > 0
       ? await payByWallet(userId, walletPayment, course.price.currency)
       : [];
-
   await addPayment(userId, courseId, walletPayments, paidbyCard, currency);
   await payInstructor(
     course.instructorInfo?.instructorId,

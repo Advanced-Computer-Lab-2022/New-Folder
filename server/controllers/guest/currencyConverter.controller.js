@@ -20,7 +20,7 @@ const currencyConverter = async (magnitude, oldCurrency, newCurrency) => {
     amount: parseFloat(magnitude),
   });
   const newMagnitude = await converter.convert();
-  return newMagnitude;
+  return parseFloat(newMagnitude);
 };
 
 module.exports = { convertCurrency, currencyConverter };
