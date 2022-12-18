@@ -47,7 +47,7 @@ const MainNavbar = (props) => {
             {ReactSession.get("userType") === "instructor" ? (
               <Nav.Link href="/createCourse">Create Course</Nav.Link>
             ) : null}
-            {ReactSession.get("userType") ? (
+            {ReactSession.get("userType") === ""? (
               <Nav.Link href="/login">Login</Nav.Link>
             ) : (
               <Nav.Link href="/" onClick={logout}>

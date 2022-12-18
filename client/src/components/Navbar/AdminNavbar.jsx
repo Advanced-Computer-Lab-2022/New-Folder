@@ -10,6 +10,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import ReactCountryFlag from "react-country-flag";
+import { NavDropdown } from "react-bootstrap";
 
 const AdminNavbar = (props) => {
   const navigate = useNavigate();
@@ -29,25 +30,25 @@ const AdminNavbar = (props) => {
           <Nav.Link href="/addUser"> Add User</Nav.Link>
           <Nav.Link href="/login">Login</Nav.Link>
           <Nav.Link href="/reports">Reports</Nav.Link>
-          <ReactCountryFlag countryCode={ReactSession.get("country")} svg />
-          <Nav.Link>
-            <Form.Select
+          <NavDropdown
               className="bg-dark text-light"
-              id="country"
-              name="country"
-              onChange={(e) => props.setCountry(e.target.value)}
+              menuVariant="dark"
+              title={
+                <ReactCountryFlag
+                  countryCode={ReactSession.get("country")}
+                  svg
+                />
+              }
+              onSelect={(e) => props.setCountry(e)}
+              scrollable
             >
               {countries.map((country) => (
-                <option
-                  selected={country.code === ReactSession.get("country")}
-                  value={country.code}
-                >
+                <NavDropdown.Item eventKey={country.code}>
                   <ReactCountryFlag countryCode={country.code} svg />
-                  {country.name}
-                </option>
+                  {" " + country.name}
+                </NavDropdown.Item>
               ))}
-            </Form.Select>
-          </Nav.Link>
+            </NavDropdown>
           <Form onSubmit={submit}>
             <InputGroup>
               <Form.Control
