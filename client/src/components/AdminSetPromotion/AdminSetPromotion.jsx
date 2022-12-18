@@ -15,6 +15,7 @@ import TextField from "@mui/material/TextField";
 import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
+import { FormControl, FormControlLabel, FormGroup } from "@mui/material";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -27,6 +28,7 @@ function AdminSetPromotion(props) {
   const [percentageError, setPercentageError] = useState(null);
   const [courses, setCourses] = useState([]);
   const [selectedCourses, setSelectedCourses] = useState([]);
+  const [allSelected, setAllSelected] = useState(false);
   const fetchData = async () => {
     try {
       const fetchedCourses = await fetchExploreData();
@@ -82,43 +84,71 @@ function AdminSetPromotion(props) {
           <Modal.Header>
             <Modal.Title>Set promotion</Modal.Title>
           </Modal.Header>
-          <Autocomplete
-            multiple
-            id="checkboxes-tags-demo"
-            options={courses}
-            disableCloseOnSelect
-            getOptionLabel={(option) => option.name}
-            renderOption={(props, option, { selected }) => (
-              <li {...props}>
-                <Checkbox
-                  icon={icon}
-                  checkedIcon={checkedIcon}
-                  style={{ marginRight: 8 }}
-                  checked={selected}
-                  onChange={() =>
-                    selected
-                      ? setSelectedCourses(
-                          selectedCourses.filter(
-                            (course) => course._id != option._id
+          <div>
+            <Autocomplete
+              multiple
+              disabled={allSelected}
+              id="checkboxes-tags-demo"
+              value={selectedCourses}
+              options={courses}
+              disableCloseOnSelect
+              getOptionLabel={(option) => option.name}
+              renderOption={(props, option, { selected }) => (
+                <li {...props}>
+                  <Checkbox
+                    icon={icon}
+                    checkedIcon={checkedIcon}
+                    style={{ marginRight: 8 }}
+                    checked={selected}
+                    onChange={() =>
+                      selected
+                        ? setSelectedCourses(
+                            selectedCourses.filter(
+                              (course) => course._id != option._id
+                            )
                           )
-                        )
-                      : setSelectedCourses([...selectedCourses, option])
-                  }
+                        : setSelectedCourses([...selectedCourses, option])
+                    }
+                  />
+                  {option.name}
+                </li>
+              )}
+              style={{ width: 400 }}
+              renderInput={(params) => (
+                <TextField
+                  {...params}
+                  id="standard-basic"
+                  variant="standard"
+                  label="Select courses"
                 />
-                {option.name}
-              </li>
-            )}
-            style={{ width: 400 }}
-            renderInput={(params) => (
-              <TextField
-                {...params}
-                id="standard-basic"
-                variant="standard"
-                label="Courses"
-                placeholder="Select courses"
-              />
-            )}
-          />
+              )}
+            />
+
+            <FormControl component="fieldset">
+              <FormGroup aria-label="position" row sx={{ margin: 0 }}>
+                <FormControlLabel
+                  value="end"
+                  control={
+                    <Checkbox
+                      icon={icon}
+                      checkedIcon={checkedIcon}
+                      style={{ marginRight: 8 }}
+                      checked={allSelected}
+                      onChange={() => {
+                        allSelected
+                          ? setSelectedCourses([])
+                          : setSelectedCourses(courses);
+                        setAllSelected(!allSelected);
+                      }}
+                      sx={{ padding: 0, marginLeft: 1 }}
+                    />
+                  }
+                  label="Select all"
+                  labelPlacement="end"
+                />
+              </FormGroup>
+            </FormControl>
+          </div>
           <Modal.Body>
             <h6 id="addPromotionHeader">Select start and end dates:</h6>
             <Stack direction="vertical" gap={1}>
