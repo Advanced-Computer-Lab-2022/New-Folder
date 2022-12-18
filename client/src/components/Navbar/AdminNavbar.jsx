@@ -23,7 +23,7 @@ const AdminNavbar = (props) => {
   };
 
   return (
-    <Navbar sticky="top" bg="dark" variant="dark" expand="lg">
+    <Navbar bg="dark" variant="dark" className="mb-4">
       <Container>
         <Nav className="me-auto">
           <Nav.Link href="/">Explore</Nav.Link>
@@ -32,21 +32,24 @@ const AdminNavbar = (props) => {
           <Nav.Link href="/login">Login</Nav.Link>
           <Nav.Link href="/reports">Reports</Nav.Link>
           <NavDropdown
-            className="bg-dark text-light"
-            menuVariant="dark"
-            title={
-              <ReactCountryFlag countryCode={ReactSession.get("country")} svg />
-            }
-            onSelect={(e) => props.setCountry(e)}
-            scrollable
-          >
-            {countries.map((country) => (
-              <NavDropdown.Item eventKey={country.code}>
-                <ReactCountryFlag countryCode={country.code} svg />
-                {" " + country.name}
-              </NavDropdown.Item>
-            ))}
-          </NavDropdown>
+              className="bg-dark text-light"
+              menuVariant="dark"
+              title={
+                <ReactCountryFlag
+                  countryCode={ReactSession.get("country")}
+                  svg
+                />
+              }
+              onSelect={(e) => props.setCountry(e)}
+              scrollable
+            >
+              {countries.map((country) => (
+                <NavDropdown.Item eventKey={country.code}>
+                  <ReactCountryFlag countryCode={country.code} svg />
+                  {" " + country.name}
+                </NavDropdown.Item>
+              ))}
+            </NavDropdown>
           <Form onSubmit={submit}>
             <InputGroup>
               <Form.Control

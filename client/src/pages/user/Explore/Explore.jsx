@@ -57,7 +57,7 @@ const Explore = () => {
   };
 
   return (
-    <Row className="m-4">
+    <Row>
       <Row className="m-4">
         <Form.Group as={Col}>
           <Form.Control
