@@ -12,7 +12,10 @@ const {
   canRequestAccess,
   canDeleteRequestAccess,
 } = require("../middlewares/corporateTraineeMiddleware");
-const { canAddPromotion } = require("../middlewares/canAddPromotionMiddleware");
+const {
+  canAddPromotion,
+  canAddMultiPromotion,
+} = require("../middlewares/canAddPromotionMiddleware");
 const {
   getCourseDetails,
   getSubtitle,
@@ -28,6 +31,7 @@ const {
   addFollowup,
   deleteAccessRequest,
   updateStatus,
+  addMultiPromotion,
 } = require("../controllers/course/courseDetails.controller");
 
 router.delete(
@@ -43,6 +47,7 @@ router.patch("/report/:id", updateStatus);
 router.patch("/addRating", canRateCourse, addReview);
 router.patch("/deleteRating", canDeleteRating, deleteRating);
 router.patch("/addPromotion", canAddPromotion, addPromotion);
+router.patch("/addMultiPromotion", canAddMultiPromotion, addMultiPromotion);
 router.patch("/:id", updateCourse);
 router.patch("/:id/newsubtitle", createSubtitle);
 router.post("/report", canReport, submitReport);

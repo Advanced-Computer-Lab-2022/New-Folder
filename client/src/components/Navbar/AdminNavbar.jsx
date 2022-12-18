@@ -12,6 +12,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 import ReactCountryFlag from "react-country-flag";
 import { NavDropdown } from "react-bootstrap";
 import AdminSetPromotion from "../AdminSetPromotion/AdminSetPromotion";
+import { networkLogout } from "../../network";
 
 const AdminNavbar = (props) => {
   const navigate = useNavigate();
@@ -23,11 +24,21 @@ const AdminNavbar = (props) => {
       navigate(`/search/${searchQuery}`);
     }
   };
-
+  const logout = async () => {
+    await networkLogout();
+    const country = ReactSession.get("country");
+    sessionStorage.clear();
+    ReactSession.set("country", country);
+    props.setCountry(country);
+    navigate("/login");
+  };
   return (
-    <Navbar bg="dark" variant="dark" className="mb-4">
+    <Navbar bg="dark" variant="dark">
       <Container>
         <Nav className="me-auto">
+          <Nav.Link href="/" onClick={logout}>
+            Logout
+          </Nav.Link>
           <Nav.Link href="/">Explore</Nav.Link>
           <Nav.Link href="/addUser"> Add User</Nav.Link>
           <Nav.Link onClick={() => setShowPromotionModal(true)}>

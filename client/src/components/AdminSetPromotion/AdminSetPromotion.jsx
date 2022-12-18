@@ -25,6 +25,7 @@ function AdminSetPromotion(props) {
   const [range, setRange] = useState(null);
   const [newPercentage, setNewPercentage] = useState(null);
   const [dateError, setDateError] = useState(null);
+  const [selectError, setSelectError] = useState(null);
   const [percentageError, setPercentageError] = useState(null);
   const [courses, setCourses] = useState([]);
   const [selectedCourses, setSelectedCourses] = useState([]);
@@ -40,7 +41,13 @@ function AdminSetPromotion(props) {
   useEffect(() => {
     fetchData();
   }, []);
-  const save = async () => {
+  const save = async (e) => {
+    e.preventDefault();
+    if (selectedCourses.length <= 0) {
+      setSelectError("Please select at least 1 course");
+      return;
+    }
+    setSelectError(null);
     const startDate = new Date(range?.from).getTime();
     const endDate = new Date(range?.to).getTime();
     if (!startDate) {
@@ -69,8 +76,12 @@ function AdminSetPromotion(props) {
     };
     setNewPercentage(null);
     setRange(null);
+    setSelectedCourses([]);
+    setAllSelected(false);
     const coursesIds = selectedCourses.map((course) => course._id);
-    await postMultiPromotion(coursesIds, addedPromotion);
+    postMultiPromotion(coursesIds, addedPromotion).then(
+      window.location.reload()
+    );
   };
   const cancel = async () => {
     setPercentageError(null);
@@ -79,6 +90,7 @@ function AdminSetPromotion(props) {
     setNewPercentage(null);
     setRange(null);
     setSelectedCourses([]);
+    setAllSelected(false);
   };
   return (
     <div>
@@ -151,6 +163,9 @@ function AdminSetPromotion(props) {
                 />
               </FormGroup>
             </FormControl>
+            {selectError ? (
+              <p className="promotionError">{selectError}</p>
+            ) : null}
           </div>
           <Modal.Body>
             <h6 id="addPromotionHeader">Select start and end dates:</h6>

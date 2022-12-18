@@ -29,4 +29,23 @@ const canAddPromotion = asyncHandler(async (req, res, next) => {
   }
 });
 
-module.exports = { canAddPromotion };
+const canAddMultiPromotion = asyncHandler(async (req, res, next) => {
+  if (!req.session.userId) {
+    throw new Error("you are not logged in");
+  }
+  const startDate = new Date(req.body.promotion?.startDate).getTime();
+  const endDate = new Date(req.body.promotion?.endDate).getTime();
+  if (startDate > endDate) {
+    throw new Error("End date must be after start date");
+  }
+  if (startDate < Date().now) {
+    throw new Error("Start date cannot be in the past");
+  }
+  if (req.session.userType === constants.admin) {
+    next();
+  } else {
+    throw new Error("You cannot define a promotion to this course");
+  }
+});
+
+module.exports = { canAddPromotion, canAddMultiPromotion };
