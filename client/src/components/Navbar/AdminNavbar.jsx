@@ -11,10 +11,12 @@ import Button from "react-bootstrap/Button";
 import InputGroup from "react-bootstrap/InputGroup";
 import ReactCountryFlag from "react-country-flag";
 import { NavDropdown } from "react-bootstrap";
+import AdminSetPromotion from "../AdminSetPromotion/AdminSetPromotion";
 
 const AdminNavbar = (props) => {
   const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
+  const [showPromotionModal, setShowPromotionModal] = useState(false);
   const submit = async (e) => {
     e.preventDefault();
     if (searchQuery) {
@@ -28,27 +30,27 @@ const AdminNavbar = (props) => {
         <Nav className="me-auto">
           <Nav.Link href="/">Explore</Nav.Link>
           <Nav.Link href="/addUser"> Add User</Nav.Link>
+          <Nav.Link onClick={() => setShowPromotionModal(true)}>
+            Set promotion
+          </Nav.Link>
           <Nav.Link href="/login">Login</Nav.Link>
           <Nav.Link href="/reports">Reports</Nav.Link>
           <NavDropdown
-              className="bg-dark text-light"
-              menuVariant="dark"
-              title={
-                <ReactCountryFlag
-                  countryCode={ReactSession.get("country")}
-                  svg
-                />
-              }
-              onSelect={(e) => props.setCountry(e)}
-              scrollable
-            >
-              {countries.map((country) => (
-                <NavDropdown.Item eventKey={country.code}>
-                  <ReactCountryFlag countryCode={country.code} svg />
-                  {" " + country.name}
-                </NavDropdown.Item>
-              ))}
-            </NavDropdown>
+            className="bg-dark text-light"
+            menuVariant="dark"
+            title={
+              <ReactCountryFlag countryCode={ReactSession.get("country")} svg />
+            }
+            onSelect={(e) => props.setCountry(e)}
+            scrollable
+          >
+            {countries.map((country) => (
+              <NavDropdown.Item eventKey={country.code}>
+                <ReactCountryFlag countryCode={country.code} svg />
+                {" " + country.name}
+              </NavDropdown.Item>
+            ))}
+          </NavDropdown>
           <Form onSubmit={submit}>
             <InputGroup>
               <Form.Control
@@ -62,6 +64,10 @@ const AdminNavbar = (props) => {
           </Form>
         </Nav>
       </Container>
+      <AdminSetPromotion
+        show={showPromotionModal}
+        setShow={setShowPromotionModal}
+      />
     </Navbar>
   );
 };
