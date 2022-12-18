@@ -16,6 +16,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { FormControl, FormControlLabel, FormGroup } from "@mui/material";
+import { useMemo } from "react";
 
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
@@ -38,6 +39,47 @@ function AdminSetPromotion(props) {
       console.log(err);
     }
   };
+  const MyAutocomplete = useMemo(() => {
+    return () => (
+      <Autocomplete
+        multiple
+        disabled={allSelected}
+        id="checkboxes-tags-demo"
+        options={courses}
+        disableCloseOnSelect
+        getOptionLabel={(option) => option.name}
+        renderOption={(props, option, { selected }) => (
+          <li {...props}>
+            <Checkbox
+              icon={icon}
+              checkedIcon={checkedIcon}
+              style={{ marginRight: 8 }}
+              checked={selected}
+              onChange={() =>
+                selected
+                  ? setSelectedCourses(
+                      selectedCourses.filter(
+                        (course) => course._id != option._id
+                      )
+                    )
+                  : setSelectedCourses([...selectedCourses, option])
+              }
+            />
+            {option.name}
+          </li>
+        )}
+        style={{ width: 400 }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            id="standard-basic"
+            variant="standard"
+            label={allSelected ? "All courses are selected" : "Select courses"}
+          />
+        )}
+      />
+    );
+  }, [allSelected]);
   useEffect(() => {
     fetchData();
   }, []);
@@ -100,45 +142,7 @@ function AdminSetPromotion(props) {
             <Modal.Title>Set promotion</Modal.Title>
           </Modal.Header>
           <div>
-            <Autocomplete
-              multiple
-              disabled={allSelected}
-              id="checkboxes-tags-demo"
-              value={selectedCourses}
-              options={courses}
-              disableCloseOnSelect
-              getOptionLabel={(option) => option.name}
-              renderOption={(props, option, { selected }) => (
-                <li {...props}>
-                  <Checkbox
-                    icon={icon}
-                    checkedIcon={checkedIcon}
-                    style={{ marginRight: 8 }}
-                    checked={selected}
-                    onChange={() =>
-                      selected
-                        ? setSelectedCourses(
-                            selectedCourses.filter(
-                              (course) => course._id != option._id
-                            )
-                          )
-                        : setSelectedCourses([...selectedCourses, option])
-                    }
-                  />
-                  {option.name}
-                </li>
-              )}
-              style={{ width: 400 }}
-              renderInput={(params) => (
-                <TextField
-                  {...params}
-                  id="standard-basic"
-                  variant="standard"
-                  label="Select courses"
-                />
-              )}
-            />
-
+            <MyAutocomplete />
             <FormControl component="fieldset">
               <FormGroup aria-label="position" row sx={{ margin: 0 }}>
                 <FormControlLabel
