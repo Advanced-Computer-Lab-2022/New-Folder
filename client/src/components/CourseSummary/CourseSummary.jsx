@@ -14,7 +14,11 @@ import AddPromotion from "../Course/AddPromotion/AddPromotion";
 import "react-day-picker/dist/style.css";
 import Container from "react-bootstrap/esm/Container";
 import { useNavigate } from "react-router-dom";
-import {getYoutubeVideoID, totalDuration} from "../../utils/getVideoDurationUtils"
+import {
+  getYoutubeVideoID,
+  totalDuration,
+} from "../../utils/getVideoDurationUtils";
+import ProgressBar from "./ProgressBar/ProgressBar";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -22,10 +26,13 @@ function CourseSummary(props) {
   const [validPromotion, setValidPromotion] = useState(false);
   const promotion = props.promotion;
   const setPromotion = props.setPromotion;
+  const subContents = props.subContents;
   const navigate = useNavigate();
+
   useEffect(() => {
     setTotalRating(props.course.totalRating);
   }, []);
+
   useEffect(() => {
     const startDate = new Date(promotion?.startDate).getTime();
     const endDate = new Date(promotion?.endDate).getTime();
@@ -36,6 +43,8 @@ function CourseSummary(props) {
       setValidPromotion(false);
     }
   }, [props.promotion]);
+
+
   let Stars = useMemo(() => {
     return () => (
       <ReactStars
@@ -52,41 +61,46 @@ function CourseSummary(props) {
   return (
     <>
       <div id="courseSummaryContainer">
-        <div id="courseSummaryFirstRow">
-          <Row className="mb-0">
-            <Col md="auto">
-              <Image width={250} src={props.course.image} thumbnail />
-            </Col>
-            <Col>
-              <Stack gap={1} id="courseHeader">
-                <h2 id="courseTitle">{props.course.name}</h2>
-                <h5 id="courseInstructorName">
-                  By:{" "}
-                  <a
-                    id="courseInstructorNameLink"
-                    href={
-                      props.vc === ViewerContexts.author
-                        ? "/myProfile"
-                        : `/viewInstructorProfile/${
-                            props.vc === ViewerContexts.enrolledTrainee
-                          }/${props.course.instructorInfo?.instructorId}`
-                    }
-                  >
-                    {props.course.instructorInfo?.instructorName ??
-                      "Instructor"}
-                  </a>
-                </h5>
-                <div id="courseRatingStars">
-                  <Stars />
-                  <h6 id="ratingsCount">
-                    ({ratingsCount} {ratingsCount == 1 ? "rating" : "rating"})
-                  </h6>
-                </div>
-              </Stack>
-            </Col>
-            <Col></Col>
-          </Row>
+        <div className="courseSummaryFirstRow-parent">
+          <div id="courseSummaryFirstRow">
+            <Row className="mb-0">
+              <Col md="auto">
+                <Image width={250} src={props.course.image} thumbnail />
+              </Col>
+              <Col>
+                <Stack gap={1} id="courseHeader">
+                  <h2 id="courseTitle">{props.course.name}</h2>
+                  <h5 id="courseInstructorName">
+                    By:{" "}
+                    <a
+                      id="courseInstructorNameLink"
+                      href={
+                        props.vc === ViewerContexts.author
+                          ? "/myProfile"
+                          : `/viewInstructorProfile/${
+                              props.vc === ViewerContexts.enrolledTrainee
+                            }/${props.course.instructorInfo?.instructorId}`
+                      }
+                    >
+                      {props.course.instructorInfo?.instructorName ??
+                        "Instructor"}
+                    </a>
+                  </h5>
+                  <div id="courseRatingStars">
+                    <Stars />
+                    <h6 id="ratingsCount">
+                      ({ratingsCount} {ratingsCount == 1 ? "rating" : "rating"})
+                    </h6>
+                  </div>
+                </Stack>
+              </Col>
+            </Row>
+          </div>
+          <div className="course-progress-bar">
+            {props.vc === ViewerContexts.enrolledTrainee && <ProgressBar  subContents={subContents} subtitles={props.subtitles}/>}
+          </div>
         </div>
+
         <div id="courseSummarySecondRow">
           <Row>
             <Col>
@@ -180,7 +194,7 @@ function CourseSummary(props) {
                     }}
                     src={
                       "https://www.youtube.com/embed/" +
-                      getYoutubeVideoID(props.course.introVideo??"")
+                      getYoutubeVideoID(props.course.introVideo ?? "")
                     }
                   ></iframe>
                 )}

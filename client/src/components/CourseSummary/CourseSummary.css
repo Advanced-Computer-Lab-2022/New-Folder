@@ -1,4 +1,5 @@
 #courseSummaryFirstRow {
+  margin: 0;
   padding: 1%;
   padding-left: 2%;
 }
@@ -63,7 +64,8 @@
   margin: 0;
 }
 #introVideo {
-  margin-top: -15%;
+  position: absolute;
+  margin-top: -11%;
 }
 #courseSummaryContainer {
   padding: 0.3%;
@@ -84,4 +86,14 @@
 #courseInstructorNameLink {
   text-decoration: none;
   color: #0d5c84;
+}
+
+.courseSummaryFirstRow-parent {
+  display: flex;
+}
+
+.course-progress-bar {
+  margin: 0;
+  margin-left: 8em;
+  margin-top: 2em;
 }

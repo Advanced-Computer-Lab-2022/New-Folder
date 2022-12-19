@@ -27,9 +27,20 @@ const CourseDetails = () => {
   const [newVideo, setNewVideo] = useState();
   const [newSubtitle, setNewSubtitle] = useState("");
   const [promotion, setPromotion] = useState(null);
+  const [subContents , setSubContents] = useState([]);
+
   let ReviewCards = useMemo(() => {
     return () => <CourseReviewCard reviews={reviews} />;
   }, [reviews]);
+
+  const includeInGlobalSubContentArr = (arr)=>{
+    if (arr !== []) {
+      let newArr = [...subContents];
+      newArr.push(arr);
+      setSubContents(newArr);
+    }
+  }
+
   const uploadIntroVideo = async () => {
     try {
       const newCourse = await updateCourse(course._id, {
@@ -125,6 +136,9 @@ const CourseDetails = () => {
         setPromotion={setPromotion}
         reviews={reviews}
         setReviews={setReviews}
+        subtitles={subtitles}
+        setSubContents={setSubContents}
+        subContents={subContents}
       />
       <div>
         <Accordion>
@@ -141,6 +155,9 @@ const CourseDetails = () => {
                 subtitleId={subtitleId}
                 durationMap={durationMap}
                 setDurationMap={setDurationMap}
+                setSubContents={setSubContents}
+                subContents={subContents}
+                handleSubContent={(arr) => includeInGlobalSubContentArr(arr)}
                 vc={vc}
               />
             ))}
