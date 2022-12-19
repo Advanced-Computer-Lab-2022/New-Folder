@@ -7,6 +7,9 @@ const getVC = async (userId, userType, courseId) => {
   if (!userId) {
     return viewerContexts.guest;
   }
+  if (userType === constants.admin) {
+    return viewerContexts.admin;
+  }
   if (course.instructorInfo?.instructorId == userId) {
     return viewerContexts.author;
   }

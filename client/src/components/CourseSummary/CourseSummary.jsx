@@ -193,7 +193,8 @@ function CourseSummary(props) {
                     reviews={props.reviews}
                     setReviews={props.setReviews}
                   />
-                  {props.vc === ViewerContexts.author ? (
+                  {props.vc === ViewerContexts.author ||
+                  props.vc === ViewerContexts.admin ? (
                     <AddPromotion
                       promotion={promotion}
                       setPromotion={setPromotion}

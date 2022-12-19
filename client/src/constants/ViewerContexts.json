@@ -3,5 +3,6 @@
   "guest": "guest",
   "enrolledTrainee": "enrolledTrainee",
   "nonEnrolledCorporateTrainee": "nonEnrolledCorporateTrainee",
-  "pendingCorporateTrainee": "pendingCorporateTrainee"
+  "pendingCorporateTrainee": "pendingCorporateTrainee",
+  "admin": "admin"
 }

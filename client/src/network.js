@@ -325,3 +325,16 @@ export const getEnrolledCourses = async () => {
   });
   return res.data;
 };
+
+//Add multible promotions
+export const postMultiPromotion = async (courses, promotion) => {
+  try {
+    const res = await instance.patch("course/addMultiPromotion", {
+      courses: courses,
+      promotion: promotion,
+    });
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

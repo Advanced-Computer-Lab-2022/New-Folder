@@ -240,6 +240,19 @@ const updateStatus = async (req, res) => {
     console.log(err);
   }
 };
+
+const addMultiPromotion = async (req, res) => {
+  try {
+    await Course.updateMany(
+      { _id: { $in: req.body.courses } },
+      { $set: { promotion: req.body.promotion } }
+    );
+  } catch (err) {
+    console.log(req.body);
+    console.log(err);
+  }
+};
+
 module.exports = {
   getSubtitle,
   getVideo,
@@ -256,4 +269,5 @@ module.exports = {
   addFollowup,
   deleteAccessRequest,
   updateStatus,
+  addMultiPromotion,
 };
