@@ -46,6 +46,7 @@ const AdminNavbar = (props) => {
           </Nav.Link>
           <Nav.Link href="/login">Login</Nav.Link>
           <Nav.Link href="/reports">Reports</Nav.Link>
+          <Nav.Link href="/AccessRequests">Courses Requests</Nav.Link>
           <NavDropdown
             className="bg-dark text-light"
             menuVariant="dark"

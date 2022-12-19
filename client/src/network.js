@@ -346,3 +346,20 @@ export const getEarnings = async () => {
   });
   return res.data;
 };
+
+// get all reports
+export const fetchRequests = async () => {
+  const res = await instance.get("admin/requests");
+  return res.data;
+};
+
+// decline access request
+export const declineAccessRequest = async (requestId) => {
+  const res = await instance.delete(`admin/requests/${requestId}`);
+  return res;
+};
+
+export const approveAccessRequest = async (requestId) => {
+  const res = await instance.post(`admin/requests/approve/${requestId}`);
+  return res;
+};
