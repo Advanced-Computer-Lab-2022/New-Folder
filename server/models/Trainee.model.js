@@ -53,6 +53,10 @@ const Trainee = mongoose.Schema(
             ref: "Course",
             required: true,
           },
+          date: {
+            type: Date,
+            required: true,
+          },
           amounts: {
             type: [
               {

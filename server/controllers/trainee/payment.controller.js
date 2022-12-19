@@ -174,11 +174,12 @@ const addPayment = async (
   paidbyCard,
   currency
 ) => {
+  const date = new Date();
   const trainee = await Trainee.findById(userId);
   if (paidbyCard > 0) {
     walletPayments.push({ magnitude: paidbyCard, currency });
   }
-  trainee.payments.push({ courseId, amounts: walletPayments });
+  trainee.payments.push({ courseId, date, amounts: walletPayments });
   await trainee.save();
 };
 
