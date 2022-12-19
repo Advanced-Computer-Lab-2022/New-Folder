@@ -25,6 +25,7 @@ import AddUser from "./pages/admin/AddUser";
 import Wallet from "./pages/user/Wallet";
 import Earnings from "./pages/user/instructor/Earnings";
 import EnrolledCourses from "./pages/user/EnrolledCourses";
+import AccessRequests from "./pages/admin/AccessRequests";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -68,6 +69,7 @@ function App() {
         />
         <Route path="/myProblems" element={<MyProblems />} />
         <Route path="/reports" element={<Reports />} />
+        <Route path="/AccessRequests" element={<AccessRequests />} />
         <Route path="/wallet" element={<Wallet />} />
         <Route path="/earnings" element={<Earnings />} />
         <Route path="/enrolledCourses" element={<EnrolledCourses />} />
