@@ -338,3 +338,11 @@ export const postMultiPromotion = async (courses, promotion) => {
     console.log(err);
   }
 };
+
+// instructor get earnings
+export const getEarnings = async () => {
+  const res = await instance.get("/instructor/myEarnings", {
+    timeout: MAX_TIMEOUT,
+  });
+  return res.data;
+};
