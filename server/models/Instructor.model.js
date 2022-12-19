@@ -29,9 +29,13 @@ const Instructor = mongoose.Schema(
     about: {
       type: String,
     },
-    wallet: {
+    earnings: {
       type: Map,
-      of: String,
+      of: {
+        type: Map,
+        of: Number,
+        default: {},
+      },
       default: {},
     },
     courses: {

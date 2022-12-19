@@ -34,7 +34,7 @@ const Trainee = mongoose.Schema(
     },
     wallet: {
       type: Map,
-      of: String,
+      of: Number,
       default: {},
     },
     courses: {
