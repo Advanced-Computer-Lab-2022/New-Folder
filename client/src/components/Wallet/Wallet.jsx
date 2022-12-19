@@ -27,7 +27,7 @@ const Wallet = () => {
           <Popover.Body>
             <Stack gao={4}>
               {wallet.length === 0 ? (
-                <strong>Your wallet in empty</strong>
+                <strong>Your wallet is empty</strong>
               ) : (
                 wallet.map((item, index) => (
                   <>
