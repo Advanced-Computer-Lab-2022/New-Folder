@@ -126,11 +126,45 @@ const enrollment = async (userId, courseId) => {
 };
 
 const payInstructor = async (instructorId, magnitude, currency) => {
+  currency = currency.toLowerCase();
+  magnitude = parseFloat(magnitude);
   const instructor = await Instructor.findById(instructorId);
-  let prevWalletAmount = instructor.wallet?.get(currency) ?? 0;
-  prevWalletAmount = parseFloat(prevWalletAmount);
-  instructor?.wallet.set(currency, prevWalletAmount + magnitude);
-  await instructor?.save();
+  const date = new Date();
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  const earnings = instructor.earnings;
+  if ((earnings?.length ?? 0) === 0 || earnings[0].year !== year) {
+    const months = [
+      { month: "January", payments: [] },
+      { month: "February", payments: [] },
+      { month: "March", payments: [] },
+      { month: "April", payments: [] },
+      { month: "May", payments: [] },
+      { month: "June", payments: [] },
+      { month: "July", payments: [] },
+      { month: "August", payments: [] },
+      { month: "September", payments: [] },
+      { month: "October", payments: [] },
+      { month: "November", payments: [] },
+      { month: "December", payments: [] },
+    ];
+    months[month].payments.push({ magnitude, currency });
+    instructor.earnings.unshift({ year, months });
+    await instructor.save();
+  } else {
+    const payments = earnings[0].months[month].payments;
+    for (let i = 0; i < payments.length; i++) {
+      let payment = payments[i];
+      if (payment.currency.toLowerCase() === currency) {
+        let newAmount = parseFloat(payment.magnitude) + magnitude;
+        payments[i] = { magnitude: newAmount, currency };
+        await instructor.save();
+        return;
+      }
+    }
+    payments.push({ magnitude, currency });
+    await instructor.save();
+  }
 };
 
 const addPayment = async (

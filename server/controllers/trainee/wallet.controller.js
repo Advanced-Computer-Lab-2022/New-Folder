@@ -5,6 +5,10 @@ const getWallet = async (req, res) => {
   const trainee = await Trainee.findById(req.session.userId);
   const wallet = trainee.wallet;
   const arrayOfAmounts = [];
+  if (!wallet) {
+    res.send(arrayOfAmounts);
+    return;
+  }
   for (let [currency, magnitude] of wallet) {
     arrayOfAmounts.push(`${magnitude}  ${currency.toUpperCase()}`);
   }
@@ -53,12 +57,24 @@ const payByWallet = async (userId, amount, currency) => {
         currency,
         walletCurrency
       );
-      wallet.set(walletCurrency, parseFloat(walletMagnitude) - takenMagnitude);
-      await trainee.save();
-      walletPayments.push({
-        magnitude: parseFloat(takenMagnitude),
-        currency: walletCurrency,
-      });
+      if (walletMagnitude <= takenMagnitude) {
+        wallet.delete(walletCurrency);
+        await trainee.save();
+        walletPayments.push({
+          magnitude: parseFloat(walletMagnitude),
+          currency: walletCurrency,
+        });
+      } else {
+        wallet.set(
+          walletCurrency,
+          parseFloat(walletMagnitude) - takenMagnitude
+        );
+        await trainee.save();
+        walletPayments.push({
+          magnitude: parseFloat(takenMagnitude),
+          currency: walletCurrency,
+        });
+      }
       amount = 0;
     }
     if (amount === 0) {

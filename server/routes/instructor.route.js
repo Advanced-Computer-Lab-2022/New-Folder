@@ -6,6 +6,9 @@ const {
   getMyCourses,
 } = require("../controllers/instructor/getMyCourses.controller");
 const {
+  getEarnings,
+} = require("../controllers/instructor/getEarnings.controller");
+const {
   createCourse,
 } = require("../controllers/instructor/createCourse.controller");
 const {
@@ -30,6 +33,7 @@ router.post("/createCourse", authInstructor, createCourse);
 router.post("/addVideo", authInstructorGivesCourse, addVideo);
 router.post("/createExam", addExam);
 router.get("/myCourses", authInstructor, getMyCourses);
+router.get("/myEarnings", authInstructor, getEarnings);
 router.get("/myProfile", authInstructor, getMyProfile);
 router.post("/editMyProfile", authInstructor, editMyProfile);
 

@@ -30,9 +30,41 @@ const Instructor = mongoose.Schema(
       type: String,
     },
     earnings: {
-      type: Map,
-      of: [Number],
-      default: {},
+      type: [
+        {
+          year: {
+            type: Number,
+            required: true,
+          },
+          months: {
+            type: [
+              {
+                month: {
+                  type: String,
+                  required: true,
+                },
+                payments: {
+                  type: [
+                    {
+                      magnitude: {
+                        type: Number,
+                        required: true,
+                      },
+                      currency: {
+                        type: String,
+                        required: true,
+                      },
+                    },
+                  ],
+                  default: [],
+                },
+              },
+            ],
+            default: [],
+          },
+        },
+      ],
+      default: [],
     },
     courses: {
       type: [{ type: mongoose.Types.ObjectId, ref: "Course" }],
