@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { getEarnings } from "../../../network";
+import EarningsCard from "../../../components/EarningsCard/EarningsCard";
 
 const Earnings = () => {
   const [earnings, setEarnings] = useState([]);
@@ -10,7 +11,13 @@ const Earnings = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  return <></>;
+  return (
+    <div>
+      {earnings.map((earning) => (
+        <EarningsCard year={earning.year} months={earning.months} />
+      ))}
+    </div>
+  );
 };
 
 export default Earnings;
