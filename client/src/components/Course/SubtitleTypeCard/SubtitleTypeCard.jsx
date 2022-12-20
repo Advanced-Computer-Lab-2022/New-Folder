@@ -53,6 +53,7 @@ const SubtitleTypeCard = (props) => {
               { replace: true }
             )
           : navigate("/excercise/" + conID);
+          navigate(0);
       }}
     >
 
