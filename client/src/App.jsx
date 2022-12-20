@@ -69,7 +69,6 @@ function App() {
         <Route path="/myProblems" element={<MyProblems />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/AccessRequests" element={<AccessRequests />} />
-        <Route path="/wallet" element={<Wallet />} />
         <Route path="/earnings" element={<Earnings />} />
         <Route path="/enrolledCourses" element={<EnrolledCourses />} />
       </Routes>
