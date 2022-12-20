@@ -36,7 +36,7 @@ const AdminNavbar = (props) => {
     <Navbar bg="dark" variant="dark">
       <Container>
         <Nav className="me-auto">
-          <Nav.Link href="/" onClick={logout}>
+          <Nav.Link href="/login" onClick={logout}>
             Logout
           </Nav.Link>
           <Nav.Link href="/">Explore</Nav.Link>
