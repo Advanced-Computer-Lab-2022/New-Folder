@@ -14,7 +14,9 @@ export const getViewerContext = (course) => {
   ) {
     return ViewerContexts.author;
   }
-  if (course.refundingTrainees.includes(userId)) {
+  console.log(course.refundingTrainees);
+  console.log(userId);
+  if (course.refundingTrainees?.includes(userId)) {
     return ViewerContexts.refundingTrainee;
   }
   if (course.trainees.includes(userId)) {

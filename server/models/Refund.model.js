@@ -15,4 +15,4 @@ const Refund = mongoose.Schema({
   reason: { type: String, required: true },
 });
 
-module.exports = mongoose.model("Regund", Refund);
+module.exports = mongoose.model("Refund", Refund);

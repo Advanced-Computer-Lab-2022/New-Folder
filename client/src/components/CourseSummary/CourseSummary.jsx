@@ -6,7 +6,6 @@ import Stack from "react-bootstrap/Stack";
 import RatingCard from "../../components/RatingCard/RatingCard";
 import Form from "react-bootstrap/Form";
 import ViewerContexts from "../../constants/ViewerContexts.json";
-import userTypes from "../../constants//UserTypes.json";
 import Button from "react-bootstrap/Button";
 import "./CourseSummary.css";
 import ReactStars from "react-rating-stars-component";
@@ -25,7 +24,6 @@ import { ReactSession } from "react-client-session";
 import countryCurrency from "../../constants/CountryCurrency.json";
 import { payForCourse } from "../../network";
 import RequestAccess from "../Course/RequestAccess/RequestAccess";
-import RefundForm from "../Course/Refund/RefundForm";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -117,12 +115,16 @@ function CourseSummary(props) {
             </Row>
           </div>
           <div className="course-progress-bar">
-            {props.vc === ViewerContexts.enrolledTrainee && (
+            {(props.vc === ViewerContexts.enrolledTrainee ||
+              props.vc === ViewerContexts.refundingTrainee) && (
               <ProgressBar
                 subContents={subContents}
                 subtitles={props.subtitles}
                 percentage={progress}
                 setPercentage={setProgress}
+                vc={props.vc}
+                setVc={props.setVc}
+                courseId={props.course._id}
               />
             )}
           </div>
@@ -227,13 +229,6 @@ function CourseSummary(props) {
                       setPromotion={setPromotion}
                       courseId={props.course._id}
                     />
-                  ) : null}
-                  {(props.vc === ViewerContexts.enrolledTrainee &&
-                    ReactSession.get("userType") !==
-                      userTypes.corporateTrainee &&
-                    progress <= 50) ||
-                  props.vc === ViewerContexts.refundingTrainee ? (
-                    <RefundForm vc={props.vc} setVc={props.setVc} />
                   ) : null}
                 </div>
               </Stack>

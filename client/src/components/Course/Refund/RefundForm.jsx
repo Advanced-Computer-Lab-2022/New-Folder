@@ -3,11 +3,10 @@ import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/Form";
 import ViewerContexts from "../../../constants/ViewerContexts.json";
 import Modal from "react-bootstrap/Modal";
-import { postReport } from "../../../network";
-import { ReactSession } from "react-client-session";
+import { requestRefund, cancelRefund } from "../../../network";
 import "./RefundForm.css";
 function RefundForm(props) {
-  const { vc, setVc } = props;
+  const { vc, setVc, courseId } = props;
   const [show, setShow] = useState(false);
   const [validated, setValidated] = useState(false);
   const [refundReason, setRefundReason] = useState(null);
@@ -19,11 +18,11 @@ function RefundForm(props) {
       event.stopPropagation();
       setValidated(true);
     } else {
-      //network logic
       setValidated(false);
       setRefundReason(null);
       setShow(false);
       setVc(ViewerContexts.refundingTrainee);
+      await requestRefund({ courseId: courseId, reason: refundReason });
     }
   };
   const close = () => {
@@ -31,11 +30,12 @@ function RefundForm(props) {
     setRefundReason(null);
     setShow(false);
   };
-  const cancelRefund = async () => {
+  const cancel = async () => {
     setValidated(false);
     setRefundReason(null);
     setShow(false);
     setVc(ViewerContexts.enrolledTrainee);
+    await cancelRefund(courseId);
   };
   return (
     <>
@@ -86,7 +86,7 @@ function RefundForm(props) {
         <Modal.Footer></Modal.Footer>
       </Modal>
       {vc === ViewerContexts.refundingTrainee ? (
-        <Button onClick={cancelRefund}>Cancel refund request</Button>
+        <Button onClick={cancel}>Cancel refund request</Button>
       ) : (
         <Button onClick={(e) => setShow(true)}>Request a refund</Button>
       )}

@@ -443,3 +443,23 @@ export const signup = async (data) => {
   const res = await instance.post("/signup", data);
   return res;
 };
+
+// request refund
+export const requestRefund = async (data) => {
+  try {
+    await instance.post("/course/requestRefund", data);
+    console.log("mango");
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// request refund
+export const cancelRefund = async (courseId) => {
+  try {
+    const res = await instance.delete(`course/${courseId}/cancelRefundRequest`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};

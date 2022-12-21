@@ -458,14 +458,16 @@ const requestRefund = async (req, res) => {
   try {
     const course = await Course.findById(req.body.courseId);
     const user = await User.findById(req.session.userId);
-    await Refund.create({
+    const refund = await Refund.create({
       userId: req.session.userId,
       courseId: req.body.courseId,
       userName: user.firstName + " " + user.lastName,
       courseName: course.name,
       reason: req.body.reason,
     });
-    res.send(200);
+    course.refundingTrainees.push(req.session.userId);
+    await course.save();
+    res.status(200);
   } catch (err) {
     console.log(req.body);
     console.log(err);
@@ -475,7 +477,7 @@ const requestRefund = async (req, res) => {
 //Request refund
 const cancelRefund = async (req, res) => {
   try {
-    await Refund.delete({
+    await Refund.findOneAndDelete({
       userId: req.session.userId,
       courseId: req.params.id,
     });
@@ -486,7 +488,7 @@ const cancelRefund = async (req, res) => {
     await Course.findByIdAndUpdate(req.params.id, {
       refundingTrainees: refundingTrainees,
     });
-    res.send(200);
+    res.status(200);
   } catch (err) {
     console.log(err);
   }

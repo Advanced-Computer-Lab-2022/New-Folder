@@ -3,11 +3,15 @@ import { Progress } from "antd";
 import { FetchContentVisit, fetchSubtitle } from "../../../network";
 import { useEffect } from "react";
 import ReactLoading from "react-loading";
-
+import userTypes from "../../../constants//UserTypes.json";
+import { ReactSession } from "react-client-session";
+import ViewerContexts from "../../../constants/ViewerContexts.json";
+import RefundForm from "../../Course/Refund/RefundForm";
+import { Stack } from "react-bootstrap";
 function ProgressBar(props) {
   const [done, setDone] = useState(false);
-  const { percentage, setPercentage, subContents, subtitles } = props;
-
+  const { subContents, subtitles, vc, setVc, courseId } = props;
+  const [percentage, setPercentage] = useState(0);
   const handleProgressPercentage = async () => {
     let totalPercentage = 0;
     let noOfFalse = 0;
@@ -40,13 +44,21 @@ function ProgressBar(props) {
   }, [subtitles]);
 
   return (
-    <div>
+    <Stack direction="vertical">
       {done ? (
-        <Progress type="circle" percent={percentage} />
+        <>
+          <Progress type="circle" percent={percentage} />
+          {(vc === ViewerContexts.enrolledTrainee &&
+            ReactSession.get("userType") !== userTypes.corporateTrainee &&
+            percentage <= 50) ||
+          vc === ViewerContexts.refundingTrainee ? (
+            <RefundForm vc={vc} setVc={setVc} courseId={courseId} />
+          ) : null}
+        </>
       ) : (
         <ReactLoading type={"spin"} color="#fff" />
       )}
-    </div>
+    </Stack>
   );
 }
 
