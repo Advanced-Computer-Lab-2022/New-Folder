@@ -29,6 +29,7 @@ function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
   const [ratingsCount, setRatingsCount] = useState(0);
   const [validPromotion, setValidPromotion] = useState(false);
+  const [progress, setProgress] = useState(0);
   const promotion = props.promotion;
   const setPromotion = props.setPromotion;
   const subContents = props.subContents;
@@ -48,7 +49,6 @@ function CourseSummary(props) {
       setValidPromotion(false);
     }
   }, [props.promotion]);
-
 
   let Stars = useMemo(() => {
     return () => (
@@ -115,7 +115,12 @@ function CourseSummary(props) {
             </Row>
           </div>
           <div className="course-progress-bar">
-            {props.vc === ViewerContexts.enrolledTrainee && <ProgressBar  subContents={subContents} subtitles={props.subtitles}/>}
+            {props.vc === ViewerContexts.enrolledTrainee && (
+              <ProgressBar
+                subContents={subContents}
+                subtitles={props.subtitles}
+              />
+            )}
           </div>
         </div>
 
