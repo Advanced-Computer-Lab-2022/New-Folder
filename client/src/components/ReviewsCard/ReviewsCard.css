@@ -4,6 +4,7 @@
 }
 .cardFrame {
   width: 100%;
+  pointer-events: none;
 }
 #reviewContainer {
   margin: 3%;
