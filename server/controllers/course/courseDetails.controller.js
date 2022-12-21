@@ -7,7 +7,7 @@ const Exercise = require("../../models/Exercises.model");
 const Trainee = require("../../models/Trainee.model");
 const User = require("../../models/User.model");
 const AccessRequest = require("../../models/AccessRequest.model");
-
+const constant = require("../../constants.json");
 const getCourseDetails = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
