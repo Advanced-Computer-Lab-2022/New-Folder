@@ -2,9 +2,12 @@ const { default: mongoose } = require("mongoose");
 const Content = require("../../models/Content.model");
 const Course = require("../../models/Course.model");
 const Subtitle = require("../../models/Subtitle.model");
-const constant = require("../../constants.json");
+const Report = require("../../models/Report.model");
 const Exercise = require("../../models/Exercises.model");
 const Trainee = require("../../models/Trainee.model");
+const User = require("../../models/User.model");
+const AccessRequest = require("../../models/AccessRequest.model");
+
 const getCourseDetails = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
@@ -280,7 +283,6 @@ const updateVisits = async (req, res) => {
     let index = false;
 
     for (let i = 0; i < visitArr.length; i++) {
-
       if (visitArr[i] === traineeID) {
         index = true;
         break;
@@ -291,11 +293,11 @@ const updateVisits = async (req, res) => {
     if (!index) {
       visitArr.push(traineeID);
       if (contentType === constant.content)
-        x =  await Content.findByIdAndUpdate(
+        x = await Content.findByIdAndUpdate(
           contentID,
           { Visits: visitArr },
           { new: true }
-      );
+        );
       else
         x = await Exercise.findByIdAndUpdate(
           contentID,
@@ -323,13 +325,12 @@ const getVisits = async (req, res) => {
     } else {
       contentObj = await Exercise.findById(contentID);
     }
-  
+
     let visitArr = contentObj.Visits;
 
     let index = false;
 
     for (let i = 0; i < visitArr.length; i++) {
-
       if (visitArr[i] === traineeID) {
         index = true;
         break;
@@ -357,6 +358,100 @@ const createSubtitle = async (req, res) => {
   }
 };
 
+const submitReport = async (req, res) => {
+  try {
+    const report = await Report.create({
+      userId: req.session.userId,
+      courseId: req.body.courseId,
+      problemType: req.body.problemType,
+      body: req.body.problemBody,
+      userName: req.body.userName,
+      courseName: req.body.courseName,
+      summary: req.body.problemSummary,
+    });
+    const user = await User.findById(req.session.userId);
+    user.reports.push(report._id);
+    user.save();
+    res.status(201).json(report);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const requestAccess = async (req, res) => {
+  try {
+    const request = await AccessRequest.create({
+      userId: req.session.userId,
+      courseId: req.body.courseId,
+      userName: req.body.userName,
+      courseName: req.body.courseName,
+      reason: req.body.reason,
+    });
+    const course = await Course.findById(req.body.courseId);
+    course.pendingTrainees.push(req.session.userId);
+    course.save();
+    res.status(201).json(request);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const addFollowup = async (req, res) => {
+  try {
+    const report = await Report.findById(req.body.problemId);
+    report.followups.push(req.body.followup);
+    report.save();
+    res.status(201).json(report);
+  } catch (err) {
+    console.log(err);
+  }
+};
+const deleteAccessRequest = async (req, res) => {
+  try {
+    await AccessRequest.findOneAndDelete({
+      userId: req.session.userId,
+      courseId: req.params.id,
+    });
+    const course = await Course.findById(req.params.id);
+    let pendingTrainees = [];
+    for (let i = 0; i < course.pendingTrainees.length; i++) {
+      if (course.pendingTrainees[i].toString() !== req.session.userId) {
+        pendingTrainees.push(course.pendingTrainees[i]);
+      }
+    }
+    await Course.findByIdAndUpdate(req.params.id, {
+      pendingTrainees: pendingTrainees,
+    });
+    res.status(201);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const updateStatus = async (req, res) => {
+  try {
+    const id = req.params.id;
+    const updatedReport = await Report.findByIdAndUpdate(id, req.body, {
+      new: true,
+    });
+    res.status(200).json(updatedReport);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+const addMultiPromotion = async (req, res) => {
+  try {
+    await Course.updateMany(
+      { _id: { $in: req.body.courses } },
+      { $set: { promotion: req.body.promotion } }
+    );
+  } catch (err) {
+    console.log(req.body);
+    console.log(err);
+  }
+};
+
 module.exports = {
   getSubtitle,
   getVideo,
@@ -373,5 +468,11 @@ module.exports = {
   updateCourse,
   createSubtitle,
   updateVisits,
-  getVisits
+  getVisits,
+  submitReport,
+  requestAccess,
+  addFollowup,
+  deleteAccessRequest,
+  updateStatus,
+  addMultiPromotion,
 };

@@ -41,20 +41,12 @@ function AddPromotion(props) {
       setDateError("End date is missing!");
       return;
     }
-    if (startDate > endDate) {
-      setDateError("End date can not be before start date!");
-      return;
-    }
-    if (endDate < Date.now()) {
-      setDateError("This promotion is in the past!");
-      return;
-    }
     setDateError(null);
     if (!newPercentage) {
       setPercentageError("Please add a percentage!");
       return;
     }
-    if (newPercentage > 100 || newPercentage < 0) {
+    if (newPercentage > 100 || newPercentage <= 0) {
       setPercentageError("Percentage must be between 0-100!");
       return;
     }
@@ -80,14 +72,33 @@ function AddPromotion(props) {
   return (
     <div>
       <>
-        <Modal show={isEditing} onHide={() => setEditing(false)} size={"lg"}>
+        <Modal
+          show={isEditing}
+          onHide={() => setEditing(false)}
+          size={"lg"}
+          centered
+        >
           <Modal.Header>
             <Modal.Title>Add promotion</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <h6 id="addPromotionHeader">Select duration:</h6>
+            <h6 id="addPromotionHeader">Select start and end dates:</h6>
             <Stack direction="vertical" gap={1}>
-              <DayPicker mode="range" selected={range} onSelect={setRange} />
+              <DayPicker
+                mode="range"
+                selected={range}
+                onSelect={setRange}
+                disabled={[
+                  {
+                    from: new Date(1900, 4, 18),
+                    to: new Date(
+                      new Date().getFullYear(),
+                      new Date().getMonth(),
+                      new Date().getDate() - 1
+                    ),
+                  },
+                ]}
+              />
             </Stack>
             {dateError ? <p className="promotionError">{dateError}</p> : null}
             <Form.Group as={Col}>

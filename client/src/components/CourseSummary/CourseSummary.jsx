@@ -19,6 +19,11 @@ import {
   totalDuration,
 } from "../../utils/getVideoDurationUtils";
 import ProgressBar from "./ProgressBar/ProgressBar";
+import ReportCourse from "../Course/ReportCourse/ReportCourse";
+import { ReactSession } from "react-client-session";
+import countryCurrency from "../../constants/CountryCurrency.json";
+import { payForCourse } from "../../network";
+import RequestAccess from "../Course/RequestAccess/RequestAccess";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -57,6 +62,19 @@ function CourseSummary(props) {
       />
     );
   }, [totalRating]);
+
+  const enroll = async () => {
+    try {
+      const checkout = await payForCourse({
+        courseID: props.courseId,
+        userCurrency:
+          countryCurrency.country_currency[ReactSession.get("country")],
+      });
+      window.location.href = checkout.url;
+    } catch (e) {
+      console.log(e);
+    }
+  };
 
   return (
     <>
@@ -107,7 +125,7 @@ function CourseSummary(props) {
               <Stack gap={3}>
                 <div id="priceEnroll">
                   {props.vc === ViewerContexts.guest ? (
-                    <Button id="enrollButton" variant="dark">
+                    <Button id="enrollButton" variant="dark" onClick={enroll}>
                       Enroll
                     </Button>
                   ) : (
@@ -124,12 +142,26 @@ function CourseSummary(props) {
                         >
                           Go to course
                         </Button>
-                      ) : null}
+                      ) : (
+                        <>
+                          {[
+                            ViewerContexts.pendingCorporateTrainee,
+                            ViewerContexts.nonEnrolledCorporateTrainee,
+                          ].includes(props.vc) ? (
+                            <RequestAccess
+                              vc={props.vc}
+                              setVc={props.setVc}
+                              course={props.course}
+                            />
+                          ) : null}
+                        </>
+                      )}
                     </>
                   )}
                 </div>
                 {props.vc !== ViewerContexts.nonEnrolledCorporateTrainee &&
-                props.vc !== ViewerContexts.enrolledTrainee ? (
+                props.vc !== ViewerContexts.enrolledTrainee &&
+                props.vc != ViewerContexts.pendingCorporateTrainee ? (
                   <>
                     {validPromotion ? (
                       <>
@@ -172,7 +204,8 @@ function CourseSummary(props) {
                     reviews={props.reviews}
                     setReviews={props.setReviews}
                   />
-                  {props.vc === ViewerContexts.author ? (
+                  {props.vc === ViewerContexts.author ||
+                  props.vc === ViewerContexts.admin ? (
                     <AddPromotion
                       promotion={promotion}
                       setPromotion={setPromotion}
@@ -225,6 +258,9 @@ function CourseSummary(props) {
             </Col>
           </Row>
         </div>
+        {props.vc !== ViewerContexts.guest ? (
+          <ReportCourse course={props.course} />
+        ) : null}
       </div>
     </>
   );

@@ -5,6 +5,9 @@ const router = express.Router();
 const { getExplore } = require("../controllers/guest/explore.controller");
 const { login } = require("../controllers/guest/login.controller");
 const { logout } = require("../controllers/guest/logout.controller");
+const {
+  convertCurrency,
+} = require("../controllers/guest/currencyConverter.controller");
 
 const {
   resetPassword,
@@ -20,6 +23,7 @@ const { postSearch } = require("../controllers/guest/search.controller");
 router.get("/", getExplore);
 router.post("/login", login);
 router.post("/logout", logout);
+router.post("/convertCurrency", convertCurrency);
 router.post("/search", postSearch);
 router.post("/sendPasswordResetLink", sendPasswordResetLink);
 router.post("/resetPassword", resetPassword);

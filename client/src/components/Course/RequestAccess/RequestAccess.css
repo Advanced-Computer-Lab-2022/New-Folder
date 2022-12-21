@@ -1,0 +1,26 @@
+#requestAccessForm {
+  margin-left: -50%;
+  margin-right: -50%;
+}
+#requestAccessFormFooter {
+  display: flex;
+  justify-content: space-around;
+}
+.requestAccessFormButton {
+  width: 40%;
+}
+#reportIconWrapper {
+  width: fit-content;
+  margin-top: -1.5%;
+}
+.accessButton {
+  font-size: 18px;
+  margin-left: 0px;
+  height: 39px;
+  line-height: 1;
+  padding-left: 7%;
+  padding-right: 7%;
+  width: 250px;
+  margin-top: -2%;
+  margin-bottom: 1%;
+}

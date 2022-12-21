@@ -6,6 +6,8 @@ import {
   getYoutubeVideoID,
 } from "./utils/getVideoDurationUtils";
 
+import UserTypes from "../src/constants/UserTypes.json";
+
 // if you delete this part ghosts will haunt you at night
 const instance = axios.create({
   withCredentials: true,
@@ -38,24 +40,35 @@ export const postCourse = async (data) => {
 };
 
 // Add Admin
-export const postAddadmin = async (data) => {
+const postAddadmin = async (data) => {
   const res = await instance.post("/admin/addAdmin", data);
   console.log(res.data);
   return res.data;
 };
 
 // Add Instructor
-export const postAddInstructor = async (data) => {
+const postAddInstructor = async (data) => {
   const res = await instance.post("/admin/addInstructor", data);
   console.log(res.data);
   return res.data;
 };
 
 // Add Corporate Trainee
-export const postAddCorporateTrainee = async (data) => {
+const postAddCorporateTrainee = async (data) => {
   const res = await instance.post("/admin/addCorporateTrainee", data);
   console.log(res.data);
   return res.data;
+};
+// post Add User
+export const postAddUser = async (userType, data) => {
+  if (userType === UserTypes.admin) {
+    return postAddadmin(data);
+  } else if (userType === UserTypes.instructor) {
+    return postAddInstructor(data);
+  } else if (userType === UserTypes.corporateTrainee) {
+    return postAddCorporateTrainee(data);
+  }
+  return {};
 };
 
 // Search results
@@ -93,14 +106,13 @@ export const sendPasswordResetLink = async (data) => {
 };
 
 export const getPrice = async (price) => {
-  const rates = await axios.get("https://api.exchangerate.host/latest");
-  const currCurrency =
-    countryCurrency.country_currency[ReactSession.get("country")];
-  const courseCurrency = price.currency;
-  var magnitude = price.magnitude;
-  const ratio =
-    rates.data.rates[currCurrency] / rates.data.rates[courseCurrency];
-  return (magnitude * ratio).toFixed(2) + " " + currCurrency;
+  const data = {
+    magnitude: price.magnitude,
+    oldCurrency: price.currency,
+    newCurrency: countryCurrency.country_currency[ReactSession.get("country")],
+  };
+  const res = await instance.post("/convertCurrency", data);
+  return res.data.magnitude.toFixed(2) + " " + res.data.currency;
 };
 
 export const fetchMyCourses = async () => {
@@ -230,62 +242,198 @@ export const postPromotion = async (courseId, promotion) => {
 };
 
 //Add and update Exercise Mark
-export const postMark = async (exerciseID , mark) => {
+export const postMark = async (exerciseID, mark) => {
   try {
-    const res = await instance.patch("course/subtitle/excercise/"+ exerciseID + "/addMark", {
-      Mark: mark,
+    const res = await instance.patch(
+      "course/subtitle/excercise/" + exerciseID + "/addMark",
+      {
+        Mark: mark,
+      }
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+//Add report
+export const postReport = async (data) => {
+  try {
+    const res = await instance.post("course/report", data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//Get problems
+export const getMyProblems = async () => {
+  try {
+    const res = await instance.get("trainee/myProblems");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// get all reports
+export const fetchReports = async () => {
+  const res = await instance.get("admin/reports");
+  return res.data;
+};
+
+// enroll in a course (payment)
+export const payForCourse = async (data) => {
+  const res = await instance.post("/trainee/payForCourse", data);
+  return res.data;
+};
+
+//Add report
+export const postAccessRequest = async (data) => {
+  try {
+    const res = await instance.post("course/requestAccess", data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+//Add followup on a report
+export const addFollowup = async (data) => {
+  try {
+    const res = await instance.post("course/addFollowup", data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// cancel request access
+export const deleteAccessRequest = async (courseId) => {
+  try {
+    const res = await instance.delete(`course/${courseId}/cancelAccessRequest`);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// update Report status
+export const updateReportStatus = async (id, data) => {
+  const res = await instance.patch(`course/report/${id}`, data);
+  // updatedData
+  return res.data;
+};
+
+// trainee get amount in wallet
+export const getAmountInWallet = async () => {
+  const res = await instance.get("/trainee/wallet", {
+    timeout: MAX_TIMEOUT,
+  });
+  return res.data;
+};
+
+// trainee get enrolled courses
+export const getEnrolledCourses = async () => {
+  const res = await instance.get("/trainee/enrolledCourses", {
+    timeout: MAX_TIMEOUT,
+  });
+  return res.data;
+};
+
+//Add multible promotions
+export const postMultiPromotion = async (courses, promotion) => {
+  try {
+    const res = await instance.patch("course/addMultiPromotion", {
+      courses: courses,
+      promotion: promotion,
     });
     return res.data;
   } catch (err) {
     console.log(err);
   }
-}
+};
 
 // get Excercise mark of trainee
-export const FetchMark  = async (exerciseID) => {
+export const FetchMark = async (exerciseID) => {
   try {
-    const res = await instance.get("course/subtitle/excercise/"+exerciseID+"/getMark");
-    return res.data;
-  }catch (err) {
-    console.log(err);
-  }
-}
-
-// add trainee's note
-export const postNote = async (contentID , note) => {
-  try {
-    const res = await instance.patch("course/subtitle/video/"+contentID+"/addNote", {
-      Note: note,
-    });
+    const res = await instance.get(
+      "course/subtitle/excercise/" + exerciseID + "/getMark"
+    );
     return res.data;
   } catch (err) {
     console.log(err);
   }
-}
+};
 
-export const FetchNote  = async (contentId) => {
+// add trainee's note
+export const postNote = async (contentID, note) => {
   try {
-    const res = await instance.get("course/subtitle/video/"+contentId+"/getNote");
+    const res = await instance.patch(
+      "course/subtitle/video/" + contentID + "/addNote",
+      {
+        Note: note,
+      }
+    );
     return res.data;
-  }catch (err) {
+  } catch (err) {
     console.log(err);
   }
-}
+};
 
-export const FetchContentVisit  = async (contentId , contentType) => {
+export const FetchNote = async (contentId) => {
   try {
-    const res = await instance.get("course/subtitle/isVisited/"+contentId+"/"+contentType);
+    const res = await instance.get(
+      "course/subtitle/video/" + contentId + "/getNote"
+    );
     return res.data;
-  }catch (err) {
+  } catch (err) {
     console.log(err);
   }
-}
+};
 
-export const UpdateContentVisit  = async (contentId , contentType) => {
+export const FetchContentVisit = async (contentId, contentType) => {
   try {
-    const res = await instance.patch("course/subtitle/isVisited/"+contentId+"/"+contentType);
+    const res = await instance.get(
+      "course/subtitle/isVisited/" + contentId + "/" + contentType
+    );
     return res.data;
-  }catch (err) {
+  } catch (err) {
     console.log(err);
   }
-}
+};
+
+export const UpdateContentVisit = async (contentId, contentType) => {
+  try {
+    const res = await instance.patch(
+      "course/subtitle/isVisited/" + contentId + "/" + contentType
+    );
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// instructor get earnings
+export const getEarnings = async () => {
+  const res = await instance.get("/instructor/myEarnings", {
+    timeout: MAX_TIMEOUT,
+  });
+  return res.data;
+};
+
+// get all reports
+export const fetchRequests = async () => {
+  const res = await instance.get("admin/requests");
+  return res.data;
+};
+
+// decline access request
+export const declineAccessRequest = async (requestId) => {
+  const res = await instance.delete(`admin/requests/${requestId}`);
+  return res;
+};
+
+export const approveAccessRequest = async (requestId) => {
+  const res = await instance.post(`admin/requests/approve/${requestId}`);
+  return res;
+};

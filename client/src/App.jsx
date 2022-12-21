@@ -7,9 +7,6 @@ import CreateCourse from "./pages/user/instructor/CreateCourse";
 import Login from "./pages/Login";
 import MyCourses from "./pages/user/instructor/MyCourses/MyCourses";
 import Navbar from "./components/Navbar/Navbar";
-import AddAdmin from "./pages/admin/AddAdmin";
-import AddInstructor from "./pages/admin/AddInstructor";
-import AddCorporateTrainee from "./pages/admin/AddCorporateTrainee";
 import { useState } from "react";
 import CourseDetails from "./pages/course/CourseDetails";
 import AdminNavbar from "./components/Navbar/AdminNavbar";
@@ -19,10 +16,15 @@ import Excercise from "./pages/course/Excercise/Excercise";
 import ViewInstructorProfile from "./pages/user/ViewInstructorProfile";
 import ForgetPassword from "./pages/user/ForgetPassword";
 import ChangePassword from "./pages/user/ChangePassword";
-import Container from "react-bootstrap/Container";
 import MyProfile from "./pages/user/instructor/MyProfile";
 import ResetPassword from "./pages/user/ResetPassword";
 import EditSubtitle from "./pages/user/instructor/EditSubtitle";
+import MyProblems from "./pages/user/MyProblems/MyProblems";
+import Reports from "./pages/admin/Reports";
+import AddUser from "./pages/admin/AddUser";
+import Earnings from "./pages/user/instructor/Earnings";
+import EnrolledCourses from "./pages/user/EnrolledCourses";
+import AccessRequests from "./pages/admin/AccessRequests";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -43,9 +45,7 @@ function App() {
         <Route path="/search/:searchQuery" element={<Search />} />
 
         <Route path="/course/:courseId" element={<CourseDetails />} />
-        <Route path="/addAdmin" element={<AddAdmin />} />
-        <Route path="/AddInstructor" element={<AddInstructor />} />
-        <Route path="/AddCorporateTrainee" element={<AddCorporateTrainee />} />
+        <Route path="/addUser" element={<AddUser />} />
         <Route path="/CreateCourse" element={<CreateCourse />} />
         <Route path="/login" element={<Login setUserType={setUserType} />} />
         <Route path="/watch/:courseId" element={<Content />} />
@@ -66,6 +66,11 @@ function App() {
           path="/editSubtitle/:courseID/:subtitleID"
           element={<EditSubtitle />}
         />
+        <Route path="/myProblems" element={<MyProblems />} />
+        <Route path="/reports" element={<Reports />} />
+        <Route path="/AccessRequests" element={<AccessRequests />} />
+        <Route path="/earnings" element={<Earnings />} />
+        <Route path="/enrolledCourses" element={<EnrolledCourses />} />
       </Routes>
     </>
   );

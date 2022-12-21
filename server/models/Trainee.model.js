@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const User = require("./User.model");
+const Report = require("./Report.model");
 const constants = require("../constants.json");
 
 // email gender firstName lastName image country courses
@@ -31,8 +32,48 @@ const Trainee = mongoose.Schema(
       type: String,
       default: "Egypt",
     },
+    wallet: {
+      type: Map,
+      of: Number,
+      default: {},
+    },
     courses: {
       type: [{ type: mongoose.Types.ObjectId, ref: "Course" }],
+      default: [],
+    },
+    reports: {
+      type: [{ type: mongoose.Types.ObjectId, ref: "Report" }],
+      default: [],
+    },
+    payments: {
+      type: [
+        {
+          courseId: {
+            type: mongoose.Types.ObjectId,
+            ref: "Course",
+            required: true,
+          },
+          date: {
+            type: Date,
+            required: true,
+          },
+          amounts: {
+            type: [
+              {
+                magnitude: {
+                  type: Number,
+                  required: true,
+                },
+                currency: {
+                  type: String,
+                  required: true,
+                },
+              },
+            ],
+            default: [],
+          },
+        },
+      ],
       default: [],
     },
     userType: {

@@ -133,30 +133,44 @@ function RatingCard(props) {
       {vc === ViewerContexts.enrolledTrainee ? (
         <>
           <>
-            <Modal show={editing} onHide={() => setEditing(false)} size={"lg"}>
+            <Modal
+              show={editing}
+              onHide={() => setEditing(false)}
+              size={"lg"}
+              centered
+            >
+              <Modal.Header>
+                <Modal.Title>Review course</Modal.Title>
+              </Modal.Header>
               <Stack direction="vertical">
                 <div id="courseStars">
-                  <h5>
-                    <b>Rate the course</b>
-                  </h5>
                   <AddRatingStars />
                 </div>
-                <div id="courseStars">
+                <div className="courseRatingForm">
                   <Form.Group as={Col}>
                     <Form.Control
-                      type="text"
+                      as="textarea"
                       placeholder="Your review"
                       value={newReview}
                       onChange={(e) => setNewReview(e.target.value)}
                     />
                   </Form.Group>
                 </div>
-                <Button onClick={() => rate()} id="deleteRating">
-                  Save changes
-                </Button>
-                <Button onClick={() => cancel()} variant="secondary">
-                  Cancel
-                </Button>
+                <div className="courseRatingForm" id="rateCourseFooter">
+                  <Button
+                    onClick={() => cancel()}
+                    variant="secondary"
+                    className="rateCourseFormButton"
+                  >
+                    Close
+                  </Button>
+                  <Button
+                    onClick={() => rate()}
+                    className="rateCourseFormButton"
+                  >
+                    Submit
+                  </Button>
+                </div>
               </Stack>
             </Modal>
           </>

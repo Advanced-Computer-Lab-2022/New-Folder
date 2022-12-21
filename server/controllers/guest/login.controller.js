@@ -10,16 +10,16 @@ exports.login = asyncHandler(async (req, res) => {
   const isCorrectPassword = password === user.password;
   if (user && isCorrectPassword) {
     req.session.userId = user._id;
-    req.session.userType = user.userType;
-    req.session.userName = user.firstName + " " + user.lastName;
-    res
-      .status(201)
-      .json({
-        userType: user.userType ?? "admin",
-        userId: user._id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-      });
+    req.session.userType = user.userType ?? "admin";
+    req.session.userName =
+      (user.firstName ?? user.username) + " " + (user.lastName ?? "");
+    res.status(201).json({
+      userType: user.userType ?? "admin",
+      userId: user._id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      userName: user.username,
+    });
   } else {
     res.status(400);
     throw new Error("invalid credintials");
