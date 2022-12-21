@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { ReactSession } from "react-client-session";
 import { useState, useEffect, useMemo } from "react";
-import { addRating, fetchCourseDetails } from "../../network";
+import { addRating, fetchCourseDetails, deleteRating } from "../../network";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import ReactStars from "react-rating-stars-component";
 import Modal from "react-bootstrap/Modal";
@@ -124,7 +124,7 @@ function RatingCard(props) {
     });
   };
 
-  const deleteRating = async () => {
+  const deleteReview = async () => {
     if (ratingsCount > 1) {
       const newTotalRating =
         (totalRating * ratingsCount - traineeRating) / (ratingsCount - 1);
@@ -146,7 +146,7 @@ function RatingCard(props) {
     setEditing(false);
     setNewRating(null);
     setNewReview(null);
-    //Network logic
+    await deleteRating({ courseId: courseId });
   };
   const cancel = async () => {
     setEditing(false);
@@ -190,7 +190,7 @@ function RatingCard(props) {
                     Close
                   </Button>
                   <Button
-                    onClick={() => deleteRating()}
+                    onClick={() => deleteReview()}
                     className="rateCourseFormButton"
                     variant="danger"
                   >

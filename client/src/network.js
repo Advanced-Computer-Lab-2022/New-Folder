@@ -209,7 +209,7 @@ export const addRating = async (data) => {
   const res = await instance.patch("/course/addRating", data);
   return res;
 };
-//addRating
+//deleteRating
 export const deleteRating = async (data) => {
   const res = await instance.patch("/course/deleteRating", data);
   return res;
