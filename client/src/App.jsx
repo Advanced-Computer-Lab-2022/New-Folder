@@ -26,6 +26,7 @@ import Earnings from "./pages/user/instructor/Earnings";
 import EnrolledCourses from "./pages/user/EnrolledCourses";
 import AccessRequests from "./pages/admin/AccessRequests";
 import Signup from "./pages/Signup";
+import Refunds from "./pages/admin/Refunds";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -68,6 +69,7 @@ function App() {
           element={<EditSubtitle />}
         />
         <Route path="/myProblems" element={<MyProblems />} />
+        <Route path="/refunds" element={<Refunds />} />
         <Route path="/reports" element={<Reports />} />
         <Route path="/AccessRequests" element={<AccessRequests />} />
         <Route path="/earnings" element={<Earnings />} />

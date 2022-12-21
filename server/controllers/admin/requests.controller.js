@@ -1,6 +1,8 @@
 const Request = require("../../models/AccessRequest.model");
 const Course = require("../../models/Course.model");
 const Trainee = require("../../models/Trainee.model");
+const Refund = require("../../models/Refund.model");
+
 const getRequests = async (req, res) => {
   try {
     const accessRequests = await Request.find({});
@@ -9,7 +11,14 @@ const getRequests = async (req, res) => {
     console.log(err);
   }
 };
-
+const getRefunds = async (req, res) => {
+  try {
+    const refunds = await Refund.find({});
+    res.status(200).send(refunds);
+  } catch (err) {
+    console.log(err);
+  }
+};
 const updateAndDelete = async (course, request) => {
   let pendingTrainees = [];
   console.log(request.userId);
@@ -53,4 +62,4 @@ const approveRequest = async (req, res) => {
   }
 };
 
-module.exports = { getRequests, deleteRequest, approveRequest };
+module.exports = { getRequests, deleteRequest, approveRequest, getRefunds };

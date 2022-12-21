@@ -16,6 +16,8 @@ const {
   getRequests,
   deleteRequest,
   approveRequest,
+  // move it from this file
+  getRefunds,
 } = require("../controllers/admin/requests.controller");
 
 // import middlewares
@@ -28,6 +30,8 @@ router.post("/addInstructor", authAdmin, addInstructor);
 router.post("/addCorporateTrainee", authAdmin, addCorpTrainee);
 
 router.post("/addAdmin", authAdmin, addAdmin);
+
+router.get("/refunds", authAdmin, getRefunds);
 
 router.get("/reports", authAdmin, getReports);
 

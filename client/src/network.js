@@ -463,3 +463,13 @@ export const cancelRefund = async (courseId) => {
     console.log(err);
   }
 };
+
+// get all refunds
+export const getRefunds = async () => {
+  try {
+    const res = await instance.get('/admin/refunds');
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
