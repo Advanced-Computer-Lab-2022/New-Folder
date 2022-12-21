@@ -123,6 +123,31 @@ function RatingCard(props) {
       review: addedReview,
     });
   };
+
+  const deleteRating = async () => {
+    if (ratingsCount > 1) {
+      const newTotalRating =
+        (totalRating * ratingsCount - traineeRating) / (ratingsCount - 1);
+      setTotalRating(newTotalRating);
+    } else {
+      setTotalRating(0);
+    }
+
+    let newReviews = [];
+    for (let i = 0; i < props.reviews.length; i++) {
+      if (props.reviews[i].traineeId !== ReactSession.get("userId")) {
+        newReviews.push(props.reviews[i]);
+      }
+    }
+    setRatingsCount(ratingsCount - 1);
+    props.setReviews(newReviews);
+    setTraineeRating(null);
+    setTraineeReview(null);
+    setEditing(false);
+    setNewRating(null);
+    setNewReview(null);
+    //Network logic
+  };
   const cancel = async () => {
     setEditing(false);
     setNewRating(null);
@@ -151,7 +176,7 @@ function RatingCard(props) {
                     <Form.Control
                       as="textarea"
                       placeholder="Your review"
-                      value={newReview}
+                      value={newReview ?? traineeReview}
                       onChange={(e) => setNewReview(e.target.value)}
                     />
                   </Form.Group>
@@ -165,6 +190,13 @@ function RatingCard(props) {
                     Close
                   </Button>
                   <Button
+                    onClick={() => deleteRating()}
+                    className="rateCourseFormButton"
+                    variant="danger"
+                  >
+                    Delete rating
+                  </Button>
+                  <Button
                     onClick={() => rate()}
                     className="rateCourseFormButton"
                   >
@@ -174,8 +206,11 @@ function RatingCard(props) {
               </Stack>
             </Modal>
           </>
-
-          <Button onClick={() => setEditing(true)}>Add rating</Button>
+          {traineeRating ? (
+            <Button onClick={() => setEditing(true)}>Edit rating</Button>
+          ) : (
+            <Button onClick={() => setEditing(true)}>Add rating</Button>
+          )}
         </>
       ) : null}
     </div>
