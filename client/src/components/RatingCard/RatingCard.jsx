@@ -5,7 +5,7 @@ import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import { ReactSession } from "react-client-session";
 import { useState, useEffect, useMemo } from "react";
-import { addRating, fetchCourseDetails } from "../../network";
+import { addRating, fetchCourseDetails, deleteRating } from "../../network";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import ReactStars from "react-rating-stars-component";
 import Modal from "react-bootstrap/Modal";
@@ -69,7 +69,7 @@ function RatingCard(props) {
       setTotalRating(newTotalRating);
     }
     const addedReview = newReview ?? traineeReview;
-    const addedRating = newRating ?? traineeRating;
+    const addedRating = newRating ?? traineeRating ?? 0;
     let newReviews = [];
     let found = false;
     for (let i = 0; i < props.reviews.length; i++) {
@@ -123,6 +123,31 @@ function RatingCard(props) {
       review: addedReview,
     });
   };
+
+  const deleteReview = async () => {
+    if (ratingsCount > 1) {
+      const newTotalRating =
+        (totalRating * ratingsCount - traineeRating) / (ratingsCount - 1);
+      setTotalRating(newTotalRating);
+    } else {
+      setTotalRating(0);
+    }
+
+    let newReviews = [];
+    for (let i = 0; i < props.reviews.length; i++) {
+      if (props.reviews[i].traineeId !== ReactSession.get("userId")) {
+        newReviews.push(props.reviews[i]);
+      }
+    }
+    setRatingsCount(ratingsCount - 1);
+    props.setReviews(newReviews);
+    setTraineeRating(null);
+    setTraineeReview(null);
+    setEditing(false);
+    setNewRating(null);
+    setNewReview(null);
+    await deleteRating({ courseId: courseId });
+  };
   const cancel = async () => {
     setEditing(false);
     setNewRating(null);
@@ -151,7 +176,7 @@ function RatingCard(props) {
                     <Form.Control
                       as="textarea"
                       placeholder="Your review"
-                      value={newReview}
+                      value={newReview ?? traineeReview}
                       onChange={(e) => setNewReview(e.target.value)}
                     />
                   </Form.Group>
@@ -164,6 +189,16 @@ function RatingCard(props) {
                   >
                     Close
                   </Button>
+                  {traineeRating != null ? (
+                    <Button
+                      onClick={() => deleteReview()}
+                      className="rateCourseFormButton"
+                      variant="danger"
+                    >
+                      Delete review
+                    </Button>
+                  ) : null}
+
                   <Button
                     onClick={() => rate()}
                     className="rateCourseFormButton"
@@ -174,8 +209,11 @@ function RatingCard(props) {
               </Stack>
             </Modal>
           </>
-
-          <Button onClick={() => setEditing(true)}>Add rating</Button>
+          {traineeRating != null ? (
+            <Button onClick={() => setEditing(true)}>Edit your review</Button>
+          ) : (
+            <Button onClick={() => setEditing(true)}>Review course</Button>
+          )}
         </>
       ) : null}
     </div>

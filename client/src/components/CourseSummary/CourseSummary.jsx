@@ -193,6 +193,13 @@ function CourseSummary(props) {
                   <strong>Summary:</strong>
                   <br /> {props.course.description ?? ""}
                 </h5>
+                {props.vc === ViewerContexts.author ? (
+                  <h5 className="courseInfo">
+                    <b>Count of enrolled trainees: </b>{" "}
+                    {props.course.trainees.length + " trainee(s)"}
+                  </h5>
+                ) : null}
+
                 <div id="addRating">
                   <RatingCard
                     courseId={props.courseId}
