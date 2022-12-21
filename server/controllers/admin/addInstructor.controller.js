@@ -5,8 +5,7 @@ exports.addInstructor = async (req, res) => {
     throw new Error("Please Fill the required data");
   }
   const instructor = await Instructor.create({
-    username: req.body.username,
-    password: req.body.password,
+    ...req.body,
   });
   //.save() to save data in the db
   res.status(200).json(instructor);

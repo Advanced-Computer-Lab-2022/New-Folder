@@ -8,12 +8,17 @@ function AddUser() {
   const [data, setData] = useState({
     username: "",
     password: "",
+    email: "",
+    firstName: "",
+    lastName: "",
   });
-  const [userType, setUserType] = useState("");
+  const [gender, setGender] = useState("male");
+  const [userType, setUserType] = useState(UserTypes.admin);
   const navigate = useNavigate();
-  const { username, password } = data;
+  const { username, password, email, firstName, lastName } = data;
   const onSubmit = (e) => {
-    postAddUser(userType, data);
+    console.log({ ...data, gender: gender });
+    postAddUser(userType, { ...data, gender: gender });
     navigate("/");
   };
 
@@ -22,6 +27,7 @@ function AddUser() {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
+    console.log(e.target);
   };
   return (
     <>
@@ -68,6 +74,57 @@ function AddUser() {
                 required
               />
             </Form.Group>
+            {userType !== UserTypes.admin && (
+              <>
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    type="text"
+                    id="firstName"
+                    name="firstName"
+                    value={firstName}
+                    placeholder="firstName"
+                    onChange={onChange}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    type="text"
+                    id="lastName"
+                    name="lastName"
+                    value={lastName}
+                    placeholder="lastName"
+                    onChange={onChange}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Control
+                    type="text"
+                    id="email"
+                    name="email"
+                    value={email}
+                    placeholder="email"
+                    onChange={onChange}
+                    required
+                  />
+                </Form.Group>
+                <Form.Group className="mb-3">
+                  <Form.Label>Gender</Form.Label>
+                  <Form.Select
+                    id="gender"
+                    name="gender"
+                    value={gender}
+                    onChange={(e) => {
+                      setGender(e.target.value);
+                    }}
+                  >
+                    <option value="male">male</option>
+                    <option value="female">female</option>
+                  </Form.Select>
+                </Form.Group>
+              </>
+            )}
             <Form.Group className="mb-3">
               <Button type="submit" variant="dark">
                 {" "}
