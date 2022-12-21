@@ -25,13 +25,6 @@ const Trainee = mongoose.Schema(
     lastName: {
       type: String,
     },
-    image: {
-      type: String,
-    },
-    country: {
-      type: String,
-      default: "Egypt",
-    },
     wallet: {
       type: Map,
       of: Number,
@@ -80,6 +73,10 @@ const Trainee = mongoose.Schema(
       type: String,
       enum: [constants.trainee, constants.corporateTrainee],
       default: constants.trainee,
+    },
+    gender: {
+      type: String,
+      default: "male",
     },
   },
   User

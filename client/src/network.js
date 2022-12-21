@@ -437,3 +437,9 @@ export const approveAccessRequest = async (requestId) => {
   const res = await instance.post(`admin/requests/approve/${requestId}`);
   return res;
 };
+
+// Signup
+export const signup = async (data) => {
+  const res = await instance.post("/signup", data);
+  return res;
+};

@@ -7,18 +7,27 @@ import Container from "react-bootstrap/esm/Container";
 import Col from "react-bootstrap/esm/Col";
 import { ReactSession } from "react-client-session";
 import userTypes from "../constants/UserTypes.json";
-const Login = (props) => {
+import { signup } from "../network";
+const Signup = (props) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [email, setEmail] = useState("");
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [gender, setGender] = useState("");
   const submit = async (e) => {
     e.preventDefault();
     const loginData = {
       username,
       password,
+      email,
+      firstName,
+      lastName,
+      gender,
     };
     try {
-      const userData = await login(loginData);
+      const userData = await signup(loginData);
       ReactSession.set("userType", userData.data.userType);
       props.setUserType(userData.data.userType);
       ReactSession.set("userId", userData.data.userId);
@@ -30,7 +39,6 @@ const Login = (props) => {
       } else {
         ReactSession.set("userName", userData.data.userName);
       }
-
       navigate("/");
     } catch (err) {
       console.log(err);
@@ -55,16 +63,59 @@ const Login = (props) => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>First name</Form.Label>
+            <Form.Control
+              type="text"
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Last name</Form.Label>
+            <Form.Control
+              type="text"
+              onChange={(e) => setLastName(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="text"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+          </Form.Group>
+          <Form.Group
+            className="mb-3"
+            controlId="formBasicCheckbox"
+            onChange={(e) => {
+              console.log(e);
+              setGender(e.target.value);
+            }}
+          >
+            <Form.Label>Gender</Form.Label>
+            <Form.Check
+              type="radio"
+              label="Male"
+              name="group1"
+              value="male"
+              onChange={(e) => setGender("male")}
+            />
+            <Form.Check
+              type="radio"
+              label="Female"
+              name="group1"
+              value="female"
+              onSelect={(e) => setGender("female")}
+            />
+          </Form.Group>
           <Button variant="dark" type="submit">
             submit
           </Button>
-          <a href="/forgetPassword">forget password</a>
-          <br />
-          <a href="/signup">Sign up</a>
+          <a href="/login">Login</a>
         </Col>
       </Container>
     </Form>
   );
 };
 
-export default Login;
+export default Signup;
