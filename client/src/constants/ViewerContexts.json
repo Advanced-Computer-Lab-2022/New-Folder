@@ -4,5 +4,6 @@
   "enrolledTrainee": "enrolledTrainee",
   "nonEnrolledCorporateTrainee": "nonEnrolledCorporateTrainee",
   "pendingCorporateTrainee": "pendingCorporateTrainee",
-  "admin": "admin"
+  "admin": "admin",
+  "refundingTrainee": "refundingTrainee"
 }

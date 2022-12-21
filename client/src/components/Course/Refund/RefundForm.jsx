@@ -1,11 +1,13 @@
 import React, { useState } from "react";
 import Button from "react-bootstrap/esm/Button";
 import Form from "react-bootstrap/Form";
+import ViewerContexts from "../../../constants/ViewerContexts.json";
 import Modal from "react-bootstrap/Modal";
 import { postReport } from "../../../network";
 import { ReactSession } from "react-client-session";
 import "./RefundForm.css";
 function RefundForm(props) {
+  const { vc, setVc } = props;
   const [show, setShow] = useState(false);
   const [validated, setValidated] = useState(false);
   const [refundReason, setRefundReason] = useState(null);
@@ -17,25 +19,27 @@ function RefundForm(props) {
       event.stopPropagation();
       setValidated(true);
     } else {
-      await postReport({
-        courseId: props.course._id,
-        problemBody: refundReason,
-        courseName: props.course.name,
-        userName: ReactSession.get("userName"),
-      });
+      //network logic
       setValidated(false);
       setRefundReason(null);
       setShow(false);
+      setVc(ViewerContexts.refundingTrainee);
     }
   };
-  const cancel = () => {
+  const close = () => {
     setValidated(false);
     setRefundReason(null);
     setShow(false);
   };
+  const cancelRefund = async () => {
+    setValidated(false);
+    setRefundReason(null);
+    setShow(false);
+    setVc(ViewerContexts.enrolledTrainee);
+  };
   return (
     <>
-      <Modal show={show} onHide={cancel} centered>
+      <Modal show={show} onHide={close} centered>
         <Modal.Header>
           <Modal.Title>Request refund</Modal.Title>
         </Modal.Header>
@@ -64,7 +68,7 @@ function RefundForm(props) {
             <div id="reportFormFooter">
               <Button
                 variant="secondary"
-                onClick={cancel}
+                onClick={close}
                 className="reportFormButton"
               >
                 Close
@@ -81,7 +85,11 @@ function RefundForm(props) {
         </Modal.Body>
         <Modal.Footer></Modal.Footer>
       </Modal>
-      <Button onClick={(e) => setShow(true)}>Request a refund</Button>
+      {vc === ViewerContexts.refundingTrainee ? (
+        <Button onClick={cancelRefund}>Cancel refund request</Button>
+      ) : (
+        <Button onClick={(e) => setShow(true)}>Request a refund</Button>
+      )}
     </>
   );
 }

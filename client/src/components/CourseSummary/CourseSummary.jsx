@@ -227,9 +227,10 @@ function CourseSummary(props) {
                       courseId={props.course._id}
                     />
                   ) : null}
-                  {props.vc === ViewerContexts.enrolledTrainee &&
-                  progress <= 50 ? (
-                    <RefundForm />
+                  {(props.vc === ViewerContexts.enrolledTrainee &&
+                    progress <= 50) ||
+                  props.vc === ViewerContexts.refundingTrainee ? (
+                    <RefundForm vc={props.vc} setVc={props.setVc} />
                   ) : null}
                 </div>
               </Stack>
