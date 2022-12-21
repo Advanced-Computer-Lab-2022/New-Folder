@@ -69,7 +69,7 @@ function RatingCard(props) {
       setTotalRating(newTotalRating);
     }
     const addedReview = newReview ?? traineeReview;
-    const addedRating = newRating ?? traineeRating;
+    const addedRating = newRating ?? traineeRating ?? 0;
     let newReviews = [];
     let found = false;
     for (let i = 0; i < props.reviews.length; i++) {
@@ -189,13 +189,16 @@ function RatingCard(props) {
                   >
                     Close
                   </Button>
-                  <Button
-                    onClick={() => deleteReview()}
-                    className="rateCourseFormButton"
-                    variant="danger"
-                  >
-                    Delete rating
-                  </Button>
+                  {traineeRating != null ? (
+                    <Button
+                      onClick={() => deleteReview()}
+                      className="rateCourseFormButton"
+                      variant="danger"
+                    >
+                      Delete review
+                    </Button>
+                  ) : null}
+
                   <Button
                     onClick={() => rate()}
                     className="rateCourseFormButton"
@@ -206,10 +209,10 @@ function RatingCard(props) {
               </Stack>
             </Modal>
           </>
-          {traineeRating ? (
-            <Button onClick={() => setEditing(true)}>Edit rating</Button>
+          {traineeRating != null ? (
+            <Button onClick={() => setEditing(true)}>Edit your review</Button>
           ) : (
-            <Button onClick={() => setEditing(true)}>Add rating</Button>
+            <Button onClick={() => setEditing(true)}>Review course</Button>
           )}
         </>
       ) : null}
