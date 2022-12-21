@@ -5,6 +5,10 @@ const {
   canDeleteRating,
 } = require("../middlewares/enrolledTraineeMiddleware");
 const {
+  canCancelRefund,
+  canRequestRefund,
+} = require("../middlewares/refundsMiddleware");
+const {
   canReport,
   canAddFollowup,
 } = require("../middlewares/reportsMiddleware");
@@ -38,6 +42,8 @@ const {
   deleteAccessRequest,
   updateStatus,
   addMultiPromotion,
+  cancelRefund,
+  requestRefund,
 } = require("../controllers/course/courseDetails.controller");
 
 router.get("/subtitle/excercise/:id/getMark", getMark);
@@ -48,6 +54,8 @@ router.delete(
   canDeleteRequestAccess,
   deleteAccessRequest
 );
+
+router.delete("/:id/cancelRefundRequest", canCancelRefund, cancelRefund);
 router.get("/subtitle/excercise/:id", getExcercise);
 router.patch("/subtitle/video/:id/addNote", updateNote);
 router.get("/subtitle/video/:id/getNote", getNote);
@@ -65,5 +73,6 @@ router.patch("/:id", updateCourse);
 router.patch("/:id/newsubtitle", createSubtitle);
 router.post("/report", canReport, submitReport);
 router.post("/requestAccess", canRequestAccess, requestAccess);
+router.post("/requestRefund", canRequestRefund, requestRefund);
 router.post("/addFollowup", canAddFollowup, addFollowup);
 module.exports = router;

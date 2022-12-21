@@ -7,6 +7,7 @@ const Exercise = require("../../models/Exercises.model");
 const Trainee = require("../../models/Trainee.model");
 const User = require("../../models/User.model");
 const AccessRequest = require("../../models/AccessRequest.model");
+const Refund = require("../../models/Refund.model");
 const constant = require("../../constants.json");
 const getCourseDetails = async (req, res) => {
   try {
@@ -452,6 +453,45 @@ const addMultiPromotion = async (req, res) => {
   }
 };
 
+//Request refund
+const requestRefund = async (req, res) => {
+  try {
+    const course = await Course.findById(req.body.courseId);
+    const user = await User.findById(req.session.userId);
+    await Refund.create({
+      userId: req.session.userId,
+      courseId: req.body.courseId,
+      userName: user.firstName + " " + user.lastName,
+      courseName: course.name,
+      reason: req.body.reason,
+    });
+    res.send(200);
+  } catch (err) {
+    console.log(req.body);
+    console.log(err);
+  }
+};
+
+//Request refund
+const cancelRefund = async (req, res) => {
+  try {
+    await Refund.delete({
+      userId: req.session.userId,
+      courseId: req.params.id,
+    });
+    const course = await Course.findById(req.params.id);
+    let refundingTrainees = course.refundingTrainees.filter(
+      (trainee) => trainee.toString() !== req.session.userId
+    );
+    await Course.findByIdAndUpdate(req.params.id, {
+      refundingTrainees: refundingTrainees,
+    });
+    res.send(200);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 module.exports = {
   getSubtitle,
   getVideo,
@@ -475,4 +515,6 @@ module.exports = {
   deleteAccessRequest,
   updateStatus,
   addMultiPromotion,
+  cancelRefund,
+  requestRefund,
 };

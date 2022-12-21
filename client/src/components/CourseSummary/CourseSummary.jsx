@@ -6,6 +6,7 @@ import Stack from "react-bootstrap/Stack";
 import RatingCard from "../../components/RatingCard/RatingCard";
 import Form from "react-bootstrap/Form";
 import ViewerContexts from "../../constants/ViewerContexts.json";
+import userTypes from "../../constants//UserTypes.json";
 import Button from "react-bootstrap/Button";
 import "./CourseSummary.css";
 import ReactStars from "react-rating-stars-component";
@@ -84,7 +85,7 @@ function CourseSummary(props) {
           <div id="courseSummaryFirstRow">
             <Row className="mb-0">
               <Col md="auto">
-                <Image width={250} src={props.course.image} thumbnail />
+                <Image width={300} src={props.course.image} thumbnail />
               </Col>
               <Col>
                 <Stack gap={1} id="courseHeader">
@@ -228,6 +229,8 @@ function CourseSummary(props) {
                     />
                   ) : null}
                   {(props.vc === ViewerContexts.enrolledTrainee &&
+                    ReactSession.get("userType") !==
+                      userTypes.corporateTrainee &&
                     progress <= 50) ||
                   props.vc === ViewerContexts.refundingTrainee ? (
                     <RefundForm vc={props.vc} setVc={props.setVc} />
