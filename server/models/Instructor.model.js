@@ -28,6 +28,7 @@ const Instructor = mongoose.Schema(
     },
     about: {
       type: String,
+      default: "",
     },
     earnings: {
       type: [

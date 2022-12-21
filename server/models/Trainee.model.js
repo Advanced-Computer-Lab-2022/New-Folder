@@ -16,9 +16,6 @@ const Trainee = mongoose.Schema(
       type: [mongoose.Schema.Types.Mixed],
       default: [],
     },
-    gender: {
-      type: String,
-    },
     firstName: {
       type: String,
     },
