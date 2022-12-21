@@ -24,6 +24,7 @@ import { ReactSession } from "react-client-session";
 import countryCurrency from "../../constants/CountryCurrency.json";
 import { payForCourse } from "../../network";
 import RequestAccess from "../Course/RequestAccess/RequestAccess";
+import RefundForm from "../Course/Refund/RefundForm";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -119,6 +120,8 @@ function CourseSummary(props) {
               <ProgressBar
                 subContents={subContents}
                 subtitles={props.subtitles}
+                percentage={progress}
+                setPercentage={setProgress}
               />
             )}
           </div>
@@ -223,6 +226,10 @@ function CourseSummary(props) {
                       setPromotion={setPromotion}
                       courseId={props.course._id}
                     />
+                  ) : null}
+                  {props.vc === ViewerContexts.enrolledTrainee &&
+                  progress <= 50 ? (
+                    <RefundForm />
                   ) : null}
                 </div>
               </Stack>
