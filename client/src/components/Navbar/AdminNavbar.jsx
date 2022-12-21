@@ -44,7 +44,6 @@ const AdminNavbar = (props) => {
           <Nav.Link onClick={() => setShowPromotionModal(true)}>
             Set promotion
           </Nav.Link>
-          <Nav.Link>Login</Nav.Link>
           <Nav.Link href="/reports">Reports</Nav.Link>
           <Nav.Link href="/AccessRequests">Courses Requests</Nav.Link>
           <NavDropdown

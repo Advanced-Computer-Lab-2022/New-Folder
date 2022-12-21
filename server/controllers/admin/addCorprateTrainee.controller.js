@@ -6,8 +6,7 @@ exports.addCorpTrainee = async (req, res) => {
     throw new Error("Please Fill the required data");
   }
   const corpTrainee = await CorpTrainee.create({
-    username: req.body.username,
-    password: req.body.password,
+    ...req.body,
     userType: constants.corporateTrainee,
   });
   res.status(200).json(corpTrainee);
