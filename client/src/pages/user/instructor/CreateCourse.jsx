@@ -21,6 +21,7 @@ function CreateCourse() {
   const [currency, setCurrency] = useState("EGP");
   const [subtitles, setSubtitles] = useState([""]);
   const [introVideo, setIntroVideo] = useState("");
+  const [courseImage, setCourseImage] = useState("");
 
   //terms and conditions
   const [show, setShow] = useState(false);
@@ -44,6 +45,7 @@ function CreateCourse() {
       currency: currency,
       subtitles: subtitles,
       introVideo: introVideo,
+      image: courseImage,
     };
     postCourse(data);
     navigate("/");
@@ -82,8 +84,16 @@ function CreateCourse() {
               <Form.Control
                 type="text"
                 value={introVideo}
-                placeholder="add course preview link"
+                placeholder="Add Course preview link"
                 onChange={(e) => setIntroVideo(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group className="mb-3">
+              <Form.Control
+                type="text"
+                value={courseImage}
+                placeholder="Add Course Image Link"
+                onChange={(e) => setCourseImage(e.target.value)}
               />
             </Form.Group>
             <Form.Group className="mb-3">

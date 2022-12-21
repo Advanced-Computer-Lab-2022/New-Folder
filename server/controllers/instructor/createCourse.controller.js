@@ -15,6 +15,7 @@ const createCourse = async (req, res) => {
     },
     duration: 0,
     introVideo: req.body.introVideo,
+    image: req.body.image,
   });
   const subtitles = [];
   for (let i = 0; i < req.body.subtitles.length; i++) {
