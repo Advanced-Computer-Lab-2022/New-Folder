@@ -149,7 +149,7 @@ function ProblemCard(props) {
             aria-controls="panel1a-content"
             id="panel1a-header"
           >
-            <Typography>Followups ({followups.length ?? 0})</Typography>
+            <Typography>Follow ups ({followups.length ?? 0})</Typography>
           </AccordionSummary>
           <AccordionDetails id="followupsList">
             <ol>
@@ -163,14 +163,14 @@ function ProblemCard(props) {
                   className="mb-3"
                   controlId="exampleForm.ControlTextarea1"
                 >
-                  <Form.Label as={"h6"}>Add a followup</Form.Label>
+                  <Form.Label as={"h6"}>Add a follow up</Form.Label>
                   <Form.Control
                     as="textarea"
                     required
                     onChange={(e) => setNewFollowup(e.target.value)}
                   />
                   <Form.Control.Feedback type="invalid">
-                    Followup cannot be empty
+                    Follow up cannot be empty
                   </Form.Control.Feedback>
                 </Form.Group>
                 <div id="followupFormFooter">
@@ -203,7 +203,7 @@ function ProblemCard(props) {
                 <div id="addIconWrapper">
                   <AiOutlinePlusCircle />
                 </div>
-                &nbsp;Add a followup
+                &nbsp;Add a follow up
               </Card>
             ) : null}
           </AccordionDetails>

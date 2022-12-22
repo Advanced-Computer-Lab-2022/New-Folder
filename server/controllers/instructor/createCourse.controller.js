@@ -7,7 +7,7 @@ const createCourse = async (req, res) => {
   const course = await Course.create({
     description: req.body.description,
     name: req.body.name,
-    field: req.body.field,
+    subject: req.body.field,
     price: { magnitude: req.body.magnitude, currency: req.body.currency },
     instructorInfo: {
       instructorId: req.session.userId,
