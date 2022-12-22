@@ -135,11 +135,7 @@ function CourseSummary(props) {
             <Col>
               <Stack gap={3}>
                 <div id="priceEnroll">
-                  {props.vc === ViewerContexts.guest ? (
-                    <Button id="enrollButton" variant="dark" onClick={enroll}>
-                      Enroll
-                    </Button>
-                  ) : (
+                  {props.vc === ViewerContexts.guest ? null : (
                     <>
                       {props.vc === ViewerContexts.enrolledTrainee ? (
                         <Button
@@ -276,7 +272,8 @@ function CourseSummary(props) {
             </Col>
           </Row>
         </div>
-        {props.vc !== ViewerContexts.guest ? (
+        {props.vc !== ViewerContexts.guest &&
+        props.vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
           <ReportCourse course={props.course} />
         ) : null}
       </div>
