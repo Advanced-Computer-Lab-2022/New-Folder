@@ -36,9 +36,7 @@ const AdminNavbar = (props) => {
     <Navbar bg="dark" variant="dark">
       <Container>
         <Nav className="me-auto">
-          <Nav.Link href="/login" onClick={logout}>
-            Logout
-          </Nav.Link>
+          <Nav.Link onClick={logout}>Logout</Nav.Link>
           <Nav.Link href="/">Explore</Nav.Link>
           <Nav.Link href="/addUser"> Add User</Nav.Link>
           <Nav.Link onClick={() => setShowPromotionModal(true)}>

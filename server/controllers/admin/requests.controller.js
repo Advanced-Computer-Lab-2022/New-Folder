@@ -11,14 +11,6 @@ const getRequests = async (req, res) => {
     console.log(err);
   }
 };
-const getRefunds = async (req, res) => {
-  try {
-    const refunds = await Refund.find({});
-    res.status(200).send(refunds);
-  } catch (err) {
-    console.log(err);
-  }
-};
 const updateAndDelete = async (course, request) => {
   let pendingTrainees = [];
   console.log(request.userId);
@@ -62,4 +54,4 @@ const approveRequest = async (req, res) => {
   }
 };
 
-module.exports = { getRequests, deleteRequest, approveRequest, getRefunds };
+module.exports = { getRequests, deleteRequest, approveRequest };

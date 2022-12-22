@@ -14,11 +14,11 @@ export const getViewerContext = (course) => {
   ) {
     return ViewerContexts.author;
   }
-  console.log(course.refundingTrainees);
-  console.log(userId);
   if (course.refundingTrainees?.includes(userId)) {
     return ViewerContexts.refundingTrainee;
   }
+  console.log(course.trainees);
+  console.log(userId);
   if (course.trainees.includes(userId)) {
     return ViewerContexts.enrolledTrainee;
   }

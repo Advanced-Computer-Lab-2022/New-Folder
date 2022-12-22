@@ -15,14 +15,14 @@ exports.resetPassword = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("password confirmation doesn't match entered password");
   }
-  // newPassword = await bcrypt.hash(newPassword,12);
   const user = await User.findById(userID);
+  const encryptedPassword = await bcrypt.hash(newPassword, 12);
   if (user) {
     const secret = process.env.JWT_SECRET + user.password;
     try {
       const payload = jwt.verify(token, secret);
       await User.findByIdAndUpdate(userID, {
-        password: newPassword,
+        password: encryptedPassword,
       });
       res.status(200).json();
     } catch (error) {

@@ -3,6 +3,15 @@ const Trainee = require("../../models/Trainee.model");
 const Course = require("../../models/Course.model");
 const Refund = require("../../models/Refund.model");
 
+const getRefunds = async (req, res) => {
+  try {
+    const refunds = await Refund.find({});
+    res.status(200).send(refunds);
+  } catch (err) {
+    console.log(err);
+  }
+};
+
 const approveRefund = async (req, res) => {
   try {
     const { userId, courseId } = req.body;
@@ -25,6 +34,7 @@ const approveRefund = async (req, res) => {
       course.price.currency
     );
     await addToWallet(userId, amounts);
+    await deleteRefund(userId, courseId);
     res.status(200).json({ message: "Refunded successfully" });
   } catch (e) {
     res.status(500).json({ error: "Refund failed" });
@@ -73,4 +83,14 @@ const removeEnrollment = async (userId, courseId) => {
   await Course.findByIdAndUpdate(courseId, { trainees: newCourseTrainees });
 };
 
-module.exports = { approveRefund };
+const deleteRefund = async (userId, courseId) => {
+  const refund = await Refund.findOneAndDelete({ userId, courseId });
+};
+
+const declineRefund = async (req, res) => {
+  const { userId, courseId } = req.body;
+  await deleteRefund(userId, courseId);
+  res.status(200).json({ message: "Refunded Declined" });
+};
+
+module.exports = { approveRefund, getRefunds, declineRefund };

@@ -3,14 +3,28 @@ import { Card, Image } from "semantic-ui-react";
 import Button from "react-bootstrap/Button";
 import "semantic-ui-css/semantic.min.css";
 import { Row } from "react-bootstrap";
-import { declineAccessRequest, approveAccessRequest } from "../../network";
+import { approveRefund, declineRefund } from "../../network";
 
 function RefundInfoCard(props) {
   const { request, allRefunds, setAllRefunds } = props;
 
   const approve = async () => {
     try {
-      //Network logic from Aya's branch
+      const data = { userId: request.userId, courseId: request.courseId };
+      await approveRefund(data);
+      const newRefunds = allRefunds.filter(
+        (refund) => refund._id != request._id
+      );
+      setAllRefunds(newRefunds);
+    } catch (err) {
+      console.log(err);
+    }
+  };
+
+  const decline = async () => {
+    try {
+      const data = { userId: request.userId, courseId: request.courseId };
+      await declineRefund(data);
       const newRefunds = allRefunds.filter(
         (refund) => refund._id != request._id
       );
@@ -42,6 +56,9 @@ function RefundInfoCard(props) {
         <Card.Content extra>
           <Button variant="outline-success" onClick={() => approve()}>
             Approve
+          </Button>
+          <Button variant="outline-danger" onClick={() => decline()}>
+            Decline
           </Button>
         </Card.Content>
       </Card>

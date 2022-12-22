@@ -6,8 +6,7 @@ const User = require("../../models/User.model");
 exports.signup = asyncHandler(async (req, res) => {
   try {
     const { username, password, email, gender, firstName, lastName } = req.body;
-    const salt = await bcrypt.genSalt();
-    const encryptedPassword = await bcrypt.hash(password, salt);
+    const encryptedPassword = await bcrypt.hash(password, 12);
     const userExists = await User.findOne({ username: username });
     if (userExists) {
       res.status(500).json({ error: "username already exists" });
@@ -25,7 +24,15 @@ exports.signup = asyncHandler(async (req, res) => {
     req.session.userType = user.userType ?? "admin";
     req.session.userName =
       (user.firstName ?? user.username) + " " + (user.lastName ?? "");
-    res.status(200).json(user);
+    res
+      .status(200)
+      .json({
+        userType: user.userType ?? "admin",
+        userId: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        userName: user.username,
+      });
   } catch (err) {
     console.log(err);
   }

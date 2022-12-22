@@ -16,9 +16,13 @@ const {
   getRequests,
   deleteRequest,
   approveRequest,
-  // move it from this file
-  getRefunds,
 } = require("../controllers/admin/requests.controller");
+
+const {
+  getRefunds,
+  approveRefund,
+  declineRefund,
+} = require("../controllers/admin/refund.controller");
 
 // import middlewares
 const { authAdmin } = require("../middlewares/authUserMiddleware");
@@ -32,6 +36,10 @@ router.post("/addCorporateTrainee", authAdmin, addCorpTrainee);
 router.post("/addAdmin", authAdmin, addAdmin);
 
 router.get("/refunds", authAdmin, getRefunds);
+
+router.post("/approveRefund", authAdmin, approveRefund);
+
+router.post("/declineRefund", authAdmin, declineRefund);
 
 router.get("/reports", authAdmin, getReports);
 

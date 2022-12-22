@@ -467,7 +467,27 @@ export const cancelRefund = async (courseId) => {
 // get all refunds
 export const getRefunds = async () => {
   try {
-    const res = await instance.get('/admin/refunds');
+    const res = await instance.get("/admin/refunds");
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// approve refund
+export const approveRefund = async (data) => {
+  try {
+    const res = await instance.post("/admin/approveRefund", data);
+    return res.data;
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+// decline refund
+export const declineRefund = async (data) => {
+  try {
+    const res = await instance.post("/admin/declineRefund", data);
     return res.data;
   } catch (err) {
     console.log(err);

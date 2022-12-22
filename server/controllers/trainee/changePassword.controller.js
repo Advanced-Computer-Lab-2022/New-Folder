@@ -17,11 +17,12 @@ exports.changePassword = asyncHandler(async (req, res) => {
   }
   // newPassword = await bcrypt.hash(newPassword,12);
   const user = await User.findById(userId);
-  //const isCorrectPassword = await bcrypt.compare(oldPassword, user.password);
-  const isCorrectPassword = oldPassword === user.password;
+  const isCorrectPassword = await bcrypt.compare(oldPassword, user.password);
+  const encryptedPassword = await bcrypt.hash(newPassword, 12);
+  //const isCorrectPassword = oldPassword === user.password;
   if (user && isCorrectPassword) {
     await User.findByIdAndUpdate(userId, {
-      password: newPassword,
+      password: encryptedPassword,
     });
     res.status(200).json();
   } else {

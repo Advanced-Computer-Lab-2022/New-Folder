@@ -16,6 +16,7 @@ function Reports() {
       console.log(err);
     }
   };
+
   useEffect(() => {
     fetchRefunds();
   }, []);
