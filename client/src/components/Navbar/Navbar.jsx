@@ -30,7 +30,7 @@ const MainNavbar = (props) => {
     navigate("/login");
   };
   return (
-    <Navbar id="navbar" sticky="top" variant="dark" expand="lg">
+    <Navbar className="blackBg" sticky="top" variant="dark" expand="lg">
       <Container fluid>
         <Navbar.Brand id="navBrand" href="/">
           Learning System
