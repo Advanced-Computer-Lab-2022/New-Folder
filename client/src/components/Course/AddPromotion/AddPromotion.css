@@ -19,3 +19,8 @@
 .rdp-day_range_middle:not(.rdp-day_outside) {
   background-color: #a6d1e6;
 }
+#promotionLoadingSpinner {
+  width: 300px;
+  height: 300px;
+  display: flex;
+}
