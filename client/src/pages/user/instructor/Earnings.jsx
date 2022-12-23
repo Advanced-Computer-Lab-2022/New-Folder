@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { getEarnings } from "../../../network";
 import EarningsCard from "../../../components/EarningsCard/EarningsCard";
+import PageHeader from "../../../components/PageHeader/PageHeader";
 
 const Earnings = () => {
   const [earnings, setEarnings] = useState([]);
@@ -13,6 +14,7 @@ const Earnings = () => {
   }, []);
   return (
     <div>
+      <PageHeader pageName="Earnings" extra="hii" />
       {earnings.map((earning) => (
         <EarningsCard year={earning.year} months={earning.months} />
       ))}

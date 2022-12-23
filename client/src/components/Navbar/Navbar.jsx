@@ -30,14 +30,16 @@ const MainNavbar = (props) => {
     navigate("/login");
   };
   return (
-    <Navbar sticky="top" bg="dark" variant="dark" expand="lg">
+    <Navbar id="navbar" sticky="top" variant="dark" expand="lg">
       <Container fluid>
-        <Navbar.Brand href="/">Learning System</Navbar.Brand>
+        <Navbar.Brand id="navBrand" href="/">
+          Learning System
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
             className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: "100px" }}
+            style={{ height: "3em" }}
             navbarScroll
           >
             <Nav.Link href="/">Explore</Nav.Link>
@@ -78,7 +80,7 @@ const MainNavbar = (props) => {
             ) : null}
 
             <NavDropdown
-              className="bg-dark text-light"
+              className="text-light"
               menuVariant="dark"
               title={
                 <ReactCountryFlag
