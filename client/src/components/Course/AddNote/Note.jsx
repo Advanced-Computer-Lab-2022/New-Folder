@@ -15,14 +15,16 @@ const Note = (props) => {
   const [noteValue, setNoteValue] = useState("");
 
 //   not used but could be used anytime later
-  const [download, setDownload] = useState(false);
+const [saving, setSaving] = useState(false);
+const [saved, setSaved] = useState(true);
+  
 
   const generatePDF = (noteTitle, noteContent) => {
     var doc = new jsPDF();
     doc.setFontSize(20);
     doc.text(noteTitle, 30,25);
     doc.setFontSize(15);
-    const s = doc.splitTextToSize(noteContent,200);
+    const s = doc.splitTextToSize(noteContent,180);
     doc.text(s, 15, 50);
     doc.save(noteTitle + "notes");
   }
@@ -51,31 +53,23 @@ const Note = (props) => {
         value={noteValue}
         onChange={(e) => {
           setNoteValue(e.target.value);
+          setSaved(false);
         }}
       ></textarea>
       <div className="note-buttons">
-        <Button variant="success" onClick={(e) => handleSubmitNote()}>
+        <Button variant="success" onClick={(e) => {setSaving(true); handleSubmitNote(); setSaved(true); setSaving(false)}}>
           Save
         </Button>
-        {/* <PDFDownloadLink
-          document={<PDFnote conTitle={conTitle} notes={noteValue} />}
-          fileName={conTitle + " notes"}
-        >
-          {({ loading }) =>
-            loading ? (
-              <Button disabled={true} variant="success" onClick={(e) => setDownload(true)}>
-                Download as <strong>PDF</strong>
-              </Button>
-            ) : (
-              <Button variant="success" onClick={(e) => setDownload(true)}>
-                Download as <strong>PDF</strong>
-              </Button>
-            )
-          } */}
-        {/* </PDFDownloadLink> */}
-        <Button variant="success" onClick={(e) => generatePDF(conTitle , noteValue)}>
+        <Button disabled={!saved} variant="success" onClick={(e) => {generatePDF(conTitle , noteValue)}}>
                 Download as <strong>PDF</strong>
         </Button>
+
+        <div className="saving-spinner">
+          <span>
+            {saved ? ("Saved") : saving ? ("Saving ...") : ("Not Saved **")}
+          </span>
+        </div>
+
 
       </div>
     </Col>

@@ -1,0 +1,14 @@
+.note-buttons {
+    display: flex;
+}
+
+.saving-spinner {
+    margin: 0;
+    margin-top: 0.8em;
+}
+
+.saving-spinner span{
+    margin-left: 3px;
+    color: rgba(0, 0, 0, 0.5);
+    font-size: 13px;
+}
