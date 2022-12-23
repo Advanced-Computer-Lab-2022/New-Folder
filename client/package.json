@@ -22,6 +22,7 @@
     "currency-list": "^1.0.8",
     "date-fns": "^2.29.3",
     "iso-country-currency": "^0.6.0",
+    "jspdf": "^2.5.1",
     "react": "^18.2.0",
     "react-bootstrap": "^2.6.0",
     "react-client-session": "^0.0.8",
