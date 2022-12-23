@@ -78,7 +78,7 @@ function AdminSetPromotion(props) {
       percentage: newPercentage,
     };
     const coursesIds = selectedCourses.map((course) => course._id);
-    postMultiPromotion(coursesIds, addedPromotion).then(() => {});
+    await postMultiPromotion(coursesIds, addedPromotion);
     setNewPercentage(null);
     setRange(null);
     setSelectedCourses([]);
@@ -86,7 +86,6 @@ function AdminSetPromotion(props) {
     setEditing(false);
     setSuccess(true);
     setLoading(false);
-    console.log("mango");
   };
   const cancel = () => {
     if (success) {
