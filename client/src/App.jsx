@@ -37,9 +37,9 @@ function App() {
   return (
     <>
       {ReactSession.get("userType") === UserTypes.admin ? (
-        <AdminNavbar setCountry={setCountry} />
+        <AdminNavbar setCountry={setCountry} setUserType={setUserType} />
       ) : (
-        <Navbar setCountry={setCountry} />
+        <Navbar setCountry={setCountry} setUserType={setUserType} />
       )}
       <Routes>
         <Route path="/" element={<Explore />} />

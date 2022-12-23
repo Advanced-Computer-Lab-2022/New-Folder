@@ -24,10 +24,9 @@ const MainNavbar = (props) => {
   };
   const logout = async () => {
     await networkLogout();
-    const country = ReactSession.get("country");
-    sessionStorage.clear();
-    ReactSession.set("country", country);
-    props.setCountry(country);
+    props.setUserType("");
+    ReactSession.set("userId", "");
+    ReactSession.set("userName", "");
     navigate("/login");
   };
   return (
@@ -48,10 +47,10 @@ const MainNavbar = (props) => {
             {ReactSession.get("userType") === "instructor" ? (
               <Nav.Link href="/createCourse">Create Course</Nav.Link>
             ) : null}
-            {ReactSession.get("userType") === "" ? (
-              <Nav.Link href="/login">Login</Nav.Link>
-            ) : (
+            {ReactSession.get("userType") ? (
               <Nav.Link onClick={logout}>Logout</Nav.Link>
+            ) : (
+              <Nav.Link href="/login">Login</Nav.Link>
             )}
             {ReactSession.get("userType") ? (
               <Nav.Link href="/changePassword">Change password</Nav.Link>
@@ -60,11 +59,7 @@ const MainNavbar = (props) => {
               <Nav.Link href="/myProfile">My profile</Nav.Link>
             ) : null}
 
-            {[
-              userTypes.instructor,
-              userTypes.trainee,
-              userTypes.corporateTrainee,
-            ].includes(ReactSession.get("userType")) ? (
+            {ReactSession.get("userType") ? (
               <Nav.Link href="/myProblems">Reports</Nav.Link>
             ) : null}
 
