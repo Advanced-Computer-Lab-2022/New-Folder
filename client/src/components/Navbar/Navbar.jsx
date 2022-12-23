@@ -24,21 +24,22 @@ const MainNavbar = (props) => {
   };
   const logout = async () => {
     await networkLogout();
-    const country = ReactSession.get("country");
-    sessionStorage.clear();
-    ReactSession.set("country", country);
-    props.setCountry(country);
+    props.setUserType("");
+    ReactSession.set("userId", "");
+    ReactSession.set("userName", "");
     navigate("/login");
   };
   return (
-    <Navbar sticky="top" bg="dark" variant="dark" expand="lg">
+    <Navbar className="blackBg" sticky="top" variant="dark" expand="lg">
       <Container fluid>
-        <Navbar.Brand href="/">Learning System</Navbar.Brand>
+        <Navbar.Brand id="navBrand" href="/">
+          Learning System
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarScroll" />
         <Navbar.Collapse id="navbarScroll">
           <Nav
             className="me-auto my-2 my-lg-0"
-            style={{ maxHeight: "100px" }}
+            style={{ height: "3em" }}
             navbarScroll
           >
             <Nav.Link href="/">Explore</Nav.Link>
@@ -48,10 +49,10 @@ const MainNavbar = (props) => {
             {ReactSession.get("userType") === "instructor" ? (
               <Nav.Link href="/createCourse">Create Course</Nav.Link>
             ) : null}
-            {ReactSession.get("userType") === "" ? (
-              <Nav.Link href="/login">Login</Nav.Link>
-            ) : (
+            {ReactSession.get("userType") ? (
               <Nav.Link onClick={logout}>Logout</Nav.Link>
+            ) : (
+              <Nav.Link href="/login">Login</Nav.Link>
             )}
             {ReactSession.get("userType") ? (
               <Nav.Link href="/changePassword">Change password</Nav.Link>
@@ -60,11 +61,7 @@ const MainNavbar = (props) => {
               <Nav.Link href="/myProfile">My profile</Nav.Link>
             ) : null}
 
-            {[
-              userTypes.instructor,
-              userTypes.trainee,
-              userTypes.corporateTrainee,
-            ].includes(ReactSession.get("userType")) ? (
+            {ReactSession.get("userType") ? (
               <Nav.Link href="/myProblems">Reports</Nav.Link>
             ) : null}
 
@@ -83,7 +80,7 @@ const MainNavbar = (props) => {
             ) : null}
 
             <NavDropdown
-              className="bg-dark text-light"
+              className="text-light"
               menuVariant="dark"
               title={
                 <ReactCountryFlag

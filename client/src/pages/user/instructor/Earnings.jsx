@@ -5,6 +5,7 @@ import EarningsGraph from "../../../components/EarningsGraph/EarningsGraph";
 import Container from "react-bootstrap/Container";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
+import PageHeader from "../../../components/PageHeader/PageHeader";
 
 const Earnings = () => {
   const [earnings, setEarnings] = useState([]);
@@ -16,17 +17,13 @@ const Earnings = () => {
     fetchData();
   }, []);
   return (
-    <Container>
-      <div></div>
-      <Row>
-        <Col>Earnings</Col>
-        <Col>Earnings</Col>
-      </Row>
+    <div>
+      <PageHeader pageName="Earnings" extra="" />
       <EarningsGraph earnings={earnings} />
       {earnings.map((earning) => (
         <EarningsCard year={earning.year} months={earning.months} />
       ))}
-    </Container>
+    </div>
   );
 };
 

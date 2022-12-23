@@ -26,10 +26,9 @@ const AdminNavbar = (props) => {
   };
   const logout = async () => {
     await networkLogout();
-    const country = ReactSession.get("country");
-    sessionStorage.clear();
-    ReactSession.set("country", country);
-    props.setCountry(country);
+    props.setUserType("");
+    ReactSession.set("userId", "");
+    ReactSession.set("userName", "");
     navigate("/login");
   };
   return (

@@ -11,3 +11,59 @@
 .row {
   margin-right: 0 !important;
 }
+
+.blackBg {
+  background-color: #100f0f;
+}
+
+.blueBg {
+  background-color: #87b3b4;
+}
+.yellowBg {
+  background-color: #ffd369;
+}
+.greyBg {
+  background-color: #b0b6b1;
+}
+.whiteBg {
+  background-color: #f6f5f6;
+}
+
+.blackTxt {
+  color: #100f0f;
+}
+
+.blueTxt {
+  color: #87b3b4;
+}
+.yellowTxt {
+  color: #ffd369;
+}
+.greyTxt {
+  color: #b0b6b1;
+}
+.whiteTxt {
+  color: #f6f5f6;
+}
+
+.blackOutline {
+  color: #100f0f;
+  border: solid #100f0f;
+  background-color: transparent;
+}
+
+.blueOutline {
+  color: #87b3b4;
+  border: solid #87b3b4;
+  background-color: transparent;
+}
+.yellowOutline {
+  color: #ffd369;
+  border: solid #ffd369;
+  background-color: transparent;
+}
+.greyOutline {
+  color: #b0b6b1;
+  border: solid #b0b6b1;
+  background-color: transparent;
+}
