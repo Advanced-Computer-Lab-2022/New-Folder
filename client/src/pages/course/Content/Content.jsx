@@ -63,8 +63,8 @@ const Content = () => {
   // second part which is the accordion shows all subtitle_content to let the user choose desired excercise or content Video
   return (
     <div className="content-page">
-      {loading ? 
-      (<Row>
+   
+      <Row>
         
         <Col lg={8}>
           {subtitleID !== "" && (
@@ -102,7 +102,7 @@ const Content = () => {
         {parentContentID !== "" && (
           <Note conID={parentContentID} conTitle={parentContentTitle} />
         )}
-      </Row>) : (<ReactLoading type="spin" color="#fff" ></ReactLoading>)}
+      </Row>
     </div>
   );
 };
