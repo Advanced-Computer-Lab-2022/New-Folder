@@ -84,7 +84,7 @@ const removeEnrollment = async (userId, courseId) => {
 };
 
 const deleteRefund = async (userId, courseId) => {
-  const refund = await Refund.findOneAndDelete({ userId, courseId });
+  await Refund.findOneAndDelete({ userId, courseId });
 };
 
 const declineRefund = async (req, res) => {
