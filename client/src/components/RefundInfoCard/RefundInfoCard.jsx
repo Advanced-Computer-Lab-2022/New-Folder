@@ -2,9 +2,9 @@ import React from "react";
 import { Card, Image } from "semantic-ui-react";
 import Button from "react-bootstrap/Button";
 import "semantic-ui-css/semantic.min.css";
-import { Row } from "react-bootstrap";
+import { Col, Row } from "react-bootstrap";
 import { approveRefund, declineRefund } from "../../network";
-
+import "./RefundInfoCard.css";
 function RefundInfoCard(props) {
   const { request, allRefunds, setAllRefunds } = props;
 
@@ -35,34 +35,35 @@ function RefundInfoCard(props) {
   };
 
   return (
-    <Card.Group>
-      <Card fluid>
-        <Card.Content>
-          <Image
-            floated="right"
-            size="mini"
-            src="https://react.semantic-ui.com/images/avatar/large/steve.jpg"
-          />
-          <Card.Header>{request.userName}</Card.Header>
-          <Card.Meta>Refund Request</Card.Meta>
-          <Card.Description>
-            {request.userName + " requests to refund the cost of course: "}
-            <a href={`/course/${request.courseId}`}>{request.courseName}</a>
-          </Card.Description>
-        </Card.Content>
-        <Card.Content>
-          <Card.Description>{request.reason}</Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          <Button variant="outline-success" onClick={() => approve()}>
-            Approve
-          </Button>
-          <Button variant="outline-danger" onClick={() => decline()}>
-            Decline
-          </Button>
-        </Card.Content>
-      </Card>
-    </Card.Group>
+    <div id="refundContainer">
+      <Row md={2} id="refundHeader">
+        <Col>
+          <h4>{request.userName}</h4>
+          <small>
+            <b>
+              {"Course: "}
+              <a
+                href={"/course/" + request.courseId}
+                id="problemCourseNameLink"
+              >
+                {request.courseName}
+              </a>
+            </b>
+            <br />
+          </small>
+        </Col>
+        <Col></Col>
+      </Row>
+      <div id="refundBody">{request.reason}</div>
+      <div id="refundFooter">
+        <Button onClick={() => decline()} id="refundRequestDeclineButton">
+          Decline
+        </Button>
+        <Button onClick={() => approve()} id="refundRequestApproveButton">
+          Approve
+        </Button>
+      </div>
+    </div>
   );
 }
 

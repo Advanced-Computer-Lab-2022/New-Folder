@@ -8,7 +8,8 @@ const getRefunds = async (req, res) => {
     const refunds = await Refund.find({});
     res.status(200).send(refunds);
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
