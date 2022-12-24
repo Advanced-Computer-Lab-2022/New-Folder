@@ -40,22 +40,22 @@
 
 #saveMyProfile {
   background-color: #5d8889;
-  border: #5d8889;
+  border: solid #5d8889;
 }
 
 #saveMyProfile:hover {
-  background-color: #100f0f;
-  border: #100f0f;
-  color: white;
+  background-color: transparent;
+  border: solid #5d8889;
+  color: #5d8889;
 }
 
 #cancelMyProfile {
   background-color: #b0b6b1;
-  border: #b0b6b1;
+  border: solid #b0b6b1;
 }
 
 #cancelMyProfile:hover {
-  background-color: #100f0f;
-  border: #100f0f;
-  color: white;
+  background-color: transparent;
+  border: solid #b0b6b1;
+  color: #b0b6b1;
 }

@@ -8,16 +8,22 @@ import Modal from "react-bootstrap/Modal";
 import { deleteInstructorReview, rateInstructor } from "../../network";
 import { useEffect } from "react";
 import { Spinner } from "react-bootstrap";
+import SuccessModal from "../SuccessModal/SuccessModal";
+import ErrorModal from "../ErrorModal/ErrorModal";
 
 const RateAndReviewInstructor = (props) => {
   const [newReview, setNewReview] = useState(props.myReview);
   const [loadingDelete, setLoadingDelete] = useState(false);
   const [loadingAdd, setLoadingAdd] = useState(false);
   const [show, setShow] = useState(false);
+  const [showError, setShowError] = useState(false);
   const [confMsg, setConfMsg] = useState("");
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const handleCloseError = () => setShowError(false);
+  const handleShowError = () => setShowError(true);
 
   const review = async () => {
     setLoadingAdd(true);
@@ -33,9 +39,8 @@ const RateAndReviewInstructor = (props) => {
       handleShow();
       setLoadingAdd(false);
     } catch {
-      setConfMsg("Something went wrong, try again later.");
       setLoadingAdd(false);
-      handleShow();
+      handleShowError();
     }
   };
 
@@ -60,11 +65,18 @@ const RateAndReviewInstructor = (props) => {
   };
 
   const deleteRev = async () => {
-    setLoadingDelete(true);
-    await deleteInstructorReview({ instructorID: props.instructorID });
-    setLoadingDelete(false);
-    props.setMyReview(null);
-    props.setHasNewReview(!props.hasNewReview);
+    try {
+      setLoadingDelete(true);
+      await deleteInstructorReview({ instructorID: props.instructorID });
+      setLoadingDelete(false);
+      props.setMyReview(null);
+      setConfMsg("Your review was deleted successfully.");
+      handleShow();
+      props.setHasNewReview(!props.hasNewReview);
+    } catch {
+      setLoadingAdd(false);
+      handleShowError();
+    }
   };
 
   let Stars = useMemo(() => {
@@ -138,7 +150,7 @@ const RateAndReviewInstructor = (props) => {
             id="addReviewBtn"
             onClick={review}
           >
-            {props.myReview ? "Edit review" : "Add review"}
+            {props.myReview ? "Update review" : "Add review"}
             {loadingAdd ? (
               <Spinner
                 as="span"
@@ -152,15 +164,8 @@ const RateAndReviewInstructor = (props) => {
           </Button>
         ) : null}
       </div>
-
-      <Modal centered show={show} onHide={handleClose}>
-        <Modal.Body className="mt-3">{confMsg}</Modal.Body>
-        <Modal.Footer>
-          <Button variant="dark" onClick={handleClose}>
-            Close
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <SuccessModal msg={confMsg} show={show} handleClose={handleClose} />
+      <ErrorModal show={showError} handleClose={handleCloseError} />
     </Card>
   );
 };

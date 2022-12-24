@@ -43,33 +43,33 @@
 
 #cancelReviewBtn {
   background-color: #b0b6b1;
-  border: #b0b6b1;
+  border: solid #b0b6b1;
 }
 
 #cancelReviewBtn:hover {
-  background-color: #100f0f;
-  border: #100f0f;
-  color: white;
+  background-color: transparent;
+  border: solid #b0b6b1;
+  color: #b0b6b1;
 }
 
 #addReviewBtn {
   background-color: #5d8889;
-  border: #5d8889;
+  border: solid #5d8889;
 }
 
 #addReviewBtn:hover {
-  background-color: #100f0f;
-  border: #100f0f;
-  color: white;
+  background-color: transparent;
+  border: solid #5d8889;
+  color: #5d8889;
 }
 
 #delReviewBtn {
   background-color: #b22727;
-  border: #b22727;
+  border: solid #b22727;
 }
 
 #delReviewBtn:hover {
-  background-color: #100f0f;
-  border: #100f0f;
-  color: white;
+  background-color: transparent;
+  border: solid #b22727;
+  color: #b22727;
 }
