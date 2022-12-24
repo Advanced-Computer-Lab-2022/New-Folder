@@ -53,17 +53,22 @@ const deleteInstructorReview = async (req, res) => {
   const instructor = await Instructor.findById(instructorID);
   let ratings = instructor.ratings;
   const ratingNo = ratings.length;
-  let rating =
-    instructor.totalRating * ratingNo -
-      ratings.find((r) => r.traineeId.toString() === req.session.userId)
-        ?.rating ?? 0 / (ratingNo - 1);
-  ratings = ratings.filter(
-    (rating) => rating.traineeId.toString() !== req.session.userId
+  // let rating =
+  //   instructor.totalRating * ratingNo -
+  //     ratings.find((r) => r.traineeId.toString() === req.session.userId)
+  //       ?.rating ?? 0 / (ratingNo - 1);
+  // ratings = ratings.filter(
+  //   (rating) => rating.traineeId.toString() !== req.session.userId
+  // );
+  // await Instructor.findByIdAndUpdate(instructorID, {
+  //   ratings,
+  //   totalRating: rating,
+  // });
+  let ratingIndex = ratings.findIndex(
+    (rating) => rating.traineeId.toString() === req.session.userId
   );
-  await Instructor.findByIdAndUpdate(instructorID, {
-    ratings,
-    totalRating: rating,
-  });
+  ratings[ratingIndex].review = null;
+  await instructor.save();
   res.status(200).json();
 };
 
