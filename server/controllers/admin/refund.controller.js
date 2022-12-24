@@ -91,6 +91,11 @@ const deleteRefund = async (userId, courseId) => {
 const declineRefund = async (req, res) => {
   const { userId, courseId } = req.body;
   await deleteRefund(userId, courseId);
+  const course = await Course.findById(courseId);
+  course.refundingTrainees = course.refundingTrainees.filter(
+    (trainee) => trainee.toString() !== userId
+  );
+  await course.save();
   res.status(200).json({ message: "Refunded Declined" });
 };
 
