@@ -5,6 +5,7 @@
   margin: 2%;
   margin-left: 15%;
   margin-right: 15%;
+  pointer-events: none;
 }
 
 #editProfileItem {
@@ -20,13 +21,41 @@
 
 .saveMyProfileChangesBtn {
   margin-right: 1%;
+  pointer-events: all;
 }
 
 #pencilIcon {
   margin: 5px;
   margin-bottom: 11px;
-  color: rgb(140, 140, 140);
+  color: #b0b6b1;
 }
 .myInfoStaticCard {
   margin: 0;
+  pointer-events: all;
+}
+
+.editInfoFormItem {
+  pointer-events: all;
+}
+
+#saveMyProfile {
+  background-color: #5d8889;
+  border: #5d8889;
+}
+
+#saveMyProfile:hover {
+  background-color: #100f0f;
+  border: #100f0f;
+  color: white;
+}
+
+#cancelMyProfile {
+  background-color: #b0b6b1;
+  border: #b0b6b1;
+}
+
+#cancelMyProfile:hover {
+  background-color: #100f0f;
+  border: #100f0f;
+  color: white;
 }

@@ -4,14 +4,15 @@ exports.getInstructorData = async (req, res) => {
   const { instructorID } = req.query;
   const instructorInfo = await Instructor.findById(instructorID);
 
-  const { firstName, lastName, image, about, ratings, courses, totalRating } =
+  const { firstName, lastName, about, ratings, courses, totalRating } =
     instructorInfo;
 
-  let myRating = ratings.filter(
+  let myRatingItem = ratings.filter(
     (rating) => rating.traineeId.toString() == req.session.userId
   );
 
-  myRating = myRating.length > 0 ? myRating[0].rating : null;
+  let myRating = myRatingItem.length > 0 ? myRatingItem[0].rating : null;
+  let myReview = myRatingItem.length > 0 ? myRatingItem[0].review : null;
 
   const ratingNo = ratings.length;
 
@@ -19,12 +20,12 @@ exports.getInstructorData = async (req, res) => {
   res.send({
     firstName,
     lastName,
-    image,
     about,
     ratingNo,
     coursesCount,
     totalRating,
     myRating,
+    myReview,
     ratings,
   });
 };

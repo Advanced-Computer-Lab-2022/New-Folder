@@ -10,6 +10,7 @@ const {
 } = require("../controllers/trainee/changePassword.controller");
 const {
   rateInstructor,
+  deleteInstructorReview,
 } = require("../controllers/trainee/rateInstructor.controller");
 const {
   getMyProblems,
@@ -38,6 +39,11 @@ router.post(
   "/rateInstructor",
   authUserTakeCourseWithInstructor,
   rateInstructor
+);
+router.post(
+  "/deleteInstructorReview",
+  authUserTakeCourseWithInstructor,
+  deleteInstructorReview
 );
 router.post("/payForCourse", canEnroll, payForCourse);
 

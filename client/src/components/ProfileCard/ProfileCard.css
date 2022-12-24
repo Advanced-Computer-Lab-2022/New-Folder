@@ -1,33 +1,19 @@
-#profileCardTop {
-  background-color: #a6d1e6;
-  overflow: visible;
-  max-height: 250px;
-  align-items: center;
-  display: flex;
-}
-
-#instructorImg {
-  margin: auto;
-  margin-top: 5%;
-}
-
 #instructorName {
   margin: auto;
-  margin-top: 70px;
+  margin-top: 2%;
   align-items: center;
   display: flex;
 }
 
 #instructorRating {
   display: inline-flex;
+  padding-left: 1.5%;
   align-items: center;
 }
 
 #instructorRatingStars {
-  width: 190px;
-  margin-top: -10px;
+  width: 185px;
   margin-right: 0;
-  padding-right: 0;
 }
 
 #instructorRatingNo {

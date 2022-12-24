@@ -1,8 +1,8 @@
 import "./ProfileCard.css";
-import Image from "react-bootstrap/Image";
 import Row from "react-bootstrap/Row";
 import ReactStars from "react-rating-stars-component";
 import { useMemo } from "react";
+import { Stack } from "react-bootstrap";
 
 const ProfileCard = (props) => {
   let Stars = useMemo(() => {
@@ -20,18 +20,17 @@ const ProfileCard = (props) => {
 
   return (
     <Row id="profileCardMain">
-      <div id="profileCardTop">
-        <Image id="instructorImg" width={170} src={props.img} thumbnail />
-      </div>
-      <div id="instructorName">
-        <h2>{props.name}</h2>
-      </div>
-      <div id="instructorRating">
-        <span id="instructorRatingStars">
-          <Stars />
-        </span>
-        <h6 id="instructorRatingNo">({props.ratingNo} ratings)</h6>
-      </div>
+      <Stack gap={1}>
+        <div id="instructorName">
+          <h2>{props.name}</h2>
+        </div>
+        <div id="instructorRating">
+          <span id="instructorRatingStars">
+            <Stars />
+          </span>
+          <h6 id="instructorRatingNo">({props.ratingNo} ratings)</h6>
+        </div>
+      </Stack>
     </Row>
   );
 };

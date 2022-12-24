@@ -7,11 +7,14 @@ import Col from "react-bootstrap/Col";
 import Card from "react-bootstrap/Card";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { ImPencil } from "react-icons/im";
+import Spinner from "react-bootstrap/Spinner";
 
 const EditMyProfileForm = (props) => {
   const [allowEdit, setAllowEdit] = useState(false);
   const [email, setEmail] = useState(props.email);
   const [about, setAbout] = useState(props.about);
+  const [validated, setValidated] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     setEmail(props.email);
@@ -20,10 +23,18 @@ const EditMyProfileForm = (props) => {
 
   const submit = async (e) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
+    setLoading(true);
     await editMyProfile({ email, about });
     setAllowEdit(false);
     props.setAbout(about);
     props.setEmail(email);
+    setLoading(false);
   };
 
   const cancelChanges = () => {
@@ -43,9 +54,14 @@ const EditMyProfileForm = (props) => {
         />
       </h3>
       <Card id="editMyProfileMain">
-        <Form onSubmit={submit} id="editProfileItem">
+        <Form
+          noValidate
+          validated={validated}
+          onSubmit={submit}
+          id="editProfileItem"
+        >
           <Col className="mb-3">
-            <Form.Group className="mb-3">
+            <Form.Group className="editInfoFormItem mb-4">
               <Form.Label>Email</Form.Label>
               {allowEdit ? (
                 <FloatingLabel
@@ -55,19 +71,25 @@ const EditMyProfileForm = (props) => {
                 >
                   <Form.Control
                     type="email"
-                    value={email}
+                    value={email ?? ""}
+                    required
                     onChange={(e) => {
                       setEmail(e.target.value);
                     }}
                   />
+                  <Form.Control.Feedback type="invalid">
+                    Please provide a valid email.
+                  </Form.Control.Feedback>
                 </FloatingLabel>
               ) : (
                 <Card onClick={() => setAllowEdit(true)}>
-                  <Card.Body className="myInfoStaticCard">{email}</Card.Body>
+                  <Card.Body className="myInfoStaticCard">
+                    {email ?? "You haven't added your email yet"}
+                  </Card.Body>
                 </Card>
               )}
             </Form.Group>
-            <Form.Group className="mb-3">
+            <Form.Group className="editInfoFormItem mb-4">
               <Form.Label>Bio</Form.Label>
               {allowEdit ? (
                 <FloatingLabel
@@ -77,7 +99,7 @@ const EditMyProfileForm = (props) => {
                 >
                   <Form.Control
                     as="textarea"
-                    value={about}
+                    value={about ?? ""}
                     onChange={(e) => {
                       setAbout(e.target.value);
                     }}
@@ -85,7 +107,11 @@ const EditMyProfileForm = (props) => {
                 </FloatingLabel>
               ) : (
                 <Card onClick={() => setAllowEdit(true)}>
-                  <Card.Body className="myInfoStaticCard">{about}</Card.Body>
+                  <Card.Body className="myInfoStaticCard">
+                    {!about || about?.length === 0
+                      ? "You haven't added your bio yet"
+                      : about}
+                  </Card.Body>
                 </Card>
               )}
             </Form.Group>
@@ -93,17 +119,29 @@ const EditMyProfileForm = (props) => {
               <div class="text-end">
                 <Button
                   className="saveMyProfileChangesBtn"
-                  variant="outline-dark"
+                  id="cancelMyProfile"
                   onClick={cancelChanges}
+                  disabled={loading}
                 >
-                  cancel changes
+                  Cancel changes
                 </Button>
                 <Button
                   className="saveMyProfileChangesBtn"
-                  variant="dark"
+                  id="saveMyProfile"
                   type="submit"
+                  disabled={loading}
                 >
-                  save changes
+                  Save changes{" "}
+                  {loading ? (
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      className="ms-1"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                  ) : null}
                 </Button>
               </div>
             ) : null}
