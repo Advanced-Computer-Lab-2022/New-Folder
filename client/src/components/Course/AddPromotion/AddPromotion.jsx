@@ -10,7 +10,8 @@ import { useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { DayPicker } from "react-day-picker";
 import "./AddPromotion.css";
-
+import SuccessFeedback from "../../SuccessFeedback/SuccessFeedback";
+import Spinner from "react-bootstrap/Spinner";
 function AddPromotion(props) {
   const { promotion, setPromotion, courseId } = props;
   const [isEditing, setEditing] = useState(false);
@@ -19,6 +20,9 @@ function AddPromotion(props) {
   const [valid, setValid] = useState(false);
   const [dateError, setDateError] = useState(null);
   const [percentageError, setPercentageError] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [show, setShow] = useState(false);
+  const [success, setSuccess] = useState(false);
   useEffect(() => {
     if (
       promotion?.startDate <= promotion?.endDate &&
@@ -50,77 +54,112 @@ function AddPromotion(props) {
       setPercentageError("Percentage must be between 0-100!");
       return;
     }
+    setLoading(true);
     setPercentageError(null);
-    setEditing(false);
     const addedPromotion = {
       startDate: new Date(startDate).getTime(),
       endDate: new Date(endDate).getTime(),
       percentage: newPercentage,
     };
-    setPromotion(addedPromotion);
-    setNewPercentage(null);
-    setRange(null);
-    await postPromotion(courseId, addedPromotion);
+    postPromotion(courseId, addedPromotion).then(() => {
+      setLoading(false);
+      setPromotion(addedPromotion);
+      setNewPercentage(null);
+      setRange(null);
+      setEditing(false);
+      setSuccess(true);
+    });
   };
-  const cancel = async () => {
+  const cancel = () => {
+    setShow(false);
+    setEditing(false);
     setPercentageError(null);
     setDateError(null);
-    setEditing(false);
     setNewPercentage(null);
     setRange(null);
+    setSuccess(false);
   };
+
   return (
     <div>
       <>
         <Modal
-          show={isEditing}
-          onHide={() => setEditing(false)}
-          size={"lg"}
+          show={show}
+          onHide={cancel}
           centered
+          backdrop={loading ? "static" : "dynamic"}
         >
-          <Modal.Header>
-            <Modal.Title>Add promotion</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <h6 id="addPromotionHeader">Select start and end dates:</h6>
-            <Stack direction="vertical" gap={1}>
-              <DayPicker
-                mode="range"
-                selected={range}
-                onSelect={setRange}
-                disabled={[
-                  {
-                    from: new Date(1900, 4, 18),
-                    to: new Date(
-                      new Date().getFullYear(),
-                      new Date().getMonth(),
-                      new Date().getDate() - 1
-                    ),
-                  },
-                ]}
-              />
-            </Stack>
-            {dateError ? <p className="promotionError">{dateError}</p> : null}
-            <Form.Group as={Col}>
-              <Form.Control
-                type="number"
-                placeholder="Promotion %"
-                value={newPercentage}
-                onChange={(e) => setNewPercentage(e.target.value)}
-              />
-              {percentageError ? (
-                <p className="promotionError">{percentageError}</p>
+          {!isEditing ? (
+            <>
+              {success ? (
+                <SuccessFeedback
+                  msg="Promotion added successfully!"
+                  onClose={cancel}
+                />
               ) : null}
-            </Form.Group>
-          </Modal.Body>
-          <Modal.Footer>
-            <Button variant="secondary" onClick={cancel}>
-              Close
-            </Button>
-            <Button variant="primary" onClick={save}>
-              Save Changes
-            </Button>
-          </Modal.Footer>
+            </>
+          ) : (
+            <>
+              <Modal.Header>
+                <Modal.Title>Add promotion</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                <h6 id="addPromotionHeader">Select start and end dates:</h6>
+                <Stack direction="vertical" gap={1}>
+                  <DayPicker
+                    mode="range"
+                    selected={range}
+                    onSelect={setRange}
+                    disabled={[
+                      {
+                        from: new Date(1900, 4, 18),
+                        to: new Date(
+                          new Date().getFullYear(),
+                          new Date().getMonth(),
+                          new Date().getDate() - 1
+                        ),
+                      },
+                    ]}
+                  />
+                </Stack>
+                {dateError ? (
+                  <p className="promotionError">{dateError}</p>
+                ) : null}
+                <Form.Group as={Col}>
+                  <Form.Control
+                    type="number"
+                    placeholder="Promotion %"
+                    value={newPercentage}
+                    onChange={(e) => setNewPercentage(e.target.value)}
+                  />
+                  {percentageError ? (
+                    <p className="promotionError">{percentageError}</p>
+                  ) : null}
+                </Form.Group>
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={cancel} disabled={loading}>
+                  Close
+                </Button>
+                {loading ? (
+                  <Button variant="primary" disabled>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    {" Saving..."}
+                  </Button>
+                ) : (
+                  <Button variant="primary" onClick={save}>
+                    Save Changes
+                  </Button>
+                )}
+              </Modal.Footer>
+            </>
+          )}
         </Modal>
       </>
 
@@ -138,12 +177,24 @@ function AddPromotion(props) {
               <b>Promotion End Date: </b>{" "}
               {new Date(promotion?.endDate).toDateString() ?? ""}
             </h5>
-            <Button variant="primary" onClick={() => setEditing(true)}>
-              Cahnge promotion
+            <Button
+              variant="primary"
+              onClick={() => {
+                setEditing(true);
+                setShow(true);
+              }}
+            >
+              Change promotion
             </Button>
           </div>
         ) : (
-          <Button variant="primary" onClick={() => setEditing(true)}>
+          <Button
+            variant="primary"
+            onClick={() => {
+              setEditing(true);
+              setShow(true);
+            }}
+          >
             Add promotion
           </Button>
         )}

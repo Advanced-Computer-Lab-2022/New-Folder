@@ -6,6 +6,7 @@ import Stack from "react-bootstrap/Stack";
 import RatingCard from "../../components/RatingCard/RatingCard";
 import Form from "react-bootstrap/Form";
 import ViewerContexts from "../../constants/ViewerContexts.json";
+import UserTypes from "../../constants/UserTypes.json";
 import Button from "react-bootstrap/Button";
 import "./CourseSummary.css";
 import ReactStars from "react-rating-stars-component";
@@ -138,9 +139,17 @@ function CourseSummary(props) {
               <Stack gap={3}>
                 <div id="priceEnroll">
                   {props.vc === ViewerContexts.guest ? (
-                    <Button id="enrollButton" variant="dark" onClick={enroll}>
-                      Enroll
-                    </Button>
+                    <>
+                      {ReactSession.get("userType") === UserTypes.trainee ? (
+                        <Button
+                          id="enrollButton"
+                          variant="dark"
+                          onClick={enroll}
+                        >
+                          Enroll
+                        </Button>
+                      ) : null}
+                    </>
                   ) : (
                     <>
                       {props.vc === ViewerContexts.enrolledTrainee ? (
@@ -278,7 +287,8 @@ function CourseSummary(props) {
             </Col>
           </Row>
         </div>
-        {props.vc !== ViewerContexts.guest ? (
+        {props.vc !== ViewerContexts.guest &&
+        props.vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
           <ReportCourse course={props.course} />
         ) : null}
       </div>

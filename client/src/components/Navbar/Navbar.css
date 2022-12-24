@@ -1,4 +1,10 @@
 .dropdown-menu {
-  height: 700px;
+  max-height: 700px;
   overflow-y: scroll;
+}
+#navbar {
+  font-size: larger;
+}
+#navBrand {
+  font-size: x-large;
 }

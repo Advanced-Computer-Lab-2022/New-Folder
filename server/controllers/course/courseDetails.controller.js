@@ -12,36 +12,36 @@ const constant = require("../../constants.json");
 const getCourseDetails = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
-    res.json(course);
+    res.status(201).json(course);
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
 const getSubtitle = async (req, res) => {
   try {
     const subtitle = await Subtitle.findById(req.params.id);
-    res.json(subtitle);
+    res.status(201).json(subtitle);
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
 const getVideo = async (req, res) => {
   try {
     const video = await Content.findById(req.params.id);
-    res.json(video);
+    res.status(201).json(video);
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
 const getExcercise = async (req, res) => {
   try {
     const excercise = await Exercise.findById(req.params.id);
-    res.json(excercise);
+    res.status(201).json(excercise);
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -90,8 +90,9 @@ const addReview = async (req, res) => {
         totalRating: totalRating,
       });
     }
+    res.status(201).json({ message: "success" });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 const deleteRating = async (req, res) => {
@@ -115,8 +116,9 @@ const deleteRating = async (req, res) => {
       ratings: ratings,
       totalRating: totalRating,
     });
+    res.status(201).json({ message: "success" });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 const updateCourse = async (req, res) => {
@@ -126,9 +128,9 @@ const updateCourse = async (req, res) => {
       req.body,
       { new: true }
     );
-    res.json(updatedCourse);
+    res.status(201).json(updatedCourse);
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 const addPromotion = async (req, res) => {
@@ -138,10 +140,9 @@ const addPromotion = async (req, res) => {
       { promotion: req.body.promotion },
       { new: true }
     );
-    res.json(updatedCourse);
+    res.status(201).json(updatedCourse);
   } catch (err) {
-    console.log(req.body);
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -170,9 +171,9 @@ const UpdateMark = async (req, res) => {
       { Mark: arrMark },
       { new: true }
     );
-    res.json(exerciseNew);
+    res.status(201).json(exerciseNew);
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -199,12 +200,12 @@ const getMark = async (req, res) => {
       }
     }
 
-    res.json({
+    res.status(201).json({
       Mark: index === -1 ? -1 : arrMark[index].Mark,
       ExerciseLength: QuestionsExcerciseLength,
     });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -233,8 +234,9 @@ const updateNote = async (req, res) => {
       { Note: arrNote },
       { new: true }
     );
+    res.status(201).json({ message: "success" });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -257,11 +259,11 @@ const getNote = async (req, res) => {
       }
     }
 
-    res.json({
+    res.status(201).json({
       TraineeNote: index === -1 ? "" : arrNote[index].note,
     });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -307,9 +309,9 @@ const updateVisits = async (req, res) => {
         );
     }
 
-    res.json(x);
+    res.status(201).json(x);
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -337,9 +339,9 @@ const getVisits = async (req, res) => {
         break;
       }
     }
-    res.json(index);
+    res.status(201).json(index);
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -353,9 +355,9 @@ const createSubtitle = async (req, res) => {
     });
     course.subtitles.push(subtitle._id);
     course.save();
-    res.json(course);
+    res.status(201).json(course);
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -375,7 +377,7 @@ const submitReport = async (req, res) => {
     user.save();
     res.status(201).json(report);
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -393,7 +395,7 @@ const requestAccess = async (req, res) => {
     course.save();
     res.status(201).json(request);
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -404,7 +406,7 @@ const addFollowup = async (req, res) => {
     report.save();
     res.status(201).json(report);
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 const deleteAccessRequest = async (req, res) => {
@@ -423,9 +425,9 @@ const deleteAccessRequest = async (req, res) => {
     await Course.findByIdAndUpdate(req.params.id, {
       pendingTrainees: pendingTrainees,
     });
-    res.status(201);
+    res.status(201).json({ message: "success" });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -435,9 +437,9 @@ const updateStatus = async (req, res) => {
     const updatedReport = await Report.findByIdAndUpdate(id, req.body, {
       new: true,
     });
-    res.status(200).json(updatedReport);
+    res.status(201).json(updatedReport);
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -447,9 +449,9 @@ const addMultiPromotion = async (req, res) => {
       { _id: { $in: req.body.courses } },
       { $set: { promotion: req.body.promotion } }
     );
+    res.status(201).json({ message: "success" });
   } catch (err) {
-    console.log(req.body);
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -467,10 +469,9 @@ const requestRefund = async (req, res) => {
     });
     course.refundingTrainees.push(req.session.userId);
     await course.save();
-    res.status(200);
+    res.status(201).json({ message: "success" });
   } catch (err) {
-    console.log(req.body);
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
@@ -488,9 +489,9 @@ const cancelRefund = async (req, res) => {
     await Course.findByIdAndUpdate(req.params.id, {
       refundingTrainees: refundingTrainees,
     });
-    res.status(200);
+    res.status(201).json({ message: "success" });
   } catch (err) {
-    console.log(err);
+    res.status(500).json({message:err.message});
   }
 };
 
