@@ -80,7 +80,7 @@ const payForCourse = async (req, res) => {
       "",
       walletPayment
     );
-    res.json({ url: `${process.env.CLIENT_URL}course/${courseID}` });
+    res.json({ url: `${process.env.CLIENT_URL}/course/${courseID}` });
     return;
   }
   if (coupon) {
