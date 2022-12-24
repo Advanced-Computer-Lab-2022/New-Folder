@@ -6,6 +6,47 @@ const stripe = require("stripe")(process.env.STRIPE_PRIVATE_KEY);
 const { currencyConverter } = require("../guest/currencyConverter.controller");
 const { payByWallet, getAmountPaidByWallet } = require("./wallet.controller");
 
+const getPayment = async (req, res) => {
+  const { courseID, userCurrency } = req.body;
+  const course = await Course.findById(courseID);
+  let discount = course.promotion;
+  let finalPrice = parseFloat(course.price.magnitude);
+  let hasDiscount = false;
+  if (discount) {
+    let now = Date.now();
+    if (discount.startDate <= now && discount.endDate > now) {
+      hasDiscount = true;
+      finalPrice *= 1 - discount.percentage / 100;
+    }
+  }
+  let walletPayment = parseFloat(
+    await getAmountPaidByWallet(
+      req.session.userId,
+      finalPrice,
+      course.price.currency
+    )
+  );
+  finalPrice -= walletPayment;
+  const paidByWallet = await currencyConverter(
+    walletPayment,
+    course.price.currency,
+    userCurrency
+  );
+  if (finalPrice <= 0) {
+    res.json({ wallet: paidByWallet, card: 0 });
+    return;
+  }
+  if (hasDiscount) {
+    finalPrice /= 1 - discount.percentage / 100;
+  }
+  const paidByCard = await currencyConverter(
+    finalPrice,
+    course.price.currency,
+    userCurrency
+  );
+  res.json({ wallet: paidByWallet, card: paidByCard });
+};
+
 const payForCourse = async (req, res) => {
   const { courseID, userCurrency } = req.body;
   const course = await Course.findById(courseID);
@@ -30,7 +71,7 @@ const payForCourse = async (req, res) => {
     )
   );
   finalPrice -= walletPayment;
-  if (finalPrice === 0) {
+  if (finalPrice <= 0) {
     await enrollInCourse(
       req.session.userId,
       courseID,
@@ -39,7 +80,7 @@ const payForCourse = async (req, res) => {
       "",
       walletPayment
     );
-    res.json({ url: `${process.env.CLIENT_URL}/course/${courseID}` });
+    res.json({ url: `${process.env.CLIENT_URL}course/${courseID}` });
     return;
   }
   if (coupon) {
@@ -183,4 +224,4 @@ const addPayment = async (
   await trainee.save();
 };
 
-module.exports = { payForCourse, enrollInCourse };
+module.exports = { payForCourse, enrollInCourse, getPayment };

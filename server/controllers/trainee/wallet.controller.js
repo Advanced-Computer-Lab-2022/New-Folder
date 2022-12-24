@@ -20,7 +20,7 @@ const payByWallet = async (userId, amount, currency) => {
   currency = currency.toLowerCase();
   const trainee = await Trainee.findById(userId);
   let walletPayments = [];
-  if (amount === 0) return walletPayments;
+  if (amount <= 0) return walletPayments;
   let wallet = trainee.wallet;
   let amountOfSameCurrency = wallet.get(currency);
   if (amountOfSameCurrency) {
@@ -77,7 +77,7 @@ const payByWallet = async (userId, amount, currency) => {
       }
       amount = 0;
     }
-    if (amount === 0) {
+    if (amount <= 0) {
       return walletPayments;
     }
   }

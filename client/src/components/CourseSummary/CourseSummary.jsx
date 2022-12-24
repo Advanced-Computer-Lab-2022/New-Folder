@@ -23,15 +23,20 @@ import ProgressBar from "./ProgressBar/ProgressBar";
 import ReportCourse from "../Course/ReportCourse/ReportCourse";
 import { ReactSession } from "react-client-session";
 import countryCurrency from "../../constants/CountryCurrency.json";
-import { payForCourse } from "../../network";
+import { getPayment } from "../../network";
 import RequestAccess from "../Course/RequestAccess/RequestAccess";
 import { Spinner } from "react-bootstrap";
+import PaymentConfirmation from "../PaymentConfirmation/PaymentConfirmation";
+import ErrorModal from "../ErrorModal/ErrorModal";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
   const [ratingsCount, setRatingsCount] = useState(0);
   const [validPromotion, setValidPromotion] = useState(false);
-  const [loadingEnrollBtn, setloadingEnrollBtn] = useState(false);
+  const [loadingEnrollBtn, setLoadingEnrollBtn] = useState(false);
+  const [showPaymentConfirmation, setShowPaymentConfirmation] = useState(false);
+  const [paymentConfirmationMsg, setPaymentConfirmationMsg] = useState("");
+  const [showError, setShowError] = useState(false);
   const [progress, setProgress] = useState(0);
   const promotion = props.promotion;
   const setPromotion = props.setPromotion;
@@ -68,17 +73,32 @@ function CourseSummary(props) {
   }, [totalRating]);
 
   const enroll = async () => {
-    setloadingEnrollBtn(true);
+    setLoadingEnrollBtn(true);
     try {
-      const checkout = await payForCourse({
+      const currency =
+        countryCurrency.country_currency[ReactSession.get("country")];
+      const payment = await getPayment({
         courseID: props.courseId,
-        userCurrency:
-          countryCurrency.country_currency[ReactSession.get("country")],
+        userCurrency: currency,
       });
-      setloadingEnrollBtn(false);
-      window.location.href = checkout.url;
+      if (payment.wallet <= 0) {
+        setPaymentConfirmationMsg(
+          `You will be charged ${payment.card} ${currency} from your credit card.`
+        );
+      } else if (payment.card <= 0) {
+        setPaymentConfirmationMsg(
+          `You will be charged ${payment.wallet} ${currency} from your wallet.`
+        );
+      } else {
+        setPaymentConfirmationMsg(
+          `You will be charged ${payment.wallet} ${currency} from your wallet and ${payment.card} ${currency} from your credit card.`
+        );
+      }
+      setLoadingEnrollBtn(false);
+      setShowPaymentConfirmation(true);
     } catch (e) {
-      setloadingEnrollBtn(false);
+      setLoadingEnrollBtn(false);
+      setShowError(true);
       console.log(e);
     }
   };
@@ -308,6 +328,13 @@ function CourseSummary(props) {
           <ReportCourse course={props.course} />
         ) : null}
       </div>
+      <PaymentConfirmation
+        show={showPaymentConfirmation}
+        setShow={setShowPaymentConfirmation}
+        msg={paymentConfirmationMsg}
+        courseId={props.courseId}
+      />
+      <ErrorModal show={showError} handleClose={() => setShowError(false)} />
     </>
   );
 }

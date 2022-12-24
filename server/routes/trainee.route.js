@@ -15,7 +15,10 @@ const {
 const {
   getMyProblems,
 } = require("../controllers/trainee/getMyProblems.controller");
-const { payForCourse } = require("../controllers/trainee/payment.controller");
+const {
+  payForCourse,
+  getPayment,
+} = require("../controllers/trainee/payment.controller");
 
 const { getWallet } = require("../controllers/trainee/wallet.controller");
 const {
@@ -46,5 +49,6 @@ router.post(
   deleteInstructorReview
 );
 router.post("/payForCourse", canEnroll, payForCourse);
+router.get("/getPayment", canEnroll, getPayment);
 
 module.exports = router;
