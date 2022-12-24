@@ -5,7 +5,7 @@ const User = require("../../models/User.model");
 exports.login = asyncHandler(async (req, res) => {
   const username = req.body.username;
   const password = req.body.password;
-  const user = (await User.findOne({ username })).toJSON();
+  const user = (await User.findOne({ username }))?.toJSON();
   const isCorrectPassword = await bcrypt.compare(password, user.password);
   //const isCorrectPassword = password === user.password;
   if (user && isCorrectPassword) {
