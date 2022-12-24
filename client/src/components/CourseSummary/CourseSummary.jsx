@@ -42,6 +42,18 @@ function CourseSummary(props) {
   }, []);
 
   useEffect(() => {
+    if (props.vc !== "")
+      if (
+        !(
+          props.vc === ViewerContexts.enrolledTrainee ||
+          props.vc === ViewerContexts.refundingTrainee
+        )
+      ) {
+        setLoading(true);
+      }
+  }, [props.vc]);
+
+  useEffect(() => {
     const startDate = new Date(promotion?.startDate).getTime();
     const endDate = new Date(promotion?.endDate).getTime();
     const now = Date.now();
@@ -127,7 +139,7 @@ function CourseSummary(props) {
                 vc={props.vc}
                 setVc={props.setVc}
                 courseId={props.course._id}
-                setLoading= {setLoading}
+                setLoading={setLoading}
               />
             )}
           </div>
