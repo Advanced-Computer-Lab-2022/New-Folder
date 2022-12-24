@@ -10,8 +10,9 @@ import RefundForm from "../../Course/Refund/RefundForm";
 import { Stack } from "react-bootstrap";
 function ProgressBar(props) {
   const [done, setDone] = useState(false);
-  const { subContents, subtitles, vc, setVc, courseId } = props;
+  const { subContents, subtitles, vc, setVc, courseId  , setLoading} = props;
   const [percentage, setPercentage] = useState(0);
+
   const handleProgressPercentage = async () => {
     let totalPercentage = 0;
     let noOfFalse = 0;
@@ -37,7 +38,12 @@ function ProgressBar(props) {
 
     setPercentage((totalPercentage * 100).toFixed(1) ?? 0);
     if (subtitles.length !== 0) setDone(true);
+   
   };
+
+  useEffect (()=>{
+    setLoading(true);
+  }, [done])
 
   useEffect(() => {
     handleProgressPercentage();

@@ -33,6 +33,7 @@ function CourseSummary(props) {
   const promotion = props.promotion;
   const setPromotion = props.setPromotion;
   const subContents = props.subContents;
+  const setLoading = props.setLoading;
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -125,6 +126,7 @@ function CourseSummary(props) {
                 vc={props.vc}
                 setVc={props.setVc}
                 courseId={props.course._id}
+                setLoading= {setLoading}
               />
             )}
           </div>

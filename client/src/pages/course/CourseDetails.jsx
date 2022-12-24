@@ -14,6 +14,7 @@ import Form from "react-bootstrap/Form";
 import CourseSummary from "../../components/CourseSummary/CourseSummary";
 import Accordion from "react-bootstrap/Accordion";
 import CourseReviewCard from "../../components/Course/CourseReviewCard/CourseReviewCard";
+import ReactLoading from 'react-loading';
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -27,19 +28,20 @@ const CourseDetails = () => {
   const [newVideo, setNewVideo] = useState();
   const [newSubtitle, setNewSubtitle] = useState("");
   const [promotion, setPromotion] = useState(null);
-  const [subContents , setSubContents] = useState([]);
+  const [subContents, setSubContents] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   let ReviewCards = useMemo(() => {
     return () => <CourseReviewCard reviews={reviews} />;
   }, [reviews]);
 
-  const includeInGlobalSubContentArr = (arr)=>{
+  const includeInGlobalSubContentArr = (arr) => {
     if (arr !== []) {
       let newArr = [...subContents];
       newArr.push(arr);
       setSubContents(newArr);
     }
-  }
+  };
 
   const uploadIntroVideo = async () => {
     try {
@@ -122,72 +124,76 @@ const CourseDetails = () => {
     claculateDuration();
   }, [durationMap, course]);
   return (
-    <div>
-      <CourseSummary
-        course={course}
-        vc={vc}
-        setVc={setVc}
-        price={price}
-        courseId={courseId}
-        duration={duration}
-        newVideo={newVideo}
-        setNewVideo={setNewVideo}
-        uploadIntroVideo={uploadIntroVideo}
-        promotion={promotion}
-        setPromotion={setPromotion}
-        reviews={reviews}
-        setReviews={setReviews}
-        subtitles={subtitles}
-        setSubContents={setSubContents}
-        subContents={subContents}
-      />
-      <div>
-        <Accordion>
-          <div id="subtitlesWrapper">
-            <h3 className="mb-4">Subtitles ({subtitles.length})</h3>
-            {subtitles.map((subtitleId, index) => (
-              <SubtitleCard
-                setCourse={setCourse}
-                subtitles={subtitles}
-                setSubtitles={setSubtitles}
-                claculateDuration={claculateDuration}
-                courseId={course._id}
-                index={index}
-                subtitleId={subtitleId}
-                durationMap={durationMap}
-                setDurationMap={setDurationMap}
-                setSubContents={setSubContents}
-                subContents={subContents}
-                handleSubContent={(arr) => includeInGlobalSubContentArr(arr)}
-                vc={vc}
-              />
-            ))}
-          </div>
-          {vc === ViewerContexts.author ? (
-            <Form onSubmit={addSubtitle}>
-              <Container className="mt-4">
-                <Form.Group className="mt-3">
-                  <Form.Control
-                    type="text"
-                    placeholder="Add Subtitle"
-                    value={newSubtitle}
-                    required
-                    onChange={(e) => {
-                      setNewSubtitle(e.target.value);
-                    }}
-                  ></Form.Control>
-                </Form.Group>
-                <div className="text-center">
-                  <Button className="mt-3" type="submit">
-                    Add Subtitle
-                  </Button>
-                </div>
-              </Container>
-            </Form>
-          ) : null}
-        </Accordion>
+    <div  className="courseDetails">
+      <div style={{display: loading ? "initial" : "none"}}>
+        <CourseSummary
+          course={course}
+          vc={vc}
+          setVc={setVc}
+          price={price}
+          courseId={courseId}
+          duration={duration}
+          newVideo={newVideo}
+          setNewVideo={setNewVideo}
+          uploadIntroVideo={uploadIntroVideo}
+          promotion={promotion}
+          setPromotion={setPromotion}
+          reviews={reviews}
+          setReviews={setReviews}
+          subtitles={subtitles}
+          setSubContents={setSubContents}
+          subContents={subContents}
+          setLoading={setLoading}
+        />
+        <div>
+          <Accordion>
+            <div id="subtitlesWrapper">
+              <h3 className="mb-4">Subtitles ({subtitles.length})</h3>
+              {subtitles.map((subtitleId, index) => (
+                <SubtitleCard
+                  setCourse={setCourse}
+                  subtitles={subtitles}
+                  setSubtitles={setSubtitles}
+                  claculateDuration={claculateDuration}
+                  courseId={course._id}
+                  index={index}
+                  subtitleId={subtitleId}
+                  durationMap={durationMap}
+                  setDurationMap={setDurationMap}
+                  setSubContents={setSubContents}
+                  subContents={subContents}
+                  handleSubContent={(arr) => includeInGlobalSubContentArr(arr)}
+                  vc={vc}
+                />
+              ))}
+            </div>
+            {vc === ViewerContexts.author ? (
+              <Form onSubmit={addSubtitle}>
+                <Container className="mt-4">
+                  <Form.Group className="mt-3">
+                    <Form.Control
+                      type="text"
+                      placeholder="Add Subtitle"
+                      value={newSubtitle}
+                      required
+                      onChange={(e) => {
+                        setNewSubtitle(e.target.value);
+                      }}
+                    ></Form.Control>
+                  </Form.Group>
+                  <div className="text-center">
+                    <Button className="mt-3" type="submit">
+                      Add Subtitle
+                    </Button>
+                  </div>
+                </Container>
+              </Form>
+            ) : null}
+          </Accordion>
+        </div>
+        <ReviewCards />
       </div>
-      <ReviewCards />
+      {!loading && <ReactLoading className="loading-spinner" type={"spin"} color="#000"/>}
     </div>
   );
 };
