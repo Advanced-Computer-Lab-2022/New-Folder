@@ -5,12 +5,12 @@ import { getMyProfile } from "../../../network";
 import EditMyProfileForm from "../../../components/EditMyProfileForm/EditMyProfileForm";
 import userTypes from "../../../constants/UserTypes.json";
 import { ReactSession } from "react-client-session";
+import PageHeader from "../../../components/PageHeader/PageHeader";
 
 const MyProfile = () => {
   const [name, setName] = useState("");
-  const [img, setImg] = useState("");
-  const [about, setAbout] = useState("");
-  const [email, setEmail] = useState("");
+  const [about, setAbout] = useState(null);
+  const [email, setEmail] = useState(null);
   const [rating, setRating] = useState(0);
   const [ratingNo, setRatingNo] = useState(0);
   const [reviews, setReviews] = useState([]);
@@ -19,11 +19,10 @@ const MyProfile = () => {
     try {
       const myProfileData = await getMyProfile();
       setName(`${myProfileData.firstName} ${myProfileData.lastName}`);
-      setImg(myProfileData.image);
-      setAbout(myProfileData.about);
+      setAbout(myProfileData.about?.length === 0 ? null : myProfileData.about);
       setRating(myProfileData.totalRating);
       setRatingNo(myProfileData.ratings.length);
-      setEmail(myProfileData.email);
+      setEmail(myProfileData.email?.length === 0 ? null : myProfileData.email);
       setReviews(myProfileData.ratings ?? []);
     } catch (err) {
       console.log(err);
@@ -37,12 +36,8 @@ const MyProfile = () => {
   if (ReactSession.get("userType") === userTypes.instructor) {
     return (
       <div>
-        <ProfileCard
-          name={name}
-          img={img}
-          rating={rating}
-          ratingNo={ratingNo}
-        />
+        <PageHeader pageName="My profile" />
+        <ProfileCard name={name} rating={rating} ratingNo={ratingNo} />
         <EditMyProfileForm
           email={email}
           setEmail={setEmail}

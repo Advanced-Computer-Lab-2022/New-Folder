@@ -4,5 +4,7 @@
   "yellow": "#FFD369",
   "grey": "#B0B6B1",
   "white": "#F6F5F6",
-  "green": "#36846e"
+  "green": "#36846e",
+  "saveButton": "#5d8889",
+  "red": "#b22727"
 }

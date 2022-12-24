@@ -25,11 +25,13 @@ import { ReactSession } from "react-client-session";
 import countryCurrency from "../../constants/CountryCurrency.json";
 import { payForCourse } from "../../network";
 import RequestAccess from "../Course/RequestAccess/RequestAccess";
+import { Spinner } from "react-bootstrap";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
   const [ratingsCount, setRatingsCount] = useState(0);
   const [validPromotion, setValidPromotion] = useState(false);
+  const [loadingEnrollBtn, setloadingEnrollBtn] = useState(false);
   const [progress, setProgress] = useState(0);
   const promotion = props.promotion;
   const setPromotion = props.setPromotion;
@@ -66,14 +68,17 @@ function CourseSummary(props) {
   }, [totalRating]);
 
   const enroll = async () => {
+    setloadingEnrollBtn(true);
     try {
       const checkout = await payForCourse({
         courseID: props.courseId,
         userCurrency:
           countryCurrency.country_currency[ReactSession.get("country")],
       });
+      setloadingEnrollBtn(false);
       window.location.href = checkout.url;
     } catch (e) {
+      setloadingEnrollBtn(false);
       console.log(e);
     }
   };
@@ -127,7 +132,7 @@ function CourseSummary(props) {
                 vc={props.vc}
                 setVc={props.setVc}
                 courseId={props.course._id}
-                setLoading= {setLoading}
+                setLoading={setLoading}
               />
             )}
           </div>
@@ -145,8 +150,19 @@ function CourseSummary(props) {
                           id="enrollButton"
                           variant="dark"
                           onClick={enroll}
+                          disabled={loadingEnrollBtn}
                         >
-                          Enroll
+                          Enroll{" "}
+                          {loadingEnrollBtn ? (
+                            <Spinner
+                              as="span"
+                              animation="border"
+                              className="ms-1"
+                              size="sm"
+                              role="status"
+                              aria-hidden="true"
+                            />
+                          ) : null}
                         </Button>
                       ) : null}
                     </>

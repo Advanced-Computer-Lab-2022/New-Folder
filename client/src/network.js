@@ -139,6 +139,12 @@ export const rateInstructor = async (data) => {
   return res;
 };
 
+// delete review instructor
+export const deleteInstructorReview = async (data) => {
+  const res = await instance.post("/trainee/deleteInstructorReview", data);
+  return res;
+};
+
 // get MyProfile for instructor
 export const getMyProfile = async () => {
   const res = await instance.get("/instructor/myProfile", {

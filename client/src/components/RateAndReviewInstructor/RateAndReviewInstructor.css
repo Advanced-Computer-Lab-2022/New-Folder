@@ -5,6 +5,7 @@
   margin: 2%;
   margin-left: 15%;
   margin-right: 15%;
+  pointer-events: none;
 }
 
 #ratingStars {
@@ -12,17 +13,20 @@
   padding: 0%;
   width: 170px;
   height: 90px;
+  pointer-events: all;
 }
 
 #reviewBox {
   margin: 0%;
   margin-top: 2%;
   margin-bottom: 2%;
+  pointer-events: all;
 }
 
 .submitReviewBtn {
   width: 150px;
   margin: 10px;
+  pointer-events: all;
 }
 
 #ratingLabel {
@@ -35,4 +39,37 @@
   display: flex;
   justify-content: flex-end;
   margin: 0;
+}
+
+#cancelReviewBtn {
+  background-color: #b0b6b1;
+  border: solid #b0b6b1;
+}
+
+#cancelReviewBtn:hover {
+  background-color: transparent;
+  border: solid #b0b6b1;
+  color: #b0b6b1;
+}
+
+#addReviewBtn {
+  background-color: #5d8889;
+  border: solid #5d8889;
+}
+
+#addReviewBtn:hover {
+  background-color: transparent;
+  border: solid #5d8889;
+  color: #5d8889;
+}
+
+#delReviewBtn {
+  background-color: #b22727;
+  border: solid #b22727;
+}
+
+#delReviewBtn:hover {
+  background-color: transparent;
+  border: solid #b22727;
+  color: #b22727;
 }

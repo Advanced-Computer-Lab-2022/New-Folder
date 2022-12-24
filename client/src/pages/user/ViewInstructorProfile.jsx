@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import PageHeader from "../../components/PageHeader/PageHeader";
 import ProfileCard from "../../components/ProfileCard/ProfileCard";
 import RateAndReviewInstructor from "../../components/RateAndReviewInstructor/RateAndReviewInstructor";
 import ReviewCard from "../../components/ReviewsCard/ReviewsCard";
@@ -7,13 +8,11 @@ import { fetchInstructorData } from "../../network";
 
 const ViewInstructorProfile = () => {
   const [name, setName] = useState("");
-  const [img, setImg] = useState("");
-  const [about, setAbout] = useState("");
   const [rating, setRating] = useState(0);
   const [reviews, setReviews] = useState([]);
   const [ratingNo, setRatingNo] = useState(0);
-  const [coursesCount, setCoursesCount] = useState(0);
   const [myRating, setMyRating] = useState(null);
+  const [myReview, setMyReview] = useState(null);
   const [hasNewReview, setHasNewReview] = useState(false);
   const { isEnrolled, instructorID } = useParams();
 
@@ -23,12 +22,11 @@ const ViewInstructorProfile = () => {
       setName(
         `${fetchedInstructorData.firstName} ${fetchedInstructorData.lastName}`
       );
-      setImg(fetchedInstructorData.image);
-      setAbout(fetchedInstructorData.about);
       setRating(fetchedInstructorData.totalRating);
       setRatingNo(fetchedInstructorData.ratingNo);
-      setCoursesCount(fetchedInstructorData.coursesCount);
       setMyRating(fetchedInstructorData.myRating);
+      setMyReview(fetchedInstructorData.myReview);
+
       setReviews(fetchedInstructorData.ratings ?? []);
     } catch (err) {
       console.log(err);
@@ -41,7 +39,8 @@ const ViewInstructorProfile = () => {
 
   return (
     <div>
-      <ProfileCard name={name} img={img} rating={rating} ratingNo={ratingNo} />
+      <PageHeader pageName="Instructor profile" />
+      <ProfileCard name={name} rating={rating} ratingNo={ratingNo} />
       {isEnrolled === "true" ? (
         <RateAndReviewInstructor
           instructorID={instructorID}
@@ -51,6 +50,8 @@ const ViewInstructorProfile = () => {
           setRatingNo={setRatingNo}
           setMyRating={setMyRating}
           myRating={myRating}
+          setMyReview={setMyReview}
+          myReview={myReview}
           hasNewReview={hasNewReview}
           setHasNewReview={setHasNewReview}
         />

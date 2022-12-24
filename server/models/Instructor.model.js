@@ -35,25 +35,21 @@ const Instructor = mongoose.Schema(
         {
           year: {
             type: Number,
-            required: true,
           },
           months: {
             type: [
               {
                 month: {
                   type: String,
-                  required: true,
                 },
                 payments: {
                   type: [
                     {
                       magnitude: {
                         type: Number,
-                        required: true,
                       },
                       currency: {
                         type: String,
-                        required: true,
                       },
                     },
                   ],
@@ -83,17 +79,14 @@ const Instructor = mongoose.Schema(
           traineeId: {
             type: mongoose.Types.ObjectId,
             ref: "Trainee",
-            required: true,
           },
           traineeName: {
             type: String,
-            required: true,
           },
           rating: {
             type: Number,
             min: 0,
             max: 5,
-            required: true,
           },
           review: {
             type: String,
