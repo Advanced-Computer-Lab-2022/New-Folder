@@ -140,6 +140,7 @@ function CourseSummary(props) {
                 setVc={props.setVc}
                 courseId={props.course._id}
                 setLoading={setLoading}
+                courseName={props.course.name}
               />
             )}
           </div>

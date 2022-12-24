@@ -22,7 +22,7 @@ const [saved, setSaved] = useState(true);
   const generatePDF = (noteTitle, noteContent) => {
     var doc = new jsPDF();
     doc.setFontSize(20);
-    doc.text(noteTitle, 30,25);
+    doc.text(noteTitle, doc.internal.pageSize.getWidth()/2 - doc.getStringUnitWidth(noteTitle) -25,25);
     doc.setFontSize(15);
     const s = doc.splitTextToSize(noteContent,180);
     doc.text(s, 15, 50);
