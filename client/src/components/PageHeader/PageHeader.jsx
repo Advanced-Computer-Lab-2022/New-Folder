@@ -4,7 +4,7 @@ import Col from "react-bootstrap/Col";
 
 const PageHeader = (props) => {
   return (
-    <Row className="mb-3 yellowBg whiteTxt" id="pageHeaderBackground">
+    <Row className="mb-3 blueBg whiteTxt" id="pageHeaderBackground">
       <Col md="auto" id="pageNameCol">
         <h3>{props.pageName}</h3>
       </Col>
