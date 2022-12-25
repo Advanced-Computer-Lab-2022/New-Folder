@@ -6,6 +6,7 @@ import Button from "react-bootstrap/Button";
 import { ReactSession } from "react-client-session";
 import { signup } from "../../network";
 import { Alert, Spinner } from "react-bootstrap";
+import SignupTerms from "../../components/SignupTerms/SignupTerms";
 
 const Signup = (props) => {
   const navigate = useNavigate();
@@ -17,6 +18,7 @@ const Signup = (props) => {
   const [lastName, setLastName] = useState("");
   const [gender, setGender] = useState("");
   const [showError, setShowError] = useState(false);
+  const [showTerms, setShowTerms] = useState(false);
   const [errorMsg, setErrorMsg] = useState(false);
   const [loading, setLoading] = useState(false);
   const [validated, setValidated] = useState(false);
@@ -67,6 +69,42 @@ const Signup = (props) => {
         </Alert>
         <Form noValidate validated={validated} onSubmit={submit}>
           <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
+            <Form.Label>First name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="First name"
+              required
+              onChange={(e) => setFirstName(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              This field is required.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
+            <Form.Label>Last name</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Last name"
+              required
+              onChange={(e) => setLastName(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              This field is required.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              required
+              placeholder="Email"
+              onChange={(e) => setEmail(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              Please enter a valid email (example@gmail.com).
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
             <Form.Label>Username</Form.Label>
             <Form.Control
               type="text"
@@ -104,42 +142,6 @@ const Signup = (props) => {
               This doesn't match the password you entered.
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
-            <Form.Label>First name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="First name"
-              required
-              onChange={(e) => setFirstName(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              This field is required.
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
-            <Form.Label>Last name</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Last name"
-              required
-              onChange={(e) => setLastName(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              This field is required.
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
-            <Form.Label>Email</Form.Label>
-            <Form.Control
-              type="email"
-              required
-              placeholder="Email"
-              onChange={(e) => setEmail(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please enter a valid email (example@gmail.com).
-            </Form.Control.Feedback>
-          </Form.Group>
           <Form.Group
             className="mb-4"
             controlId="formBasicCheckbox"
@@ -147,6 +149,24 @@ const Signup = (props) => {
               setGender(e.target.value);
             }}
           >
+            <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
+              <Form.Check
+                type="checkbox"
+                label={
+                  <p>
+                    Agree to{" "}
+                    <a
+                      onClick={() => setShowTerms(true)}
+                      className="signupLinks"
+                    >
+                      terms and conditions
+                    </a>
+                    .
+                  </p>
+                }
+                required
+              />
+            </Form.Group>
             <Form.Label>Gender</Form.Label>
             <Form.Check
               type="radio"
@@ -194,6 +214,7 @@ const Signup = (props) => {
           </a>
         </h3>
       </div>
+      <SignupTerms show={showTerms} setShow={setShowTerms} />
     </div>
   );
 };
