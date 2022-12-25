@@ -21,7 +21,7 @@ import ResetPassword from "./pages/user/ResetPassword";
 import EditSubtitle from "./pages/user/instructor/EditSubtitle";
 import MyProblems from "./pages/user/MyProblems/MyProblems";
 import Reports from "./pages/admin/Reports";
-import AddUser from "./pages/admin/AddUser";
+import AddUser from "./pages/admin/AddUser/AddUser";
 import Earnings from "./pages/user/instructor/Earnings";
 import EnrolledCourses from "./pages/user/EnrolledCourses";
 import AccessRequests from "./pages/admin/AccessRequests";
