@@ -52,7 +52,7 @@ const Earnings = () => {
               <EarningsCard months={year.months} />
             </div>
           ) : (
-            <div className="pt-3">
+            <div className="pt-5">
               <Stack className="mt-5" gap={3}>
                 <Image width={"25%"} src="/assets/Banknote.png" />
                 <h2 className="m-auto mt-3">You don't have any earnings yet</h2>
