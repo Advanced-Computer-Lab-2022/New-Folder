@@ -1,3 +1,17 @@
 #modal-Certificate {
     margin: 0;
 }
+
+.tooltip-wrapper {
+    cursor: pointer;
+}
+
+.Email-loader {
+    display: flex;
+    flex-direction: row;
+}
+
+.Email-Loader-spinner {
+    margin-right: 5px;
+    margin-bottom: 3px;
+}

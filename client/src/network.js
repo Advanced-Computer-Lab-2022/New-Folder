@@ -105,6 +105,15 @@ export const sendPasswordResetLink = async (data) => {
   return res;
 };
 
+export const sendCertificate = async (userName , courseName) => {
+ 
+
+  const res = await instance.post('/trainee/sendCertificate', {
+    userName  : userName,
+    courseName : courseName,
+  });
+}
+
 export const getPrice = async (price) => {
   const data = {
     magnitude: price.magnitude,
