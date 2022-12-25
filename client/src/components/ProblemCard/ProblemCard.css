@@ -15,21 +15,21 @@
     rgba(0, 0, 0, 0.1) 0px 10px 15px -3px;
 }
 #problemHeaderUnseen {
-  background-color: rgba(179, 58, 58, 0.3);
+  background-color: #ffd269;
   color: 5%;
   margin: 0%;
   border-radius: 1em;
   padding: 1%;
 }
 #problemHeaderPending {
-  background-color: rgba(255, 255, 0, 0.3);
+  background-color: #87b3b4;
   color: 5%;
   margin: 0%;
   border-radius: 1em;
   padding: 1%;
 }
 #problemHeaderResolved {
-  background-color: rgba(0, 255, 0, 0.3);
+  background-color: #6bb16f7c;
   color: 5%;
   margin: 0%;
   border-radius: 1em;

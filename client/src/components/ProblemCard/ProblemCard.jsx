@@ -118,7 +118,10 @@ function ProblemCard(props) {
                   {problem.status === ProblemStatus.unseen && (
                     <Col className="mb-1">
                       <Button
-                        variant="warning"
+                        style={{
+                          backgroundColor: "#F6F5F6",
+                        }}
+                        variant="light"
                         size="sm"
                         onClick={(e) => changeStatus(ProblemStatus.pending)}
                       >
@@ -130,6 +133,7 @@ function ProblemCard(props) {
                     <Col className="mb-1">
                       <Button
                         variant="success"
+                        style={{ backgroundColor: "#156358" }}
                         size="sm"
                         onClick={(e) => changeStatus(ProblemStatus.resolved)}
                       >
