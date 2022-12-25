@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { postCourse } from "../../../network";
+import { postCourse } from "../../../../network";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import CountryCurrency from "iso-country-currency";
@@ -8,7 +8,8 @@ import Container from "react-bootstrap/esm/Container";
 import Col from "react-bootstrap/esm/Col";
 import Row from "react-bootstrap/Row";
 import CloseButton from "react-bootstrap/CloseButton";
-import ContractCard from "../../../components/ContractCard/ContractCard";
+import ContractCard from "../../../../components/ContractCard/ContractCard";
+import PageHeader from "../../../../components/PageHeader/PageHeader";
 
 const countries = CountryCurrency.getAllISOCodes();
 
@@ -22,6 +23,7 @@ function CreateCourse() {
   const [subtitles, setSubtitles] = useState([""]);
   const [introVideo, setIntroVideo] = useState("");
   const [courseImage, setCourseImage] = useState("");
+  const [validated, setValidated] = useState(false);
 
   //terms and conditions
   const [show, setShow] = useState(false);
@@ -36,7 +38,7 @@ function CreateCourse() {
     setSubtitles(temp);
   };
 
-  const submit = () => {
+  const submit = async () => {
     const data = {
       name: name,
       field: field,
@@ -47,21 +49,27 @@ function CreateCourse() {
       introVideo: introVideo,
       image: courseImage,
     };
-    postCourse(data);
+    await postCourse(data);
     navigate("/");
   };
 
   const onSubmit = (e) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
     setShow(true);
   };
 
   return (
     <div>
-      <Form onSubmit={onSubmit}>
+      <PageHeader pageName="Create course" />
+      <Form onSubmit={onSubmit} noValidate validated={validated}>
         <Container className="mt-4">
           <Col lg="5">
-            <h3 className="mb-3">Create Course</h3>
             <Form.Group className="mb-3">
               <Form.Control
                 type="text"
@@ -70,6 +78,9 @@ function CreateCourse() {
                 onChange={(e) => setName(e.target.value)}
                 required
               />
+              <Form.Control.Feedback type="invalid">
+                This field is required
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Control
@@ -79,6 +90,9 @@ function CreateCourse() {
                 onChange={(e) => setField(e.target.value)}
                 required
               />
+              <Form.Control.Feedback type="invalid">
+                This field is required
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Control
@@ -86,7 +100,11 @@ function CreateCourse() {
                 value={introVideo}
                 placeholder="Add Course preview link"
                 onChange={(e) => setIntroVideo(e.target.value)}
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                This field is required
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Control
@@ -94,7 +112,11 @@ function CreateCourse() {
                 value={courseImage}
                 placeholder="Add Course Image Link"
                 onChange={(e) => setCourseImage(e.target.value)}
+                required
               />
+              <Form.Control.Feedback type="invalid">
+                This field is required
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Control
@@ -105,6 +127,9 @@ function CreateCourse() {
                 onChange={(e) => setDescription(e.target.value)}
                 required
               />
+              <Form.Control.Feedback type="invalid">
+                This field is required
+              </Form.Control.Feedback>
             </Form.Group>
             {subtitles.map((sub, index) => {
               return (
@@ -123,14 +148,12 @@ function CreateCourse() {
                       }}
                       required
                     />
+                    <Form.Control.Feedback type="invalid">
+                      This field is required
+                    </Form.Control.Feedback>
                   </Form.Group>
+
                   <Form.Group as={Col} className="mt-2">
-                    {/* <Button
-                      className="btn btn-danger "
-                      onClick={() => removeSubtitle(index)}
-                    >
-                      x
-                    </Button> */}
                     <CloseButton onClick={() => removeSubtitle(index)} />
                   </Form.Group>
                 </Row>
@@ -156,6 +179,9 @@ function CreateCourse() {
                 onChange={(e) => setMagnitude(e.target.value)}
                 required
               />
+              <Form.Control.Feedback type="invalid">
+                This field is required
+              </Form.Control.Feedback>
             </Form.Group>
             <Form.Group className="mb-3">
               <Form.Select

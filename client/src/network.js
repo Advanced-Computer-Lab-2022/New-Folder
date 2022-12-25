@@ -35,7 +35,6 @@ export const fetchCourseDetails = async (id) => {
 // Create Course
 export const postCourse = async (data) => {
   const res = await instance.post("/instructor/createCourse", data);
-  console.log(res.data);
   return res.data;
 };
 
