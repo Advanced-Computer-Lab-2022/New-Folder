@@ -13,6 +13,7 @@
 
 .watchScreen__description {
   padding-bottom: 1em;
+  width: 90%;
 }
 
 .watchScreen__description i {
@@ -23,10 +24,18 @@
   
 }
 
+.watchScreen__description p {
+  margin: 0;
+  font-size: 1.4em;
+  font-weight: 400;
+  margin-bottom: 0.7em;
+}
+
 .watchScreen__description span {
   margin: 0;
-  font-size: 1.3em;
-  font-weight: 600;
+  font-size: 1.1em;
+  font-weight: 300;
+  margin-bottom: 1em;
 }
 
 .watchScreen__description button {
