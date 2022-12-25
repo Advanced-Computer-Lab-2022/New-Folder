@@ -1,10 +1,7 @@
 {
+  "whiteBg": "rgba(255, 255, 255, 0.7)",
   "black": "#100F0F",
-  "blue": "#a5c9ca",
-  "yellow": "#FFD369",
-  "grey": "#B0B6B1",
-  "white": "#F6F5F6",
-  "green": "#36846e",
-  "darkerBlue": "#5d8889",
-  "red": "#b22727"
+  "blue": "#297f87",
+  "grey": "#9d9d9d",
+  "red": "ba2d3d"
 }

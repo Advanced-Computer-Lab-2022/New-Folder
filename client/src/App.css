@@ -23,7 +23,11 @@
   background-color: #5d8889;
 }
 .yellowBg {
+<<<<<<< Updated upstream
   background-color: #ffd369;
+=======
+  background-color: #297f87;
+>>>>>>> Stashed changes
 }
 .greyBg {
   background-color: #b0b6b1;
@@ -51,7 +55,7 @@
   color: #b0b6b1;
 }
 .whiteTxt {
-  color: #f6f5f6;
+  color: #ffffff;
 }
 
 .blackOutline {
