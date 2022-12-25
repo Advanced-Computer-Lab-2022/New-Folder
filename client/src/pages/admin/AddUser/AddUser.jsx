@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Col, Spinner, InputGroup } from "react-bootstrap";
+import { Form, Button, Col, Spinner, InputGroup, Alert } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { postAddUser } from "../../../network";
 import UserTypes from "../../../constants/UserTypes.json";
@@ -18,9 +18,10 @@ function AddUser() {
   const [validated, setValidated] = useState(false);
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
-  const [fail, setFail] = useState(false);
   const [gender, setGender] = useState("Male");
   const [userType, setUserType] = useState(UserTypes.admin);
+  const [showError, setShowError] = useState(false);
+  const [errorMsg, setErrorMsg] = useState(null);
   const navigate = useNavigate();
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -30,16 +31,31 @@ function AddUser() {
       setValidated(true);
       return;
     }
+    setShowError(false);
+    setErrorMsg(null);
     setLoading(true);
     try {
       await postAddUser(userType, { ...data, gender: gender });
       setSuccess(true);
     } catch (err) {
-      setFail(true);
+      setErrorMsg(err.response.data.message);
+      setShowError(true);
     }
     setLoading(false);
   };
-
+  // This function returns the user type in a human readable way instead of camel case
+  const getUserType = (s) => {
+    if (s === UserTypes.admin) {
+      return "Admin";
+    }
+    if (s === UserTypes.corporateTrainee) {
+      return "Corporate trainee";
+    }
+    if (s === UserTypes.instructor) {
+      return "Instructor";
+    }
+    return "";
+  };
   const onChange = (e) => {
     setData((prevState) => ({
       ...prevState,
@@ -48,21 +64,23 @@ function AddUser() {
   };
   const close = () => {
     setSuccess(false);
-    setFail(false);
+    setShowError(false);
     navigate("/");
   };
   return (
     <>
       <SuccessModal
         show={success}
-        msg={`${userType} added successfully!`}
+        msg={`${getUserType(userType)} added successfully!`}
         handleClose={close}
       />
-      <ErrorModal show={fail} handleClose={close} />
       <PageHeader pageName="Add user" />
 
       <Form noValidate validated={validated} onSubmit={onSubmit}>
         <Col md="4" id="addUserWrapper">
+          <Alert show={showError} variant="danger">
+            {errorMsg}
+          </Alert>
           <Form.Group controlId="validationCustomUsername">
             <Form.Label>Username</Form.Label>
             <InputGroup hasValidation>
@@ -105,7 +123,7 @@ function AddUser() {
                     onChange={(e) => {
                       setUserType(type);
                     }}
-                    label={type}
+                    label={getUserType(type)}
                     required
                   ></Form.Check>
                 )
@@ -189,7 +207,7 @@ function AddUser() {
             </Button>
           ) : (
             <Button type="submit" id="addUserSaveButton">
-              Save
+              Add user
             </Button>
           )}
         </Col>
