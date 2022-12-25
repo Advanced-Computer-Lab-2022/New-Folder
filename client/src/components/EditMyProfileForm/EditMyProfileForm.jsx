@@ -78,7 +78,7 @@ const EditMyProfileForm = (props) => {
                     }}
                   />
                   <Form.Control.Feedback type="invalid">
-                    Please provide a valid email.
+                    Please provide a valid email (example@gmail.com).
                   </Form.Control.Feedback>
                 </FloatingLabel>
               ) : (

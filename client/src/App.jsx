@@ -25,7 +25,7 @@ import AddUser from "./pages/admin/AddUser/AddUser";
 import Earnings from "./pages/user/instructor/Earnings";
 import EnrolledCourses from "./pages/user/EnrolledCourses";
 import AccessRequests from "./pages/admin/AccessRequests";
-import Signup from "./pages/Signup";
+import Signup from "./pages/Signup/Signup";
 import Refunds from "./pages/admin/Refunds";
 ReactSession.setStoreType("sessionStorage");
 
