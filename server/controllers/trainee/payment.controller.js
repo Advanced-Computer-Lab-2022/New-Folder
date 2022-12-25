@@ -11,11 +11,9 @@ const getPayment = async (req, res) => {
   const course = await Course.findById(courseID);
   let discount = course.promotion;
   let finalPrice = parseFloat(course.price.magnitude);
-  let hasDiscount = false;
   if (discount) {
     let now = Date.now();
     if (discount.startDate <= now && discount.endDate > now) {
-      hasDiscount = true;
       finalPrice *= 1 - discount.percentage / 100;
     }
   }
@@ -44,9 +42,6 @@ const getPayment = async (req, res) => {
   if (finalPrice <= 0) {
     res.json({ wallet: paidByWallet, card: 0 });
     return;
-  }
-  if (hasDiscount) {
-    finalPrice /= 1 - discount.percentage / 100;
   }
   const paidByCard = await currencyConverter(
     finalPrice,
