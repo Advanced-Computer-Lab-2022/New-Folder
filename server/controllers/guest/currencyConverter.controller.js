@@ -1,16 +1,20 @@
 const CC = require("currency-converter-lt");
 
 const convertCurrency = async (req, res) => {
-  const { magnitude, oldCurrency, newCurrency } = req.body;
-  const newMagnitude = await currencyConverter(
-    magnitude,
-    oldCurrency,
-    newCurrency
-  );
-  res.send({
-    magnitude: newMagnitude,
-    currency: newCurrency,
-  });
+  try {
+    const { magnitude, oldCurrency, newCurrency } = req.body;
+    const newMagnitude = await currencyConverter(
+      magnitude,
+      oldCurrency,
+      newCurrency
+    );
+    res.status(200).send({
+      magnitude: newMagnitude,
+      currency: newCurrency,
+    });
+  } catch (err) {
+    res.send(500).json({ message: err.message });
+  }
 };
 
 const currencyConverter = async (magnitude, oldCurrency, newCurrency) => {
