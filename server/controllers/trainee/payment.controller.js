@@ -114,7 +114,7 @@ const payForCourse = async (req, res) => {
             currency: userCurrency,
             product_data: {
               name: course.name,
-              images: [course.image],
+              images: course.image?.length > 0 ? [course.image] : [],
               description: course.subject,
             },
             unit_amount: Math.round(100 * priceMagnitude),

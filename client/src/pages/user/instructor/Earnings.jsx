@@ -54,8 +54,8 @@ const Earnings = () => {
           ) : (
             <div className="pt-3">
               <Stack className="mt-5" gap={3}>
-                <Image width={"30%"} src="/assets/Banknote.gif" />
-                <h2 className="m-auto">You don't have any earnings yet</h2>
+                <Image width={"25%"} src="/assets/Banknote.png" />
+                <h2 className="m-auto mt-3">You don't have any earnings yet</h2>
               </Stack>
             </div>
           )}
