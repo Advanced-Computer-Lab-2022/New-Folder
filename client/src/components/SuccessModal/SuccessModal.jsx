@@ -6,7 +6,7 @@ const SuccessModal = (props) => {
   let timeoutId;
   useEffect(() => {
     if (props.show) {
-      timeoutId = setTimeout(onClose, 3000);
+      timeoutId = setTimeout(close, 3000);
     }
   }, [props.show]);
   const close = () => {
