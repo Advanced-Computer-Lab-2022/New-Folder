@@ -20,6 +20,10 @@ const {
   getPayment,
 } = require("../controllers/trainee/payment.controller");
 
+const {
+  sendCertificate,
+} = require("../controllers/trainee/sendCertificate.controller");
+
 const { getWallet } = require("../controllers/trainee/wallet.controller");
 const {
   getEnrolledCourses,
@@ -50,5 +54,6 @@ router.post(
 );
 router.post("/payForCourse", canEnroll, payForCourse);
 router.post("/getPayment", canEnroll, getPayment);
+router.post("/sendCertificate" ,authUser, sendCertificate );
 
 module.exports = router;

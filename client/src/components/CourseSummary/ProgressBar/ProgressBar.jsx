@@ -59,7 +59,7 @@ function ProgressBar(props) {
             <Progress type="circle" percent={percentage} />
           </div>
           <div className="options-certificate-refund">
-            <Certificate courseName={courseName} />
+            <Certificate percentage={percentage}  courseName={courseName} />
             {(vc === ViewerContexts.enrolledTrainee &&
               ReactSession.get("userType") !== userTypes.corporateTrainee &&
               percentage <= 50) ||
