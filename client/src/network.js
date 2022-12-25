@@ -42,31 +42,31 @@ export const postCourse = async (data) => {
 // Add Admin
 const postAddadmin = async (data) => {
   const res = await instance.post("/admin/addAdmin", data);
-  console.log(res.data);
   return res.data;
 };
 
 // Add Instructor
 const postAddInstructor = async (data) => {
   const res = await instance.post("/admin/addInstructor", data);
-  console.log(res.data);
   return res.data;
 };
 
 // Add Corporate Trainee
 const postAddCorporateTrainee = async (data) => {
   const res = await instance.post("/admin/addCorporateTrainee", data);
-  console.log(res.data);
   return res.data;
 };
 // post Add User
 export const postAddUser = async (userType, data) => {
   if (userType === UserTypes.admin) {
-    return postAddadmin(data);
+    const res = await postAddadmin(data);
+    return res;
   } else if (userType === UserTypes.instructor) {
-    return postAddInstructor(data);
+    const res = await postAddInstructor(data);
+    return res;
   } else if (userType === UserTypes.corporateTrainee) {
-    return postAddCorporateTrainee(data);
+    const res = await postAddCorporateTrainee(data);
+    return res;
   }
   return {};
 };
@@ -104,6 +104,15 @@ export const sendPasswordResetLink = async (data) => {
   const res = await instance.post("/sendPasswordResetLink", data);
   return res;
 };
+
+export const sendCertificate = async (userName , courseName) => {
+ 
+
+  const res = await instance.post('/trainee/sendCertificate', {
+    userName  : userName,
+    courseName : courseName,
+  });
+}
 
 export const getPrice = async (price) => {
   const data = {

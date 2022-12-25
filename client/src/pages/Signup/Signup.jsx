@@ -207,12 +207,12 @@ const Signup = (props) => {
         </Form>
       </div>
       <div id="signupMain2">
-        <h3>
+        <h4>
           Already have an account?{" "}
           <a className="signupLinks" href="/login">
             Log in
           </a>
-        </h3>
+        </h4>
       </div>
       <SignupTerms show={showTerms} setShow={setShowTerms} />
     </div>

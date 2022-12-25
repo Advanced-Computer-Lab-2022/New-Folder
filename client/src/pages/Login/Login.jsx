@@ -64,7 +64,7 @@ const Login = (props) => {
               placeholder="Username"
               onChange={(e) => setUsername(e.target.value)}
             />
-            <Form.Control.Feedback type="invalid">
+            <Form.Control.Feedback className="text-start" type="invalid">
               This field is required.
             </Form.Control.Feedback>
           </Form.Group>
@@ -75,7 +75,7 @@ const Login = (props) => {
               required
               onChange={(e) => setPassword(e.target.value)}
             />
-            <Form.Control.Feedback type="invalid">
+            <Form.Control.Feedback className="text-start" type="invalid">
               This field is required.
             </Form.Control.Feedback>
           </Form.Group>
