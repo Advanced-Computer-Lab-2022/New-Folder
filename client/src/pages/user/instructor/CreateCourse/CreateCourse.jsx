@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { postCourse } from "../../../../network";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import CountryCurrency from "iso-country-currency";
 import Button from "react-bootstrap/Button";
@@ -219,12 +219,22 @@ function CreateCourse() {
             </Form.Select>
           </Form.Group>
           <Form.Group className="mb-3">
-            <Form.Check
-              required
-              label="Agree to terms and conditions"
-              feedback="You must agree before submitting."
-              feedbackType="invalid"
-            />
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "flex-start",
+                width: "fit-content",
+                margin: 0,
+              }}
+            >
+              <Form.Check
+                required
+                feedback="You must agree before submitting."
+                feedbackType="invalid"
+              />
+              &nbsp; Agree on &nbsp;
+              <Link onClick={() => setShow(true)}>terms and conditions</Link>
+            </div>
           </Form.Group>
           <Form.Group className="mb-3">
             {loading ? (
@@ -243,7 +253,7 @@ function CreateCourse() {
                 Create course
               </Button>
             )}
-            {/* <ContractCard submit={submit} show={show} setShow={setShow} /> */}
+            <ContractCard show={show} setShow={setShow} />
           </Form.Group>
         </Col>
       </Form>

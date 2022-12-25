@@ -105,9 +105,6 @@ const ContractCard = (props) => {
         <Button variant="outline-dark" onClick={handleClose}>
           Close
         </Button>
-        <Button onClick={() => props.submit()} variant="dark">
-          Accept
-        </Button>
       </Modal.Footer>
     </Modal>
   );
