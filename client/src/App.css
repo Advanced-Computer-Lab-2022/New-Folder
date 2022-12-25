@@ -31,7 +31,12 @@
 .whiteBg {
   background-color: #f6f5f6;
 }
-
+.redBg {
+  background-color: #b22727;
+}
+.greenBg {
+  background-color: #36846e;
+}
 .blackTxt {
   color: #100f0f;
 }
