@@ -8,14 +8,17 @@ exports.changePassword = asyncHandler(async (req, res) => {
   let newPassword = req.body.newPassword;
   const confirmNewPassword = req.body.confirmNewPassword;
   if (newPassword.length < 6) {
-    res.status(400);
-    throw new Error("invalid password");
+    res
+      .status(500)
+      .json({ error: "Password should be at least 6 characters." });
+    return;
   }
   if (newPassword !== confirmNewPassword) {
-    res.status(400);
-    throw new Error("password confirmation doesn't match entered password");
+    res
+      .status(500)
+      .json({ error: "Password confirmation doesn't match entered password" });
+    return;
   }
-  // newPassword = await bcrypt.hash(newPassword,12);
   const user = await User.findById(userId);
   const isCorrectPassword = await bcrypt.compare(oldPassword, user.password);
   const encryptedPassword = await bcrypt.hash(newPassword, 12);
@@ -26,7 +29,7 @@ exports.changePassword = asyncHandler(async (req, res) => {
     });
     res.status(200).json();
   } else {
-    res.status(400);
-    throw new Error("failed to change the password");
+    res.status(500).json({ error: "Failed to change the password." });
+    return;
   }
 });

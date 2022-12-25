@@ -1,38 +1,92 @@
+import "./Password.css";
 import { useState } from "react";
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/esm/Container";
-import Col from "react-bootstrap/esm/Col";
-import { useNavigate } from "react-router-dom";
+import { Form, Button, Container, Col, Spinner, Alert } from "react-bootstrap";
 import { sendPasswordResetLink } from "../../network";
+import PageHeader from "../../components/PageHeader/PageHeader";
+import SuccessModal from "../../components/SuccessModal/SuccessModal";
 
 const ForgetPassword = () => {
   const [username, setUsername] = useState("");
-  const navigate = useNavigate();
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [confMsg, setConfMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
+  const [validated, setValidated] = useState(false);
+
+  const handleClose = () => setShowConfirmation(false);
 
   const submit = async (e) => {
     e.preventDefault();
-    await sendPasswordResetLink({ username });
-    navigate("/");
+    setErrorMsg("");
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
+    setLoading(true);
+    try {
+      await sendPasswordResetLink({ username });
+      setConfMsg("You will recieve an email with your password reset link.");
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      setErrorMsg(err.response.data.error);
+      setShowError(true);
+      console.log(err);
+    }
   };
 
   return (
-    <Form onSubmit={submit}>
-      <Container className="mt-4">
-        <Col lg="5">
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              onChange={(e) => setUsername(e.target.value)}
-            />
-          </Form.Group>
-          <Button variant="dark" type="submit">
-            send password reset email
-          </Button>
-        </Col>
-      </Container>
-    </Form>
+    <div>
+      <PageHeader pageName="Forget password" />
+      <div className="passwordMain">
+        <h1 className="mb-5">Learning System</h1>
+        <Alert show={showError} variant="danger">
+          {errorMsg}
+        </Alert>
+        <Form noValidate validated={validated} onSubmit={submit}>
+          <Container className="mt-4">
+            <Col lg="5">
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Username</Form.Label>
+                <Form.Control
+                  type="text"
+                  required
+                  placeholder="Username"
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                <Form.Control.Feedback type="invalid">
+                  This field is required.
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Button variant="dark" type="submit" disabled={loading}>
+                Send password reset email{" "}
+                {loading ? (
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    className="ms-1"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                ) : null}
+              </Button>
+            </Col>
+          </Container>
+        </Form>
+      </div>
+      <SuccessModal
+        msg={confMsg}
+        show={showConfirmation}
+        handleClose={handleClose}
+      />
+    </div>
   );
 };
 

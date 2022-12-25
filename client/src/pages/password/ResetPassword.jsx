@@ -1,47 +1,108 @@
-import Form from "react-bootstrap/Form";
-import Button from "react-bootstrap/Button";
-import Container from "react-bootstrap/esm/Container";
-import Col from "react-bootstrap/esm/Col";
-import { useNavigate, useParams } from "react-router-dom";
+import "./Password.css";
+import { Form, Button, Container, Col, Spinner } from "react-bootstrap";
+import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { resetPassword } from "../../network";
+import SuccessModal from "../../components/SuccessModal/SuccessModal";
+import ErrorModal from "../../components/ErrorModal/ErrorModal";
 
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
   const { userID, token } = useParams();
-  const navigate = useNavigate();
+  const [showConfirmation, setShowConfirmation] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [confMsg, setConfMsg] = useState("");
+  const [validated, setValidated] = useState(false);
+
+  const handleClose = () => setShowConfirmation(false);
+  const handleCloseError = () => setShowError(false);
 
   const submit = async (e) => {
     e.preventDefault();
-    await resetPassword({ userID, token, newPassword, confirmNewPassword });
-    navigate("/");
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
+    setLoading(true);
+    try {
+      await resetPassword({ userID, token, newPassword, confirmNewPassword });
+      setConfMsg("Your password has been changed successfully.");
+      setLoading(false);
+    } catch (err) {
+      setLoading(false);
+      setShowError(true);
+      console.log(err);
+    }
   };
 
   return (
-    <Form onSubmit={submit}>
-      <Container className="mt-4">
-        <Col lg="5">
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>New password</Form.Label>
-            <Form.Control
-              type="password"
-              onChange={(e) => setNewPassword(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Confirm New password</Form.Label>
-            <Form.Control
-              type="password"
-              onChange={(e) => setConfirmNewPassword(e.target.value)}
-            />
-          </Form.Group>
-          <Button variant="dark" type="submit">
-            Reset password
-          </Button>
-        </Col>
-      </Container>
-    </Form>
+    <div>
+      <PageHeader pageName="Reset password" />
+      <div className="passwordMain">
+        <h1 className="mb-5">Learning System</h1>
+        <Form noValidate validated={validated} onSubmit={submit}>
+          <Container className="mt-4">
+            <Col lg="5">
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>New password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="New password"
+                  required
+                  minLength={6}
+                  onChange={(e) => setNewPassword(e.target.value)}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please enter a valid password (min: 6 characters).
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Form.Group
+                className="mb-3"
+                controlId="exampleForm.ControlInput1"
+              >
+                <Form.Label>Confirm New password</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="Confirm New password"
+                  required
+                  pattern={newPassword}
+                  onChange={(e) => setConfirmNewPassword(e.target.value)}
+                />
+                <Form.Control.Feedback type="invalid">
+                  This doesn't match the password you entered.
+                </Form.Control.Feedback>
+              </Form.Group>
+              <Button variant="dark" type="submit" disabled={loading}>
+                Reset password{" "}
+                {loading ? (
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    className="ms-1"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                ) : null}
+              </Button>
+            </Col>
+          </Container>
+        </Form>
+      </div>
+      <SuccessModal
+        msg={confMsg}
+        show={showConfirmation}
+        handleClose={handleClose}
+      />
+      <ErrorModal show={showError} handleClose={handleCloseError} />
+    </div>
   );
 };
 

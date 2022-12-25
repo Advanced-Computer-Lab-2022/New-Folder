@@ -8,12 +8,16 @@ exports.resetPassword = asyncHandler(async (req, res) => {
   const { userID, token, confirmNewPassword } = req.body;
   let newPassword = req.body.newPassword;
   if (newPassword.length < 6) {
-    res.status(400);
-    throw new Error("invalid password");
+    res
+      .status(500)
+      .json({ error: "Password should be at least 6 characters." });
+    return;
   }
   if (newPassword !== confirmNewPassword) {
-    res.status(400);
-    throw new Error("password confirmation doesn't match entered password");
+    res
+      .status(500)
+      .json({ error: "Password confirmation doesn't match entered password" });
+    return;
   }
   const user = await User.findById(userID);
   const encryptedPassword = await bcrypt.hash(newPassword, 12);
@@ -30,7 +34,7 @@ exports.resetPassword = asyncHandler(async (req, res) => {
       res.send(error.message);
     }
   } else {
-    res.status(400);
-    throw new Error("failed to change the password");
+    res.status(500).json({ error: "Something went wrong." });
+    return;
   }
 });

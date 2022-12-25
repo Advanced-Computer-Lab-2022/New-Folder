@@ -7,7 +7,16 @@ require("dotenv").config();
 
 exports.sendPasswordResetLink = asyncHandler(async (req, res) => {
   const user = await User.findOne({ username: req.body.username });
-
+  if (!user) {
+    res.status(500).json({ error: "Username doesn't exist." });
+    return;
+  }
+  if (user.email?.length === 0) {
+    res
+      .status(500)
+      .json({ error: "There is no email address linked with this account." });
+    return;
+  }
   if (user) {
     const secret = process.env.JWT_SECRET + user.password;
     const payload = {
@@ -41,7 +50,7 @@ exports.sendPasswordResetLink = asyncHandler(async (req, res) => {
 
     res.status(200).json();
   } else {
-    res.status(400);
-    throw new Error("user doesn't exist");
+    res.status(500).json({ error: "Something went wrong, try again later." });
+    return;
   }
 });
