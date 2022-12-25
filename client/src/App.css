@@ -34,7 +34,7 @@
 }
 
 .blueTxt {
-  color: #87b3b4;
+  color: #5d8889;
 }
 .yellowTxt {
   color: #ffd369;
@@ -53,8 +53,8 @@
 }
 
 .blueOutline {
-  color: #87b3b4;
-  border: solid #87b3b4;
+  color: #5d8889;
+  border: solid #5d8889;
   background-color: transparent;
 }
 .yellowOutline {
