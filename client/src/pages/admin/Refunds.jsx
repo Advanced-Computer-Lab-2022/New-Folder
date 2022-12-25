@@ -15,19 +15,21 @@ function Reports() {
   const [success, setSuccess] = useState(false);
   const [fail, setFail] = useState(false);
   const [msg, setMsg] = useState(null);
+  const [fetchFail, setFetchFail] = useState(false);
   const fetchRefunds = async () => {
     setLoading(true);
     try {
       const fetchedRefunds = await getRefunds();
       setRefunds(fetchedRefunds);
     } catch (err) {
-      console.log(err);
+      setFetchFail(true);
     }
     setLoading(false);
   };
   const close = () => {
     setSuccess(false);
     setFail(false);
+    setFetchFail(false);
   };
   useEffect(() => {
     fetchRefunds();
@@ -35,7 +37,7 @@ function Reports() {
   return (
     <>
       <SuccessModal show={success} msg={msg} handleClose={close} />
-      <ErrorModal show={fail} handleClose={close} />
+      <ErrorModal show={fail || fetchFail} handleClose={close} />
       {loading ? (
         <div
           className="d-flex justify-content-center"
