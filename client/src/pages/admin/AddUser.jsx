@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { Form, Button, Col, Container } from "react-bootstrap";
+import { Form, Button, Col, Container, Spinner } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
 import { postAddUser } from "../../network";
 import UserTypes from "../../constants/UserTypes.json";
+import PageHeader from "../../components/PageHeader/PageHeader";
+import SuccessModal from "../../components/SuccessModal/SuccessModal";
+import ErrorModal from "../../components/ErrorModal/ErrorModal";
 
 function AddUser() {
   const [data, setData] = useState({
@@ -12,14 +15,21 @@ function AddUser() {
     firstName: "",
     lastName: "",
   });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [fail, setFail] = useState(false);
   const [gender, setGender] = useState("male");
   const [userType, setUserType] = useState(UserTypes.admin);
   const navigate = useNavigate();
-  const { username, password, email, firstName, lastName } = data;
-  const onSubmit = (e) => {
-    console.log({ ...data, gender: gender });
-    postAddUser(userType, { ...data, gender: gender });
-    navigate("/");
+  const onSubmit = async (e) => {
+    setLoading(true);
+    try {
+      await postAddUser(userType, { ...data, gender: gender });
+      setSuccess(true);
+    } catch (err) {
+      setFail(true);
+    }
+    setLoading(false);
   };
 
   const onChange = (e) => {
@@ -27,11 +37,22 @@ function AddUser() {
       ...prevState,
       [e.target.name]: e.target.value,
     }));
-    console.log(e.target);
+  };
+  const close = () => {
+    setSuccess(false);
+    setFail(false);
+    navigate("/");
   };
   return (
     <>
-      <Form onSubmit={onSubmit}>
+      <SuccessModal
+        show={success}
+        msg={`${userType} added successfully!`}
+        handleClose={close}
+      />
+      <ErrorModal show={fail} handleClose={close} />
+      <PageHeader pageName="Add user" />
+      <Form>
         <Container className="mt-4">
           <Col lg="5">
             <Form.Group className="mb-3">
@@ -39,7 +60,7 @@ function AddUser() {
                 type="text"
                 id="username"
                 name="username"
-                value={username}
+                value={data.username}
                 placeholder="Enter your username"
                 onChange={onChange}
                 required
@@ -68,7 +89,7 @@ function AddUser() {
                 type="password"
                 id="password"
                 name="password"
-                value={password}
+                value={data.password}
                 placeholder="Enter password"
                 onChange={onChange}
                 required
@@ -81,7 +102,7 @@ function AddUser() {
                     type="text"
                     id="firstName"
                     name="firstName"
-                    value={firstName}
+                    value={data.firstName}
                     placeholder="firstName"
                     onChange={onChange}
                     required
@@ -92,7 +113,7 @@ function AddUser() {
                     type="text"
                     id="lastName"
                     name="lastName"
-                    value={lastName}
+                    value={data.lastName}
                     placeholder="lastName"
                     onChange={onChange}
                     required
@@ -103,7 +124,7 @@ function AddUser() {
                     type="text"
                     id="email"
                     name="email"
-                    value={email}
+                    value={data.email}
                     placeholder="email"
                     onChange={onChange}
                     required
@@ -126,10 +147,22 @@ function AddUser() {
               </>
             )}
             <Form.Group className="mb-3">
-              <Button type="submit" variant="dark">
-                {" "}
-                add{" "}
-              </Button>
+              {loading ? (
+                <Button variant="dark" disabled>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                  {" Saving..."}
+                </Button>
+              ) : (
+                <Button onClick={onSubmit} variant="dark">
+                  Save
+                </Button>
+              )}
             </Form.Group>
           </Col>
         </Container>
