@@ -21,7 +21,6 @@ exports.login = asyncHandler(async (req, res) => {
       userName: user.username,
     });
   } else {
-    res.status(400);
-    throw new Error("invalid credintials");
+    res.status(500).json({ error: "Incorrect username or password." });
   }
 });
