@@ -11,6 +11,9 @@ import CloseButton from "react-bootstrap/CloseButton";
 import ContractCard from "../../../../components/ContractCard/ContractCard";
 import PageHeader from "../../../../components/PageHeader/PageHeader";
 import "./CreateCourse.css";
+import SuccessModal from "../../../../components/SuccessModal/SuccessModal";
+import ErrorModal from "../../../../components/ErrorModal/ErrorModal";
+import { Spinner } from "react-bootstrap";
 const countries = CountryCurrency.getAllISOCodes();
 
 function CreateCourse() {
@@ -24,6 +27,9 @@ function CreateCourse() {
   const [introVideo, setIntroVideo] = useState("");
   const [courseImage, setCourseImage] = useState("");
   const [validated, setValidated] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [fail, setFail] = useState(false);
   //terms and conditions
   const [show, setShow] = useState(false);
 
@@ -36,23 +42,7 @@ function CreateCourse() {
     // updating the list
     setSubtitles(temp);
   };
-
-  const submit = async () => {
-    const data = {
-      name: name,
-      field: field,
-      description: description,
-      magnitude: magnitude,
-      currency: currency,
-      subtitles: subtitles,
-      introVideo: introVideo,
-      image: courseImage,
-    };
-    await postCourse(data);
-    navigate("/");
-  };
-
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
@@ -60,12 +50,39 @@ function CreateCourse() {
       setValidated(true);
       return;
     }
-    setShow(true);
+    setLoading(true);
+    try {
+      const data = {
+        name: name,
+        field: field,
+        description: description,
+        magnitude: magnitude,
+        currency: currency,
+        subtitles: subtitles,
+        introVideo: introVideo,
+        image: courseImage,
+      };
+      await postCourse(data);
+      setSuccess(true);
+    } catch (err) {
+      setFail(true);
+    }
+    setLoading(false);
   };
-
+  const close = () => {
+    setFail(false);
+    setSuccess(false);
+    navigate("/");
+  };
   return (
     <>
       <PageHeader pageName="Create course" />
+      <SuccessModal
+        msg="Course created successfully!"
+        handleClose={close}
+        show={success}
+      />
+      <ErrorModal handleClose={close} show={fail} />
       <Form onSubmit={onSubmit} noValidate validated={validated}>
         <Col md="4" id="createCourseWrapper">
           <Form.Group className="mb-3">
@@ -163,13 +180,14 @@ function CreateCourse() {
               onClick={(e) => {
                 setSubtitles([...subtitles, ""]);
               }}
+              disabled={loading}
             >
               Add Subtitle
             </Button>
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Control
-              type="text"
+              type="number"
               id="magnitude"
               name="magnitude"
               value={magnitude}
@@ -209,10 +227,23 @@ function CreateCourse() {
             />
           </Form.Group>
           <Form.Group className="mb-3">
-            <Button type="submit" id="createCourseSaveButton">
-              Create course
-            </Button>
-            <ContractCard submit={submit} show={show} setShow={setShow} />
+            {loading ? (
+              <Button type="submit" id="createCourseSaveButton" disabled>
+                <Spinner
+                  as="span"
+                  animation="border"
+                  size="sm"
+                  role="status"
+                  aria-hidden="true"
+                />
+                {" Saving..."}
+              </Button>
+            ) : (
+              <Button type="submit" id="createCourseSaveButton">
+                Create course
+              </Button>
+            )}
+            {/* <ContractCard submit={submit} show={show} setShow={setShow} /> */}
           </Form.Group>
         </Col>
       </Form>
