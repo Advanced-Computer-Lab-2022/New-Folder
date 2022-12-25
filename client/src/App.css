@@ -14,67 +14,43 @@
 
 .blackBg {
   background-color: #100f0f;
+  border: 1px solid #100f0f;
+  color: white;
 }
 
 .blueBg {
-  background-color: #a5c9ca;
-}
-.darkerBlueBg {
-  background-color: #5d8889;
-}
-.yellowBg {
   background-color: #297f87;
+  border: 1px solid #297f87;
+  color: white;
 }
 .greyBg {
-  background-color: #b0b6b1;
-}
-.whiteBg {
-  background-color: #f6f5f6;
+  background-color: #9d9d9d;
+  border: 1px solid #9d9d9d;
+  color: white;
 }
 .redBg {
-  background-color: #b22727;
+  background-color: #ba2d3d;
+  border: 1px solid #ba2d3d;
+  color: white;
 }
-.greenBg {
-  background-color: #36846e;
-}
+
 .blackTxt {
   color: #100f0f;
 }
 
 .blueTxt {
-  color: #5d8889;
-}
-.yellowTxt {
-  color: #ffd369;
+  color: #297f87;
 }
 .greyTxt {
-  color: #b0b6b1;
+  color: #9d9d9d;
+}
+.redTxt {
+  color: #ba2d3d;
 }
 .whiteTxt {
-  color: #ffffff;
+  color: white;
 }
 
-.blackOutline {
-  color: #100f0f;
-  border: solid #100f0f;
-  background-color: transparent;
-}
-
-.blueOutline {
-  color: #5d8889;
-  border: solid #5d8889;
-  background-color: transparent;
-}
-.yellowOutline {
-  color: #ffd369;
-  border: solid #ffd369;
-  background-color: transparent;
-}
-.greyOutline {
-  color: #b0b6b1;
-  border: solid #b0b6b1;
-  background-color: transparent;
-}
 input[type="radio"]:checked {
   background-color: #100f0f;
   box-shadow: none;
