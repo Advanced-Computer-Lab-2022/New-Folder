@@ -8,7 +8,8 @@ const getRefunds = async (req, res) => {
     const refunds = await Refund.find({});
     res.status(200).send(refunds);
   } catch (err) {
-    console.log(err);
+    console.log(err.message);
+    res.status(500).send({ message: err.message });
   }
 };
 
@@ -84,13 +85,22 @@ const removeEnrollment = async (userId, courseId) => {
 };
 
 const deleteRefund = async (userId, courseId) => {
+  const course = await Course.findById(courseId);
+  course.refundingTrainees = course.refundingTrainees.filter(
+    (trainee) => trainee.toString() !== userId
+  );
+  await course.save();
   await Refund.findOneAndDelete({ userId, courseId });
 };
 
 const declineRefund = async (req, res) => {
-  const { userId, courseId } = req.body;
-  await deleteRefund(userId, courseId);
-  res.status(200).json({ message: "Refunded Declined" });
+  try {
+    const { userId, courseId } = req.body;
+    await deleteRefund(userId, courseId);
+    res.status(200).json({ message: "Refunded Declined" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
 };
 
 module.exports = { approveRefund, getRefunds, declineRefund };
