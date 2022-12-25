@@ -4,12 +4,14 @@ const Exercises = require("../../models/Exercises.model");
 const constants = require("../../constants.json");
 
 const addVideo = async (req, res) => {
-  const { courseID, subtitleID, videoURL, duration, description } = req.body;
+  const { courseID, subtitleID, videoURL, videoTitle, duration, description } =
+    req.body;
   const content = await Content.create({
     courseID,
     description,
     duration,
     video: videoURL,
+    title: videoTitle,
   });
   const subtitle = await Subtitle.findById(subtitleID);
   subtitle.subTitle_Content.push({

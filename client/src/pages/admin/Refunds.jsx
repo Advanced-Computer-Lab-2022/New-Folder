@@ -38,6 +38,7 @@ function Reports() {
     <>
       <SuccessModal show={success} msg={msg} handleClose={close} />
       <ErrorModal show={fail || fetchFail} handleClose={close} />
+      <PageHeader pageName="Refund requests" />
       {loading ? (
         <div
           className="d-flex justify-content-center"
@@ -57,7 +58,6 @@ function Reports() {
         <>
           {refunds.length > 0 ? (
             <>
-              <PageHeader pageName="Refund requests" />
               <div id="gridContainer">
                 <Row xs={1} md={3}>
                   {refunds.map((refund) => (

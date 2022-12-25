@@ -8,14 +8,17 @@ const Content = mongoose.Schema({
   description: {
     type: String,
   },
+  title: {
+    type: String,
+  },
   duration: {
     type: mongoose.Schema.Types.Mixed, // {hrs: , minutes: , seconds: }
   },
   video: {
     type: String,
   },
-  Note : {
-    type : [mongoose.Schema.Types.Mixed] //Trainee_id , note 
+  Note: {
+    type: [mongoose.Schema.Types.Mixed], //Trainee_id , note
   },
   Visits: {
     // if the traineeId exists here in this array means that he/she has opened it before

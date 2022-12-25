@@ -10,6 +10,7 @@ const UploadVideo = (props) => {
   const [validated, setValidated] = useState(false);
   const [videoURL, setVideoURL] = useState("");
   const [description, setDescription] = useState("");
+  const [videoTitle, setVideoTitle] = useState("");
 
   const submit = async (e) => {
     e.preventDefault();
@@ -21,6 +22,7 @@ const UploadVideo = (props) => {
         subtitleID: props.subtitleID,
         courseID: props.courseID,
         videoURL,
+        videoTitle,
         description,
       };
       try {
@@ -45,7 +47,14 @@ const UploadVideo = (props) => {
             onChange={(e) => setVideoURL(e.target.value)}
           />
         </Form.Group>
-
+        <Form.Group className="mb-3" controlId="formBasicEmail">
+          <Form.Label>Title</Form.Label>
+          <Form.Control
+            required
+            type="text"
+            onChange={(e) => setVideoTitle(e.target.value)}
+          />
+        </Form.Group>
         <Form.Group className="mb-3" controlId="formBasicPassword">
           <Form.Label>Description</Form.Label>
           <Form.Control
