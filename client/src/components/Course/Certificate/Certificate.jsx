@@ -8,6 +8,7 @@ import "./Certificate.css";
 import { sendCertificate } from "../../../network";
 import ReactLoading from 'react-loading';
 import Loading from "react-loading";
+import { useEffect } from "react";
 
 const Certificate = (props) => {
   const [show, setShow] = useState(false);
@@ -43,6 +44,7 @@ const Certificate = (props) => {
     doc.save(ReactSession.get("userName") + " certificate");
   };
 
+
   return (
     <div>
       <div
@@ -50,13 +52,13 @@ const Certificate = (props) => {
         data-toggle="tooltip"
         data-placement="top"
         title={
-          percentage !== 100
+          Math.trunc(percentage) !== 100
             ? "To earn certificate, complete the whole course"
             : "download PDF or via Email"
         }
       >
         <Button
-          // disabled={percentage !== 100}
+          disabled={Math.trunc(percentage) !== 100}
           onClick={handleShow}
           variant="success"
         >
