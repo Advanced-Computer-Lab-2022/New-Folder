@@ -6,10 +6,15 @@ import RefundInfoCard from "../../components/RefundInfoCard/RefundInfoCard";
 import Spinner from "react-bootstrap/Spinner";
 import colors from "../../colors.json";
 import PageHeader from "../../components/PageHeader/PageHeader";
+import SuccessModal from "../../components/SuccessModal/SuccessModal";
+import ErrorModal from "../../components/ErrorModal/ErrorModal";
 
 function Reports() {
   const [refunds, setRefunds] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [fail, setFail] = useState(false);
+  const [msg, setMsg] = useState(null);
   const fetchRefunds = async () => {
     setLoading(true);
     try {
@@ -20,12 +25,17 @@ function Reports() {
     }
     setLoading(false);
   };
-
+  const close = () => {
+    setSuccess(false);
+    setFail(false);
+  };
   useEffect(() => {
     fetchRefunds();
   }, []);
   return (
     <>
+      <SuccessModal show={success} msg={msg} handleClose={close} />
+      <ErrorModal show={fail} handleClose={close} />
       {loading ? (
         <div
           className="d-flex justify-content-center"
@@ -54,6 +64,9 @@ function Reports() {
                         request={refund}
                         allRefunds={refunds}
                         setAllRefunds={setRefunds}
+                        setFail={setFail}
+                        setSuccess={setSuccess}
+                        setMsg={setMsg}
                       />
                     </Col>
                   ))}

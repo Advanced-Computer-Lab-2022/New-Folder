@@ -482,20 +482,12 @@ export const getRefunds = async () => {
 
 // approve refund
 export const approveRefund = async (data) => {
-  try {
-    const res = await instance.post("/admin/approveRefund", data);
-    return res.data;
-  } catch (err) {
-    console.log(err);
-  }
+  const res = await instance.post("/admin/approveRefund", data);
+  return res.data;
 };
 
 // decline refund
 export const declineRefund = async (data) => {
-  try {
-    const res = await instance.post("/admin/declineRefund", data);
-    return res.data;
-  } catch (err) {
-    console.log(err);
-  }
+  const res = await instance.post("/admin/declineRefund", data);
+  return res.data;
 };
