@@ -186,9 +186,8 @@ const Signup = (props) => {
             />
           </Form.Group>
           <Button
-            className="mb-4"
+            className="mb-4 blueBg blueBgHover"
             id="signupBtn"
-            variant="dark"
             disabled={loading}
             type="submit"
           >
@@ -209,7 +208,7 @@ const Signup = (props) => {
       <div id="signupMain2">
         <h4>
           Already have an account?{" "}
-          <a className="signupLinks" href="/login">
+          <a className="signupLinks blueTxt" href="/login">
             Log in
           </a>
         </h4>

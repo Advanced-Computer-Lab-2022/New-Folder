@@ -25,6 +25,7 @@ function VideoPreview(props) {
   return (
     <>
       <ul style={{ border: "1px dotted black" }}>
+        <li>{"Video title: " + video.title}</li>
         <li>{"Video Duration: " + totalDuration(video.duration)}</li>
         <li>{"Video Description: " + video.description}</li>
       </ul>

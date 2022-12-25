@@ -9,6 +9,7 @@ const VideoAndDescription = (props) => {
   const contentID = props.contentFetched;
   const [video, setVideo] = useState("");
   const [description, setDescription] = useState("");
+  const [title , setTitle] = useState("");
   const setParentContentTitle = props.setParentContentTitle;
 
   // get content from database and then display video and title
@@ -24,6 +25,7 @@ const VideoAndDescription = (props) => {
           getYoutubeVideoID(fetchedContent.video)
       );
       setDescription(fetchedContent.description);
+      setTitle(fetchedContent.title);
     } catch (err) {
       console.log(err);
     }
@@ -34,8 +36,8 @@ const VideoAndDescription = (props) => {
   }, []);
 
   useEffect (()=>{
-    setParentContentTitle(description);
-  },[description])
+    setParentContentTitle(title);
+  },[title])
 
   // only video and video title are dislayed here
   // there is a button for next video is commented till further discussions
@@ -52,9 +54,14 @@ const VideoAndDescription = (props) => {
         ></iframe>
       </div>
       <div class="watchScreen__description">
-        <i class="bi bi-play-circle-fill"></i>
+    
+        <p>{title}</p>
         <span>{description}</span>
+        
         {/* <button type="button" class="btn btn-primary">Next Video</button> */}
+      </div>
+      <div className="watchscreen__des">
+        
       </div>
     </div>
   );
