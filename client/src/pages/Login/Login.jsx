@@ -80,9 +80,8 @@ const Login = (props) => {
             </Form.Control.Feedback>
           </Form.Group>
           <Button
-            className="mb-4"
+            className="mb-4 blueBg blueBgHover"
             id="loginBtn"
-            variant="dark"
             disabled={loading}
             type="submit"
           >
@@ -99,7 +98,7 @@ const Login = (props) => {
             ) : null}
           </Button>
           <h5>
-            <a className="loginLinks" href="/forgetPassword">
+            <a className="loginLinks blueTxt" href="/forgetPassword">
               Forgot password?
             </a>
           </h5>
@@ -108,7 +107,7 @@ const Login = (props) => {
       <div id="loginMain2">
         <h3>
           Don't have an account?{" "}
-          <a className="loginLinks" href="/signup">
+          <a className="loginLinks blueTxt" href="/signup">
             Sign up
           </a>
         </h3>

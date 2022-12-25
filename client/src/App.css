@@ -13,64 +13,64 @@
 }
 
 .blackBg {
-  background-color: #100f0f;
-  border: 1px solid #100f0f;
-  color: white;
+  background-color: #100f0f !important;
+  border: 1px solid #100f0f !important;
+  color: white !important;
 }
 
 .blueBg {
-  background-color: #297f87;
-  border: 1px solid #297f87;
-  color: white;
+  background-color: #297f87 !important;
+  border: 1px solid #297f87 !important;
+  color: white !important;
 }
 .greyBg {
-  background-color: #9d9d9d;
-  border: 1px solid #9d9d9d;
-  color: white;
+  background-color: #9d9d9d !important;
+  border: 1px solid #9d9d9d !important;
+  color: white !important;
 }
 .redBg {
-  background-color: #ba2d3d;
-  border: 1px solid #ba2d3d;
-  color: white;
+  background-color: #ba2d3d !important;
+  border: 1px solid #ba2d3d !important;
+  color: white !important;
 }
 
 .blackBgHover:hover {
-  background-color: transparent;
-  border: 1px solid #100f0f;
-  color: #100f0f;
+  background-color: transparent !important;
+  border: 1px solid #100f0f !important;
+  color: #100f0f !important;
 }
 
 .blueBgHover:hover {
-  background-color: transparent;
-  border: 1px solid #297f87;
-  color: #297f87;
+  background-color: transparent !important;
+  border: 1px solid #297f87 !important;
+  color: #297f87 !important;
 }
 .greyBgHover:hover {
-  background-color: transparent;
-  border: 1px solid #9d9d9d;
-  color: #9d9d9d;
+  background-color: transparent !important;
+  border: 1px solid #9d9d9d !important;
+  color: #9d9d9d !important;
 }
 .redBgHover:hover {
-  background-color: transparent;
-  border: 1px solid #ba2d3d;
-  color: #ba2d3d;
+  background-color: transparent !important;
+  border: 1px solid #ba2d3d !important;
+  color: #ba2d3d !important;
 }
 
 .blackTxt {
-  color: #100f0f;
+  color: #100f0f !important;
 }
 
 .blueTxt {
-  color: #297f87;
+  color: #297f87 !important;
 }
 .greyTxt {
-  color: #9d9d9d;
+  color: #9d9d9d !important;
 }
 .redTxt {
-  color: #ba2d3d;
+  color: #ba2d3d !important;
 }
 .whiteTxt {
-  color: white;
+  color: white !important;
 }
 
 input[type="radio"]:checked {

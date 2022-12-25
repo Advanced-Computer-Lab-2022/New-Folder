@@ -28,16 +28,7 @@
 }
 #loginBtn {
   width: 100%;
-  background-color: #5d8889;
-  border: 1px solid #5d8889;
-}
-#loginBtn:hover {
-  width: 100%;
-  background-color: transparent;
-  color: #5d8889;
-  border: 1px solid #5d8889;
 }
 .loginLinks {
   text-decoration: none;
-  color: #5d8889;
 }
