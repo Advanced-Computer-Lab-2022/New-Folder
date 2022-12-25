@@ -1,0 +1,24 @@
+.progress-bar-circle {
+    margin-right: 2.5em;
+}
+
+.cerificate-refund-child {
+    display: flex;
+    flex-direction: row;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    padding: 1.5em;
+    border-radius: 15px;
+    background-color: #c7e7f5;
+}
+
+.options-certificate-refund {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    
+}
+
+.options-certificate-refund button {
+    margin-bottom: 0.7em;
+}

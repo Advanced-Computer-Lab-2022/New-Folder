@@ -88,7 +88,7 @@ function RefundForm(props) {
       {vc === ViewerContexts.refundingTrainee ? (
         <Button onClick={cancel}>Cancel refund request</Button>
       ) : (
-        <Button onClick={(e) => setShow(true)}>Request a refund</Button>
+        <Button onClick={(e) => setShow(true)}>Request refund</Button>
       )}
     </>
   );
