@@ -490,10 +490,6 @@ export const declineRefund = async (data) => {
 
 // get amount paid by wallet and amount paid by card
 export const getPayment = async (data) => {
-  try {
-    const res = await instance.post("/trainee/getPayment", data);
-    return res.data;
-  } catch (err) {
-    console.log(err);
-  }
+  const res = await instance.post("/trainee/getPayment", data);
+  return res.data;
 };
