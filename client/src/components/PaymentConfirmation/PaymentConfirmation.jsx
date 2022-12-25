@@ -1,3 +1,4 @@
+import "./PaymentConfirmation.css";
 import { useState } from "react";
 import { Button, Modal, Spinner } from "react-bootstrap";
 import { payForCourse } from "../../network";
@@ -41,16 +42,18 @@ const PaymentConfirmation = (props) => {
         <Modal.Header>
           <Modal.Title>Payment confirmation</Modal.Title>
         </Modal.Header>
-        <Modal.Body>{props.msg}</Modal.Body>
+        <Modal.Body>
+          <h5 className="mt-3 mb-3">{props.msg}</h5>
+        </Modal.Body>
         <Modal.Footer>
           <Button
-            variant="outline-dark"
+            id="cancelPaymentBtn"
             disabled={loading}
             onClick={handleClose}
           >
-            Close
+            Cancel
           </Button>
-          <Button onClick={submit} disabled={loading} variant="dark">
+          <Button onClick={submit} disabled={loading} id="confirmPaymentBtn">
             Confirm{" "}
             {loading ? (
               <Spinner

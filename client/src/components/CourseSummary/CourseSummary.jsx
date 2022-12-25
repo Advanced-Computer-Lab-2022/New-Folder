@@ -90,20 +90,28 @@ function CourseSummary(props) {
       const currency =
         countryCurrency.country_currency[ReactSession.get("country")];
       const payment = await getPayment({
-        courseID: props.courseId,
+        courseID: props.course._id,
         userCurrency: currency,
       });
       if (payment.wallet <= 0) {
         setPaymentConfirmationMsg(
-          `You will be charged ${payment.card} ${currency} from your credit card.`
+          `You will be charged ${payment.card.toFixed(
+            2
+          )} ${currency} from your credit card.`
         );
       } else if (payment.card <= 0) {
         setPaymentConfirmationMsg(
-          `You will be charged ${payment.wallet} ${currency} from your wallet.`
+          `You will be charged ${payment.wallet.toFixed(
+            2
+          )} ${currency} from your wallet.`
         );
       } else {
         setPaymentConfirmationMsg(
-          `You will be charged ${payment.wallet} ${currency} from your wallet and ${payment.card} ${currency} from your credit card.`
+          `You will be charged ${payment.wallet.toFixed(
+            2
+          )} ${currency} from your wallet and ${payment.card.toFixed(
+            2
+          )} ${currency} from your credit card.`
         );
       }
       setLoadingEnrollBtn(false);
@@ -345,7 +353,7 @@ function CourseSummary(props) {
         show={showPaymentConfirmation}
         setShow={setShowPaymentConfirmation}
         msg={paymentConfirmationMsg}
-        courseId={props.courseId}
+        courseId={props.course._id}
       />
       <ErrorModal show={showError} handleClose={() => setShowError(false)} />
     </>

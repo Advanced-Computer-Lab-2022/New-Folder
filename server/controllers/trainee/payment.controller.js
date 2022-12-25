@@ -26,6 +26,15 @@ const getPayment = async (req, res) => {
       course.price.currency
     )
   );
+  if (walletPayment <= 0) {
+    const paidByCard = await currencyConverter(
+      finalPrice,
+      course.price.currency,
+      userCurrency
+    );
+    res.json({ wallet: 0, card: paidByCard });
+    return;
+  }
   finalPrice -= walletPayment;
   const paidByWallet = await currencyConverter(
     walletPayment,
@@ -70,6 +79,7 @@ const payForCourse = async (req, res) => {
       course.price.currency
     )
   );
+  if (walletPayment < 0) walletPayment = 0;
   finalPrice -= walletPayment;
   if (finalPrice <= 0) {
     await enrollInCourse(

@@ -49,6 +49,6 @@ router.post(
   deleteInstructorReview
 );
 router.post("/payForCourse", canEnroll, payForCourse);
-router.get("/getPayment", canEnroll, getPayment);
+router.post("/getPayment", canEnroll, getPayment);
 
 module.exports = router;
