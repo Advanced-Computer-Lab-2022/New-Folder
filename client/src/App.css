@@ -34,6 +34,28 @@
   color: white;
 }
 
+.blackBgHover:hover {
+  background-color: transparent;
+  border: 1px solid #100f0f;
+  color: #100f0f;
+}
+
+.blueBgHover:hover {
+  background-color: transparent;
+  border: 1px solid #297f87;
+  color: #297f87;
+}
+.greyBgHover:hover {
+  background-color: transparent;
+  border: 1px solid #9d9d9d;
+  color: #9d9d9d;
+}
+.redBgHover:hover {
+  background-color: transparent;
+  border: 1px solid #ba2d3d;
+  color: #ba2d3d;
+}
+
 .blackTxt {
   color: #100f0f;
 }
