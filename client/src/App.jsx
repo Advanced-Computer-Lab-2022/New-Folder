@@ -4,7 +4,7 @@ import { ReactSession } from "react-client-session";
 import Explore from "./pages/user/Explore/Explore";
 import Search from "./pages/user/Search";
 import CreateCourse from "./pages/user/instructor/CreateCourse";
-import Login from "./pages/Login";
+import Login from "./pages/Login/Login";
 import MyCourses from "./pages/user/instructor/MyCourses/MyCourses";
 import Navbar from "./components/Navbar/Navbar";
 import { useState } from "react";
