@@ -4,7 +4,7 @@ import { ReactSession } from "react-client-session";
 import Explore from "./pages/user/Explore/Explore";
 import Search from "./pages/user/Search";
 import CreateCourse from "./pages/user/instructor/CreateCourse";
-import Login from "./pages/Login";
+import Login from "./pages/Login/Login";
 import MyCourses from "./pages/user/instructor/MyCourses/MyCourses";
 import Navbar from "./components/Navbar/Navbar";
 import { useState } from "react";
@@ -41,41 +41,46 @@ function App() {
       ) : (
         <Navbar setCountry={setCountry} setUserType={setUserType} />
       )}
-      <Routes>
-        <Route path="/" element={<Explore />} />
-        <Route path="/myCourses" element={<MyCourses />} />
-        <Route path="/search/:searchQuery" element={<Search />} />
+      <div id="mainApp">
+        <Routes>
+          <Route path="/" element={<Explore />} />
+          <Route path="/myCourses" element={<MyCourses />} />
+          <Route path="/search/:searchQuery" element={<Search />} />
 
-        <Route path="/course/:courseId" element={<CourseDetails />} />
-        <Route path="/addUser" element={<AddUser />} />
-        <Route path="/CreateCourse" element={<CreateCourse />} />
-        <Route path="/login" element={<Login setUserType={setUserType} />} />
-        <Route path="/watch/:courseId" element={<Content />} />
-        <Route path="/excercise/:excerciseID" element={<Excercise />} />
+          <Route path="/course/:courseId" element={<CourseDetails />} />
+          <Route path="/addUser" element={<AddUser />} />
+          <Route path="/CreateCourse" element={<CreateCourse />} />
+          <Route path="/login" element={<Login setUserType={setUserType} />} />
+          <Route path="/watch/:courseId" element={<Content />} />
+          <Route path="/excercise/:excerciseID" element={<Excercise />} />
 
-        <Route
-          path="/viewInstructorProfile/:isEnrolled/:instructorID"
-          element={<ViewInstructorProfile />}
-        />
-        <Route path="/forgetPassword" element={<ForgetPassword />} />
-        <Route path="/changePassword" element={<ChangePassword />} />
-        <Route path="/myProfile" element={<MyProfile />} />
-        <Route
-          path="/resetPassword/:userID/:token"
-          element={<ResetPassword />}
-        />
-        <Route
-          path="/editSubtitle/:courseID/:subtitleID"
-          element={<EditSubtitle />}
-        />
-        <Route path="/myProblems" element={<MyProblems />} />
-        <Route path="/refunds" element={<Refunds />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/AccessRequests" element={<AccessRequests />} />
-        <Route path="/earnings" element={<Earnings />} />
-        <Route path="/enrolledCourses" element={<EnrolledCourses />} />
-        <Route path="/signup" element={<Signup setUserType={setUserType} />} />
-      </Routes>
+          <Route
+            path="/viewInstructorProfile/:isEnrolled/:instructorID"
+            element={<ViewInstructorProfile />}
+          />
+          <Route path="/forgetPassword" element={<ForgetPassword />} />
+          <Route path="/changePassword" element={<ChangePassword />} />
+          <Route path="/myProfile" element={<MyProfile />} />
+          <Route
+            path="/resetPassword/:userID/:token"
+            element={<ResetPassword />}
+          />
+          <Route
+            path="/editSubtitle/:courseID/:subtitleID"
+            element={<EditSubtitle />}
+          />
+          <Route path="/myProblems" element={<MyProblems />} />
+          <Route path="/refunds" element={<Refunds />} />
+          <Route path="/reports" element={<Reports />} />
+          <Route path="/AccessRequests" element={<AccessRequests />} />
+          <Route path="/earnings" element={<Earnings />} />
+          <Route path="/enrolledCourses" element={<EnrolledCourses />} />
+          <Route
+            path="/signup"
+            element={<Signup setUserType={setUserType} />}
+          />
+        </Routes>
+      </div>
     </>
   );
 }

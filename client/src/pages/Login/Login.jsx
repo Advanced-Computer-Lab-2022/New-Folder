@@ -1,12 +1,13 @@
+import "./Login.css";
 import { useState } from "react";
-import { login } from "../network";
+import { login } from "../../network";
 import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Container from "react-bootstrap/esm/Container";
 import Col from "react-bootstrap/esm/Col";
 import { ReactSession } from "react-client-session";
-import userTypes from "../constants/UserTypes.json";
+import userTypes from "../../constants/UserTypes.json";
 const Login = (props) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -34,32 +35,43 @@ const Login = (props) => {
   };
 
   return (
-    <Form onSubmit={submit}>
-      <Container className="mt-4">
-        <Col lg="5">
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Form.Label>Username</Form.Label>
+    <div>
+      <div id="loginMain">
+        <h1 className="mb-5">Learning System</h1>
+        <Form onSubmit={submit}>
+          <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
             <Form.Control
               type="text"
+              placeholder="Username"
               onChange={(e) => setUsername(e.target.value)}
             />
           </Form.Group>
-          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Password</Form.Label>
+          <Form.Group className="mb-4" controlId="exampleForm.ControlTextarea1">
             <Form.Control
               type="password"
+              placeholder="Password"
               onChange={(e) => setPassword(e.target.value)}
             />
           </Form.Group>
-          <Button variant="dark" type="submit">
-            submit
+          <Button className="mb-4" id="loginBtn" variant="dark" type="submit">
+            Log in
           </Button>
-          <a href="/forgetPassword">forget password</a>
-          <br />
-          <a href="/signup">Sign up</a>
-        </Col>
-      </Container>
-    </Form>
+          <h5>
+            <a className="loginLinks" href="/forgetPassword">
+              Forgot password?
+            </a>
+          </h5>
+        </Form>
+      </div>
+      <div id="loginMain2">
+        <h3>
+          Don't have an account?{" "}
+          <a className="loginLinks" href="/signup">
+            Sign up
+          </a>
+        </h3>
+      </div>
+    </div>
   );
 };
 

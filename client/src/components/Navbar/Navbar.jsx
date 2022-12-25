@@ -50,9 +50,12 @@ const MainNavbar = (props) => {
               <Nav.Link href="/createCourse">Create Course</Nav.Link>
             ) : null}
             {ReactSession.get("userType") ? (
-              <Nav.Link onClick={logout}>Logout</Nav.Link>
+              <Nav.Link onClick={logout}>Log out</Nav.Link>
             ) : (
-              <Nav.Link href="/login">Login</Nav.Link>
+              <Nav.Link href="/login">Log in</Nav.Link>
+            )}
+            {ReactSession.get("userType") ? null : (
+              <Nav.Link href="/signup">Sign up</Nav.Link>
             )}
             {ReactSession.get("userType") ? (
               <Nav.Link href="/changePassword">Change password</Nav.Link>
