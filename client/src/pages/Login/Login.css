@@ -1,5 +1,5 @@
 #loginMain {
-  background-color: rgba(255, 255, 255, 0.819);
+  background-color: rgba(255, 255, 255, 0.7);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
     rgba(0, 0, 0, 0.1) 0px 10px 15px -3px;
   border-radius: 10px;
@@ -15,7 +15,7 @@
 }
 
 #loginMain2 {
-  background-color: rgba(255, 255, 255, 0.819);
+  background-color: rgba(255, 255, 255, 0.7);
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
     rgba(0, 0, 0, 0.1) 0px 10px 15px -3px;
   border-radius: 10px;
