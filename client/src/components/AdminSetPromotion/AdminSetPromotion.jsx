@@ -42,9 +42,16 @@ function AdminSetPromotion(props) {
       console.log(err);
     }
   };
+
   useEffect(() => {
     fetchData();
   }, []);
+  let timeoutId;
+  useEffect(() => {
+    if (success) {
+      timeoutId = setTimeout(cancel, 3000);
+    }
+  }, [success]);
   const save = async () => {
     if (selectedCourses.length <= 0) {
       setSelectError("Please select at least 1 course");
@@ -88,6 +95,7 @@ function AdminSetPromotion(props) {
     setLoading(false);
   };
   const cancel = () => {
+    clearTimeout(timeoutId);
     if (success) {
       window.location.reload();
       return;
