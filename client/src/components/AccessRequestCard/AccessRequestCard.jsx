@@ -1,59 +1,132 @@
-import React from "react";
+import React, { useState } from "react";
 import { Card, Image } from "semantic-ui-react";
 import Button from "react-bootstrap/Button";
 import "semantic-ui-css/semantic.min.css";
-import { Row } from "react-bootstrap";
+import { Row, Col, Spinner } from "react-bootstrap";
 import { declineAccessRequest, approveAccessRequest } from "../../network";
-
+import "./AccessRequestCard.css";
 function AccessRequestCard(props) {
-  const request = props.request;
-
-  const approve = async()=>{
-    try{
+  const { request, getRequests, setFail, setSuccess, setMsg } = props;
+  const [approveLoading, setApproveLoading] = useState(false);
+  const [declineLoading, setDeclineLoading] = useState(false);
+  const approve = async () => {
+    setApproveLoading(true);
+    try {
       await approveAccessRequest(request._id);
-      props.getRequests();
-    }catch(err){
-      console.log(err);
+      setSuccess(true);
+      setMsg("Access request approved successfully!");
+      await getRequests();
+    } catch (err) {
+      setFail(true);
     }
-  }
+    setApproveLoading(false);
+  };
 
-  const decline = async()=>{
-    try{
+  const decline = async () => {
+    setDeclineLoading(true);
+    try {
       await declineAccessRequest(request._id);
-      console.log("done");
-      props.getRequests();
-    }catch(err){
-      console.log(err);
+      setSuccess(true);
+      setMsg("Access request declined successfully!");
+      await getRequests();
+    } catch (err) {
+      setFail(true);
     }
-  }
+    setDeclineLoading(false);
+  };
 
   return (
-    <Card.Group>
-      <Card fluid>
-        <Card.Content>
-          <Image
-            floated="right"
-            size="mini"
-            src="https://react.semantic-ui.com/images/avatar/large/steve.jpg"
-          />
-          <Card.Header>{request.userName}</Card.Header>
-          <Card.Meta>Course Access Request</Card.Meta>
-          <Card.Description>
-            {request.userName + " requests access to course: "}
-            <a href={`/course/${request.courseId}`}>{request.courseName}</a>
-          </Card.Description>
-        </Card.Content>
-        <Card.Content>
-          <Card.Description>{request.reason}</Card.Description>
-        </Card.Content>
-        <Card.Content extra>
-          <Row xs={1} md={2}>
-            <Button variant="outline-success" onClick={()=>approve()}>Approve</Button>
-            <Button variant="outline-danger" onClick={()=>decline()}>Decline</Button>
-          </Row>
-        </Card.Content>
-      </Card>
-    </Card.Group>
+    <div id="accessRequestContainer">
+      <Row md={2} id="accessRequestHeader">
+        <Col>
+          <h4>{request.userName}</h4>
+          <small>
+            <b>
+              {"Course: "}
+              <a
+                href={"/course/" + request.courseId}
+                id="problemCourseNameLink"
+              >
+                {request.courseName}
+              </a>
+            </b>
+            <br />
+          </small>
+        </Col>
+        <Col></Col>
+      </Row>
+      <div id="accessRequestBody">{request.reason}</div>
+      <div id="accessRequestFooter">
+        {declineLoading ? (
+          <>
+            <Button
+              onClick={() => decline()}
+              id="accessRequestDeclineButton"
+              disabled
+            >
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              {" Saving..."}
+            </Button>
+            <Button
+              onClick={() => approve()}
+              id="accessRequestApproveButton"
+              disabled
+            >
+              Approve
+            </Button>
+          </>
+        ) : (
+          <>
+            {approveLoading ? (
+              <>
+                <Button
+                  onClick={() => decline()}
+                  id="accessRequestDeclineButton"
+                  disabled
+                >
+                  Decline
+                </Button>
+                <Button
+                  onClick={() => approve()}
+                  id="accessRequestApproveButton"
+                  disabled
+                >
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
+                  />
+                  {" Saving..."}
+                </Button>
+              </>
+            ) : (
+              <>
+                <Button
+                  onClick={() => decline()}
+                  id="accessRequestDeclineButton"
+                >
+                  Decline
+                </Button>
+                <Button
+                  onClick={() => approve()}
+                  id="accessRequestApproveButton"
+                >
+                  Approve
+                </Button>
+              </>
+            )}
+          </>
+        )}
+      </div>
+    </div>
   );
 }
 

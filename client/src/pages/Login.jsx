@@ -22,14 +22,10 @@ const Login = (props) => {
       ReactSession.set("userType", userData.data.userType);
       props.setUserType(userData.data.userType);
       ReactSession.set("userId", userData.data.userId);
-      if (userData.data.userType !== userTypes.corporateTrainee) {
-        ReactSession.set(
-          "userName",
-          userData.data.firstName + " " + userData.data.lastName
-        );
-      } else {
-        ReactSession.set("userName", userData.data.userName);
-      }
+      ReactSession.set(
+        "userName",
+        userData.data.firstName + " " + userData.data.lastName
+      );
 
       navigate("/");
     } catch (err) {
