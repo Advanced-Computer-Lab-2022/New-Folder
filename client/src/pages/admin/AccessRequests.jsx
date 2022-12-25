@@ -65,8 +65,9 @@ function AccessRequests() {
                   {accessRequests.map((request) => (
                     <Col>
                       <AccessRequestCard
+                        accessRequests={accessRequests}
+                        setAccessRequests={setAccessRequests}
                         request={request}
-                        getRequests={getRequests}
                         setFail={setFail}
                         setSuccess={setSuccess}
                         setMsg={setMsg}

@@ -6,16 +6,29 @@ import { Row, Col, Spinner } from "react-bootstrap";
 import { declineAccessRequest, approveAccessRequest } from "../../network";
 import "./AccessRequestCard.css";
 function AccessRequestCard(props) {
-  const { request, getRequests, setFail, setSuccess, setMsg } = props;
+  const {
+    request,
+    accessRequests,
+    setAccessRequests,
+    setFail,
+    setSuccess,
+    setMsg,
+  } = props;
   const [approveLoading, setApproveLoading] = useState(false);
   const [declineLoading, setDeclineLoading] = useState(false);
+  const deleteRequest = (id) => {
+    const newAccessRequests = accessRequests.filter(
+      (element) => element._id != id
+    );
+    setAccessRequests(newAccessRequests);
+  };
   const approve = async () => {
     setApproveLoading(true);
     try {
       await approveAccessRequest(request._id);
+      deleteRequest(request._id);
       setSuccess(true);
       setMsg("Access request approved successfully!");
-      await getRequests();
     } catch (err) {
       setFail(true);
     }
@@ -26,9 +39,9 @@ function AccessRequestCard(props) {
     setDeclineLoading(true);
     try {
       await declineAccessRequest(request._id);
+      deleteRequest(request._id);
       setSuccess(true);
       setMsg("Access request declined successfully!");
-      await getRequests();
     } catch (err) {
       setFail(true);
     }
