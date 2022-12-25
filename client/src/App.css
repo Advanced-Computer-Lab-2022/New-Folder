@@ -75,3 +75,8 @@
   border: solid #b0b6b1;
   background-color: transparent;
 }
+input[type="radio"]:checked {
+  background-color: #100f0f;
+  box-shadow: none;
+  border: 1px solid #100f0f;
+}
