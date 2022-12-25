@@ -80,3 +80,9 @@ input[type="radio"]:checked {
   box-shadow: none;
   border: 1px solid #100f0f;
 }
+
+input[type="checkbox"]:checked {
+  background-color: #100f0f;
+  box-shadow: none;
+  border: 1px solid #100f0f;
+}

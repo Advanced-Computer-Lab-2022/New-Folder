@@ -1,10 +1,12 @@
 import { Button, Modal } from "react-bootstrap";
 
-const ContractCard = (props) => {
+const SignupTerms = (props) => {
   const handleClose = () => props.setShow(false);
   return (
     <Modal
-      size="xl"
+      centered
+      style={{ maxHeight: "700px" }}
+      size="lg"
       show={props.show}
       onHide={handleClose}
       backdrop="static"
@@ -102,11 +104,15 @@ const ContractCard = (props) => {
         consectetur tempora?
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-dark" onClick={handleClose}>
+        <Button
+          style={{ width: "200px" }}
+          variant="outline-dark"
+          onClick={handleClose}
+        >
           Close
         </Button>
       </Modal.Footer>
     </Modal>
   );
 };
-export default ContractCard;
+export default SignupTerms;
