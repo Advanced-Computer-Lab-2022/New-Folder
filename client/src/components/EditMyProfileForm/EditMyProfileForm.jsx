@@ -4,10 +4,10 @@ import { editMyProfile } from "../../network";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
-import Card from "react-bootstrap/Card";
 import FloatingLabel from "react-bootstrap/FloatingLabel";
 import { ImPencil } from "react-icons/im";
 import Spinner from "react-bootstrap/Spinner";
+import { Card } from "react-bootstrap";
 
 const EditMyProfileForm = (props) => {
   const [allowEdit, setAllowEdit] = useState(false);
@@ -53,7 +53,7 @@ const EditMyProfileForm = (props) => {
           size={20}
         />
       </h3>
-      <Card id="editMyProfileMain">
+      <div id="editMyProfileMain" className="whiteCard">
         <Form
           noValidate
           validated={validated}
@@ -118,16 +118,14 @@ const EditMyProfileForm = (props) => {
             {allowEdit ? (
               <div class="text-end">
                 <Button
-                  className="saveMyProfileChangesBtn"
-                  id="cancelMyProfile"
+                  className="saveMyProfileChangesBtn greyBg greyBgHover"
                   onClick={cancelChanges}
                   disabled={loading}
                 >
                   Cancel changes
                 </Button>
                 <Button
-                  className="saveMyProfileChangesBtn"
-                  id="saveMyProfile"
+                  className="saveMyProfileChangesBtn blueBg blueBgHover"
                   type="submit"
                   disabled={loading}
                 >
@@ -147,7 +145,7 @@ const EditMyProfileForm = (props) => {
             ) : null}
           </Col>
         </Form>
-      </Card>
+      </div>
     </div>
   );
 };

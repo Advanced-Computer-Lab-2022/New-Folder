@@ -51,7 +51,7 @@ const Login = (props) => {
 
   return (
     <div id="loginMain3">
-      <div id="loginMain">
+      <div id="loginMain" className="whiteCard">
         <h1 className="mb-5">Learning System</h1>
         <Alert show={showError} variant="danger">
           {errorMsg}
@@ -104,7 +104,7 @@ const Login = (props) => {
           </h5>
         </Form>
       </div>
-      <div id="loginMain2">
+      <div id="loginMain2" className="whiteCard">
         <h3>
           Don't have an account?{" "}
           <a className="loginLinks blueTxt" href="/signup">

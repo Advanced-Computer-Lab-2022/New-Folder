@@ -24,7 +24,7 @@ const ReviewCard = (props) => {
     const tempReviews = [];
     for (let i = 0; i < props.reviews.length && i < lastReviewIndex; i++) {
       tempReviews.push(
-        <Card className="cardFrame">
+        <div className="cardFrame whiteCard">
           <Card.Body className="reviewCard">
             <Card.Title>{props.reviews[i].traineeName}</Card.Title>
             <div id="reviewCardStars">
@@ -32,7 +32,7 @@ const ReviewCard = (props) => {
             </div>
             <Card.Text>{props.reviews[i].review}</Card.Text>
           </Card.Body>
-        </Card>
+        </div>
       );
     }
     setReviews(tempReviews);
@@ -42,7 +42,7 @@ const ReviewCard = (props) => {
     const tempReviews = [];
     for (let i = 0; i < props.reviews.length && i < lastReviewIndex + 5; i++) {
       tempReviews.push(
-        <Card className="cardFrame">
+        <div className="cardFrame whiteCard">
           <Card.Body className="reviewCard">
             <Card.Title>{props.reviews[i].traineeName}</Card.Title>
             <div id="reviewCardStars">
@@ -50,7 +50,7 @@ const ReviewCard = (props) => {
             </div>
             <Card.Text>{props.reviews[i].review}</Card.Text>
           </Card.Body>
-        </Card>
+        </div>
       );
     }
     setReviews(tempReviews);

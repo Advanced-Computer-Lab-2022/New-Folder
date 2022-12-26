@@ -62,7 +62,7 @@ const Signup = (props) => {
 
   return (
     <div id="signupMain3">
-      <div id="signupMain">
+      <div id="signupMain" className="whiteCard">
         <h1 className="text-center mb-5">Learning System</h1>
         <Alert show={showError} variant="danger">
           {errorMsg}
@@ -205,7 +205,7 @@ const Signup = (props) => {
           </Button>
         </Form>
       </div>
-      <div id="signupMain2">
+      <div id="signupMain2" className="whiteCard">
         <h4>
           Already have an account?{" "}
           <a className="signupLinks blueTxt" href="/login">
