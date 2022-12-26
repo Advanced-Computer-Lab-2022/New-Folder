@@ -1,17 +1,15 @@
-const Course = require("../../models/Course.model");
 const Subtitle = require("../../models/Subtitle.model");
 const Content = require("../../models/Content.model");
-const constants = require("../constants.json");
+const constants = require("../../constants.json");
 
 const coursePrice = async (course) => {
-  const course = await Course.findById(course._id);
   let discount = course.promotion;
   let finalPrice = parseFloat(course.price.magnitude);
   let hasPromotion = false;
   if (discount) {
     let now = Date.now();
     if (discount.startDate <= now && discount.endDate > now) {
-      priceAfterPromotion *= 1 - discount.percentage / 100;
+      finalPrice *= 1 - discount.percentage / 100;
       hasPromotion = true;
     }
   }
@@ -24,9 +22,8 @@ const coursePrice = async (course) => {
 };
 
 const courseDuration = async (course) => {
-  const course = await Course.findById(course._id);
   let allContent = [];
-  course?.subtitles?.array.forEach(async (sub) => {
+  course?.subtitles?.forEach(async (sub) => {
     let subtitle = await Subtitle.findById(sub);
     allContent = allContent.concat(
       subtitle?.subTitle_Content?.filter(

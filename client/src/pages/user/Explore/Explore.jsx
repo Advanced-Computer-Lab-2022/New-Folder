@@ -54,21 +54,19 @@ const Explore = () => {
             <h4>Learn new skills and unlock new opportunities.</h4>
           </div>
           <h2 id="exploreTitle">Popular courses</h2>
-          <div id="exploreMain" className="whiteCard">
+          <div id="exploreMain" className="blueBg">
             {courses?.length > 0 ? (
               <Carousel
-                nextIcon={
-                  <IoIosArrowDroprightCircle size={40} color="#100F0F" />
-                }
-                prevIcon={
-                  <IoIosArrowDropleftCircle size={40} color="#100F0F" />
-                }
-                variant="dark"
+                nextIcon={<IoIosArrowDroprightCircle size={40} />}
+                prevIcon={<IoIosArrowDropleftCircle size={40} />}
+                variant="light"
               >
                 {courses}
               </Carousel>
             ) : (
-              <h2>Right now there are no courses uploaded yet</h2>
+              <h2 className="m-4 mt-0">
+                Right now there are no courses uploaded yet.
+              </h2>
             )}
           </div>
         </div>
