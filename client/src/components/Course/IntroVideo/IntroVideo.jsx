@@ -11,6 +11,8 @@ function IntroVideo(props) {
         <iframe
           style={{
             borderRadius: 8,
+            height: 250,
+            width: 400,
           }}
           src={
             "https://www.youtube.com/embed/" +

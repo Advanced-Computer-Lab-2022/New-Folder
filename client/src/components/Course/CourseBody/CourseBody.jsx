@@ -1,6 +1,7 @@
 import React from "react";
 import ViewerContexts from "../../../constants/ViewerContexts.json";
 import "./CourseBody.css";
+import "../../../App.css";
 function CourseBody(props) {
   const {
     vc,
@@ -13,7 +14,7 @@ function CourseBody(props) {
     trainees,
   } = props;
   return (
-    <div id="courseBodyContainer">
+    <div id="courseBodyContainer" className="whiteCard">
       {vc !== ViewerContexts.nonEnrolledCorporateTrainee &&
       vc !== ViewerContexts.enrolledTrainee &&
       vc != ViewerContexts.pendingCorporateTrainee ? (
