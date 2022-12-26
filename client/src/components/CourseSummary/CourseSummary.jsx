@@ -28,6 +28,7 @@ import RequestAccess from "../Course/RequestAccess/RequestAccess";
 import { Spinner } from "react-bootstrap";
 import PaymentConfirmation from "../PaymentConfirmation/PaymentConfirmation";
 import ErrorModal from "../ErrorModal/ErrorModal";
+import IntroVideo from "../Course/IntroVideo/IntroVideo";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -125,7 +126,7 @@ function CourseSummary(props) {
 
   return (
     <>
-      <div id="courseSummaryContainer">
+      <div id="courseSummaryContainer" className="blueBg">
         <div className="courseSummaryFirstRow-parent">
           <div id="courseSummaryFirstRow">
             <Row className="mb-0">
@@ -302,45 +303,13 @@ function CourseSummary(props) {
               </Stack>
             </Col>
             <Col>
-              <div id="introVideo">
-                {props.course.introVideo !== "" && (
-                  <iframe
-                    style={{
-                      height: 300,
-                      width: 500,
-                      marginLeft: 190,
-                      borderRadius: 8,
-                    }}
-                    src={
-                      "https://www.youtube.com/embed/" +
-                      getYoutubeVideoID(props.course.introVideo ?? "")
-                    }
-                  ></iframe>
-                )}
-                {props.vc === ViewerContexts.author ? (
-                  <Form>
-                    <Container className="mt-4">
-                      <Form.Group className="mt-3">
-                        <Form.Control
-                          type="text"
-                          placeholder="Video url"
-                          value={props.newVideo}
-                          required
-                          onChange={(e) => {
-                            props.setNewVideo(e.target.value);
-                          }}
-                          id="urlInput"
-                        ></Form.Control>
-                      </Form.Group>
-                      <div className="text-center">
-                        <Button id="addVideo" onClick={props.uploadIntroVideo}>
-                          Add video
-                        </Button>
-                      </div>
-                    </Container>
-                  </Form>
-                ) : null}
-              </div>
+              <IntroVideo
+                introVideo={props.course.introVideo}
+                vc={props.vc}
+                newVideo={props.newVideo}
+                setNewVideo={props.setNewVideo}
+                uploadIntroVideo={props.uploadIntroVideo}
+              />
             </Col>
           </Row>
         </div>
