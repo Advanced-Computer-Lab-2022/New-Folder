@@ -54,6 +54,10 @@ const Explore = () => {
     }
     if (minPrice !== "" && maxPrice !== "") {
       newCourses = await filterCoursesByPrice(minPrice, maxPrice, newCourses);
+    } else if (minPrice !== "" && maxPrice === "") {
+      newCourses = await filterCoursesByPrice(minPrice, Infinity, newCourses);
+    } else if (minPrice === "" && maxPrice !== "") {
+      newCourses = await filterCoursesByPrice(0, maxPrice, newCourses);
     }
     setFilteredCourses(newCourses);
   };

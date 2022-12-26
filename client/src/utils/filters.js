@@ -1,8 +1,15 @@
 import { getPrice } from "../network";
 
 export const filterCoursesByPrice = async (min, max, courses) => {
+  if (min === "") min = 0;
+  if (max === "") max = Infinity;
   let coursesPrices = await Promise.all(
-    courses.map((course) => getPrice(course.price.finalPrice))
+    courses.map((course) =>
+      getPrice({
+        magnitude: course.price.finalPrice,
+        currency: course.price.currency,
+      })
+    )
   );
   coursesPrices = coursesPrices.map((course) =>
     parseFloat(course.split(" ")[0])

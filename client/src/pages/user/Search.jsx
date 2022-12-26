@@ -66,6 +66,18 @@ const Search = () => {
         maxPrice,
         newSearchResults
       );
+    } else if (minPrice !== "" && maxPrice === "") {
+      newSearchResults = await filterCoursesByPrice(
+        minPrice,
+        Infinity,
+        newSearchResults
+      );
+    } else if (minPrice === "" && maxPrice !== "") {
+      newSearchResults = await filterCoursesByPrice(
+        0,
+        maxPrice,
+        newSearchResults
+      );
     }
     setFilteredSearchResults(newSearchResults);
   };
