@@ -1,18 +1,34 @@
 .wrapper {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(9rem, 18rem));
+  display: inline-flex;
   gap: 2rem;
-  justify-content: center;
+  justify-content: start;
+  justify-self: start;
 }
 
 .explore__content {
   width: 80% !important;
 }
 
-.explore__header {
+.exploreCarouselItem {
   margin: 0;
-  margin-left: 4em;
-  color: rgba(0, 0, 0, 0.3);
-  font-size: 1.6em;
+  margin-bottom: 60px;
+  align-self: flex-start;
+}
+#exploreMain {
+  width: 70%;
+  padding: 0.8%;
+  padding-top: 3%;
+  padding-bottom: 1.7%;
+}
+#exploreTitle {
+  margin: 1.5%;
+  margin-top: 2%;
+  margin-left: 15.3%;
   font-weight: 300;
+}
+#exploreSlogan {
+  margin-top: 2%;
+  width: 70%;
+  padding: 2%;
+  text-align: center;
 }

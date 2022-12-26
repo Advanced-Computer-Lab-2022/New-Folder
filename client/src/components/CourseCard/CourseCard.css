@@ -1,9 +1,9 @@
 .card {
   overflow: hidden;
   width: 250px;
-  height: 400px;
+  min-height: 350px;
+  max-height: 350px;
   cursor: pointer;
-  margin: 10px;
 }
 
 .card:hover {
@@ -82,10 +82,11 @@
   font-weight: bold;
 }
 
-.card__price sup {
+#courseCardCurrency {
   font-size: 0.6m;
   color: rgba(41, 13, 13, 0.35);
   margin: 0;
+  margin-left: 5px;
 }
 
 .instructor__image {

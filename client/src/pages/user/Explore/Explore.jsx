@@ -1,117 +1,71 @@
 import { useState, useEffect } from "react";
 import CourseCard from "../../../components/CourseCard/CourseCard";
 import { fetchExploreData } from "../../../network";
+import { Carousel, Image, Spinner, Stack } from "react-bootstrap";
 import {
-  filterCoursesBySubject,
-  filterCoursesByPrice,
-  filterCoursesByRating,
-} from "../../../utils/filters";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
+  IoIosArrowDroprightCircle,
+  IoIosArrowDropleftCircle,
+} from "react-icons/io";
 import "./Explore.css";
+import PageHeader from "../../../components/PageHeader/PageHeader";
 const Explore = () => {
   const [courses, setCourses] = useState([]);
-  const [filteredCourses, setFilteredCourses] = useState(courses);
-  const [minPrice, setMinPrice] = useState("");
-  const [maxPrice, setMaxPrice] = useState("");
-  const [rating, setRating] = useState("");
-  const [subject, setSubject] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
+      let tmp = [];
       const fetchedCourses = await fetchExploreData();
-      setFilteredCourses(fetchedCourses);
-      setCourses(fetchedCourses);
+      for (let i = 0; i < fetchedCourses?.length && i < 16; i += 3) {
+        let courseCards = [];
+        for (let j = 0; j + i < fetchedCourses?.length && j < 3; j++) {
+          courseCards.push(<CourseCard course={fetchedCourses[i + j]} />);
+        }
+        tmp.push(
+          <Carousel.Item className="exploreCarouselItem">
+            <div className="wrapper">{courseCards}</div>
+          </Carousel.Item>
+        );
+      }
+      setCourses(tmp);
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       console.log(err);
     }
   };
 
   useEffect(() => {
     fetchData();
-    clearFilters();
   }, []);
 
-  const clearFilters = () => {
-    setMinPrice("");
-    setMaxPrice("");
-    setRating("");
-    setSubject("");
-    setFilteredCourses(courses);
-  };
-
-  const filter = async () => {
-    let newCourses = courses;
-    if (subject !== "") {
-      newCourses = filterCoursesBySubject(subject, newCourses);
-    }
-    if (rating !== "") {
-      newCourses = filterCoursesByRating(rating, newCourses);
-    }
-    if (minPrice !== "" && maxPrice !== "") {
-      newCourses = await filterCoursesByPrice(minPrice, maxPrice, newCourses);
-    }
-    setFilteredCourses(newCourses);
-  };
-
   return (
-    <Row>
-      <Row className="m-4">
-        <Form.Group as={Col}>
-          <Form.Control
-            type="number"
-            placeholder="min price"
-            value={minPrice}
-            onChange={(e) => setMinPrice(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group as={Col}>
-          <Form.Control
-            type="number"
-            placeholder="max price"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group as={Col}>
-          <Form.Control
-            type="number"
-            placeholder="rating"
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group as={Col}>
-          <Form.Control
-            type="text"
-            placeholder="subject"
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group as={Col}>
-          <Button variant="dark" className="me-4" onClick={filter}>
-            Filter
-          </Button>
-          <Button variant="dark" onClick={clearFilters}>
-            Clear filters
-          </Button>
-        </Form.Group>
-      </Row>
-
-      <div className="explore__content">
-        <div className="explore__header">
-          <p className="header">Featured Courses</p>
+    <div>
+      {loading ? (
+        <Stack className="m-4">
+          <Spinner animation="border" />
+        </Stack>
+      ) : (
+        <div>
+          <PageHeader pageName="Explore" />
+          <div id="exploreSlogan" className="whiteCard">
+            <h1 className="blueTxt">Reach the next level</h1>
+            <h4>Learn new skills and Unlock new opportunities.</h4>
+          </div>
+          <h2 id="exploreTitle">Popular courses</h2>
+          <div id="exploreMain" className="whiteCard">
+            <Carousel
+              nextIcon={<IoIosArrowDroprightCircle size={40} color="#100F0F" />}
+              prevIcon={<IoIosArrowDropleftCircle size={40} color="#100F0F" />}
+              variant="dark"
+            >
+              {courses}
+            </Carousel>
+          </div>
         </div>
-        <div className="wrapper">
-          {filteredCourses.map((course) => (
-            <CourseCard course={course} />
-          ))}
-        </div>
-      </div>
-    </Row>
+      )}
+    </div>
   );
 };
 

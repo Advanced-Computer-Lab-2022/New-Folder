@@ -53,12 +53,6 @@ function CourseCard(props) {
             <span className="card__subject">{props.course.subject}</span>
           </div>
 
-          <div className="card__details__description">
-            <p className="card__description">
-              {props.course.description ?? "No description"}
-            </p>
-          </div>
-
           <div className="card__details__price__rating">
             <div className="card__details__rating">
               <i class="bi bi-star-fill"></i>
@@ -72,7 +66,8 @@ function CourseCard(props) {
             </div>
 
             <p className="card__price">
-              {price} <sup>{currency}</sup>
+              {price}
+              <span id="courseCardCurrency">{currency}</span>
             </p>
           </div>
         </div>
