@@ -2,6 +2,11 @@ import { getPrice, fetchInstructorData } from "../../network";
 import { useState, useEffect } from "react";
 import { ReactSession } from "react-client-session";
 import { useNavigate } from "react-router-dom";
+import Card from "@mui/material/Card";
+import CardContent from "@mui/material/CardContent";
+import CardMedia from "@mui/material/CardMedia";
+import Typography from "@mui/material/Typography";
+import { CardActionArea } from "@mui/material";
 import "./CourseCard.css";
 
 function CourseCard(props) {
@@ -26,53 +31,51 @@ function CourseCard(props) {
   }, [ReactSession.get("country"), props.course]);
 
   return (
-    <div
-      className="card whiteCard"
-      onClick={(e) => navigate("/course/" + props.course._id)}
-    >
-      <div className="card__body">
-        <img
-          className="card__image"
-          src={
-            props.course.image === ""
-              ? "../../public/assets/course/course-default.png"
-              : props.course.image
+    <Card sx={{ maxWidth: 250, minWidth: 250 }}>
+      <CardActionArea>
+        <CardMedia
+          component="img"
+          height="180"
+          width="250"
+          image={
+            props.course?.image?.length > 0
+              ? props.course.image
+              : "https://www.pngkey.com/png/detail/350-3500680_placeholder-open-book-silhouette-vector.png"
           }
         />
-        <div className="card__instructor">
-          <p className="instructor__name">
-            {props.course.instructorInfo == undefined
-              ? "unknown"
-              : props.course.instructorInfo.instructorName}
-          </p>
-        </div>
-
-        <div className="card__details">
-          <div className="card__details__title">
-            <h4 className="card__title">{props.course.name}</h4>
-            <span className="card__subject">{props.course.subject}</span>
-          </div>
-
-          <div className="card__details__price__rating">
-            <div className="card__details__rating">
-              <i class="bi bi-star-fill"></i>
-              <p className="card__rating">{props.course.totalRating ?? 0}</p>
-              <span className="card__rating__number">
-                (
-                {(props.course.ratings?.length ?? "0") +
-                  (props.course.ratings?.length == 1 ? " rating" : " ratings")}
-                )
-              </span>
-            </div>
-
-            <p className="card__price">
-              {price}
-              <span id="courseCardCurrency">{currency}</span>
+        <CardContent>
+          <Typography gutterBottom variant="h5" component="div">
+            {props.course.name}
+          </Typography>
+          <Typography variant="body2">
+            <p className="instructor__name">
+              {props.course.instructorInfo == undefined
+                ? "unknown"
+                : props.course.instructorInfo.instructorName}
             </p>
-          </div>
-        </div>
-      </div>
-    </div>
+            <div className="card__details__price__rating">
+              <div className="card__details__rating">
+                <i class="bi bi-star-fill"></i>
+                <p className="card__rating">{props.course.totalRating ?? 0}</p>
+                <span className="card__rating__number">
+                  (
+                  {(props.course.ratings?.length ?? "0") +
+                    (props.course.ratings?.length == 1
+                      ? " rating"
+                      : " ratings")}
+                  )
+                </span>
+              </div>
+
+              <h6 className="card__price">
+                {price}
+                <span id="courseCardCurrency">{currency}</span>
+              </h6>
+            </div>
+          </Typography>
+        </CardContent>
+      </CardActionArea>
+    </Card>
   );
 }
 

@@ -55,13 +55,21 @@ const Explore = () => {
           </div>
           <h2 id="exploreTitle">Popular courses</h2>
           <div id="exploreMain" className="whiteCard">
-            <Carousel
-              nextIcon={<IoIosArrowDroprightCircle size={40} color="#100F0F" />}
-              prevIcon={<IoIosArrowDropleftCircle size={40} color="#100F0F" />}
-              variant="dark"
-            >
-              {courses}
-            </Carousel>
+            {courses?.length > 0 ? (
+              <Carousel
+                nextIcon={
+                  <IoIosArrowDroprightCircle size={40} color="#100F0F" />
+                }
+                prevIcon={
+                  <IoIosArrowDropleftCircle size={40} color="#100F0F" />
+                }
+                variant="dark"
+              >
+                {courses}
+              </Carousel>
+            ) : (
+              <h2>Right now there are no courses uploaded yet</h2>
+            )}
           </div>
         </div>
       )}
