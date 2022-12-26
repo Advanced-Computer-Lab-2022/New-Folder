@@ -30,6 +30,7 @@ import PaymentConfirmation from "../PaymentConfirmation/PaymentConfirmation";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import IntroVideo from "../Course/IntroVideo/IntroVideo";
 import CourseHeader from "../Course/CourseHeader/CourseHeader";
+import CourseBody from "../Course/CourseBody/CourseBody";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -118,9 +119,6 @@ function CourseSummary(props) {
         <div className="courseSummaryFirstRow-parent">
           <div id="courseSummaryFirstRow">
             <Row className="mb-0">
-              <Col md="auto">
-                <Image width={300} src={props.course.image} thumbnail />
-              </Col>
               <Col>
                 <CourseHeader
                   totalRating={totalRating}
@@ -210,46 +208,16 @@ function CourseSummary(props) {
                     </>
                   )}
                 </div>
-                {props.vc !== ViewerContexts.nonEnrolledCorporateTrainee &&
-                props.vc !== ViewerContexts.enrolledTrainee &&
-                props.vc != ViewerContexts.pendingCorporateTrainee ? (
-                  <>
-                    {validPromotion ? (
-                      <>
-                        <h5 className="courseInfo">
-                          <b>Price:</b>{" "}
-                          <del>{props.price.split(" ")[0] ?? ""}</del>{" "}
-                          {(
-                            parseFloat(props.price.split(" ")[0]) *
-                            (1 - promotion.percentage / 100)
-                          ).toFixed(2)}{" "}
-                          {props.price.split(" ")[1]}
-                          {`(-${promotion.percentage}%)`}
-                        </h5>
-                      </>
-                    ) : (
-                      <h5 className="courseInfo">
-                        <b>Price:</b> {props.price ?? ""}
-                      </h5>
-                    )}
-                  </>
-                ) : null}
-                <h5 className="courseInfo">
-                  <b>Total duration:</b> {totalDuration(props.duration)}
-                </h5>
-                <h5 className="courseInfo">
-                  <strong>Subject:</strong> {props.course.subject ?? ""}
-                </h5>
-                <h5 className="courseInfo">
-                  <strong>Summary:</strong>
-                  <br /> {props.course.description ?? ""}
-                </h5>
-                {props.vc === ViewerContexts.author ? (
-                  <h5 className="courseInfo">
-                    <b>Count of enrolled trainees: </b>{" "}
-                    {props.course.trainees.length + " trainee(s)"}
-                  </h5>
-                ) : null}
+                <CourseBody
+                  vc={props.vc}
+                  validPromotion={validPromotion}
+                  price={props.price}
+                  percentage={promotion?.percentage}
+                  totalDuration={totalDuration(props.duration)}
+                  subject={props.course.subject}
+                  summary={props.course.description}
+                  trainees={props.course.trainees}
+                />
 
                 <div id="addRating">
                   <RatingCard
