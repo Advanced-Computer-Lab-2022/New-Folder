@@ -1,6 +1,6 @@
 import "./Password.css";
 import { useState } from "react";
-import { Form, Button, Container, Col, Spinner, Alert } from "react-bootstrap";
+import { Form, Button, Spinner, Alert } from "react-bootstrap";
 import { sendPasswordResetLink } from "../../network";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
@@ -41,44 +41,40 @@ const ForgetPassword = () => {
   return (
     <div>
       <PageHeader pageName="Forget password" />
-      <div className="passwordMain">
-        <h1 className="mb-5">Learning System</h1>
+      <div className="passwordMain whiteCard">
         <Alert show={showError} variant="danger">
           {errorMsg}
         </Alert>
         <Form noValidate validated={validated} onSubmit={submit}>
-          <Container className="mt-4">
-            <Col lg="5">
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Username</Form.Label>
-                <Form.Control
-                  type="text"
-                  required
-                  placeholder="Username"
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-                <Form.Control.Feedback type="invalid">
-                  This field is required.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Button variant="dark" type="submit" disabled={loading}>
-                Send password reset email{" "}
-                {loading ? (
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    className="ms-1"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                ) : null}
-              </Button>
-            </Col>
-          </Container>
+          <Form.Group className="mb-4" controlId="exampleForm.ControlInput1">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="text"
+              required
+              placeholder="Username"
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              This field is required.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Button
+            className="blueBg blueBgHover passwordBtn"
+            type="submit"
+            disabled={loading}
+          >
+            Send password reset email{" "}
+            {loading ? (
+              <Spinner
+                as="span"
+                animation="border"
+                className="ms-1"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            ) : null}
+          </Button>
         </Form>
       </div>
       <SuccessModal

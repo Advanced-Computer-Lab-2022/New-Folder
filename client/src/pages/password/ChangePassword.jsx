@@ -1,6 +1,6 @@
 import "./Password.css";
 import { useState } from "react";
-import { Form, Button, Container, Col, Spinner } from "react-bootstrap";
+import { Form, Button, Spinner } from "react-bootstrap";
 import { changePassword } from "../../network";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
@@ -42,67 +42,63 @@ const ChangePassword = () => {
   return (
     <div>
       <PageHeader pageName="Change password" />
-      <div className="passwordMain">
-        <h1 className="mb-5">Learning System</h1>
+      <div className="passwordMain whiteCard">
         <Form noValidate validated={validated} onSubmit={submit}>
-          <Container className="mt-4">
-            <Col lg="5">
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Old password</Form.Label>
-                <Form.Control
-                  type="password"
-                  required
-                  onChange={(e) => setOldPassword(e.target.value)}
-                />
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>New password</Form.Label>
-                <Form.Control
-                  type="password"
-                  required
-                  minLength={6}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a valid password (min: 6 characters).
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Confirm New password</Form.Label>
-                <Form.Control
-                  type="password"
-                  required
-                  pattern={newPassword}
-                  onChange={(e) => setConfirmNewPassword(e.target.value)}
-                />
-                <Form.Control.Feedback type="invalid">
-                  This doesn't match the password you entered.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Button variant="dark" type="submit" disabled={loading}>
-                Change password
-                {loading ? (
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    className="ms-1"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                ) : null}
-              </Button>
-            </Col>
-          </Container>
+          <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
+            <Form.Label>Old password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Old password"
+              required
+              onChange={(e) => setOldPassword(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              This field is required.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
+            <Form.Label>New password</Form.Label>
+            <Form.Control
+              type="password"
+              required
+              placeholder="New password"
+              minLength={6}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              Please enter a valid password (min: 6 characters).
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-4" controlId="exampleForm.ControlInput1">
+            <Form.Label>Confirm New password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Confirm New password"
+              required
+              pattern={newPassword}
+              onChange={(e) => setConfirmNewPassword(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              This doesn't match the password you entered.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Button
+            className=" blueBg blueBgHover passwordBtn"
+            type="submit"
+            disabled={loading}
+          >
+            Change password
+            {loading ? (
+              <Spinner
+                as="span"
+                animation="border"
+                className="ms-1"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            ) : null}
+          </Button>
         </Form>
       </div>
       <SuccessModal

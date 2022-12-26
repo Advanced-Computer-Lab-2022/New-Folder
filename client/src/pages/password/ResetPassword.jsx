@@ -1,10 +1,11 @@
 import "./Password.css";
-import { Form, Button, Container, Col, Spinner } from "react-bootstrap";
+import { Form, Button, Spinner } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { resetPassword } from "../../network";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
 import ErrorModal from "../../components/ErrorModal/ErrorModal";
+import PageHeader from "../../components/PageHeader/PageHeader";
 
 const ResetPassword = () => {
   const [newPassword, setNewPassword] = useState("");
@@ -42,58 +43,51 @@ const ResetPassword = () => {
   return (
     <div>
       <PageHeader pageName="Reset password" />
-      <div className="passwordMain">
-        <h1 className="mb-5">Learning System</h1>
+      <div className="passwordMain whiteCard">
         <Form noValidate validated={validated} onSubmit={submit}>
-          <Container className="mt-4">
-            <Col lg="5">
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>New password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="New password"
-                  required
-                  minLength={6}
-                  onChange={(e) => setNewPassword(e.target.value)}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please enter a valid password (min: 6 characters).
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Form.Group
-                className="mb-3"
-                controlId="exampleForm.ControlInput1"
-              >
-                <Form.Label>Confirm New password</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="Confirm New password"
-                  required
-                  pattern={newPassword}
-                  onChange={(e) => setConfirmNewPassword(e.target.value)}
-                />
-                <Form.Control.Feedback type="invalid">
-                  This doesn't match the password you entered.
-                </Form.Control.Feedback>
-              </Form.Group>
-              <Button variant="dark" type="submit" disabled={loading}>
-                Reset password{" "}
-                {loading ? (
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    className="ms-1"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                ) : null}
-              </Button>
-            </Col>
-          </Container>
+          <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
+            <Form.Label>New password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="New password"
+              required
+              minLength={6}
+              onChange={(e) => setNewPassword(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              Please enter a valid password (min: 6 characters).
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-4" controlId="exampleForm.ControlInput1">
+            <Form.Label>Confirm New password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Confirm New password"
+              required
+              pattern={newPassword}
+              onChange={(e) => setConfirmNewPassword(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              This doesn't match the password you entered.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Button
+            className="blueBg blueBgHover passwordBtn"
+            type="submit"
+            disabled={loading}
+          >
+            Reset password{" "}
+            {loading ? (
+              <Spinner
+                as="span"
+                animation="border"
+                className="ms-1"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            ) : null}
+          </Button>
         </Form>
       </div>
       <SuccessModal
