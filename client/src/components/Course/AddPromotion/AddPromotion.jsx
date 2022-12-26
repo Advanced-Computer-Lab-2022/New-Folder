@@ -12,6 +12,7 @@ import { DayPicker } from "react-day-picker";
 import "./AddPromotion.css";
 import SuccessFeedback from "../../SuccessFeedback/SuccessFeedback";
 import Spinner from "react-bootstrap/Spinner";
+import ErrorFeedback from "../../ErrorFeedback/ErrorFeedback";
 function AddPromotion(props) {
   const { promotion, setPromotion, courseId } = props;
   const [isEditing, setEditing] = useState(false);
@@ -23,6 +24,7 @@ function AddPromotion(props) {
   const [loading, setLoading] = useState(false);
   const [show, setShow] = useState(false);
   const [success, setSuccess] = useState(false);
+  const [fail, setFail] = useState(false);
   useEffect(() => {
     if (
       promotion?.startDate <= promotion?.endDate &&
@@ -34,6 +36,12 @@ function AddPromotion(props) {
       setValid(false);
     }
   }, [promotion]);
+  let timeoutId;
+  useEffect(() => {
+    if (success || fail) {
+      timeoutId = setTimeout(cancel, 3000);
+    }
+  }, [success, fail]);
   const save = async () => {
     const startDate = new Date(range?.from).getTime();
     const endDate = new Date(range?.to).getTime();
@@ -61,14 +69,17 @@ function AddPromotion(props) {
       endDate: new Date(endDate).getTime(),
       percentage: newPercentage,
     };
-    postPromotion(courseId, addedPromotion).then(() => {
-      setLoading(false);
+    try {
+      await postPromotion(courseId, addedPromotion);
       setPromotion(addedPromotion);
       setNewPercentage(null);
       setRange(null);
       setEditing(false);
       setSuccess(true);
-    });
+    } catch (err) {
+      setFail(true);
+    }
+    setLoading(false);
   };
   const cancel = () => {
     setShow(false);
@@ -78,6 +89,7 @@ function AddPromotion(props) {
     setNewPercentage(null);
     setRange(null);
     setSuccess(false);
+    setFail(false);
   };
 
   return (
@@ -96,7 +108,16 @@ function AddPromotion(props) {
                   msg="Promotion added successfully!"
                   onClose={cancel}
                 />
-              ) : null}
+              ) : (
+                <>
+                  {fail ? (
+                    <ErrorFeedback
+                      msg="Promotion added successfully!"
+                      onClose={cancel}
+                    />
+                  ) : null}
+                </>
+              )}
             </>
           ) : (
             <>

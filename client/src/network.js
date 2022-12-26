@@ -104,14 +104,12 @@ export const sendPasswordResetLink = async (data) => {
   return res;
 };
 
-export const sendCertificate = async (userName , courseName) => {
- 
-
-  const res = await instance.post('/trainee/sendCertificate', {
-    userName  : userName,
-    courseName : courseName,
+export const sendCertificate = async (userName, courseName) => {
+  const res = await instance.post("/trainee/sendCertificate", {
+    userName: userName,
+    courseName: courseName,
   });
-}
+};
 
 export const getPrice = async (price) => {
   const data = {
@@ -244,15 +242,11 @@ export const createNewSubtitle = async (courseId, subtitle) => {
 
 //Add promotion
 export const postPromotion = async (courseId, promotion) => {
-  try {
-    const res = await instance.patch("course/addPromotion", {
-      courseId: courseId,
-      promotion: promotion,
-    });
-    return res.data;
-  } catch (err) {
-    console.log(err);
-  }
+  const res = await instance.patch("course/addPromotion", {
+    courseId: courseId,
+    promotion: promotion,
+  });
+  return res.data;
 };
 
 //Add and update Exercise Mark
