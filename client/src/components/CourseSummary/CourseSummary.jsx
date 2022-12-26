@@ -9,7 +9,6 @@ import ViewerContexts from "../../constants/ViewerContexts.json";
 import UserTypes from "../../constants/UserTypes.json";
 import Button from "react-bootstrap/Button";
 import "./CourseSummary.css";
-import ReactStars from "react-rating-stars-component";
 import { useState } from "react";
 import AddPromotion from "../Course/AddPromotion/AddPromotion";
 import "react-day-picker/dist/style.css";
@@ -24,13 +23,13 @@ import ReportCourse from "../Course/ReportCourse/ReportCourse";
 import { ReactSession } from "react-client-session";
 import countryCurrency from "../../constants/CountryCurrency.json";
 import { getPayment } from "../../network";
-import RequestAccess from "../Course/RequestAccess/RequestAccess";
 import { Spinner } from "react-bootstrap";
 import PaymentConfirmation from "../PaymentConfirmation/PaymentConfirmation";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import IntroVideo from "../Course/IntroVideo/IntroVideo";
 import CourseHeader from "../Course/CourseHeader/CourseHeader";
 import CourseBody from "../Course/CourseBody/CourseBody";
+import EnrollGoToCourse from "../Course/EnrollGoToCourse/EnrollGoToCourse";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -153,61 +152,14 @@ function CourseSummary(props) {
           <Row>
             <Col>
               <Stack gap={3}>
-                <div id="priceEnroll">
-                  {props.vc === ViewerContexts.guest ? (
-                    <>
-                      {ReactSession.get("userType") === UserTypes.trainee ? (
-                        <Button
-                          id="enrollButton"
-                          variant="dark"
-                          onClick={enroll}
-                          disabled={loadingEnrollBtn}
-                        >
-                          Enroll{" "}
-                          {loadingEnrollBtn ? (
-                            <Spinner
-                              as="span"
-                              animation="border"
-                              className="ms-1"
-                              size="sm"
-                              role="status"
-                              aria-hidden="true"
-                            />
-                          ) : null}
-                        </Button>
-                      ) : null}
-                    </>
-                  ) : (
-                    <>
-                      {props.vc === ViewerContexts.enrolledTrainee ? (
-                        <Button
-                          id="goToCourse"
-                          variant="dark"
-                          onClick={() =>
-                            navigate(
-                              "/watch/" + props.courseId + "?sId=0&cId=0"
-                            )
-                          }
-                        >
-                          Go to course
-                        </Button>
-                      ) : (
-                        <>
-                          {[
-                            ViewerContexts.pendingCorporateTrainee,
-                            ViewerContexts.nonEnrolledCorporateTrainee,
-                          ].includes(props.vc) ? (
-                            <RequestAccess
-                              vc={props.vc}
-                              setVc={props.setVc}
-                              course={props.course}
-                            />
-                          ) : null}
-                        </>
-                      )}
-                    </>
-                  )}
-                </div>
+                <EnrollGoToCourse
+                  vc={props.vc}
+                  enroll={enroll}
+                  loadingEnrollBtn={loadingEnrollBtn}
+                  courseId={props.courseId}
+                  course={props.course}
+                  setVc={props.setVc}
+                />
                 <CourseBody
                   vc={props.vc}
                   validPromotion={validPromotion}
