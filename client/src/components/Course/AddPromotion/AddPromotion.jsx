@@ -82,6 +82,7 @@ function AddPromotion(props) {
     setLoading(false);
   };
   const cancel = () => {
+    clearTimeout(timeoutId);
     setShow(false);
     setEditing(false);
     setPercentageError(null);
@@ -109,14 +110,7 @@ function AddPromotion(props) {
                   onClose={cancel}
                 />
               ) : (
-                <>
-                  {fail ? (
-                    <ErrorFeedback
-                      msg="Promotion added successfully!"
-                      onClose={cancel}
-                    />
-                  ) : null}
-                </>
+                <>{fail ? <ErrorFeedback onClose={cancel} /> : null}</>
               )}
             </>
           ) : (

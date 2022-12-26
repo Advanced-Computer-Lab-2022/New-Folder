@@ -265,12 +265,8 @@ export const postMark = async (exerciseID, mark) => {
 };
 //Add report
 export const postReport = async (data) => {
-  try {
-    const res = await instance.post("course/report", data);
-    return res.data;
-  } catch (err) {
-    console.log(err);
-  }
+  const res = await instance.post("course/report", data);
+  return res.data;
 };
 
 //Get problems
