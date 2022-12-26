@@ -106,7 +106,7 @@ const SignupTerms = (props) => {
       <Modal.Footer>
         <Button
           style={{ width: "200px" }}
-          variant="outline-dark"
+          className="blueBg blueBgHover"
           onClick={handleClose}
         >
           Close
