@@ -31,7 +31,10 @@ function CourseCard(props) {
   }, [ReactSession.get("country"), props.course]);
 
   return (
-    <Card sx={{ maxWidth: 250, minWidth: 250 }}>
+    <Card
+      sx={{ maxWidth: 250, minWidth: 250 }}
+      onClick={(e) => navigate("/course/" + props.course._id)}
+    >
       <CardActionArea>
         <CardMedia
           component="img"
