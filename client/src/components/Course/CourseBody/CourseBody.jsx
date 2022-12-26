@@ -41,6 +41,11 @@ function CourseBody(props) {
       <h5 className="courseInfo">
         <b>Total duration:</b> {totalDuration}
       </h5>
+      {vc === ViewerContexts.author ? (
+        <h5 className="courseInfo">
+          <b>Count of enrolled trainees: </b> {trainees.length + " trainee(s)"}
+        </h5>
+      ) : null}
       <h5 className="courseInfo">
         <strong>Subject:</strong> {subject ?? ""}
       </h5>
@@ -48,11 +53,6 @@ function CourseBody(props) {
         <strong>Summary:</strong>
         <br /> {summary ?? ""}
       </h5>
-      {vc === ViewerContexts.author ? (
-        <h5 className="courseInfo">
-          <b>Count of enrolled trainees: </b> {trainees.length + " trainee(s)"}
-        </h5>
-      ) : null}
     </div>
   );
 }

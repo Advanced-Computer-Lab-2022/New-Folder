@@ -48,15 +48,11 @@ const CourseDetails = () => {
   };
 
   const uploadIntroVideo = async () => {
-    try {
-      const newCourse = await updateCourse(course._id, {
-        introVideo: newVideo,
-      });
-      setCourse(newCourse);
-      setNewVideo("");
-    } catch (err) {
-      console.log(err);
-    }
+    const newCourse = await updateCourse(course._id, {
+      introVideo: newVideo,
+    });
+    setCourse(newCourse);
+    setNewVideo("");
   };
   const fetchCourse = async () => {
     try {
