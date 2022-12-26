@@ -154,7 +154,7 @@ function RatingCard(props) {
     setNewReview(null);
   };
   return (
-    <div>
+    <div id="rateCourseButton">
       {vc === ViewerContexts.enrolledTrainee ? (
         <>
           <>

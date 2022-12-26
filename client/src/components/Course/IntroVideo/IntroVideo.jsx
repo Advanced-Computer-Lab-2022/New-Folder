@@ -10,8 +10,6 @@ function IntroVideo(props) {
       {introVideo !== "" && (
         <iframe
           style={{
-            height: 300,
-            width: 500,
             borderRadius: 8,
           }}
           src={

@@ -28,14 +28,15 @@
 #leftCol {
   width: fit-content;
   margin: 0;
-  padding-top: 1%;
+  padding-top: 0%;
   padding-bottom: 1%;
 }
 #rightCol {
   width: fit-content;
   margin: 0;
   padding: 2%;
-  padding-top: 1%;
+  padding-top: 0%;
+  padding-bottom: 0.3%;
 }
 #goToCourse {
   font-size: 18px;
@@ -62,7 +63,8 @@
   margin: 0;
 }
 #courseSummaryContainer {
-  padding: 0.3%;
+  padding: 1%;
+  padding-bottom: 0%;
   background-color: #a6d1e6;
   margin-left: 2.5%;
   margin-right: 2.5%;

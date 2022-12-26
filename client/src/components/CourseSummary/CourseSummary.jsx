@@ -134,18 +134,14 @@ function CourseSummary(props) {
             courseId={props.course._id}
             setLoading={setLoading}
             courseName={props.course.name}
-          />
-          
-          <RatingCard
-            courseId={props.courseId}
-            vc={props.vc}
-            totalRating={totalRating}
             setTotalRating={setTotalRating}
-            ratingsCount={ratingsCount}
             setRatingsCount={setRatingsCount}
             reviews={props.reviews}
             setReviews={props.setReviews}
+            promotion={promotion}
+            setPromotion={setPromotion}
           />
+
           <CourseBody
             vc={props.vc}
             validPromotion={validPromotion}
@@ -160,14 +156,6 @@ function CourseSummary(props) {
           props.vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
             <ReportCourse course={props.course} />
           ) : null}
-          {/* {props.vc === ViewerContexts.author ||
-          props.vc === ViewerContexts.admin ? (
-            <AddPromotion
-              promotion={promotion}
-              setPromotion={setPromotion}
-              courseId={props.course._id}
-            />
-          ) : null}*/}
         </div>
       </div>
 

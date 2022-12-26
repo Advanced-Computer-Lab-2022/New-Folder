@@ -14,11 +14,12 @@
   width: fit-content;
   border: none;
   margin: 0;
+  padding-top: 1%;
 }
 .reportFormButton {
   width: 40%;
 }
 #reportIconWrapper {
   width: fit-content;
-  margin-top: -1.5%;
+  margin-top: 0;
 }

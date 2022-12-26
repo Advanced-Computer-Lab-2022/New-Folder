@@ -4,6 +4,8 @@ import ProgressBar from "../../CourseSummary/ProgressBar/ProgressBar";
 import ReactStars from "react-rating-stars-component";
 import ViewerContexts from "../../../constants/ViewerContexts.json";
 import "./CourseHeader.css";
+import RatingCard from "../../RatingCard/RatingCard";
+import AddPromotion from "../AddPromotion/AddPromotion";
 function CourseHeader(props) {
   const {
     totalRating,
@@ -20,6 +22,12 @@ function CourseHeader(props) {
     courseId,
     setLoading,
     courseName,
+    setTotalRating,
+    setRatingsCount,
+    reviews,
+    setReviews,
+    promotion,
+    setPromotion,
   } = props;
   let Stars = useMemo(() => {
     return () => (
@@ -34,29 +42,42 @@ function CourseHeader(props) {
     );
   }, [totalRating]);
   return (
-    <Stack gap={1} id="courseHeader" direction="vertical">
-      <h2>{name}</h2>
-      <h5>
-        By:{" "}
-        <a
-          id="courseInstructorNameLink"
-          href={
-            vc === ViewerContexts.author
-              ? "/myProfile"
-              : `/viewInstructorProfile/${
-                  vc === ViewerContexts.enrolledTrainee
-                }/${instructorId}`
-          }
-        >
-          {instructorName ?? "Instructor"}
-        </a>
-      </h5>
-      <div id="courseHeaderStarsContainer">
-        <Stars />
-        <h6 id="courseHeaderRatingCount">
-          &nbsp;&nbsp;({ratingsCount} {ratingsCount == 1 ? "rating" : "rating"})
-        </h6>
-      </div>
+    <div id="courseHeaderWrapper">
+      <Stack gap={1} id="courseHeaderLeft" direction="vertical">
+        <h2>{name}</h2>
+        <h5>
+          By:{" "}
+          <a
+            id="courseInstructorNameLink"
+            href={
+              vc === ViewerContexts.author
+                ? "/myProfile"
+                : `/viewInstructorProfile/${
+                    vc === ViewerContexts.enrolledTrainee
+                  }/${instructorId}`
+            }
+          >
+            {instructorName ?? "Instructor"}
+          </a>
+        </h5>
+        <div id="courseHeaderStarsContainer">
+          <Stars />
+          <h6 id="courseHeaderRatingCount">
+            &nbsp;&nbsp;({ratingsCount}{" "}
+            {ratingsCount == 1 ? "rating" : "rating"})
+          </h6>
+        </div>
+        <RatingCard
+          courseId={courseId}
+          vc={vc}
+          totalRating={totalRating}
+          setTotalRating={setTotalRating}
+          ratingsCount={ratingsCount}
+          setRatingsCount={setRatingsCount}
+          reviews={reviews}
+          setReviews={setReviews}
+        />
+      </Stack>
       <div className="course-progress-bar">
         {(vc === ViewerContexts.enrolledTrainee ||
           vc === ViewerContexts.refundingTrainee) && (
@@ -73,7 +94,15 @@ function CourseHeader(props) {
           />
         )}
       </div>
-    </Stack>
+      {props.vc === ViewerContexts.author ||
+      props.vc === ViewerContexts.admin ? (
+        <AddPromotion
+          promotion={promotion}
+          setPromotion={setPromotion}
+          courseId={courseId}
+        />
+      ) : null}
+    </div>
   );
 }
 
