@@ -17,6 +17,9 @@ import IntroVideo from "../Course/IntroVideo/IntroVideo";
 import CourseHeader from "../Course/CourseHeader/CourseHeader";
 import CourseBody from "../Course/CourseBody/CourseBody";
 import EnrollGoToCourse from "../Course/EnrollGoToCourse/EnrollGoToCourse";
+import PageHeader from "../PageHeader/PageHeader";
+import { Button } from "react-bootstrap";
+import EditPreviewVideo from "../Course/EditPreviewVideo/EditPreviewVideo";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -109,6 +112,14 @@ function CourseSummary(props) {
             setNewVideo={props.setNewVideo}
             uploadIntroVideo={props.uploadIntroVideo}
           />
+          {props.vc === ViewerContexts.author ? (
+            <EditPreviewVideo
+              newVideo={props.newVideo}
+              setNewVideo={props.setNewVideo}
+              uploadIntroVideo={props.uploadIntroVideo}
+            />
+          ) : null}
+
           <EnrollGoToCourse
             vc={props.vc}
             enroll={enroll}

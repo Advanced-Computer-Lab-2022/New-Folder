@@ -1,0 +1,21 @@
+#editPreviewVideoButton {
+  width: 100%;
+  margin-top: 2%;
+  font-size: 18px;
+}
+#urlInput {
+  width: 100%;
+  margin-left: 0%;
+}
+#savePreviewVideo {
+  width: 49%;
+  margin: 1%;
+  margin-top: 2%;
+  margin-right: 0%;
+}
+#cancelPreviewVideo {
+  width: 49%;
+  margin: 1%;
+  margin-top: 2%;
+  margin-left: 0%;
+}
