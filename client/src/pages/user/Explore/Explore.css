@@ -57,3 +57,8 @@
     filter: saturate(200%) hue-rotate(20deg);
   }
 } */
+
+#sloganSmallTxt {
+  font-weight: 200;
+  font-size: 22px;
+}

@@ -51,7 +51,9 @@ const Explore = () => {
           <PageHeader pageName="Explore" />
           <div id="exploreSlogan" className="blackBg whiteCard">
             <h1 id="exploreSloganTxt">Reach the next level</h1>
-            <h4>Learn new skills and unlock new opportunities.</h4>
+            <p id="sloganSmallTxt">
+              Learn new skills and unlock new opportunities
+            </p>
           </div>
           <h2 id="exploreTitle">Popular courses</h2>
           <div id="exploreMain" className="blueBg">
