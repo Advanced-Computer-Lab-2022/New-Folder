@@ -24,7 +24,7 @@ const Explore = () => {
         }
         tmp.push(
           <Carousel.Item className="exploreCarouselItem">
-            <div className="wrapper">{courseCards}</div>
+            <div className="wrapperExplore">{courseCards}</div>
           </Carousel.Item>
         );
       }

@@ -128,7 +128,9 @@ const Explore = () => {
             {filteredCourses?.length > 0 ? (
               <div className="wrapper">
                 {filteredCourses.map((course) => (
-                  <CourseCard course={course} />
+                  <div className="mb-4 mt-1">
+                    <CourseCard course={course} />
+                  </div>
                 ))}
               </div>
             ) : (

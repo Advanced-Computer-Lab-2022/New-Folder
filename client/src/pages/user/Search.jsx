@@ -140,7 +140,9 @@ const Search = () => {
               {filteredSearchResults?.length > 0 ? (
                 <div className="wrapper">
                   {filteredSearchResults.map((result) => (
-                    <CourseCard course={result} />
+                    <div className="mb-4 mt-1">
+                      <CourseCard course={result} />
+                    </div>
                   ))}
                 </div>
               ) : (
