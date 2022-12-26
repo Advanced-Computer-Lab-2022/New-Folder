@@ -36,7 +36,7 @@ const EnrolledCourses = () => {
               <Stack className="mt-5" gap={3}>
                 <Image width={"23%"} src="/assets/Empty.png" />
                 <h4 className="m-auto mt-2">
-                  You are not enrolled in any courses.
+                  You haven't enrolled in any courses yet.
                 </h4>
               </Stack>
             </div>
