@@ -10,7 +10,7 @@ import "./Explore.css";
 import PageHeader from "../../../components/PageHeader/PageHeader";
 const Explore = () => {
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const fetchData = async () => {
     setLoading(true);
@@ -52,7 +52,7 @@ const Explore = () => {
           <div id="exploreSlogan" className="blackBg whiteCard">
             <h1 id="exploreSloganTxt">Reach the next level</h1>
             <p id="sloganSmallTxt">
-              Learn new skills and unlock new opportunities
+              Learn new skills and unlock new opportunities.
             </p>
           </div>
           <h2 id="exploreTitle">Popular courses</h2>

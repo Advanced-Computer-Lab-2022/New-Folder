@@ -2,9 +2,8 @@ import { getPrice } from "../network";
 
 export const filterCoursesByPrice = async (min, max, courses) => {
   let coursesPrices = await Promise.all(
-    courses.map((course) => getPrice(course.price))
+    courses.map((course) => getPrice(course.price.finalPrice))
   );
-  console.log(coursesPrices);
   coursesPrices = coursesPrices.map((course) =>
     parseFloat(course.split(" ")[0])
   );
@@ -15,7 +14,6 @@ export const filterCoursesByPrice = async (min, max, courses) => {
 };
 
 export const filterCoursesByRating = (value, courses) => {
-  console.log(parseFloat(value).toFixed(1));
   return courses.filter(
     (course) =>
       parseFloat(course.totalRating).toFixed(1) == parseFloat(value).toFixed(1)

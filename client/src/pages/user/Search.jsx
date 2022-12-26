@@ -18,7 +18,7 @@ const Search = () => {
   const [maxPrice, setMaxPrice] = useState("");
   const [rating, setRating] = useState("");
   const [subject, setSubject] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const clearFilters = () => {
     setMinPrice("");

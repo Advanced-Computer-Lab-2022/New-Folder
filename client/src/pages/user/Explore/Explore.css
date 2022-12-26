@@ -36,27 +36,32 @@
   text-align: center;
 }
 #exploreSloganTxt {
-  color: white;
-  /* --color1: #b5e67b;
-  --color2: #7ad088;
-  --color3: #289b92;
-  --color4: #297f87; */
   font-family: "Monoton", sans-serif;
-  /* --interval: 2s;
-  display: block;
-  text-shadow: 0 0 10px var(--color1), 0 0 20px var(--color2),
-    0 0 40px var(--color3), 0 0 80px var(--color4);
-  will-change: filter, color;
-  filter: saturate(60%);
-  animation: flicker steps(100) var(--interval) 1s infinite; */
+  /* margin: 0 auto;
+  border-right: 2px solid rgba(255, 255, 255, 0.75);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  animation: typewriter 4s steps(44) 1s 1 normal both,
+    blinkTextCursor 500ms steps(44) infinite normal; */
 }
 
-/* @keyframes flicker {
-  50% {
-    color: white;
-    filter: saturate(200%) hue-rotate(20deg);
+@keyframes typewriter {
+  from {
+    width: 0;
   }
-} */
+  to {
+    width: 13em;
+  }
+}
+@keyframes blinkTextCursor {
+  from {
+    border-right-color: rgba(255, 255, 255, 0.75);
+  }
+  to {
+    border-right-color: transparent;
+  }
+}
 
 #sloganSmallTxt {
   font-weight: 200;

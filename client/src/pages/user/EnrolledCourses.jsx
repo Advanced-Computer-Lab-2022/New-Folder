@@ -6,7 +6,8 @@ import { Image, Spinner, Stack } from "react-bootstrap";
 
 const EnrolledCourses = () => {
   const [courses, setCourses] = useState([]);
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
   const fetchCourses = async () => {
     setLoading(true);
     const data = await getEnrolledCourses();
