@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import CourseCard from "../../../components/CourseCard/CourseCard";
 import { fetchExploreData } from "../../../network";
-import { Carousel, Image, Spinner, Stack } from "react-bootstrap";
+import { Carousel, Spinner, Stack } from "react-bootstrap";
 import {
   IoIosArrowDroprightCircle,
   IoIosArrowDropleftCircle,

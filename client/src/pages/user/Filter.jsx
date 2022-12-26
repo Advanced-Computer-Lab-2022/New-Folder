@@ -6,10 +6,8 @@ import {
   filterCoursesByPrice,
   filterCoursesByRating,
 } from "../../utils/filters";
-import Button from "react-bootstrap/Button";
-import Col from "react-bootstrap/Col";
-import Form from "react-bootstrap/Form";
-import Row from "react-bootstrap/Row";
+import PageHeader from "../../components/PageHeader/PageHeader";
+import { Spinner, Stack, Row, Form, Button, Col, Image } from "react-bootstrap";
 import "./Explore/Explore.css";
 const Explore = () => {
   const [courses, setCourses] = useState([]);
@@ -18,13 +16,17 @@ const Explore = () => {
   const [maxPrice, setMaxPrice] = useState("");
   const [rating, setRating] = useState("");
   const [subject, setSubject] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const fetchData = async () => {
+    setLoading(true);
     try {
       const fetchedCourses = await fetchExploreData();
       setFilteredCourses(fetchedCourses);
       setCourses(fetchedCourses);
+      setLoading(false);
     } catch (err) {
+      setLoading(false);
       console.log(err);
     }
   };
@@ -57,58 +59,77 @@ const Explore = () => {
   };
 
   return (
-    <Row>
-      <Row className="m-4">
-        <Form.Group as={Col}>
-          <Form.Control
-            type="number"
-            placeholder="min price"
-            value={minPrice}
-            onChange={(e) => setMinPrice(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group as={Col}>
-          <Form.Control
-            type="number"
-            placeholder="max price"
-            value={maxPrice}
-            onChange={(e) => setMaxPrice(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group as={Col}>
-          <Form.Control
-            type="number"
-            placeholder="rating"
-            value={rating}
-            onChange={(e) => setRating(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group as={Col}>
-          <Form.Control
-            type="text"
-            placeholder="subject"
-            value={subject}
-            onChange={(e) => setSubject(e.target.value)}
-          />
-        </Form.Group>
-        <Form.Group as={Col}>
-          <Button variant="dark" className="me-4" onClick={filter}>
-            Filter
-          </Button>
-          <Button variant="dark" onClick={clearFilters}>
-            Clear filters
-          </Button>
-        </Form.Group>
-      </Row>
-
-      <div className="explore__content">
-        <div className="wrapper">
-          {filteredCourses.map((course) => (
-            <CourseCard course={course} />
-          ))}
+    <div>
+      {loading ? (
+        <Stack className="m-4">
+          <Spinner animation="border" />
+        </Stack>
+      ) : (
+        <div>
+          <PageHeader pageName="Filter courses" />
+          <Row className="m-4">
+            <Form.Group as={Col}>
+              <Form.Control
+                type="number"
+                placeholder="min price"
+                value={minPrice}
+                onChange={(e) => setMinPrice(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group as={Col}>
+              <Form.Control
+                type="number"
+                placeholder="max price"
+                value={maxPrice}
+                onChange={(e) => setMaxPrice(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group as={Col}>
+              <Form.Control
+                type="number"
+                placeholder="rating"
+                value={rating}
+                onChange={(e) => setRating(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group as={Col}>
+              <Form.Control
+                type="text"
+                placeholder="subject"
+                value={subject}
+                onChange={(e) => setSubject(e.target.value)}
+              />
+            </Form.Group>
+            <Form.Group as={Col}>
+              <Button className="me-3 blueBg blueBgHover" onClick={filter}>
+                Filter
+              </Button>
+              <Button className="greyBg greyBgHover" onClick={clearFilters}>
+                Clear filters
+              </Button>
+            </Form.Group>
+          </Row>
+          <div>
+            {filteredCourses?.length > 0 ? (
+              <div className="explore__content">
+                <div className="wrapper">
+                  {filteredCourses.map((course) => (
+                    <CourseCard course={course} />
+                  ))}
+                </div>
+              </div>
+            ) : (
+              <div className="pt-5">
+                <Stack className="mt-5" gap={3}>
+                  <Image width={"23%"} src="/assets/Empty.png" />
+                  <h4 className="m-auto mt-2">No results found</h4>
+                </Stack>
+              </div>
+            )}
+          </div>
         </div>
-      </div>
-    </Row>
+      )}
+    </div>
   );
 };
 
