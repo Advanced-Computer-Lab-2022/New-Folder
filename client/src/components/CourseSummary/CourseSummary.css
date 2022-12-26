@@ -24,20 +24,18 @@
   margin-bottom: -10px;
   margin-left: 5px;
 }
-#courseHeader {
-  margin: 5px;
-  margin-top: 13px;
+
+#leftCol {
+  width: fit-content;
+  margin: 0;
+  padding-top: 1%;
+  padding-bottom: 1%;
 }
-#enrollButton {
-  font-size: 18px;
-  margin-left: 0px;
-  height: 39px;
-  line-height: 1;
-  padding-left: 7%;
-  padding-right: 7%;
-  width: 250px;
-  margin-top: -2%;
-  margin-bottom: 1%;
+#rightCol {
+  width: fit-content;
+  margin: 0;
+  padding: 2%;
+  padding-top: 1%;
 }
 #goToCourse {
   font-size: 18px;
@@ -63,10 +61,6 @@
 #addRating {
   margin: 0;
 }
-#introVideo {
-  position: absolute;
-  margin-top: -11%;
-}
 #courseSummaryContainer {
   padding: 0.3%;
   background-color: #a6d1e6;
@@ -74,6 +68,7 @@
   margin-right: 2.5%;
   margin-top: 1%;
   border-radius: 1em;
+  display: flex;
 }
 #ratingsCount {
   margin-top: 24%;
@@ -98,6 +93,6 @@
 
 .course-progress-bar {
   margin: 0;
-  margin-left: 8em;
-  margin-top: 2em;
+  margin-left: 3%;
+  margin-right: 3%;
 }

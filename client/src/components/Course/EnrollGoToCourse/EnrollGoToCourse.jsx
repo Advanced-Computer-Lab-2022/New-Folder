@@ -5,21 +5,21 @@ import { Button, Spinner } from "react-bootstrap";
 import RequestAccess from "../RequestAccess/RequestAccess";
 import { useNavigate } from "react-router-dom";
 import { ReactSession } from "react-client-session";
-
+import "./EnrollGoToCourse.css";
 function EnrollGoToCourse(props) {
   const { vc, enroll, loadingEnrollBtn, courseId, course, setVc } = props;
   const navigate = useNavigate();
 
   return (
-    <div id="priceEnroll">
+    <>
       {vc === ViewerContexts.guest ? (
         <>
           {ReactSession.get("userType") === UserTypes.trainee ? (
             <Button
-              id="enrollButton"
               variant="dark"
               onClick={enroll}
               disabled={loadingEnrollBtn}
+              id="enrollButton"
             >
               Enroll{" "}
               {loadingEnrollBtn ? (
@@ -39,9 +39,9 @@ function EnrollGoToCourse(props) {
         <>
           {vc === ViewerContexts.enrolledTrainee ? (
             <Button
-              id="goToCourse"
               variant="dark"
               onClick={() => navigate("/watch/" + courseId + "?sId=0&cId=0")}
+              id="enrollButton"
             >
               Go to course
             </Button>
@@ -57,7 +57,7 @@ function EnrollGoToCourse(props) {
           )}
         </>
       )}
-    </div>
+    </>
   );
 }
 

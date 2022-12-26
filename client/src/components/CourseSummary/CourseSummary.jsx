@@ -6,7 +6,6 @@ import "./CourseSummary.css";
 import { useState } from "react";
 import AddPromotion from "../Course/AddPromotion/AddPromotion";
 import "react-day-picker/dist/style.css";
-import { useNavigate } from "react-router-dom";
 import { totalDuration } from "../../utils/getVideoDurationUtils";
 import ProgressBar from "./ProgressBar/ProgressBar";
 import ReportCourse from "../Course/ReportCourse/ReportCourse";
@@ -103,21 +102,22 @@ function CourseSummary(props) {
   return (
     <>
       <div id="courseSummaryContainer" className="blueBg">
-        <div className="courseSummaryFirstRow-parent">
-          <div id="courseSummaryFirstRow">
-            <Row className="mb-0">
-              <Col>
-                <CourseHeader
-                  totalRating={totalRating}
-                  name={props.course.name}
-                  vc={props.vc}
-                  instructorId={props.course.instructorInfo?.instructorId}
-                  instructorName={props.course.instructorInfo?.instructorName}
-                  ratingsCount={ratingsCount}
-                />
-              </Col>
-            </Row>
-          </div>
+        <div id="leftCol">
+          <IntroVideo
+            introVideo={props.course.introVideo}
+            vc={props.vc}
+            newVideo={props.newVideo}
+            setNewVideo={props.setNewVideo}
+            uploadIntroVideo={props.uploadIntroVideo}
+          />
+          <EnrollGoToCourse
+            vc={props.vc}
+            enroll={enroll}
+            loadingEnrollBtn={loadingEnrollBtn}
+            courseId={props.courseId}
+            course={props.course}
+            setVc={props.setVc}
+          />
           <div className="course-progress-bar">
             {(props.vc === ViewerContexts.enrolledTrainee ||
               props.vc === ViewerContexts.refundingTrainee) && (
@@ -135,66 +135,51 @@ function CourseSummary(props) {
             )}
           </div>
         </div>
-        <div id="courseSummarySecondRow">
-          <Row>
-            <Col>
-              <Stack gap={3}>
-                <EnrollGoToCourse
-                  vc={props.vc}
-                  enroll={enroll}
-                  loadingEnrollBtn={loadingEnrollBtn}
-                  courseId={props.courseId}
-                  course={props.course}
-                  setVc={props.setVc}
-                />
-                <CourseBody
-                  vc={props.vc}
-                  validPromotion={validPromotion}
-                  price={props.price}
-                  percentage={promotion?.percentage}
-                  totalDuration={totalDuration(props.duration)}
-                  subject={props.course.subject}
-                  summary={props.course.description}
-                  trainees={props.course.trainees}
-                />
-                <div id="addRating">
-                  <RatingCard
-                    courseId={props.courseId}
-                    vc={props.vc}
-                    totalRating={totalRating}
-                    setTotalRating={setTotalRating}
-                    ratingsCount={ratingsCount}
-                    setRatingsCount={setRatingsCount}
-                    reviews={props.reviews}
-                    setReviews={props.setReviews}
-                  />
-                  {props.vc === ViewerContexts.author ||
-                  props.vc === ViewerContexts.admin ? (
-                    <AddPromotion
-                      promotion={promotion}
-                      setPromotion={setPromotion}
-                      courseId={props.course._id}
-                    />
-                  ) : null}
-                </div>
-              </Stack>
-            </Col>
-            <Col>
-              <IntroVideo
-                introVideo={props.course.introVideo}
-                vc={props.vc}
-                newVideo={props.newVideo}
-                setNewVideo={props.setNewVideo}
-                uploadIntroVideo={props.uploadIntroVideo}
-              />
-            </Col>
-          </Row>
+        <div id="rightCol">
+          <CourseHeader
+            totalRating={totalRating}
+            name={props.course.name}
+            vc={props.vc}
+            instructorId={props.course.instructorInfo?.instructorId}
+            instructorName={props.course.instructorInfo?.instructorName}
+            ratingsCount={ratingsCount}
+          />
+          <RatingCard
+            courseId={props.courseId}
+            vc={props.vc}
+            totalRating={totalRating}
+            setTotalRating={setTotalRating}
+            ratingsCount={ratingsCount}
+            setRatingsCount={setRatingsCount}
+            reviews={props.reviews}
+            setReviews={props.setReviews}
+          />
+          <CourseBody
+            vc={props.vc}
+            validPromotion={validPromotion}
+            price={props.price}
+            percentage={promotion?.percentage}
+            totalDuration={totalDuration(props.duration)}
+            subject={props.course.subject}
+            summary={props.course.description}
+            trainees={props.course.trainees}
+          />
+
+          {props.vc === ViewerContexts.author ||
+          props.vc === ViewerContexts.admin ? (
+            <AddPromotion
+              promotion={promotion}
+              setPromotion={setPromotion}
+              courseId={props.course._id}
+            />
+          ) : null}
         </div>
-        {props.vc !== ViewerContexts.guest &&
-        props.vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
-          <ReportCourse course={props.course} />
-        ) : null}
       </div>
+
+      {props.vc !== ViewerContexts.guest &&
+      props.vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
+        <ReportCourse course={props.course} />
+      ) : null}
       <PaymentConfirmation
         show={showPaymentConfirmation}
         setShow={setShowPaymentConfirmation}

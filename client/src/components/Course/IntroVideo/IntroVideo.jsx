@@ -6,13 +6,12 @@ import ViewerContexts from "../../../constants/ViewerContexts.json";
 function IntroVideo(props) {
   const { introVideo, vc, newVideo, setNewVideo, uploadIntroVideo } = props;
   return (
-    <div id="intro">
+    <div id="introVideoWrapper">
       {introVideo !== "" && (
         <iframe
           style={{
             height: 300,
             width: 500,
-            marginLeft: 190,
             borderRadius: 8,
           }}
           src={

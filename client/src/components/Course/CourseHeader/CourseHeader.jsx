@@ -2,7 +2,7 @@ import React, { useMemo } from "react";
 import { Stack } from "react-bootstrap";
 import ReactStars from "react-rating-stars-component";
 import ViewerContexts from "../../../constants/ViewerContexts.json";
-
+import "./CourseHeader.css";
 function CourseHeader(props) {
   const { totalRating, name, vc, instructorName, instructorId, ratingsCount } =
     props;
@@ -19,9 +19,9 @@ function CourseHeader(props) {
     );
   }, [totalRating]);
   return (
-    <Stack gap={1} id="courseHeader">
-      <h2 id="courseTitle">{name}</h2>
-      <h5 id="courseInstructorName">
+    <Stack gap={1} id="courseHeader" direction="vertical">
+      <h2>{name}</h2>
+      <h5>
         By:{" "}
         <a
           id="courseInstructorNameLink"
@@ -36,10 +36,10 @@ function CourseHeader(props) {
           {instructorName ?? "Instructor"}
         </a>
       </h5>
-      <div id="courseRatingStars">
+      <div id="courseHeaderStarsContainer">
         <Stars />
-        <h6 id="ratingsCount">
-          ({ratingsCount} {ratingsCount == 1 ? "rating" : "rating"})
+        <h6 id="courseHeaderRatingCount">
+          &nbsp;&nbsp;({ratingsCount} {ratingsCount == 1 ? "rating" : "rating"})
         </h6>
       </div>
     </Stack>

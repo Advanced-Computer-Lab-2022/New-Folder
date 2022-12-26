@@ -1,6 +1,6 @@
 import React from "react";
 import ViewerContexts from "../../../constants/ViewerContexts.json";
-
+import "./CourseBody.css";
 function CourseBody(props) {
   const {
     vc,
@@ -13,7 +13,7 @@ function CourseBody(props) {
     trainees,
   } = props;
   return (
-    <>
+    <div id="courseBodyContainer">
       {vc !== ViewerContexts.nonEnrolledCorporateTrainee &&
       vc !== ViewerContexts.enrolledTrainee &&
       vc != ViewerContexts.pendingCorporateTrainee ? (
@@ -52,7 +52,7 @@ function CourseBody(props) {
           <b>Count of enrolled trainees: </b> {trainees.length + " trainee(s)"}
         </h5>
       ) : null}
-    </>
+    </div>
   );
 }
 
