@@ -1,5 +1,4 @@
 import React, { useEffect, useMemo } from "react";
-import { Row, Col, Stack } from "react-bootstrap";
 import RatingCard from "../../components/RatingCard/RatingCard";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import "./CourseSummary.css";
@@ -118,22 +117,6 @@ function CourseSummary(props) {
             course={props.course}
             setVc={props.setVc}
           />
-          <div className="course-progress-bar">
-            {(props.vc === ViewerContexts.enrolledTrainee ||
-              props.vc === ViewerContexts.refundingTrainee) && (
-              <ProgressBar
-                subContents={subContents}
-                subtitles={props.subtitles}
-                percentage={progress}
-                setPercentage={setProgress}
-                vc={props.vc}
-                setVc={props.setVc}
-                courseId={props.course._id}
-                setLoading={setLoading}
-                courseName={props.course.name}
-              />
-            )}
-          </div>
         </div>
         <div id="rightCol">
           <CourseHeader
@@ -143,7 +126,16 @@ function CourseSummary(props) {
             instructorId={props.course.instructorInfo?.instructorId}
             instructorName={props.course.instructorInfo?.instructorName}
             ratingsCount={ratingsCount}
+            subContents={subContents}
+            subtitles={props.subtitles}
+            percentage={progress}
+            setPercentage={setProgress}
+            setVc={props.setVc}
+            courseId={props.course._id}
+            setLoading={setLoading}
+            courseName={props.course.name}
           />
+          
           <RatingCard
             courseId={props.courseId}
             vc={props.vc}
@@ -164,22 +156,21 @@ function CourseSummary(props) {
             summary={props.course.description}
             trainees={props.course.trainees}
           />
-
-          {props.vc === ViewerContexts.author ||
+          {props.vc !== ViewerContexts.guest &&
+          props.vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
+            <ReportCourse course={props.course} />
+          ) : null}
+          {/* {props.vc === ViewerContexts.author ||
           props.vc === ViewerContexts.admin ? (
             <AddPromotion
               promotion={promotion}
               setPromotion={setPromotion}
               courseId={props.course._id}
             />
-          ) : null}
+          ) : null}*/}
         </div>
       </div>
 
-      {props.vc !== ViewerContexts.guest &&
-      props.vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
-        <ReportCourse course={props.course} />
-      ) : null}
       <PaymentConfirmation
         show={showPaymentConfirmation}
         setShow={setShowPaymentConfirmation}
