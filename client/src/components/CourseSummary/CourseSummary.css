@@ -70,6 +70,10 @@
 #courseSummaryContainer {
   padding: 0.3%;
   background-color: #a6d1e6;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
+  margin-top: 1%;
+  border-radius: 1em;
 }
 #ratingsCount {
   margin-top: 24%;

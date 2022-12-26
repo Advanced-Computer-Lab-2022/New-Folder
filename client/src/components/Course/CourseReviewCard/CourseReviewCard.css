@@ -1,14 +1,16 @@
 .courseReviewCard {
   margin: 0;
-  width: 90%;
+  width: 100%;
 }
 .courseCardFrame {
   width: 100%;
+  margin: 0;
+  margin-bottom: 1%;
 }
 #courseReviewContainer {
   margin: 3%;
-  margin-left: 2.6%;
-  margin-right: 5%;
+  margin-left: 2.5%;
+  margin-right: 2.5%;
 }
 #courseReviewInnerContainer {
   margin-top: 2%;
