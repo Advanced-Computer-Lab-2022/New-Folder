@@ -7,7 +7,16 @@ import {
   filterCoursesByRating,
 } from "../../utils/filters";
 import PageHeader from "../../components/PageHeader/PageHeader";
-import { Spinner, Stack, Row, Form, Button, Col, Image } from "react-bootstrap";
+import {
+  Spinner,
+  Stack,
+  Row,
+  Form,
+  Button,
+  Col,
+  Image,
+  Container,
+} from "react-bootstrap";
 import "./Explore/Explore.css";
 const Explore = () => {
   const [courses, setCourses] = useState([]);
@@ -71,7 +80,7 @@ const Explore = () => {
       ) : (
         <div>
           <PageHeader pageName="Filter courses" />
-          <Row className="m-4">
+          <Row className="m-4 p-2 pt-3 ps-5 pe-5 text-center">
             <Form.Group as={Col}>
               <Form.Control
                 type="number"
@@ -104,23 +113,23 @@ const Explore = () => {
                 onChange={(e) => setSubject(e.target.value)}
               />
             </Form.Group>
-            <Form.Group as={Col}>
-              <Button className="me-3 blueBg blueBgHover" onClick={filter}>
+            <Col lg="auto">
+              <Button className="blueBg blueBgHover" onClick={filter}>
                 Filter
               </Button>
+            </Col>
+            <Col lg="auto">
               <Button className="greyBg greyBgHover" onClick={clearFilters}>
                 Clear filters
               </Button>
-            </Form.Group>
+            </Col>
           </Row>
           <div>
             {filteredCourses?.length > 0 ? (
-              <div className="explore__content">
-                <div className="wrapper">
-                  {filteredCourses.map((course) => (
-                    <CourseCard course={course} />
-                  ))}
-                </div>
+              <div className="wrapper">
+                {filteredCourses.map((course) => (
+                  <CourseCard course={course} />
+                ))}
               </div>
             ) : (
               <div className="pt-5">

@@ -47,14 +47,15 @@ function CourseCard(props) {
 
   return (
     <Card
-      sx={{ maxWidth: 250, minWidth: 250 }}
+      id="courseCardMain"
+      sx={{ maxWidth: 230, minWidth: 230 }}
       onClick={(e) => navigate("/course/" + props.course.id)}
     >
       <CardActionArea>
         <CardMedia
           component="img"
           height="180"
-          width="250"
+          width="230"
           image={
             props.course?.image?.length > 0
               ? props.course.image

@@ -1,8 +1,10 @@
 .wrapper {
-  display: inline-flex;
-  gap: 0.5rem;
-  justify-content: start;
-  justify-self: start;
+  width: 98% !important;
+  display: inline;
+  justify-content: start !important;
+  flex-wrap: wrap;
+  gap: 0.5% !important;
+  padding-left: 3.6% !important;
 }
 
 .explore__content {

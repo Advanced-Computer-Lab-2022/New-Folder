@@ -89,72 +89,71 @@ const Search = () => {
           <Spinner animation="border" />
         </Stack>
       ) : (
-        <>
+        <div>
           <PageHeader pageName="Search results" />
-          <Row className="m-4">
-            <Form.Group as={Col}>
-              <Form.Control
-                type="number"
-                placeholder="min price"
-                value={minPrice}
-                onChange={(e) => setMinPrice(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Control
-                type="number"
-                placeholder="max price"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Control
-                type="number"
-                placeholder="rating"
-                value={rating}
-                onChange={(e) => setRating(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Control
-                type="text"
-                placeholder="subject"
-                value={subject}
-                onChange={(e) => setSubject(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Button className="me-3 blueBg blueBgHover" onClick={filter}>
-                Filter
-              </Button>
-              <Button className="greyBg greyBgHover" onClick={clearFilters}>
-                Clear filters
-              </Button>
-            </Form.Group>
-          </Row>
-          <div>
-            {filteredSearchResults?.length > 0 ? (
-              <div
-                className="m-3 ms-5"
-                style={{ float: "left", display: "inline-flex" }}
-              >
-                {filteredSearchResults.map((result) => (
-                  <div className="me-5">
+          <div className="ps-5 pe-5">
+            <Row className="m-4 p-2 pt-3 ps-5 pe-5 text-center">
+              <Form.Group as={Col}>
+                <Form.Control
+                  type="number"
+                  placeholder="min price"
+                  value={minPrice}
+                  onChange={(e) => setMinPrice(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Control
+                  type="number"
+                  placeholder="max price"
+                  value={maxPrice}
+                  onChange={(e) => setMaxPrice(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Control
+                  type="number"
+                  placeholder="rating"
+                  value={rating}
+                  onChange={(e) => setRating(e.target.value)}
+                />
+              </Form.Group>
+              <Form.Group as={Col}>
+                <Form.Control
+                  type="text"
+                  placeholder="subject"
+                  value={subject}
+                  onChange={(e) => setSubject(e.target.value)}
+                />
+              </Form.Group>
+              <Col lg="auto">
+                <Button className="blueBg blueBgHover" onClick={filter}>
+                  Filter
+                </Button>
+              </Col>
+              <Col lg="auto">
+                <Button className="greyBg greyBgHover" onClick={clearFilters}>
+                  Clear filters
+                </Button>
+              </Col>
+            </Row>
+            <div>
+              {filteredSearchResults?.length > 0 ? (
+                <div className="wrapper">
+                  {filteredSearchResults.map((result) => (
                     <CourseCard course={result} />
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="pt-5">
-                <Stack className="mt-5" gap={3}>
-                  <Image width={"23%"} src="/assets/Empty.png" />
-                  <h4 className="m-auto mt-2">No results found</h4>
-                </Stack>
-              </div>
-            )}
+                  ))}
+                </div>
+              ) : (
+                <div className="pt-5">
+                  <Stack className="mt-5" gap={3}>
+                    <Image width={"23%"} src="/assets/Empty.png" />
+                    <h4 className="m-auto mt-2">No results found</h4>
+                  </Stack>
+                </div>
+              )}
+            </div>
           </div>
-        </>
+        </div>
       )}
     </div>
   );
