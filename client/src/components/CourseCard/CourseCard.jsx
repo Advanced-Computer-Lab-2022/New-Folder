@@ -27,7 +27,7 @@ function CourseCard(props) {
 
   return (
     <div
-      className="card"
+      className="card whiteCard"
       onClick={(e) => navigate("/course/" + props.course._id)}
     >
       <div className="card__body">

@@ -3,6 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import { ReactSession } from "react-client-session";
 import Explore from "./pages/user/Explore/Explore";
 import Search from "./pages/user/Search";
+import Filter from "./pages/user/Filter";
 import CreateCourse from "./pages/user/instructor/CreateCourse/CreateCourse";
 import Login from "./pages/Login/Login";
 import MyCourses from "./pages/user/instructor/MyCourses/MyCourses";
@@ -43,6 +44,7 @@ function App() {
       )}
       <Routes>
         <Route path="/" element={<Explore />} />
+        <Route path="/filter" element={<Filter />} />
         <Route path="/myCourses" element={<MyCourses />} />
         <Route path="/search/:searchQuery" element={<Search />} />
 

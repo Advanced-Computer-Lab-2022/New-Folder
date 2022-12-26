@@ -113,6 +113,9 @@ const MainNavbar = (props) => {
             <Button type="submit" variant="outline-light">
               Search
             </Button>
+            <Button href="/filter" className="ms-2" variant="outline-light">
+              Filter
+            </Button>
           </Form>
         </Navbar.Collapse>
       </Container>
