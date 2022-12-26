@@ -1,29 +1,18 @@
 import React, { useEffect, useMemo } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
-import Stack from "react-bootstrap/Stack";
+import { Row, Col, Stack } from "react-bootstrap";
 import RatingCard from "../../components/RatingCard/RatingCard";
-import Form from "react-bootstrap/Form";
 import ViewerContexts from "../../constants/ViewerContexts.json";
-import UserTypes from "../../constants/UserTypes.json";
-import Button from "react-bootstrap/Button";
 import "./CourseSummary.css";
 import { useState } from "react";
 import AddPromotion from "../Course/AddPromotion/AddPromotion";
 import "react-day-picker/dist/style.css";
-import Container from "react-bootstrap/esm/Container";
 import { useNavigate } from "react-router-dom";
-import {
-  getYoutubeVideoID,
-  totalDuration,
-} from "../../utils/getVideoDurationUtils";
+import { totalDuration } from "../../utils/getVideoDurationUtils";
 import ProgressBar from "./ProgressBar/ProgressBar";
 import ReportCourse from "../Course/ReportCourse/ReportCourse";
 import { ReactSession } from "react-client-session";
 import countryCurrency from "../../constants/CountryCurrency.json";
 import { getPayment } from "../../network";
-import { Spinner } from "react-bootstrap";
 import PaymentConfirmation from "../PaymentConfirmation/PaymentConfirmation";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import IntroVideo from "../Course/IntroVideo/IntroVideo";
@@ -44,7 +33,6 @@ function CourseSummary(props) {
   const setPromotion = props.setPromotion;
   const subContents = props.subContents;
   const setLoading = props.setLoading;
-  const navigate = useNavigate();
 
   useEffect(() => {
     setTotalRating(props.course.totalRating);
@@ -147,7 +135,6 @@ function CourseSummary(props) {
             )}
           </div>
         </div>
-
         <div id="courseSummarySecondRow">
           <Row>
             <Col>
@@ -170,7 +157,6 @@ function CourseSummary(props) {
                   summary={props.course.description}
                   trainees={props.course.trainees}
                 />
-
                 <div id="addRating">
                   <RatingCard
                     courseId={props.courseId}
