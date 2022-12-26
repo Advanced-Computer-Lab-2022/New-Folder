@@ -29,6 +29,7 @@ import { Spinner } from "react-bootstrap";
 import PaymentConfirmation from "../PaymentConfirmation/PaymentConfirmation";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import IntroVideo from "../Course/IntroVideo/IntroVideo";
+import CourseHeader from "../Course/CourseHeader/CourseHeader";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -71,19 +72,6 @@ function CourseSummary(props) {
       setValidPromotion(false);
     }
   }, [props.promotion]);
-
-  let Stars = useMemo(() => {
-    return () => (
-      <ReactStars
-        count={5}
-        size={40}
-        isHalf={true}
-        activeColor="#ffd700"
-        value={totalRating}
-        edit={false}
-      />
-    );
-  }, [totalRating]);
 
   const enroll = async () => {
     setLoadingEnrollBtn(true);
@@ -134,31 +122,14 @@ function CourseSummary(props) {
                 <Image width={300} src={props.course.image} thumbnail />
               </Col>
               <Col>
-                <Stack gap={1} id="courseHeader">
-                  <h2 id="courseTitle">{props.course.name}</h2>
-                  <h5 id="courseInstructorName">
-                    By:{" "}
-                    <a
-                      id="courseInstructorNameLink"
-                      href={
-                        props.vc === ViewerContexts.author
-                          ? "/myProfile"
-                          : `/viewInstructorProfile/${
-                              props.vc === ViewerContexts.enrolledTrainee
-                            }/${props.course.instructorInfo?.instructorId}`
-                      }
-                    >
-                      {props.course.instructorInfo?.instructorName ??
-                        "Instructor"}
-                    </a>
-                  </h5>
-                  <div id="courseRatingStars">
-                    <Stars />
-                    <h6 id="ratingsCount">
-                      ({ratingsCount} {ratingsCount == 1 ? "rating" : "rating"})
-                    </h6>
-                  </div>
-                </Stack>
+                <CourseHeader
+                  totalRating={totalRating}
+                  name={props.course.name}
+                  vc={props.vc}
+                  instructorId={props.course.instructorInfo?.instructorId}
+                  instructorName={props.course.instructorInfo?.instructorName}
+                  ratingsCount={ratingsCount}
+                />
               </Col>
             </Row>
           </div>
