@@ -3,8 +3,6 @@ import { useMemo, useState } from "react";
 import ReactStars from "react-rating-stars-component";
 import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
-import Card from "react-bootstrap/Card";
-import Modal from "react-bootstrap/Modal";
 import { deleteInstructorReview, rateInstructor } from "../../network";
 import { useEffect } from "react";
 import { Spinner } from "react-bootstrap";
@@ -94,7 +92,7 @@ const RateAndReviewInstructor = (props) => {
   }, [props.myRating]);
 
   return (
-    <Card id="rateInstructorMain">
+    <div id="rateInstructorMain" className="whiteCard">
       <h3 id="ratingLabel">
         {props.myRating ? "Your rating" : "Rate this instructor"}
       </h3>
@@ -114,8 +112,7 @@ const RateAndReviewInstructor = (props) => {
       <div id="reviewButtonsContainer">
         {props.myReview !== newReview ? (
           <Button
-            className="submitReviewBtn"
-            id="cancelReviewBtn"
+            className="submitReviewBtn greyBg greyBgHover"
             disabled={loadingAdd || loadingDelete}
             onClick={() => setNewReview(props.myReview)}
           >
@@ -124,8 +121,7 @@ const RateAndReviewInstructor = (props) => {
         ) : null}
         {props.myReview ? (
           <Button
-            className="submitReviewBtn"
-            id="delReviewBtn"
+            className="submitReviewBtn redBg redBgHover"
             disabled={loadingAdd || loadingDelete}
             onClick={deleteRev}
           >
@@ -144,10 +140,8 @@ const RateAndReviewInstructor = (props) => {
         ) : null}
         {newReview?.length > 0 ? (
           <Button
-            variant="dark"
-            className="submitReviewBtn"
+            className="submitReviewBtn blueBg blueBgHover"
             disabled={loadingAdd || loadingDelete}
-            id="addReviewBtn"
             onClick={review}
           >
             {props.myReview ? "Update review" : "Add review"}
@@ -166,7 +160,7 @@ const RateAndReviewInstructor = (props) => {
       </div>
       <SuccessModal msg={confMsg} show={show} handleClose={handleClose} />
       <ErrorModal show={showError} handleClose={handleCloseError} />
-    </Card>
+    </div>
   );
 };
 
