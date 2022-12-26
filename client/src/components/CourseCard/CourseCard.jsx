@@ -11,16 +11,31 @@ import "./CourseCard.css";
 
 function CourseCard(props) {
   const [price, setPrice] = useState("");
+  const [priceBeforeDiscount, setPriceBeforeDiscount] = useState(null);
   const [currency, setCurrency] = useState("");
 
   const navigate = useNavigate();
 
   const fetchPrice = async () => {
     try {
-      const fetchedPrice = await getPrice(props.course.price);
-      const priceStr = fetchedPrice.split(" ");
+      const fetchedPrice = await getPrice({
+        magnitude: props.course.price.finalPrice,
+        currency: props.course.price.currency,
+      });
+      let priceStr = fetchedPrice.split(" ");
       setPrice(priceStr[0]);
       setCurrency(priceStr[1]);
+      if (props.course.price.hasPromotion) {
+        const fetchedPriceBeforeDiscount = await getPrice({
+          magnitude: props.course.price.priceBeforePromotion,
+          currency: props.course.price.currency,
+        });
+        priceStr = fetchedPriceBeforeDiscount.split(" ");
+        setPriceBeforeDiscount(priceStr[0]);
+        setCurrency(priceStr[1]);
+      } else {
+        setPriceBeforeDiscount(null);
+      }
     } catch (err) {
       console.log(err);
     }
@@ -51,11 +66,7 @@ function CourseCard(props) {
             {props.course.name}
           </Typography>
           <Typography variant="body2">
-            <p className="instructor__name">
-              {props.course.instructorInfo == undefined
-                ? "unknown"
-                : props.course.instructorInfo.instructorName}
-            </p>
+            <p className="instructor__name">{props.course.instructorName}</p>
             <div className="card__details__price__rating">
               <div className="card__details__rating">
                 <i class="bi bi-star-fill"></i>

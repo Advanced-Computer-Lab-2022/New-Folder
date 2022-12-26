@@ -6,7 +6,7 @@ const constants = require("../constants.json");
 const coursePrice = async (course) => {
   const course = await Course.findById(course._id);
   let discount = course.promotion;
-  let priceAfterPromotion = parseFloat(course.price.magnitude);
+  let finalPrice = parseFloat(course.price.magnitude);
   let hasPromotion = false;
   if (discount) {
     let now = Date.now();
@@ -18,7 +18,7 @@ const coursePrice = async (course) => {
   return {
     hasPromotion,
     priceBeforePromotion: course.price.magnitude,
-    priceAfterPromotion,
+    finalPrice,
     currency: course.price.currency,
   };
 };

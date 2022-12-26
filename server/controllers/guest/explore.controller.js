@@ -20,7 +20,7 @@ exports.getExplore = async (req, res) => {
     return {
       price: coursePrices[index],
       duration: courseDurations[index],
-      instructorName: instructorInfo.instructorName,
+      instructorName: instructorInfo?.instructorName,
       name,
       subject,
       totalRating,
