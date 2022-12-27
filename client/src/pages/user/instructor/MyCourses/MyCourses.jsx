@@ -11,7 +11,9 @@ import Button from "react-bootstrap/Button";
 import Col from "react-bootstrap/Col";
 import Form from "react-bootstrap/Form";
 import Row from "react-bootstrap/Row";
-import './MyCourses.css';
+import "./MyCourses.css";
+import { Autocomplete, TextField } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const MyCourses = () => {
   const [courses, setCourses] = useState([]);
@@ -20,6 +22,7 @@ const MyCourses = () => {
   const [maxPrice, setMaxPrice] = useState("");
   const [rating, setRating] = useState("");
   const [subject, setSubject] = useState("");
+  const navigate = useNavigate();
   const fetchData = async () => {
     try {
       const fetchedCourses = await fetchMyCourses();
@@ -58,6 +61,26 @@ const MyCourses = () => {
 
   return (
     <Row>
+      <Autocomplete
+        freeSolo
+        id="free-solo-2-demo"
+        disableClearable
+        options={courses}
+        getOptionLabel={(option) => option.name}
+        onChange={(event, value) => {
+          navigate("/course/" + value.id);
+        }}
+        renderInput={(params) => (
+          <TextField
+            {...params}
+            label="Search input"
+            InputProps={{
+              ...params.InputProps,
+              type: "search",
+            }}
+          />
+        )}
+      />
       <Row className="m-4">
         <Form.Group as={Col}>
           <Form.Control
@@ -106,9 +129,9 @@ const MyCourses = () => {
           <p className="header">My Courses</p>
         </div>
         <div className="wrapper">
-            {filteredCourses.map((course) => (
-              <CourseCard course={course} />
-            ))}
+          {filteredCourses.map((course) => (
+            <CourseCard course={course} />
+          ))}
         </div>
       </div>
     </Row>
