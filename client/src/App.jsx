@@ -19,7 +19,7 @@ import ForgetPassword from "./pages/password/ForgetPassword";
 import ChangePassword from "./pages/password/ChangePassword";
 import MyProfile from "./pages/user/instructor/MyProfile";
 import ResetPassword from "./pages/password/ResetPassword";
-import EditSubtitle from "./pages/user/instructor/EditSubtitle";
+import EditSubtitle from "./pages/user/instructor/EditSubtitle/EditSubtitle";
 import MyProblems from "./pages/user/MyProblems/MyProblems";
 import Reports from "./pages/admin/Reports";
 import AddUser from "./pages/admin/AddUser/AddUser";
