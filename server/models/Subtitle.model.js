@@ -23,7 +23,6 @@ const Subtitle = mongoose.Schema({
           default: constants.content,
           required: true,
         },
-
       },
     ],
     default: [],

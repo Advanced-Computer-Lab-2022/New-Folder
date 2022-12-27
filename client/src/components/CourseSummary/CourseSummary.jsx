@@ -1,33 +1,25 @@
 import React, { useEffect, useMemo } from "react";
-import Row from "react-bootstrap/Row";
-import Col from "react-bootstrap/Col";
-import Image from "react-bootstrap/Image";
-import Stack from "react-bootstrap/Stack";
 import RatingCard from "../../components/RatingCard/RatingCard";
-import Form from "react-bootstrap/Form";
 import ViewerContexts from "../../constants/ViewerContexts.json";
-import UserTypes from "../../constants/UserTypes.json";
-import Button from "react-bootstrap/Button";
 import "./CourseSummary.css";
-import ReactStars from "react-rating-stars-component";
 import { useState } from "react";
 import AddPromotion from "../Course/AddPromotion/AddPromotion";
 import "react-day-picker/dist/style.css";
-import Container from "react-bootstrap/esm/Container";
-import { useNavigate } from "react-router-dom";
-import {
-  getYoutubeVideoID,
-  totalDuration,
-} from "../../utils/getVideoDurationUtils";
+import { totalDuration } from "../../utils/getVideoDurationUtils";
 import ProgressBar from "./ProgressBar/ProgressBar";
 import ReportCourse from "../Course/ReportCourse/ReportCourse";
 import { ReactSession } from "react-client-session";
 import countryCurrency from "../../constants/CountryCurrency.json";
 import { getPayment } from "../../network";
-import RequestAccess from "../Course/RequestAccess/RequestAccess";
-import { Spinner } from "react-bootstrap";
 import PaymentConfirmation from "../PaymentConfirmation/PaymentConfirmation";
 import ErrorModal from "../ErrorModal/ErrorModal";
+import IntroVideo from "../Course/IntroVideo/IntroVideo";
+import CourseHeader from "../Course/CourseHeader/CourseHeader";
+import CourseBody from "../Course/CourseBody/CourseBody";
+import EnrollGoToCourse from "../Course/EnrollGoToCourse/EnrollGoToCourse";
+import PageHeader from "../PageHeader/PageHeader";
+import { Button } from "react-bootstrap";
+import EditPreviewVideo from "../Course/EditPreviewVideo/EditPreviewVideo";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -42,7 +34,6 @@ function CourseSummary(props) {
   const setPromotion = props.setPromotion;
   const subContents = props.subContents;
   const setLoading = props.setLoading;
-  const navigate = useNavigate();
 
   useEffect(() => {
     setTotalRating(props.course.totalRating);
@@ -70,19 +61,6 @@ function CourseSummary(props) {
       setValidPromotion(false);
     }
   }, [props.promotion]);
-
-  let Stars = useMemo(() => {
-    return () => (
-      <ReactStars
-        count={5}
-        size={40}
-        isHalf={true}
-        activeColor="#ffd700"
-        value={totalRating}
-        edit={false}
-      />
-    );
-  }, [totalRating]);
 
   const enroll = async () => {
     setLoadingEnrollBtn(true);
@@ -125,230 +103,73 @@ function CourseSummary(props) {
 
   return (
     <>
-      <div id="courseSummaryContainer">
-        <div className="courseSummaryFirstRow-parent">
-          <div id="courseSummaryFirstRow">
-            <Row className="mb-0">
-              <Col md="auto">
-                <Image width={300} src={props.course.image} thumbnail />
-              </Col>
-              <Col>
-                <Stack gap={1} id="courseHeader">
-                  <h2 id="courseTitle">{props.course.name}</h2>
-                  <h5 id="courseInstructorName">
-                    By:{" "}
-                    <a
-                      id="courseInstructorNameLink"
-                      href={
-                        props.vc === ViewerContexts.author
-                          ? "/myProfile"
-                          : `/viewInstructorProfile/${
-                              props.vc === ViewerContexts.enrolledTrainee
-                            }/${props.course.instructorInfo?.instructorId}`
-                      }
-                    >
-                      {props.course.instructorInfo?.instructorName ??
-                        "Instructor"}
-                    </a>
-                  </h5>
-                  <div id="courseRatingStars">
-                    <Stars />
-                    <h6 id="ratingsCount">
-                      ({ratingsCount} {ratingsCount == 1 ? "rating" : "rating"})
-                    </h6>
-                  </div>
-                </Stack>
-              </Col>
-            </Row>
-          </div>
-          <div className="course-progress-bar">
-            {(props.vc === ViewerContexts.enrolledTrainee ||
-              props.vc === ViewerContexts.refundingTrainee) && (
-              <ProgressBar
-                subContents={subContents}
-                subtitles={props.subtitles}
-                percentage={progress}
-                setPercentage={setProgress}
-                vc={props.vc}
-                setVc={props.setVc}
-                courseId={props.course._id}
-                setLoading={setLoading}
-                courseName={props.course.name}
-              />
-            )}
-          </div>
-        </div>
+      <div id="courseSummaryContainer" className="blueBg">
+        <div id="leftCol">
+          <IntroVideo
+            introVideo={props.course.introVideo}
+            vc={props.vc}
+            newVideo={props.newVideo}
+            setNewVideo={props.setNewVideo}
+            uploadIntroVideo={props.uploadIntroVideo}
+          />
+          {props.vc === ViewerContexts.author ? (
+            <EditPreviewVideo
+              newVideo={props.newVideo}
+              setNewVideo={props.setNewVideo}
+              uploadIntroVideo={props.uploadIntroVideo}
+            />
+          ) : null}
 
-        <div id="courseSummarySecondRow">
-          <Row>
-            <Col>
-              <Stack gap={3}>
-                <div id="priceEnroll">
-                  {props.vc === ViewerContexts.guest ? (
-                    <>
-                      {ReactSession.get("userType") === UserTypes.trainee ? (
-                        <Button
-                          id="enrollButton"
-                          variant="dark"
-                          onClick={enroll}
-                          disabled={loadingEnrollBtn}
-                        >
-                          Enroll{" "}
-                          {loadingEnrollBtn ? (
-                            <Spinner
-                              as="span"
-                              animation="border"
-                              className="ms-1"
-                              size="sm"
-                              role="status"
-                              aria-hidden="true"
-                            />
-                          ) : null}
-                        </Button>
-                      ) : null}
-                    </>
-                  ) : (
-                    <>
-                      {props.vc === ViewerContexts.enrolledTrainee ? (
-                        <Button
-                          id="goToCourse"
-                          variant="dark"
-                          onClick={() =>
-                            navigate(
-                              "/watch/" + props.courseId + "?sId=0&cId=0"
-                            )
-                          }
-                        >
-                          Go to course
-                        </Button>
-                      ) : (
-                        <>
-                          {[
-                            ViewerContexts.pendingCorporateTrainee,
-                            ViewerContexts.nonEnrolledCorporateTrainee,
-                          ].includes(props.vc) ? (
-                            <RequestAccess
-                              vc={props.vc}
-                              setVc={props.setVc}
-                              course={props.course}
-                            />
-                          ) : null}
-                        </>
-                      )}
-                    </>
-                  )}
-                </div>
-                {props.vc !== ViewerContexts.nonEnrolledCorporateTrainee &&
-                props.vc !== ViewerContexts.enrolledTrainee &&
-                props.vc != ViewerContexts.pendingCorporateTrainee ? (
-                  <>
-                    {validPromotion ? (
-                      <>
-                        <h5 className="courseInfo">
-                          <b>Price:</b>{" "}
-                          <del>{props.price.split(" ")[0] ?? ""}</del>{" "}
-                          {(
-                            parseFloat(props.price.split(" ")[0]) *
-                            (1 - promotion.percentage / 100)
-                          ).toFixed(2)}{" "}
-                          {props.price.split(" ")[1]}
-                          {`(-${promotion.percentage}%)`}
-                        </h5>
-                      </>
-                    ) : (
-                      <h5 className="courseInfo">
-                        <b>Price:</b> {props.price ?? ""}
-                      </h5>
-                    )}
-                  </>
-                ) : null}
-                <h5 className="courseInfo">
-                  <b>Total duration:</b> {totalDuration(props.duration)}
-                </h5>
-                <h5 className="courseInfo">
-                  <strong>Subject:</strong> {props.course.subject ?? ""}
-                </h5>
-                <h5 className="courseInfo">
-                  <strong>Summary:</strong>
-                  <br /> {props.course.description ?? ""}
-                </h5>
-                {props.vc === ViewerContexts.author ? (
-                  <h5 className="courseInfo">
-                    <b>Count of enrolled trainees: </b>{" "}
-                    {props.course.trainees.length + " trainee(s)"}
-                  </h5>
-                ) : null}
-
-                <div id="addRating">
-                  <RatingCard
-                    courseId={props.courseId}
-                    vc={props.vc}
-                    totalRating={totalRating}
-                    setTotalRating={setTotalRating}
-                    ratingsCount={ratingsCount}
-                    setRatingsCount={setRatingsCount}
-                    reviews={props.reviews}
-                    setReviews={props.setReviews}
-                  />
-                  {props.vc === ViewerContexts.author ||
-                  props.vc === ViewerContexts.admin ? (
-                    <AddPromotion
-                      promotion={promotion}
-                      setPromotion={setPromotion}
-                      courseId={props.course._id}
-                    />
-                  ) : null}
-                </div>
-              </Stack>
-            </Col>
-            <Col>
-              <div id="introVideo">
-                {props.course.introVideo !== "" && (
-                  <iframe
-                    style={{
-                      height: 300,
-                      width: 500,
-                      marginLeft: 190,
-                      borderRadius: 8,
-                    }}
-                    src={
-                      "https://www.youtube.com/embed/" +
-                      getYoutubeVideoID(props.course.introVideo ?? "")
-                    }
-                  ></iframe>
-                )}
-                {props.vc === ViewerContexts.author ? (
-                  <Form>
-                    <Container className="mt-4">
-                      <Form.Group className="mt-3">
-                        <Form.Control
-                          type="text"
-                          placeholder="Video url"
-                          value={props.newVideo}
-                          required
-                          onChange={(e) => {
-                            props.setNewVideo(e.target.value);
-                          }}
-                          id="urlInput"
-                        ></Form.Control>
-                      </Form.Group>
-                      <div className="text-center">
-                        <Button id="addVideo" onClick={props.uploadIntroVideo}>
-                          Add video
-                        </Button>
-                      </div>
-                    </Container>
-                  </Form>
-                ) : null}
-              </div>
-            </Col>
-          </Row>
+          <EnrollGoToCourse
+            vc={props.vc}
+            enroll={enroll}
+            loadingEnrollBtn={loadingEnrollBtn}
+            courseId={props.courseId}
+            course={props.course}
+            setVc={props.setVc}
+          />
         </div>
-        {props.vc !== ViewerContexts.guest &&
-        props.vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
-          <ReportCourse course={props.course} />
-        ) : null}
+        <div id="rightCol">
+          <CourseHeader
+            totalRating={totalRating}
+            name={props.course.name}
+            vc={props.vc}
+            instructorId={props.course.instructorInfo?.instructorId}
+            instructorName={props.course.instructorInfo?.instructorName}
+            ratingsCount={ratingsCount}
+            subContents={subContents}
+            subtitles={props.subtitles}
+            percentage={progress}
+            setPercentage={setProgress}
+            setVc={props.setVc}
+            courseId={props.course._id}
+            setLoading={setLoading}
+            courseName={props.course.name}
+            setTotalRating={setTotalRating}
+            setRatingsCount={setRatingsCount}
+            reviews={props.reviews}
+            setReviews={props.setReviews}
+            promotion={promotion}
+            setPromotion={setPromotion}
+          />
+
+          <CourseBody
+            vc={props.vc}
+            validPromotion={validPromotion}
+            price={props.price}
+            percentage={promotion?.percentage}
+            totalDuration={totalDuration(props.duration)}
+            subject={props.course.subject}
+            summary={props.course.description}
+            trainees={props.course.trainees}
+          />
+          {props.vc !== ViewerContexts.guest &&
+          props.vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
+            <ReportCourse course={props.course} />
+          ) : null}
+        </div>
       </div>
+
       <PaymentConfirmation
         show={showPaymentConfirmation}
         setShow={setShowPaymentConfirmation}

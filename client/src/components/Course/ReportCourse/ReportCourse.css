@@ -13,13 +13,13 @@
   flex-direction: row;
   width: fit-content;
   border: none;
-  margin-left: 2%;
-  margin-top: -0.5%;
+  margin: 0;
+  padding-top: 1%;
 }
 .reportFormButton {
   width: 40%;
 }
 #reportIconWrapper {
   width: fit-content;
-  margin-top: -1.5%;
+  margin-top: 0;
 }

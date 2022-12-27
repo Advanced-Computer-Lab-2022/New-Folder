@@ -1,0 +1,17 @@
+#courseHeaderStarsContainer {
+  width: fit-content;
+  margin: 0;
+  display: flex;
+  justify-content: flex-end;
+  margin-top: -1%;
+}
+#courseHeaderRatingCount {
+  margin: 0;
+  margin-top: 10.5%;
+}
+#courseHeaderWrapper {
+  display: flex;
+}
+#courseHeaderLeft {
+  margin: 0%;
+}
