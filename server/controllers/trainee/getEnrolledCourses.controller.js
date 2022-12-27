@@ -17,12 +17,14 @@ const getEnrolledCourses = async (req, res) => {
   );
 
   let coursesFormatted = courses.map((course, index) => {
-    const { name, subject, totalRating, image, instructorInfo } = course;
+    const { name, subject, totalRating, image, instructorInfo, ratings } =
+      course;
     return {
       id: course._id,
       price: coursePrices[index],
       duration: courseDuration(course),
       instructorName: instructorInfo?.instructorName,
+      ratingsCount: ratings?.length ?? 0,
       name,
       subject,
       totalRating,
