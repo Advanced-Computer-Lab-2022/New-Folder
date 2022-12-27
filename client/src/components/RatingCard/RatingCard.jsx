@@ -11,6 +11,9 @@ import ReactStars from "react-rating-stars-component";
 import Modal from "react-bootstrap/Modal";
 
 import "./RatingCard.css";
+import { Spinner } from "react-bootstrap";
+import SuccessFeedback from "../SuccessFeedback/SuccessFeedback";
+import ErrorFeedback from "../ErrorFeedback/ErrorFeedback";
 function RatingCard(props) {
   const {
     courseId,
@@ -25,6 +28,12 @@ function RatingCard(props) {
   const [newRating, setNewRating] = useState(null);
   const [newReview, setNewReview] = useState(null);
   const [editing, setEditing] = useState(false);
+  const [saveLoading, setSaveLoading] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [fail, setFail] = useState(false);
+  const [msg, setMsg] = useState(null);
+  const [submitted, setSubmitted] = useState(false);
   const initializeRatings = async () => {
     const fetchedCourse = await fetchCourseDetails(courseId);
     setTotalRating(fetchedCourse.totalRating);
@@ -54,169 +63,243 @@ function RatingCard(props) {
   useEffect(() => {
     initializeRatings();
   }, []);
-  const rate = async () => {
-    if (traineeRating == null) {
-      const newTotalRating =
-        (totalRating * ratingsCount + (newRating ?? 0)) / (ratingsCount + 1);
-      setTotalRating(newTotalRating);
-      setRatingsCount(ratingsCount + 1);
-    } else {
-      const newTotalRating =
-        (totalRating * ratingsCount +
-          (newRating ?? traineeRating) -
-          traineeRating) /
-        ratingsCount;
-      setTotalRating(newTotalRating);
+  let timeoutId;
+  useEffect(() => {
+    if (success || fail) {
+      timeoutId = setTimeout(cancel, 3000);
     }
-    const addedReview = newReview ?? traineeReview;
-    const addedRating = newRating ?? traineeRating ?? 0;
-    let newReviews = [];
-    let found = false;
-    for (let i = 0; i < props.reviews.length; i++) {
-      if (props.reviews[i].traineeId === ReactSession.get("userId")) {
+  }, [success, fail]);
+  const rate = async () => {
+    setSaveLoading(true);
+    try {
+      if (traineeRating == null) {
+        const newTotalRating =
+          (totalRating * ratingsCount + (newRating ?? 0)) / (ratingsCount + 1);
+        setTotalRating(newTotalRating);
+        setRatingsCount(ratingsCount + 1);
+      } else {
+        const newTotalRating =
+          (totalRating * ratingsCount +
+            (newRating ?? traineeRating) -
+            traineeRating) /
+          ratingsCount;
+        setTotalRating(newTotalRating);
+      }
+      const addedReview = newReview ?? traineeReview;
+      const addedRating = newRating ?? traineeRating ?? 0;
+      let newReviews = [];
+      let found = false;
+      for (let i = 0; i < props.reviews.length; i++) {
+        if (props.reviews[i].traineeId === ReactSession.get("userId")) {
+          if (addedReview && addedReview !== "") {
+            newReviews.push({
+              traineeName: props.reviews[i].traineeName,
+              traineeId: props.reviews[i].traineeId,
+              review: addedReview,
+              rating: addedRating,
+            });
+          } else {
+            newReviews.push({
+              traineeName: props.reviews[i].traineeName,
+              traineeId: props.reviews[i].traineeId,
+              review: props.reviews[i].review,
+              rating: addedRating,
+            });
+          }
+          found = true;
+        } else {
+          newReviews.push(props.reviews[i]);
+        }
+      }
+      if (!found) {
         if (addedReview && addedReview !== "") {
           newReviews.push({
-            traineeName: props.reviews[i].traineeName,
-            traineeId: props.reviews[i].traineeId,
+            traineeName: ReactSession.get("userName"),
+            traineeId: ReactSession.get("userId"),
             review: addedReview,
             rating: addedRating,
           });
         } else {
           newReviews.push({
-            traineeName: props.reviews[i].traineeName,
-            traineeId: props.reviews[i].traineeId,
-            review: props.reviews[i].review,
+            traineeName: ReactSession.get("userName"),
+            traineeId: ReactSession.get("userId"),
+            review: null,
             rating: addedRating,
           });
         }
-        found = true;
-      } else {
-        newReviews.push(props.reviews[i]);
       }
+
+      await addRating({
+        courseId: courseId,
+        rating: addedRating ?? 0,
+        review: addedReview,
+      });
+      props.setReviews(newReviews);
+      setTraineeRating(addedRating);
+      setTraineeReview(addedReview);
+      setNewRating(null);
+      setNewReview(null);
+      setSuccess(true);
+      setMsg("Review submitted successfully!");
+    } catch (err) {
+      setFail(true);
     }
-    if (!found) {
-      if (addedReview && addedReview !== "") {
-        newReviews.push({
-          traineeName: ReactSession.get("userName"),
-          traineeId: ReactSession.get("userId"),
-          review: addedReview,
-          rating: addedRating,
-        });
-      } else {
-        newReviews.push({
-          traineeName: ReactSession.get("userName"),
-          traineeId: ReactSession.get("userId"),
-          review: null,
-          rating: addedRating,
-        });
-      }
-    }
-    props.setReviews(newReviews);
-    setTraineeRating(addedRating);
-    setTraineeReview(addedReview);
-    setNewRating(null);
-    setNewReview(null);
-    setEditing(false);
-    await addRating({
-      courseId: courseId,
-      rating: addedRating ?? 0,
-      review: addedReview,
-    });
+    setSubmitted(true);
+    setSaveLoading(false);
   };
 
   const deleteReview = async () => {
-    if (ratingsCount > 1) {
-      const newTotalRating =
-        (totalRating * ratingsCount - traineeRating) / (ratingsCount - 1);
-      setTotalRating(newTotalRating);
-    } else {
-      setTotalRating(0);
-    }
-
-    let newReviews = [];
-    for (let i = 0; i < props.reviews.length; i++) {
-      if (props.reviews[i].traineeId !== ReactSession.get("userId")) {
-        newReviews.push(props.reviews[i]);
+    setDeleteLoading(true);
+    try {
+      if (ratingsCount > 1) {
+        const newTotalRating =
+          (totalRating * ratingsCount - traineeRating) / (ratingsCount - 1);
+        setTotalRating(newTotalRating);
+      } else {
+        setTotalRating(0);
       }
+
+      let newReviews = [];
+      for (let i = 0; i < props.reviews.length; i++) {
+        if (props.reviews[i].traineeId !== ReactSession.get("userId")) {
+          newReviews.push(props.reviews[i]);
+        }
+      }
+      await deleteRating({ courseId: courseId });
+      setRatingsCount(ratingsCount - 1);
+      props.setReviews(newReviews);
+      setTraineeRating(null);
+      setTraineeReview(null);
+      setNewRating(null);
+      setNewReview(null);
+      setSuccess(true);
+      setMsg("Review deleted successfully");
+    } catch (err) {
+      setFail(true);
     }
-    setRatingsCount(ratingsCount - 1);
-    props.setReviews(newReviews);
-    setTraineeRating(null);
-    setTraineeReview(null);
-    setEditing(false);
-    setNewRating(null);
-    setNewReview(null);
-    await deleteRating({ courseId: courseId });
+    setSubmitted(true);
+    setDeleteLoading(false);
   };
   const cancel = async () => {
+    clearTimeout(timeoutId);
     setEditing(false);
     setNewRating(null);
     setNewReview(null);
+    setSuccess(false);
+    setFail(false);
+    setMsg(null);
   };
   return (
-    <div id="rateCourseButton">
+    <>
       {vc === ViewerContexts.enrolledTrainee ? (
-        <>
+        <div id="rateCourseButton">
           <>
-            <Modal
-              show={editing}
-              onHide={() => setEditing(false)}
-              size={"lg"}
-              centered
-            >
-              <Modal.Header>
-                <Modal.Title>Review course</Modal.Title>
-              </Modal.Header>
-              <Stack direction="vertical">
-                <div id="courseStars">
-                  <AddRatingStars />
-                </div>
-                <div className="courseRatingForm">
-                  <Form.Group as={Col}>
-                    <Form.Control
-                      as="textarea"
-                      placeholder="Your review"
-                      value={newReview ?? traineeReview}
-                      onChange={(e) => setNewReview(e.target.value)}
-                    />
-                  </Form.Group>
-                </div>
-                <div className="courseRatingForm" id="rateCourseFooter">
-                  <Button
-                    onClick={() => cancel()}
-                    variant="secondary"
-                    className="rateCourseFormButton"
-                  >
-                    Close
-                  </Button>
-                  {traineeRating != null ? (
-                    <Button
-                      onClick={() => deleteReview()}
-                      className="rateCourseFormButton"
-                      variant="danger"
-                    >
-                      Delete review
-                    </Button>
-                  ) : null}
+            <>
+              <Modal
+                show={editing}
+                onHide={() => setEditing(false)}
+                size={"lg"}
+                centered
+              >
+                <Modal.Header>
+                  <Modal.Title>Review course</Modal.Title>
+                </Modal.Header>
+                {submitted ? (
+                  <>
+                    {success ? (
+                      <SuccessFeedback msg={msg} />
+                    ) : (
+                      <>{fail ? <ErrorFeedback /> : null}</>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    {" "}
+                    <Stack direction="vertical">
+                      <div id="courseStars">
+                        <AddRatingStars />
+                      </div>
+                      <div className="courseRatingForm">
+                        <Form.Group as={Col}>
+                          <Form.Control
+                            as="textarea"
+                            placeholder="Your review"
+                            value={newReview ?? traineeReview}
+                            onChange={(e) => setNewReview(e.target.value)}
+                          />
+                        </Form.Group>
+                      </div>
+                      <div className="courseRatingForm" id="rateCourseFooter">
+                        <Button
+                          onClick={() => cancel()}
+                          variant="secondary"
+                          className="rateCourseFormButton"
+                          disabled={saveLoading || deleteLoading}
+                        >
+                          Close
+                        </Button>
+                        {traineeRating != null ? (
+                          <Button
+                            onClick={() => deleteReview()}
+                            className="rateCourseFormButton"
+                            variant="danger"
+                            disabled={saveLoading || deleteLoading}
+                          >
+                            {deleteLoading ? (
+                              <>
+                                <Spinner
+                                  as="span"
+                                  animation="border"
+                                  size="sm"
+                                  role="status"
+                                  aria-hidden="true"
+                                />
+                                {" Deleting..."}
+                              </>
+                            ) : (
+                              <>{"Delete Review"}</>
+                            )}
+                          </Button>
+                        ) : null}
 
-                  <Button
-                    onClick={() => rate()}
-                    className="rateCourseFormButton"
-                  >
-                    Submit
-                  </Button>
-                </div>
-              </Stack>
-            </Modal>
+                        <Button
+                          onClick={() => rate()}
+                          className="rateCourseFormButton"
+                          disabled={saveLoading || deleteLoading}
+                        >
+                          {saveLoading ? (
+                            <>
+                              <Spinner
+                                as="span"
+                                animation="border"
+                                size="sm"
+                                role="status"
+                                aria-hidden="true"
+                              />
+                              {" Saving..."}
+                            </>
+                          ) : (
+                            <>{"Submit"}</>
+                          )}
+                        </Button>
+                      </div>
+                    </Stack>
+                  </>
+                )}
+              </Modal>
+            </>
+            <Button
+              onClick={() => {
+                setEditing(true);
+                setSubmitted(false);
+              }}
+            >
+              {traineeRating != null ? "Edit your review" : "Review course"}
+            </Button>
           </>
-          {traineeRating != null ? (
-            <Button onClick={() => setEditing(true)}>Edit your review</Button>
-          ) : (
-            <Button onClick={() => setEditing(true)}>Review course</Button>
-          )}
-        </>
+        </div>
       ) : null}
-    </div>
+    </>
   );
 }
 export default RatingCard;
