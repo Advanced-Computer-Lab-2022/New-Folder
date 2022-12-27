@@ -28,7 +28,6 @@ function CourseCard(props) {
         currency: props.course.price.currency,
       });
       let priceStr = fetchedPrice.split(" ");
-      console.log(props.course.duration);
       setDuration(props.course.duration);
       setPrice(priceStr[0]);
       setCurrency(priceStr[1]);
@@ -79,6 +78,7 @@ function CourseCard(props) {
           <Typography variant="body2">
             <Stack>
               <h6>{props.course.instructorName}</h6>
+              <h6>{duration}</h6>
             </Stack>
           </Typography>
         </CardContent>
