@@ -23,26 +23,31 @@ const coursePrice = async (course) => {
 };
 
 const courseDuration = async (course) => {
+  let subtitles = await Promise.all(
+    course?.subtitles?.map((sub) => Subtitle.findById(sub))
+  );
   let allContent = [];
-  course?.subtitles?.forEach(async (sub) => {
-    let subtitle = await Subtitle.findById(sub);
+  subtitles?.forEach((item) => {
     allContent = allContent.concat(
-      subtitle?.subTitle_Content?.filter(
+      item.subTitle_Content?.filter(
         (content) => content.type === constants.content
       )
     );
   });
+
+  allContent = await Promise.all(
+    allContent.map((c) => Content.findById(c.subTitle_Content_id))
+  );
+
   let totalDurationInSeconds =
-    allContent?.reduce(async (total, c) => {
-      let content = await Content.findById(c.subTitle_Content_id);
-      return total + content.duration;
-    }, 0) ?? 0;
+    allContent?.reduce((total, c) => total + c.duration, 0) ?? 0;
 
   const hrs = Math.floor(totalDurationInSeconds / 3600);
   totalDurationInSeconds -= hrs * 3600;
   const mins = Math.floor(totalDurationInSeconds / 60);
   totalDurationInSeconds -= mins * 60;
   const secs = totalDurationInSeconds;
+
   return { hrs, mins, secs };
 };
 

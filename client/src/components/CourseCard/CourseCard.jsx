@@ -86,7 +86,7 @@ function CourseCard(props) {
                 {priceBeforeDiscount ? (
                   <span>
                     <del>{priceBeforeDiscount}</del>
-                    {`${price} -${discount}%`}
+                    {`${price} (-${discount}%)`}
                   </span>
                 ) : (
                   <span>{price}</span>
