@@ -12,6 +12,7 @@ import "./CourseCard.css";
 function CourseCard(props) {
   const [price, setPrice] = useState("");
   const [priceBeforeDiscount, setPriceBeforeDiscount] = useState(null);
+  const [discount, setDiscount] = useState(null);
   const [currency, setCurrency] = useState("");
 
   const navigate = useNavigate();
@@ -32,6 +33,7 @@ function CourseCard(props) {
         });
         priceStr = fetchedPriceBeforeDiscount.split(" ");
         setPriceBeforeDiscount(priceStr[0]);
+        setDiscount(props.course.price.discount);
         setCurrency(priceStr[1]);
       } else {
         setPriceBeforeDiscount(null);
@@ -81,7 +83,14 @@ function CourseCard(props) {
               </div>
 
               <h6 className="card__price">
-                {price}
+                {priceBeforeDiscount ? (
+                  <span>
+                    <del>{priceBeforeDiscount}</del>
+                    {`${price} -${discount}%`}
+                  </span>
+                ) : (
+                  <span>{price}</span>
+                )}
                 <span id="courseCardCurrency">{currency}</span>
               </h6>
             </div>
