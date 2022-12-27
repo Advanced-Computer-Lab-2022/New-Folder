@@ -15,6 +15,7 @@ const coursePrice = async (course) => {
   }
   return {
     hasPromotion,
+    percentage: discount,
     priceBeforePromotion: course.price.magnitude,
     finalPrice,
     currency: course.price.currency,
