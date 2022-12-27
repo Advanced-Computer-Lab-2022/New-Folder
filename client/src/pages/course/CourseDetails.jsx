@@ -75,6 +75,7 @@ const CourseDetails = () => {
         }
       }
       await fetchPrice(fetchedCourse);
+      setDuration(fetchedCourse.duration);
       setReviews(fetchedReviews);
       setSubtitles(fetchedCourse.subtitles);
       setPromotion(fetchedCourse.promotion);
@@ -124,9 +125,7 @@ const CourseDetails = () => {
   useEffect(() => {
     fetchPrice(course);
   }, [ReactSession.get("country"), course]);
-  useEffect(() => {
-    claculateDuration();
-  }, [durationMap, course]);
+
   return (
     <>
       {allPageLoading ? (

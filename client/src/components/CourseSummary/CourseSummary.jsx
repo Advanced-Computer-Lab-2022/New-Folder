@@ -158,7 +158,7 @@ function CourseSummary(props) {
             validPromotion={validPromotion}
             price={props.price}
             percentage={promotion?.percentage}
-            totalDuration={totalDuration(props.duration)}
+            totalDuration={props.duration}
             subject={props.course.subject}
             summary={props.course.description}
             trainees={props.course.trainees}

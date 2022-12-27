@@ -14,7 +14,8 @@ const getCourseDetails = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
     const displayedPrice = await coursePrice(course);
-    res.status(201).json({ ...course.toJSON(), ...displayedPrice });
+    const duration = await courseDuration(course);
+    res.status(201).json({ ...course.toJSON(), ...displayedPrice, duration });
   } catch (err) {
     res.status(500).json({ message: err.message });
   }
