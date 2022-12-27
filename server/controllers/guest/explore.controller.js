@@ -14,7 +14,8 @@ exports.getExplore = async (req, res) => {
   );
 
   let coursesFormatted = courses.map((course, index) => {
-    const { name, subject, totalRating, image, instructorInfo } = course;
+    const { name, subject, totalRating, image, instructorInfo, ratings } =
+      course;
     return {
       id: course._id,
       price: coursePrices[index],
@@ -23,6 +24,7 @@ exports.getExplore = async (req, res) => {
       name,
       subject,
       totalRating,
+      ratingsCount: ratings?.length ?? 0,
       image,
     };
   });

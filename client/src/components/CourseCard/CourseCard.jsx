@@ -74,10 +74,8 @@ function CourseCard(props) {
                 <p className="card__rating">{props.course.totalRating ?? 0}</p>
                 <span className="card__rating__number">
                   (
-                  {(props.course.ratings?.length ?? "0") +
-                    (props.course.ratings?.length == 1
-                      ? " rating"
-                      : " ratings")}
+                  {(props.course?.ratingsCount ?? "0") +
+                    (props.course?.ratingsCount == 1 ? " rating" : " ratings")}
                   )
                 </span>
               </div>
