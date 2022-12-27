@@ -1,15 +1,33 @@
 const Course = require("../../models/Course.model");
-const User = require("../../models/User.model");
+const Instructor = require("../../models/Instructor.model");
+const {
+  coursePrice,
+  courseDuration,
+} = require("../course/courseUtils.controller");
+
 exports.getMyCourses = async (req, res) => {
-  const user = await User.findById(req.session.userId);
-  if (user) {
-    const coursesId = user.toJSON().courses;
-    const courses = await Promise.all(
-      coursesId.map(async (id) => {
-        const course = await Course.findById(id);
-        return course.toJSON();
-      })
-    );
-    res.send(courses);
-  }
+  const instructor = await Instructor.findById(req.session.userId);
+
+  let courses = await Promise.all(
+    instructor.courses.map((courseId) => Course.findById(courseId))
+  );
+
+  let coursePrices = await Promise.all(
+    courses.map((course) => coursePrice(course))
+  );
+
+  let coursesFormatted = courses.map((course, index) => {
+    const { name, subject, totalRating, image, instructorInfo } = course;
+    return {
+      id: course._id,
+      price: coursePrices[index],
+      duration: courseDuration(course),
+      instructorName: instructorInfo?.instructorName,
+      name,
+      subject,
+      totalRating,
+      image,
+    };
+  });
+  res.send(coursesFormatted);
 };
