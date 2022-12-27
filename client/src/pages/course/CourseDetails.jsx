@@ -32,7 +32,6 @@ const CourseDetails = () => {
   const [promotion, setPromotion] = useState(null);
   const [subContents, setSubContents] = useState([]);
   const [allPageLoading, setAllPageLoading] = useState(false);
-  const [priceLoading, setPriceLoading] = useState(false);
   const [loading, setLoading] = useState(false);
 
   let ReviewCards = useMemo(() => {
@@ -75,6 +74,7 @@ const CourseDetails = () => {
           });
         }
       }
+      await fetchPrice(fetchedCourse);
       setReviews(fetchedReviews);
       setSubtitles(fetchedCourse.subtitles);
       setPromotion(fetchedCourse.promotion);
@@ -83,12 +83,13 @@ const CourseDetails = () => {
       console.log(err);
     }
   };
-  const fetchPrice = async () => {
+  const fetchPrice = async (course) => {
     try {
-      setPriceLoading(true);
-      const fetchedPrice = await getPrice(course.price);
+      const fetchedPrice = await getPrice({
+        magnitude: course.priceBeforePromotion,
+        currency: course.price.currency,
+      });
       setPrice(fetchedPrice);
-      setPriceLoading(false);
     } catch (err) {
       console.log(err);
     }
@@ -121,7 +122,7 @@ const CourseDetails = () => {
   }, []);
 
   useEffect(() => {
-    fetchPrice();
+    fetchPrice(course);
   }, [ReactSession.get("country"), course]);
   useEffect(() => {
     claculateDuration();

@@ -5,6 +5,7 @@ import UserTypes from "../constants/UserTypes.json";
 export const getViewerContext = (course) => {
   const userId = ReactSession.get("userId");
   const userType = ReactSession.get("userType");
+  console.log(course);
   if (userType === UserTypes.admin) {
     return ViewerContexts.admin;
   }

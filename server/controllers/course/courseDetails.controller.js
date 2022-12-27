@@ -9,12 +9,14 @@ const User = require("../../models/User.model");
 const AccessRequest = require("../../models/AccessRequest.model");
 const Refund = require("../../models/Refund.model");
 const constant = require("../../constants.json");
+const { coursePrice, courseDuration } = require("./courseUtils.controller");
 const getCourseDetails = async (req, res) => {
   try {
     const course = await Course.findById(req.params.id);
-    res.status(201).json(course);
+    const displayedPrice = await coursePrice(course);
+    res.status(201).json({ ...course.toJSON(), ...displayedPrice });
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -23,7 +25,7 @@ const getSubtitle = async (req, res) => {
     const subtitle = await Subtitle.findById(req.params.id);
     res.status(201).json(subtitle);
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -32,7 +34,7 @@ const getVideo = async (req, res) => {
     const video = await Content.findById(req.params.id);
     res.status(201).json(video);
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -41,7 +43,7 @@ const getExcercise = async (req, res) => {
     const excercise = await Exercise.findById(req.params.id);
     res.status(201).json(excercise);
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -92,7 +94,7 @@ const addReview = async (req, res) => {
     }
     res.status(201).json({ message: "success" });
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 const deleteRating = async (req, res) => {
@@ -118,7 +120,7 @@ const deleteRating = async (req, res) => {
     });
     res.status(201).json({ message: "success" });
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 const updateCourse = async (req, res) => {
@@ -130,7 +132,7 @@ const updateCourse = async (req, res) => {
     );
     res.status(201).json(updatedCourse);
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 const addPromotion = async (req, res) => {
@@ -142,7 +144,7 @@ const addPromotion = async (req, res) => {
     );
     res.status(201).json(updatedCourse);
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -173,7 +175,7 @@ const UpdateMark = async (req, res) => {
     );
     res.status(201).json(exerciseNew);
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -205,7 +207,7 @@ const getMark = async (req, res) => {
       ExerciseLength: QuestionsExcerciseLength,
     });
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -236,7 +238,7 @@ const updateNote = async (req, res) => {
     );
     res.status(201).json({ message: "success" });
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -263,7 +265,7 @@ const getNote = async (req, res) => {
       TraineeNote: index === -1 ? "" : arrNote[index].note,
     });
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -311,7 +313,7 @@ const updateVisits = async (req, res) => {
 
     res.status(201).json(x);
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -341,7 +343,7 @@ const getVisits = async (req, res) => {
     }
     res.status(201).json(index);
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -357,7 +359,7 @@ const createSubtitle = async (req, res) => {
     course.save();
     res.status(201).json(course);
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -377,7 +379,7 @@ const submitReport = async (req, res) => {
     user.save();
     res.status(201).json(report);
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -395,7 +397,7 @@ const requestAccess = async (req, res) => {
     course.save();
     res.status(201).json(request);
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -406,7 +408,7 @@ const addFollowup = async (req, res) => {
     report.save();
     res.status(201).json(report);
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 const deleteAccessRequest = async (req, res) => {
@@ -427,7 +429,7 @@ const deleteAccessRequest = async (req, res) => {
     });
     res.status(201).json({ message: "success" });
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -439,7 +441,7 @@ const updateStatus = async (req, res) => {
     });
     res.status(201).json(updatedReport);
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -451,7 +453,7 @@ const addMultiPromotion = async (req, res) => {
     );
     res.status(201).json({ message: "success" });
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -471,7 +473,7 @@ const requestRefund = async (req, res) => {
     await course.save();
     res.status(201).json({ message: "success" });
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
@@ -491,7 +493,7 @@ const cancelRefund = async (req, res) => {
     });
     res.status(201).json({ message: "success" });
   } catch (err) {
-    res.status(500).json({message:err.message});
+    res.status(500).json({ message: err.message });
   }
 };
 
