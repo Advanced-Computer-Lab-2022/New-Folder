@@ -5,8 +5,10 @@ const Instructor = require("../models/Instructor.model");
 const authInstructorGivesCourse = asyncHandler(async (req, res, next) => {
   if (!req.session.userId) {
     res.redirect("/login");
+    return;
   } else if (req.session.userType !== constants.instructor) {
     res.redirect("/explore");
+    return;
   }
   const instructor = await Instructor.findById(req.session.userId);
   const courses = instructor.courses;
