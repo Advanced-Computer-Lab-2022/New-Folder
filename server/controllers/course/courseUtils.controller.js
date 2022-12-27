@@ -2,7 +2,7 @@ const Subtitle = require("../../models/Subtitle.model");
 const Content = require("../../models/Content.model");
 const constants = require("../../constants.json");
 
-const coursePrice = async (course) => {
+const coursePrice = (course) => {
   let discount = course.promotion;
   let finalPrice = parseFloat(course.price.magnitude);
   let hasPromotion = false;
