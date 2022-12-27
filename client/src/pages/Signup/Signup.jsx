@@ -69,6 +69,44 @@ const Signup = (props) => {
         </Alert>
         <Form noValidate validated={validated} onSubmit={submit}>
           <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
+            <Form.Label>Username</Form.Label>
+            <Form.Control
+              type="text"
+              placeholder="Username"
+              required
+              onChange={(e) => setUsername(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              This field is required.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-2" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Password"
+              required
+              minLength={6}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              Please enter a valid password (min: 6 characters).
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-2" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Confirm Password"
+              required
+              pattern={password}
+              onChange={(e) => setConfirmedPassword(e.target.value)}
+            />
+            <Form.Control.Feedback type="invalid">
+              This doesn't match the password you entered.
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
             <Form.Label>First name</Form.Label>
             <Form.Control
               type="text"
@@ -117,6 +155,7 @@ const Signup = (props) => {
               onSelect={(e) => setGender("female")}
             />
           </Form.Group>
+
           <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
             <Form.Label>Email</Form.Label>
             <Form.Control
@@ -127,44 +166,6 @@ const Signup = (props) => {
             />
             <Form.Control.Feedback type="invalid">
               Please enter a valid email (example@gmail.com).
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
-            <Form.Label>Username</Form.Label>
-            <Form.Control
-              type="text"
-              placeholder="Username"
-              required
-              onChange={(e) => setUsername(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              This field is required.
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mb-2" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Password"
-              required
-              minLength={6}
-              onChange={(e) => setPassword(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              Please enter a valid password (min: 6 characters).
-            </Form.Control.Feedback>
-          </Form.Group>
-          <Form.Group className="mb-2" controlId="exampleForm.ControlTextarea1">
-            <Form.Label>Confirm Password</Form.Label>
-            <Form.Control
-              type="password"
-              placeholder="Confirm Password"
-              required
-              pattern={password}
-              onChange={(e) => setConfirmedPassword(e.target.value)}
-            />
-            <Form.Control.Feedback type="invalid">
-              This doesn't match the password you entered.
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-4" controlId="exampleForm.ControlInput1">
