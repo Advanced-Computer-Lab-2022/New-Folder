@@ -12,17 +12,18 @@ exports.getMyCourses = async (req, res) => {
     instructor.courses.map((courseId) => Course.findById(courseId))
   );
 
-  let coursePrices = await Promise.all(
-    courses.map((course) => coursePrice(course))
+  let courseDurations = await Promise.all(
+    courses.map((course) => courseDuration(course))
   );
 
   let coursesFormatted = courses.map((course, index) => {
     const { name, subject, totalRating, image, instructorInfo, ratings } =
       course;
+
     return {
       id: course._id,
-      price: coursePrices[index],
-      duration: courseDuration(course),
+      price: coursePrice(course),
+      duration: courseDurations[index],
       instructorName: instructorInfo?.instructorName,
       name,
       subject,

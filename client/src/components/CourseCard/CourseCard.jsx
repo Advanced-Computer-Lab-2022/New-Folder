@@ -8,22 +8,27 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea } from "@mui/material";
 import "./CourseCard.css";
+import { Stack } from "react-bootstrap";
 
 function CourseCard(props) {
   const [price, setPrice] = useState("");
   const [priceBeforeDiscount, setPriceBeforeDiscount] = useState(null);
   const [discount, setDiscount] = useState(null);
   const [currency, setCurrency] = useState("");
+  const [duration, setDuration] = useState("");
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
   const fetchPrice = async () => {
+    setLoading(true);
     try {
       const fetchedPrice = await getPrice({
         magnitude: props.course.price.finalPrice,
         currency: props.course.price.currency,
       });
       let priceStr = fetchedPrice.split(" ");
+      setDuration(props.course.duration);
       setPrice(priceStr[0]);
       setCurrency(priceStr[1]);
       if (props.course.price.hasPromotion) {
@@ -38,8 +43,10 @@ function CourseCard(props) {
       } else {
         setPriceBeforeDiscount(null);
       }
+      setLoading(false);
     } catch (err) {
       console.log(err);
+      setLoading(false);
     }
   };
 
@@ -65,35 +72,14 @@ function CourseCard(props) {
           }
         />
         <CardContent>
-          <Typography gutterBottom variant="h5" component="div">
+          <Typography variant="h5" component="div">
             {props.course.name}
           </Typography>
           <Typography variant="body2">
-            <p className="instructor__name">{props.course.instructorName}</p>
-            <div className="card__details__price__rating">
-              <div className="card__details__rating">
-                <i class="bi bi-star-fill"></i>
-                <p className="card__rating">{props.course.totalRating ?? 0}</p>
-                <span className="card__rating__number">
-                  (
-                  {(props.course?.ratingsCount ?? "0") +
-                    (props.course?.ratingsCount == 1 ? " rating" : " ratings")}
-                  )
-                </span>
-              </div>
-
-              <h6 className="card__price">
-                {priceBeforeDiscount ? (
-                  <span>
-                    <del>{priceBeforeDiscount}</del>
-                    {`${price} (-${discount}%)`}
-                  </span>
-                ) : (
-                  <span>{price}</span>
-                )}
-                <span id="courseCardCurrency">{currency}</span>
-              </h6>
-            </div>
+            <Stack>
+              <h6>{props.course.instructorName}</h6>
+              <h6>{duration}</h6>
+            </Stack>
           </Typography>
         </CardContent>
       </CardActionArea>
