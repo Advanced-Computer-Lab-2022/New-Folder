@@ -92,6 +92,31 @@ const Signup = (props) => {
               This field is required.
             </Form.Control.Feedback>
           </Form.Group>
+          <Form.Group
+            className="mb-2"
+            controlId="formBasicCheckbox"
+            onChange={(e) => {
+              setGender(e.target.value);
+            }}
+          >
+            <Form.Label>Gender</Form.Label>
+            <Form.Check
+              type="radio"
+              label="Male"
+              name="group1"
+              value="male"
+              required
+              onChange={(e) => setGender("male")}
+            />
+            <Form.Check
+              type="radio"
+              label="Female"
+              name="group1"
+              required
+              value="female"
+              onSelect={(e) => setGender("female")}
+            />
+          </Form.Group>
           <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
             <Form.Label>Email</Form.Label>
             <Form.Control
@@ -142,51 +167,26 @@ const Signup = (props) => {
               This doesn't match the password you entered.
             </Form.Control.Feedback>
           </Form.Group>
-          <Form.Group
-            className="mb-4"
-            controlId="formBasicCheckbox"
-            onChange={(e) => {
-              setGender(e.target.value);
-            }}
-          >
-            <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
-              <Form.Check
-                type="checkbox"
-                label={
-                  <p>
-                    Agree to{" "}
-                    <a
-                      onClick={() => setShowTerms(true)}
-                      className="signupLinks"
-                    >
-                      terms and conditions
-                    </a>
-                    .
-                  </p>
-                }
-                required
-              />
-            </Form.Group>
-            <Form.Label>Gender</Form.Label>
+          <Form.Group className="mb-4" controlId="exampleForm.ControlInput1">
             <Form.Check
-              type="radio"
-              label="Male"
-              name="group1"
-              value="male"
+              type="checkbox"
+              label={
+                <p>
+                  Agree to{" "}
+                  <a
+                    onClick={() => setShowTerms(true)}
+                    className="signupLinks blueTxt"
+                  >
+                    terms and conditions
+                  </a>
+                  .
+                </p>
+              }
               required
-              onChange={(e) => setGender("male")}
-            />
-            <Form.Check
-              type="radio"
-              label="Female"
-              name="group1"
-              required
-              value="female"
-              onSelect={(e) => setGender("female")}
             />
           </Form.Group>
           <Button
-            className="mb-4 blueBg blueBgHover"
+            className="mb-3 blueBg blueBgHover"
             id="signupBtn"
             disabled={loading}
             type="submit"
