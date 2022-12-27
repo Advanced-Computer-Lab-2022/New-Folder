@@ -48,7 +48,17 @@ const courseDuration = async (course) => {
   totalDurationInSeconds -= mins * 60;
   const secs = totalDurationInSeconds;
 
-  return { hrs, mins, secs };
+  let duration = "";
+  if (hrs > 0) {
+    duration = `${hrs}:${mins > 9 ? mins : "0" + mins}:${
+      secs > 9 ? secs : "0" + secs
+    }`;
+  } else if (mins > 0) {
+    duration = `${mins}:${secs > 9 ? secs : "0" + secs}`;
+  } else {
+    duration = secs;
+  }
+  return duration;
 };
 
 module.exports = { coursePrice, courseDuration };
