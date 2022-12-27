@@ -66,6 +66,7 @@ const Trainee = mongoose.Schema(
       ],
       default: [],
     },
+    corporateName: { type: String, default: "" },
     userType: {
       type: String,
       enum: [constants.trainee, constants.corporateTrainee],
