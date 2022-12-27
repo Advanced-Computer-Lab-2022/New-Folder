@@ -49,9 +49,7 @@ function CourseCard(props) {
     <Card
       id="courseCardMain"
       sx={{ maxWidth: 230, minWidth: 230 }}
-      onClick={(e) =>
-        navigate("/course/" + (props.course._id ?? props.course.id))
-      }
+      onClick={(e) => navigate("/course/" + props.course.id)}
     >
       <CardActionArea>
         <CardMedia
