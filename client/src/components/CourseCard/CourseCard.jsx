@@ -6,13 +6,14 @@ import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
 import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
-import { CardActionArea } from "@mui/material";
+import { CardActionArea, Rating } from "@mui/material";
 import "./CourseCard.css";
-import { Stack } from "react-bootstrap";
+import { Spinner, Stack } from "react-bootstrap";
+import { MdPayments, MdOutlineStar } from "react-icons/md";
+import { RiPlayList2Fill } from "react-icons/ri";
 
 function CourseCard(props) {
   const [price, setPrice] = useState("");
-  const [priceBeforeDiscount, setPriceBeforeDiscount] = useState(null);
   const [discount, setDiscount] = useState(null);
   const [currency, setCurrency] = useState("");
   const [duration, setDuration] = useState("");
@@ -32,16 +33,9 @@ function CourseCard(props) {
       setPrice(priceStr[0]);
       setCurrency(priceStr[1]);
       if (props.course.price.hasPromotion) {
-        const fetchedPriceBeforeDiscount = await getPrice({
-          magnitude: props.course.price.priceBeforePromotion,
-          currency: props.course.price.currency,
-        });
-        priceStr = fetchedPriceBeforeDiscount.split(" ");
-        setPriceBeforeDiscount(priceStr[0]);
         setDiscount(props.course.price.discount);
-        setCurrency(priceStr[1]);
       } else {
-        setPriceBeforeDiscount(null);
+        setDiscount(null);
       }
       setLoading(false);
     } catch (err) {
@@ -76,10 +70,36 @@ function CourseCard(props) {
             {props.course.name}
           </Typography>
           <Typography variant="body2">
-            <Stack>
-              <h6>{props.course.instructorName}</h6>
-              <h6>{duration}</h6>
-            </Stack>
+            {loading ? (
+              <Stack className="m-4">
+                <Spinner animation="border" />
+              </Stack>
+            ) : (
+              <Stack gap={1}>
+                <h6 className="courseCardItem greyTxt">
+                  {props.course.instructorName}
+                </h6>
+                <h6 className="courseCardItem">
+                  <RiPlayList2Fill size={16} color="#100F0F" /> {duration}
+                </h6>
+                <h6 id="courseCardRating" className="courseCardItem">
+                  <MdOutlineStar size={20} color="#ffd700" />{" "}
+                  <span id="courseCardTxt">
+                    {props.course.totalRating}{" "}
+                    <span className="greyTxt">{`(${props.course.ratingsCount} ${
+                      props.course.ratingsCount === 1 ? "rating" : "ratings"
+                    })`}</span>
+                  </span>
+                </h6>
+                <h6 className="courseCardItem">
+                  <MdPayments size={17} color="#100F0F" />{" "}
+                  <span id="courseCardTxt">
+                    {price} <span className="greyTxt">{currency}</span>
+                    {discount ? <span>{` (-${discount}%)`}</span> : null}
+                  </span>
+                </h6>
+              </Stack>
+            )}
           </Typography>
         </CardContent>
       </CardActionArea>

@@ -42,22 +42,25 @@ const courseDuration = async (course) => {
   let totalDurationInSeconds =
     allContent?.reduce((total, c) => total + c.duration, 0) ?? 0;
 
-  const hrs = Math.floor(totalDurationInSeconds / 3600);
-  totalDurationInSeconds -= hrs * 3600;
-  const mins = Math.floor(totalDurationInSeconds / 60);
-  totalDurationInSeconds -= mins * 60;
-  const secs = totalDurationInSeconds;
+  // const hrs = Math.floor(totalDurationInSeconds / 3600);
+  // totalDurationInSeconds -= hrs * 3600;
+  // const mins = Math.floor(totalDurationInSeconds / 60);
+  // totalDurationInSeconds -= mins * 60;
+  // const secs = totalDurationInSeconds;
 
-  let duration = "";
-  if (hrs > 0) {
-    duration = `${hrs}:${mins > 9 ? mins : "0" + mins}:${
-      secs > 9 ? secs : "0" + secs
-    }`;
-  } else if (mins > 0) {
-    duration = `${mins}:${secs > 9 ? secs : "0" + secs}`;
-  } else {
-    duration = secs;
-  }
+  // let duration = "";
+  // if (hrs > 0) {
+  //   duration = `${hrs}:${mins > 9 ? mins : "0" + mins}:${
+  //     secs > 9 ? secs : "0" + secs
+  //   }`;
+  // } else if (mins > 0) {
+  //   duration = `${mins}:${secs > 9 ? secs : "0" + secs}`;
+  // } else {
+  //   duration = secs;
+  // }
+
+  let duration = Math.round(totalDurationInSeconds / 3600);
+  duration += duration === 1 ? " hour" : " hours";
   return duration;
 };
 

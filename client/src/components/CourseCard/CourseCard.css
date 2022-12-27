@@ -9,9 +9,17 @@
   margin-right: 15px;
 }
 
-#courseCardCurrency {
-  font-size: 0.6m;
-  color: rgba(41, 13, 13, 0.35);
+.courseCardItem {
   margin: 0;
-  margin-left: 5px;
+}
+
+#courseCardRating {
+  margin-left: -3px;
+}
+
+.courseCardTxt {
+  padding-bottom: -10px !important;
+  padding-top: 10px !important;
+  margin-top: 10px !important;
+  margin-bottom: -10px !important;
 }
