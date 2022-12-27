@@ -147,9 +147,7 @@ function AdminSetPromotion(props) {
                   value={allSelected ? [] : selectedCourses}
                   onChange={(event, value) => {
                     setSelectedCourses(value);
-                    console.log(value);
                   }}
-                  onre
                   getOptionLabel={(option) => option.name}
                   renderOption={(props, option, { selected }) => (
                     <li {...props}>
