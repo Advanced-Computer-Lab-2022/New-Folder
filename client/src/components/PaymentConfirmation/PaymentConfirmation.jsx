@@ -47,13 +47,17 @@ const PaymentConfirmation = (props) => {
         </Modal.Body>
         <Modal.Footer>
           <Button
-            id="cancelPaymentBtn"
+            className="greyBg greyBgHover"
             disabled={loading}
             onClick={handleClose}
           >
             Cancel
           </Button>
-          <Button onClick={submit} disabled={loading} id="confirmPaymentBtn">
+          <Button
+            onClick={submit}
+            disabled={loading}
+            className="blueBg blueBgHover"
+          >
             Confirm{" "}
             {loading ? (
               <Spinner

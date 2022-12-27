@@ -46,7 +46,7 @@ const Earnings = () => {
             pageName="Earnings"
             extra={<EarningsDropdown years={earnings} setYear={setYear} />}
           />
-          {earnings.length > 0 ? (
+          {earnings?.length > 0 ? (
             <div className="mt-5">
               <EarningsGraph data={graphData} />
               <EarningsCard months={year.months} />
