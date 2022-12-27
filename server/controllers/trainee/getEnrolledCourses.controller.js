@@ -1,14 +1,35 @@
 const Course = require("../../models/Course.model");
 const Trainee = require("../../models/Trainee.model");
+const {
+  coursePrice,
+  courseDuration,
+} = require("../course/courseUtils.controller");
 
 const getEnrolledCourses = async (req, res) => {
   const trainee = await Trainee.findById(req.session.userId);
-  const courses = [];
-  for (let courseId of trainee.courses) {
-    let course = await Course.findById(courseId);
-    if (course) courses.push(course);
-  }
-  res.send(courses);
+
+  let courses = await Promise.all(
+    trainee.courses.map((courseId) => Course.findById(courseId))
+  );
+
+  let coursePrices = await Promise.all(
+    courses.map((course) => coursePrice(course))
+  );
+
+  let coursesFormatted = courses.map((course, index) => {
+    const { name, subject, totalRating, image, instructorInfo } = course;
+    return {
+      id: course._id,
+      price: coursePrices[index],
+      duration: courseDuration(course),
+      instructorName: instructorInfo?.instructorName,
+      name,
+      subject,
+      totalRating,
+      image,
+    };
+  });
+  res.send(coursesFormatted);
 };
 
 module.exports = { getEnrolledCourses };
