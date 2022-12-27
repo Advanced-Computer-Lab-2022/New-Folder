@@ -5,7 +5,7 @@ const {
 } = require("../course/courseUtils.controller");
 
 exports.postSearch = async (req, res) => {
-  const courses = await Course.aggregate([
+  let courses = await Course.aggregate([
     {
       $search: {
         index: "courses",
@@ -16,6 +16,9 @@ exports.postSearch = async (req, res) => {
       },
     },
   ]);
+
+  //filter published courses
+
   let courseDurations = await Promise.all(
     courses.map((course) => courseDuration(course))
   );

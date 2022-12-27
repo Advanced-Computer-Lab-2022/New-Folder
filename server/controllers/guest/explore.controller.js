@@ -5,7 +5,10 @@ const {
 } = require("../course/courseUtils.controller");
 
 exports.getExplore = async (req, res) => {
-  const courses = await Course.find();
+  let courses = await Course.find();
+
+  //filter published courses
+
   courses.sort(
     (course1, course2) => course2.trainees.length - course1.trainees.length
   );

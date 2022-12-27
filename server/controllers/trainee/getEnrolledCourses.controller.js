@@ -12,6 +12,8 @@ const getEnrolledCourses = async (req, res) => {
     trainee.courses.map((courseId) => Course.findById(courseId))
   );
 
+  //filter published courses
+
   let courseDurations = await Promise.all(
     courses.map((course) => courseDuration(course))
   );
