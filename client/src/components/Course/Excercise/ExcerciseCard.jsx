@@ -20,19 +20,17 @@ const ExcerciseCard = (props) => {
     selectedChoice(e.target.value);
   };
 
-
-
   return (
     <div
-      className={
-        "whiteCard " + !isSubmitted
-          ? answerSelected !== -1
-            ? "question-main"
-            : "question-main required"
-          : answerSelected == correctIDx
-          ? "question-main correct"
-          : "question-main wrong"
-      }
+      className={"whiteCard question-main"}
+      //   + !isSubmitted
+      //     ? answerSelected !== -1
+      //       ? "question-main"
+      //       : "question-main required"
+      //     : answerSelected == correctIDx
+      //     ? "question-main correct"
+      //     : "question-main wrong"
+      // }
     >
       <Row className="question-Number">
         <Col>
@@ -78,7 +76,7 @@ const ExcerciseCard = (props) => {
                 choice={choice}
                 handleChange={handleChange}
                 selectedChoice={(x) => selectedChoice(x)}
-                setAnswerSelected = {setAnswerSelected}
+                setAnswerSelected={setAnswerSelected}
               />
             );
           })}

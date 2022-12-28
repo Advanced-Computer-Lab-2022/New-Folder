@@ -115,7 +115,7 @@ const Excercise = () => {
           </Col>
         }
       />
-      <Row lg={1}>
+      <Row className="pt-5" lg={1}>
         {questions.map((question, index) => {
           return (
             <ExcerciseCard
@@ -134,7 +134,7 @@ const Excercise = () => {
         <button
           disabled={isSubmitted}
           type="button"
-          class="btn btn-primary"
+          className ="blueBg blueBgHover btn btn-primary"
           onClick={handleSubmit}
         >
           Submit
@@ -142,7 +142,7 @@ const Excercise = () => {
         {isSubmitted && (
           <button
             type="button"
-            class="btn btn-success"
+            className ="blackBg blackBgHover btn btn-success"
             onClick={() => navigate(-1)}
           >
             Go Back to Course Content
@@ -172,7 +172,7 @@ const Excercise = () => {
         </Modal.Body>
 
         <Modal.Footer id="quiz-reaction">
-          <Button variant="primary" onClick={handleClose}>
+          <Button className="blueBg blueBgHover " variant="primary" onClick={handleClose}>
             continue
           </Button>
         </Modal.Footer>
@@ -188,10 +188,10 @@ const Excercise = () => {
         </Modal.Body>
 
         <Modal.Footer id="quiz-reaction">
-          <Button variant="Danger" onClick={handleCloseConfirmation}>
+          <Button className = "greyBg greyBgHover" variant="Danger" onClick={handleCloseConfirmation}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleConfirm}>
+          <Button className="blueBg blueBgHover " variant="primary" onClick={handleConfirm}>
             Confirm
           </Button>
         </Modal.Footer>
