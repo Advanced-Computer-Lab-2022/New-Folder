@@ -6,7 +6,7 @@ import "react-day-picker/dist/style.css";
 import ReportCourse from "../Course/ReportCourse/ReportCourse";
 import { ReactSession } from "react-client-session";
 import countryCurrency from "../../constants/CountryCurrency.json";
-import { getPayment } from "../../network";
+import { getPayment, publishCourse } from "../../network";
 import PaymentConfirmation from "../PaymentConfirmation/PaymentConfirmation";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import IntroVideo from "../Course/IntroVideo/IntroVideo";
@@ -14,6 +14,7 @@ import CourseHeader from "../Course/CourseHeader/CourseHeader";
 import CourseBody from "../Course/CourseBody/CourseBody";
 import EnrollGoToCourse from "../Course/EnrollGoToCourse/EnrollGoToCourse";
 import EditPreviewVideo from "../Course/EditPreviewVideo/EditPreviewVideo";
+import { Button } from "react-bootstrap";
 
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
@@ -94,7 +95,10 @@ function CourseSummary(props) {
       console.log(e);
     }
   };
-
+  const publish = async () => {
+    await publishCourse(props.course._id);
+    props.setVc(ViewerContexts.savedAuthor);
+  };
   return (
     <>
       <div id="courseSummaryContainer" className="blueBg">
@@ -122,6 +126,9 @@ function CourseSummary(props) {
             course={props.course}
             setVc={props.setVc}
           />
+          {props.vc === ViewerContexts.author ? (
+            <Button onClick={publish}>Publish</Button>
+          ) : null}
         </div>
         <div id="rightCol">
           <CourseHeader
