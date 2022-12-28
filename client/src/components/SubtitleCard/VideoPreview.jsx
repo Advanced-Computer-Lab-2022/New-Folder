@@ -1,7 +1,13 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { fetchVideoContent } from "../../network";
-import {totalDuration} from "../../utils/getVideoDurationUtils";
+import { totalDuration } from "../../utils/getVideoDurationUtils";
+import {
+  BsFillPlayBtnFill,
+  BsClockFill,
+  BsFillPlayCircleFill,
+  BsFillFileTextFill,
+} from "react-icons/bs";
 function VideoPreview(props) {
   const [video, setVideo] = useState({});
 
@@ -23,13 +29,17 @@ function VideoPreview(props) {
     fetchVideo();
   }, []);
   return (
-    <>
-      <ul style={{ border: "1px dotted black" }}>
-        <li>{"Video title: " + video.title}</li>
-        <li>{"Video Duration: " + totalDuration(video.duration)}</li>
-        <li>{"Video Description: " + video.description}</li>
-      </ul>
-    </>
+    <div>
+      <h5>
+        <BsFillPlayCircleFill size={17} style={{ marginRight: 3 }} />{" "}
+        {video.title ?? "mango"}
+      </h5>
+      <h5>
+        <BsClockFill size={17} style={{ marginBottom: 5, marginRight: 5 }} />
+        {totalDuration(video.duration)}
+      </h5>
+      <h6 style={{ color: "grey" }}>{video.description}</h6>
+    </div>
   );
 }
 

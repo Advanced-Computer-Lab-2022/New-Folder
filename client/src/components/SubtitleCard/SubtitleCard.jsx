@@ -4,8 +4,8 @@ import { fetchSubtitle, updateCourse } from "../../network";
 import { useNavigate } from "react-router-dom";
 import VideoPreview from "./VideoPreview";
 import Accordion from "react-bootstrap/Accordion";
-import { MdOutlineOndemandVideo } from "react-icons/md";
 import { GiNotebook } from "react-icons/gi";
+import { BsFillPlayBtnFill, BsFillFileTextFill } from "react-icons/bs";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import Button from "react-bootstrap/Button";
 import "./SubtitleCard.css";
@@ -52,7 +52,9 @@ function SubtitleCard(props) {
       <Accordion.Item eventKey={props.index}>
         <Accordion.Header>
           <div id="sectionHeader">
-            <h5>{"Section " + subtitle.subtitleNumber + ": "}</h5>
+            <h4>
+              <b>{subtitle.title}</b>
+            </h4>
           </div>
         </Accordion.Header>
         <Accordion.Body>
@@ -70,34 +72,30 @@ function SubtitleCard(props) {
               delete
             </Button>
           ) : null}
-          <p>{"Title: " + (subtitle.title ?? "")}</p>
-          <ol style={{ border: "1px dotted black" }}>
-            {subtitle.subTitle_Content.map((content, index) => {
-              return (
-                <li>
-                  <div>
-                    {content.type == "content" ? (
-                      <div>
-                        <MdOutlineOndemandVideo gap={3} />
-                        video
-                        <VideoPreview
-                          videoId={content.subTitle_Content_id}
-                          idx={index}
-                          durationMap={props.durationMap}
-                          setDurationMap={props.setDurationMap}
-                        />
-                      </div>
-                    ) : (
-                      <div>
-                        <GiNotebook />
-                        Exercise
-                      </div>
-                    )}
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
+
+          {subtitle.subTitle_Content.map((content, index) => {
+            return (
+              <div>
+                {content.type == "content" ? (
+                  <VideoPreview
+                    videoId={content.subTitle_Content_id}
+                    idx={index}
+                    durationMap={props.durationMap}
+                    setDurationMap={props.setDurationMap}
+                  />
+                ) : (
+                  <h5>
+                    <BsFillFileTextFill
+                      size={18}
+                      style={{ marginBottom: 5, marginRight: 4 }}
+                    />
+                    Exercise
+                  </h5>
+                )}
+                {index != subtitle.subTitle_Content.length - 1 ? <hr /> : null}
+              </div>
+            );
+          })}
         </Accordion.Body>
       </Accordion.Item>
     </>
