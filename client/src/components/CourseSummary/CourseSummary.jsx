@@ -115,18 +115,17 @@ function CourseSummary(props) {
               uploadIntroVideo={props.uploadIntroVideo}
             />
           ) : null}
-
+          <PublishCourse
+            courseId={props.course._id}
+            vc={props.vc}
+            setVc={props.setVc}
+          />
           <EnrollGoToCourse
             vc={props.vc}
             enroll={enroll}
             loadingEnrollBtn={loadingEnrollBtn}
             courseId={props.courseId}
             course={props.course}
-            setVc={props.setVc}
-          />
-          <PublishCourse
-            courseId={props.course._id}
-            vc={props.vc}
             setVc={props.setVc}
           />
 

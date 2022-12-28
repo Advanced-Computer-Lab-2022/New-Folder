@@ -83,7 +83,11 @@ function EditPreviewVideo(props) {
           </Button>
         </Form>
       ) : (
-        <Button id="editPreviewVideoButton" onClick={() => setEditing(true)}>
+        <Button
+          id="editPreviewVideoButton"
+          variant="outline-light"
+          onClick={() => setEditing(true)}
+        >
           Edit Preview Video
         </Button>
       )}
