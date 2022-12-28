@@ -491,3 +491,9 @@ export const getPayment = async (data) => {
   const res = await instance.post("/trainee/getPayment", data);
   return res.data;
 };
+
+// publish course
+export const publishCourse = async (courseId) => {
+  const res = await instance.patch(`course/${courseId}/publishCourse`);
+  return res.data;
+};
