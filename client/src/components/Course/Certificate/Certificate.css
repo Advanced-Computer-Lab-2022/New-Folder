@@ -2,6 +2,10 @@
     margin: 0;
 }
 
+.certificate-msg {
+    font-size: 1.25em;
+}
+
 .tooltip-wrapper {
     cursor: pointer;
 }

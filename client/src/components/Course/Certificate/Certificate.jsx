@@ -70,12 +70,12 @@ const Certificate = (props) => {
         <Modal.Header id="modal-Certificate" closeButton>
           <Modal.Title id="modal-Certificate">Earn Certificate</Modal.Title>
         </Modal.Header>
-        <Modal.Body id="modal-Certificate">
+        <Modal.Body className="certificate-msg" id="modal-Certificate">
           You can have your certificate by dowloading it as <strong>PDF</strong>{" "}
           or send it on your <strong>Email</strong>
         </Modal.Body>
         <Modal.Footer id="modal-Certificate">
-          <Button
+          <Button className="blueBg blueBgHover"
             variant="warning"
             onClick={() => {
               setMailLoading(true);
@@ -90,7 +90,7 @@ const Certificate = (props) => {
             </div>
             
           </Button>
-          <Button
+          <Button className="blackBg blackBgHover"
             variant="warning"
             onClick={() => {
               generatePDF();
