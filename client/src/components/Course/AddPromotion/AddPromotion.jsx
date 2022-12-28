@@ -13,6 +13,11 @@ import "./AddPromotion.css";
 import SuccessFeedback from "../../SuccessFeedback/SuccessFeedback";
 import Spinner from "react-bootstrap/Spinner";
 import ErrorFeedback from "../../ErrorFeedback/ErrorFeedback";
+import { TbDiscount2 } from "react-icons/tb";
+import { HiOutlineCalendarDays } from "react-icons/hi2";
+import { BsArrowRight } from "react-icons/bs";
+import { ImPencil } from "react-icons/im";
+import "../../../App.css";
 function AddPromotion(props) {
   const { promotion, setPromotion, courseId } = props;
   const [isEditing, setEditing] = useState(false);
@@ -151,13 +156,20 @@ function AddPromotion(props) {
                     <p className="promotionError">{percentageError}</p>
                   ) : null}
                 </Form.Group>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={cancel} disabled={loading}>
+                <Button
+                  id="addPromotionCloseButton"
+                  className="greyBg greyBgHover"
+                  onClick={cancel}
+                  disabled={loading}
+                >
                   Close
                 </Button>
                 {loading ? (
-                  <Button variant="primary" disabled>
+                  <Button
+                    id="addPromotionSaveButton"
+                    className="blueBg blueBgHover"
+                    disabled
+                  >
                     <Spinner
                       as="span"
                       animation="border"
@@ -168,52 +180,73 @@ function AddPromotion(props) {
                     {" Saving..."}
                   </Button>
                 ) : (
-                  <Button variant="primary" onClick={save}>
+                  <Button
+                    id="addPromotionSaveButton"
+                    className="blueBg blueBgHover"
+                    onClick={save}
+                  >
                     Save Changes
                   </Button>
                 )}
-              </Modal.Footer>
+              </Modal.Body>
             </>
           )}
         </Modal>
       </>
 
-      <>
-        {valid ? (
-          <div>
-            <h5>
-              <b>Course promotion: </b> {promotion?.percentage ?? 0}%
-            </h5>
-            <h5>
-              <b>Promotion Start Date: </b>{" "}
-              {new Date(promotion?.startDate).toDateString() ?? ""}
-            </h5>
-            <h5>
-              <b>Promotion End Date: </b>{" "}
-              {new Date(promotion?.endDate).toDateString() ?? ""}
-            </h5>
-            <Button
-              variant="primary"
-              onClick={() => {
-                setEditing(true);
-                setShow(true);
-              }}
-            >
-              Change promotion
-            </Button>
-          </div>
-        ) : (
-          <Button
-            variant="primary"
+      <div>
+        <h4>
+          Course promotion
+          <ImPencil
             onClick={() => {
               setEditing(true);
               setShow(true);
             }}
-          >
-            Add promotion
-          </Button>
-        )}
-      </>
+            size={15}
+            style={{ marginTop: -5, marginLeft: 10 }}
+            id="editPromotionButton"
+          />
+        </h4>
+        <div>
+          {valid ? (
+            <>
+              <h5>
+                {" "}
+                <TbDiscount2
+                  size={20}
+                  style={{ marginTop: -5, marginRight: 3 }}
+                />
+                {promotion.percentage + " %"}
+              </h5>
+              <h5>
+                <HiOutlineCalendarDays
+                  size={20}
+                  style={{ marginTop: -5, marginRight: 3 }}
+                />
+                {new Date(promotion?.startDate).toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                }) ?? ""}
+                <BsArrowRight
+                  style={{ marginTop: -5, marginRight: 3, marginLeft: 3 }}
+                />
+                {new Date(promotion?.endDate).toLocaleDateString("en-us", {
+                  year: "numeric",
+                  month: "short",
+                  day: "numeric",
+                }) ?? ""}
+              </h5>
+            </>
+          ) : (
+            <>
+              <h5>
+                There are no promotions for this <br /> course.
+              </h5>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 }
