@@ -94,8 +94,11 @@ function CourseHeader(props) {
           />
         )}
       </div>
-      {props.vc === ViewerContexts.author ||
-      props.vc === ViewerContexts.admin ? (
+      {[
+        ViewerContexts.author,
+        ViewerContexts.admin,
+        ViewerContexts.savedAuthor,
+      ].includes(vc) ? (
         <AddPromotion
           promotion={promotion}
           setPromotion={setPromotion}

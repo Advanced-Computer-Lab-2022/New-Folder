@@ -1,26 +1,22 @@
 import React, { useEffect, useMemo } from "react";
-import RatingCard from "../../components/RatingCard/RatingCard";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import "./CourseSummary.css";
 import { useState } from "react";
-import AddPromotion from "../Course/AddPromotion/AddPromotion";
 import "react-day-picker/dist/style.css";
-import { totalDuration } from "../../utils/getVideoDurationUtils";
-import ProgressBar from "./ProgressBar/ProgressBar";
 import ReportCourse from "../Course/ReportCourse/ReportCourse";
 import { ReactSession } from "react-client-session";
 import countryCurrency from "../../constants/CountryCurrency.json";
-import { getPayment } from "../../network";
+import { getPayment, publishCourse } from "../../network";
 import PaymentConfirmation from "../PaymentConfirmation/PaymentConfirmation";
 import ErrorModal from "../ErrorModal/ErrorModal";
 import IntroVideo from "../Course/IntroVideo/IntroVideo";
 import CourseHeader from "../Course/CourseHeader/CourseHeader";
 import CourseBody from "../Course/CourseBody/CourseBody";
 import EnrollGoToCourse from "../Course/EnrollGoToCourse/EnrollGoToCourse";
-import PageHeader from "../PageHeader/PageHeader";
-import { Button } from "react-bootstrap";
 import EditPreviewVideo from "../Course/EditPreviewVideo/EditPreviewVideo";
-
+import { Button } from "react-bootstrap";
+import "../../App.css";
+import PublishCourse from "../Course/PublishCourse/PublishCourse";
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
   const [ratingsCount, setRatingsCount] = useState(0);
@@ -128,6 +124,16 @@ function CourseSummary(props) {
             course={props.course}
             setVc={props.setVc}
           />
+          <PublishCourse
+            courseId={props.course._id}
+            vc={props.vc}
+            setVc={props.setVc}
+          />
+
+          {props.vc !== ViewerContexts.guest &&
+          props.vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
+            <ReportCourse course={props.course} />
+          ) : null}
         </div>
         <div id="rightCol">
           <CourseHeader
@@ -163,10 +169,6 @@ function CourseSummary(props) {
             summary={props.course.description}
             trainees={props.course.trainees}
           />
-          {props.vc !== ViewerContexts.guest &&
-          props.vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
-            <ReportCourse course={props.course} />
-          ) : null}
         </div>
       </div>
 

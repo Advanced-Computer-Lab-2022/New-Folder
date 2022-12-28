@@ -498,6 +498,15 @@ const cancelRefund = async (req, res) => {
   }
 };
 
+// Publish course
+const publishCourse = async (req, res) => {
+  try {
+    await Course.findByIdAndUpdate(req.params.id, { published: true });
+    res.status(200).json({ message: "Success" });
+  } catch (err) {
+    res.status(500).json({ message: err.message });
+  }
+};
 module.exports = {
   getSubtitle,
   getVideo,
@@ -523,4 +532,5 @@ module.exports = {
   addMultiPromotion,
   cancelRefund,
   requestRefund,
+  publishCourse,
 };

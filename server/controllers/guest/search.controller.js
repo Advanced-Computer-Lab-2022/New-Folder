@@ -17,7 +17,7 @@ exports.postSearch = async (req, res) => {
     },
   ]);
 
-  //filter published courses
+  courses = courses.filter((course) => course.published);
 
   let courseDurations = await Promise.all(
     courses.map((course) => courseDuration(course))

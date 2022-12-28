@@ -40,7 +40,6 @@ function AccessRequests() {
     <>
       <SuccessModal show={success} msg={msg} handleClose={close} />
       <ErrorModal show={fail || fetchFail} handleClose={close} />
-      <PageHeader pageName="Access requests" />
       {loading ? (
         <div
           className="d-flex justify-content-center"
@@ -80,7 +79,7 @@ function AccessRequests() {
           ) : (
             <div className="pt-3">
               <Stack className="mt-5" gap={3}>
-                <Image width={"30%"} src="/assets/Empty.jpg" />
+                <Image width={"30%"} src="/assets/Empty.png" />
                 <h2 className="m-auto">There are no access requests</h2>
               </Stack>
             </div>

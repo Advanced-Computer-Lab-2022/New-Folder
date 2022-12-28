@@ -7,10 +7,9 @@ import Filter from "./pages/user/Filter";
 import CreateCourse from "./pages/user/instructor/CreateCourse/CreateCourse";
 import Login from "./pages/Login/Login";
 import MyCourses from "./pages/user/instructor/MyCourses/MyCourses";
-import Navbar from "./components/Navbar/Navbar";
+import Navbar from "./components/NavbarV2/Navbar";
 import { useState } from "react";
 import CourseDetails from "./pages/course/CourseDetails";
-import AdminNavbar from "./components/Navbar/AdminNavbar";
 import UserTypes from "./constants/UserTypes.json";
 import Content from "./pages/course/Content/Content";
 import Excercise from "./pages/course/Excercise/Excercise";
@@ -21,13 +20,11 @@ import MyProfile from "./pages/user/instructor/MyProfile";
 import ResetPassword from "./pages/password/ResetPassword";
 import EditSubtitle from "./pages/user/instructor/EditSubtitle/EditSubtitle";
 import MyProblems from "./pages/user/MyProblems/MyProblems";
-import Reports from "./pages/admin/Reports";
 import AddUser from "./pages/admin/AddUser/AddUser";
 import Earnings from "./pages/user/instructor/Earnings";
 import EnrolledCourses from "./pages/user/EnrolledCourses";
-import AccessRequests from "./pages/admin/AccessRequests";
 import Signup from "./pages/Signup/Signup";
-import Refunds from "./pages/admin/Refunds";
+import AdminHome from "./pages/admin/AdminHome/AdminHome";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -37,14 +34,10 @@ function App() {
   ReactSession.set("userType", userType);
   return (
     <>
-      {ReactSession.get("userType") === UserTypes.admin ? (
-        <AdminNavbar setCountry={setCountry} setUserType={setUserType} />
-      ) : (
-        <Navbar setCountry={setCountry} setUserType={setUserType} />
-      )}
+      <Navbar setCountry={setCountry} setUserType={setUserType} />
       <Routes>
         <Route path="/" element={<Explore />} />
-        <Route path="/filter" element={<Filter />} />
+        <Route path="/allCourses" element={<Filter />} />
         <Route path="/myCourses" element={<MyCourses />} />
         <Route path="/search/:searchQuery" element={<Search />} />
 
@@ -71,9 +64,7 @@ function App() {
           element={<EditSubtitle />}
         />
         <Route path="/myProblems" element={<MyProblems />} />
-        <Route path="/refunds" element={<Refunds />} />
-        <Route path="/reports" element={<Reports />} />
-        <Route path="/AccessRequests" element={<AccessRequests />} />
+        <Route path="/adminHome" element={<AdminHome />} />
         <Route path="/earnings" element={<Earnings />} />
         <Route path="/enrolledCourses" element={<EnrolledCourses />} />
         <Route path="/signup" element={<Signup setUserType={setUserType} />} />
