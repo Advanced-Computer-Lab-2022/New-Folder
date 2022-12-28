@@ -31,7 +31,10 @@ function VideoPreview(props) {
   return (
     <div>
       <h5>
-        <BsFillPlayCircleFill size={17} style={{ marginRight: 3 }} />{" "}
+        <BsFillPlayCircleFill
+          size={17}
+          style={{ marginRight: 3, marginBottom: 3 }}
+        />{" "}
         {video.title ?? "mango"}
       </h5>
       <h5>
