@@ -42,6 +42,28 @@
   color: white !important;
 }
 
+.blackBgHover {
+  background-color: #100f0f !important;
+  border: 1px solid #100f0f !important;
+  color: white !important;
+}
+
+.blueBgHover {
+  background-color: #297f87 !important;
+  border: 1px solid #297f87 !important;
+  color: white !important;
+}
+.greyBgHover {
+  background-color: #9d9d9d !important;
+  border: 1px solid #9d9d9d !important;
+  color: white !important;
+}
+.redBgHover {
+  background-color: #ba2d3d !important;
+  border: 1px solid #ba2d3d !important;
+  color: white !important;
+}
+
 .blackBgHover:hover {
   background-color: transparent !important;
   border: 1px solid #100f0f !important;

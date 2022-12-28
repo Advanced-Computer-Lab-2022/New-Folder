@@ -11,6 +11,7 @@ import "./CourseCard.css";
 import { Spinner, Stack } from "react-bootstrap";
 import { MdPayments, MdOutlineStar } from "react-icons/md";
 import { RiPlayList2Fill } from "react-icons/ri";
+import Placeholder from "react-bootstrap/Placeholder";
 
 function CourseCard(props) {
   const [price, setPrice] = useState("");
@@ -51,7 +52,7 @@ function CourseCard(props) {
   return (
     <Card
       id="courseCardMain"
-      sx={{ maxWidth: 230, minWidth: 230 }}
+      sx={{ maxWidth: 230, minWidth: 230, maxHeight: 322, minHeight: 322 }}
       onClick={(e) => navigate("/course/" + props.course.id)}
     >
       <CardActionArea>
@@ -65,16 +66,24 @@ function CourseCard(props) {
               : "https://www.pngkey.com/png/detail/350-3500680_placeholder-open-book-silhouette-vector.png"
           }
         />
-        <CardContent>
-          <Typography variant="h5" component="div">
-            {props.course.name}
-          </Typography>
-          <Typography variant="body2">
-            {loading ? (
-              <Stack className="m-4">
-                <Spinner animation="border" />
-              </Stack>
-            ) : (
+        {loading ? (
+          <CardContent>
+            <Placeholder as={Card.Title} animation="glow">
+              <Placeholder xs={5} />
+            </Placeholder>
+            <Placeholder as={Card.Text} animation="glow">
+              <Placeholder xs={10} />
+              <Placeholder xs={10} />
+              <Placeholder xs={10} />
+              <Placeholder xs={10} />
+            </Placeholder>
+          </CardContent>
+        ) : (
+          <CardContent>
+            <Typography variant="h5" component="div">
+              {props.course.name}
+            </Typography>
+            <Typography variant="body2">
               <Stack gap={1}>
                 <h6 className="courseCardItem greyTxt">
                   {props.course.instructorName}
@@ -99,9 +108,9 @@ function CourseCard(props) {
                   </span>
                 </h6>
               </Stack>
-            )}
-          </Typography>
-        </CardContent>
+            </Typography>
+          </CardContent>
+        )}
       </CardActionArea>
     </Card>
   );
