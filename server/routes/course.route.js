@@ -44,6 +44,7 @@ const {
   addMultiPromotion,
   cancelRefund,
   requestRefund,
+  publishCourse,
 } = require("../controllers/course/courseDetails.controller");
 
 router.get("/subtitle/excercise/:id/getMark", getMark);
@@ -71,6 +72,7 @@ router.patch("/addPromotion", canAddPromotion, addPromotion);
 router.patch("/addMultiPromotion", canAddMultiPromotion, addMultiPromotion);
 router.patch("/:id", updateCourse);
 router.patch("/:id/newsubtitle", createSubtitle);
+router.patch("/:id/publishCourse", publishCourse);
 router.post("/report", canReport, submitReport);
 router.post("/requestAccess", canRequestAccess, requestAccess);
 router.post("/requestRefund", canRequestRefund, requestRefund);

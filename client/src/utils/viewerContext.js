@@ -13,6 +13,9 @@ export const getViewerContext = (course) => {
     userType === UserTypes.instructor &&
     course.instructorInfo.instructorId === userId
   ) {
+    if (course.published) {
+      return ViewerContexts.savedAuthor;
+    }
     return ViewerContexts.author;
   }
   if (course.refundingTrainees?.includes(userId)) {
