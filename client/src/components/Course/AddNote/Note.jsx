@@ -19,18 +19,18 @@ const Note = (props) => {
 
   const generatePDF = (noteTitle, noteContent) => {
     var doc = new jsPDF();
+    let width = doc.internal.pageSize.getWidth();
+    let height = doc.internal.pageSize.getHeight();
     doc.setFontSize(20);
-    doc.text(
-      noteTitle,
-      doc.internal.pageSize.getWidth() / 2 -
-        doc.getStringUnitWidth(noteTitle) -
-        25,
-      25
-    );
+    if (noteTitle === undefined) noteTitle = "Unknown";
+    doc.text(noteTitle, width / 2, 20, {
+      align: "center",
+    });
     doc.setFontSize(15);
     const s = doc.splitTextToSize(noteContent, 180);
     doc.text(s, 15, 50);
-    doc.save(noteTitle + "notes");
+
+    doc.save(noteTitle + " notes");
   };
 
   const getNote = async () => {
