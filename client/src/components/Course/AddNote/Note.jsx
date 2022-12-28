@@ -6,7 +6,7 @@ import { FetchNote, postNote } from "../../../network";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import "./Note.css";
 import PDFnote from "../../PDF/PDFnote";
-import jsPDF from 'jspdf';
+import jsPDF from "jspdf";
 
 const Note = (props) => {
   const conID = props.conID;
@@ -14,20 +14,25 @@ const Note = (props) => {
 
   const [noteValue, setNoteValue] = useState("");
 
-//   not used but could be used anytime later
-const [saving, setSaving] = useState(false);
-const [saved, setSaved] = useState(true);
-  
+  //   not used but could be used anytime later
+  const [saving, setSaving] = useState(false);
+  const [saved, setSaved] = useState(true);
 
   const generatePDF = (noteTitle, noteContent) => {
     var doc = new jsPDF();
     doc.setFontSize(20);
-    doc.text(noteTitle, doc.internal.pageSize.getWidth()/2 - doc.getStringUnitWidth(noteTitle) -25,25);
+    doc.text(
+      noteTitle,
+      doc.internal.pageSize.getWidth() / 2 -
+        doc.getStringUnitWidth(noteTitle) -
+        25,
+      25
+    );
     doc.setFontSize(15);
-    const s = doc.splitTextToSize(noteContent,180);
+    const s = doc.splitTextToSize(noteContent, 180);
     doc.text(s, 15, 50);
     doc.save(noteTitle + "notes");
-  }
+  };
 
   const getNote = async () => {
     const traineeNote = await FetchNote(conID);
@@ -57,20 +62,34 @@ const [saved, setSaved] = useState(true);
         }}
       ></textarea>
       <div className="note-buttons">
-        <Button variant="success" onClick={(e) => {setSaving(true); handleSubmitNote(); setSaved(true); setSaving(false)}}>
+        <Button
+          className="blueBg blueBgHover"
+          variant="success"
+          onClick={(e) => {
+            setSaving(true);
+            handleSubmitNote();
+            setSaved(true);
+            setSaving(false);
+          }}
+        >
           Save
         </Button>
-        <Button disabled={!saved} variant="success" onClick={(e) => {generatePDF(conTitle , noteValue)}}>
-                Download as <strong>PDF</strong>
+        <Button
+          className="blackBg blackBgHover"
+          disabled={!saved}
+          variant="success"
+          onClick={(e) => {
+            generatePDF(conTitle, noteValue);
+          }}
+        >
+          Download as <strong>PDF</strong>
         </Button>
 
         <div className="saving-spinner">
           <span>
-            {saved ? ("Saved") : saving ? ("Saving ...") : ("Not Saved **")}
+            {saved ? "Saved" : saving ? "Saving ..." : "Not Saved **"}
           </span>
         </div>
-
-
       </div>
     </Col>
   );
