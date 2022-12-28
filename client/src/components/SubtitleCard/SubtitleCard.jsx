@@ -4,10 +4,11 @@ import { fetchSubtitle, updateCourse } from "../../network";
 import { useNavigate } from "react-router-dom";
 import VideoPreview from "./VideoPreview";
 import Accordion from "react-bootstrap/Accordion";
-import { GiNotebook } from "react-icons/gi";
-import { BsFillPlayBtnFill, BsFillFileTextFill } from "react-icons/bs";
+import { BsFillFileTextFill, BsTrashFill } from "react-icons/bs";
 import ViewerContexts from "../../constants/ViewerContexts.json";
+import { ImPencil } from "react-icons/im";
 import Button from "react-bootstrap/Button";
+import colors from "../../colors.json";
 import "./SubtitleCard.css";
 function SubtitleCard(props) {
   const navigate = useNavigate();
@@ -54,25 +55,30 @@ function SubtitleCard(props) {
           <div id="sectionHeader">
             <h4>
               <b>{subtitle.title}</b>
+              {props.vc === ViewerContexts.author ? (
+                <>
+                  <ImPencil
+                    color={colors.blue}
+                    size={18}
+                    style={{ marginBottom: 5, marginLeft: 7 }}
+                    onClick={() =>
+                      navigate(
+                        `/editSubtitle/${props.courseId}/${props.subtitleId}`
+                      )
+                    }
+                  />
+                  <BsTrashFill
+                    color={colors.red}
+                    size={18}
+                    style={{ marginBottom: 5, marginLeft: 7 }}
+                    onClick={deleteSubtitle}
+                  />
+                </>
+              ) : null}
             </h4>
           </div>
         </Accordion.Header>
         <Accordion.Body>
-          {props.vc === ViewerContexts.author ? (
-            <Button
-              onClick={() =>
-                navigate(`/editSubtitle/${props.courseId}/${props.subtitleId}`)
-              }
-            >
-              edit
-            </Button>
-          ) : null}
-          {props.vc === ViewerContexts.author ? (
-            <Button variant="danger" onClick={deleteSubtitle}>
-              delete
-            </Button>
-          ) : null}
-
           {subtitle.subTitle_Content.map((content, index) => {
             return (
               <div>
