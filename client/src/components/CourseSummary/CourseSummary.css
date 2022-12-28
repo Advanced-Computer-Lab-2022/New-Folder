@@ -78,11 +78,6 @@
   margin-left: -5%;
 }
 
-#courseInstructorNameLink {
-  text-decoration: none;
-  color: #100f0f;
-}
-
 .courseSummaryFirstRow-parent {
   display: flex;
 }

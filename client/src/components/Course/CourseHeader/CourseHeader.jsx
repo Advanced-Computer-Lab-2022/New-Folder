@@ -56,6 +56,7 @@ function CourseHeader(props) {
                     vc === ViewerContexts.enrolledTrainee
                   }/${instructorId}`
             }
+            className="whiteTxt"
           >
             {instructorName ?? "Instructor"}
           </a>
