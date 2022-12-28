@@ -21,8 +21,10 @@ const ExcerciseCard = (props) => {
   return (
     <div
       className={
-        !isSubmitted
-          ? answerSelected !== -1 ? "question-main"  : "question-main required"
+        "whiteCard " + !isSubmitted
+          ? answerSelected !== -1
+            ? "question-main"
+            : "question-main required"
           : answerSelected == correctIDx
           ? "question-main correct"
           : "question-main wrong"
@@ -37,7 +39,7 @@ const ExcerciseCard = (props) => {
             <div
               className={
                 "answer-status " + (answerSelected == correctIDx ? "" : "wrong")
-              }
+              }checked
               hidden={!isSubmitted}
             >
               <span>

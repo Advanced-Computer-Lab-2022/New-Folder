@@ -7,12 +7,18 @@
   margin-left: 1em;
 }
 
-.mark-quiz {
+/* .mark-quiz {
   display: flex;
 
   width: 58% !important;
   padding: 2em;
   justify-content: space-between;
+} */
+
+.mark-quiz {
+  text-align: right;
+  font-weight: 100 !important;
+ 
 }
 
 .mark-quiz p {
@@ -22,11 +28,7 @@
   color: rgba(0, 0, 0, 0.3);
 }
 
-.mark-quiz h4 {
-  margin: 0;
-  float: right;
-  font-size: 2em;
-}
+
 
 #quiz-reaction {
   margin: 0;
