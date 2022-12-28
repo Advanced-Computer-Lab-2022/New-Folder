@@ -8,3 +8,6 @@
 #navBrand {
   font-size: x-large;
 }
+.navItem {
+  font-size: 1.2em !important;
+}
