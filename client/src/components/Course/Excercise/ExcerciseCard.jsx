@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Col, Row } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
+import ChoiceCard from "./choiceCard/ChoiceCard";
 import "./ExcerciseCard.css";
 
 const ExcerciseCard = (props) => {
@@ -14,9 +15,12 @@ const ExcerciseCard = (props) => {
   const [answerSelected, setAnswerSelected] = useState(-1);
 
   const handleChange = (e) => {
+    console.log(e);
     setAnswerSelected(e.target.value);
     selectedChoice(e.target.value);
   };
+
+
 
   return (
     <div
@@ -39,7 +43,8 @@ const ExcerciseCard = (props) => {
             <div
               className={
                 "answer-status " + (answerSelected == correctIDx ? "" : "wrong")
-              }checked
+              }
+              checked
               hidden={!isSubmitted}
             >
               <span>
@@ -66,13 +71,14 @@ const ExcerciseCard = (props) => {
         <Form.Group>
           {choicesArray.map((choice, index) => {
             return (
-              <Form.Check
-                disabled={isSubmitted}
+              <ChoiceCard
+                isSubmitted={isSubmitted}
                 checked={answerSelected == index}
-                value={index}
-                type="radio"
-                label={choice}
-                onChange={handleChange}
+                index={index}
+                choice={choice}
+                handleChange={handleChange}
+                selectedChoice={(x) => selectedChoice(x)}
+                setAnswerSelected = {setAnswerSelected}
               />
             );
           })}

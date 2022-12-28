@@ -1,0 +1,26 @@
+.choice-card {
+  display: flex;
+  flex-direction: row;
+  padding: 0.8em;
+  border: 1px solid  rgba(0, 0, 0, 0.5);
+  border-radius: 1em;
+  margin-top: 1em;
+  cursor: pointer;
+
+}
+
+.choice-card.selected {
+    background-color: #297f87;
+    color: white;
+}
+
+.choice-radio {
+  margin: 0;
+  padding-right: 1.5em;
+}
+
+.choice-card p {
+  margin: 0;
+  font-size: 1.15em;
+  font-weight: 500;
+}
