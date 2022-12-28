@@ -15,7 +15,8 @@ import CourseBody from "../Course/CourseBody/CourseBody";
 import EnrollGoToCourse from "../Course/EnrollGoToCourse/EnrollGoToCourse";
 import EditPreviewVideo from "../Course/EditPreviewVideo/EditPreviewVideo";
 import { Button } from "react-bootstrap";
-
+import "../../App.css";
+import PublishCourse from "../Course/PublishCourse/PublishCourse";
 function CourseSummary(props) {
   const [totalRating, setTotalRating] = useState(null);
   const [ratingsCount, setRatingsCount] = useState(0);
@@ -95,10 +96,7 @@ function CourseSummary(props) {
       console.log(e);
     }
   };
-  const publish = async () => {
-    await publishCourse(props.course._id);
-    props.setVc(ViewerContexts.savedAuthor);
-  };
+
   return (
     <>
       <div id="courseSummaryContainer" className="blueBg">
@@ -126,8 +124,15 @@ function CourseSummary(props) {
             course={props.course}
             setVc={props.setVc}
           />
-          {props.vc === ViewerContexts.author ? (
-            <Button onClick={publish}>Publish</Button>
+          <PublishCourse
+            courseId={props.course._id}
+            vc={props.vc}
+            setVc={props.setVc}
+          />
+
+          {props.vc !== ViewerContexts.guest &&
+          props.vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
+            <ReportCourse course={props.course} />
           ) : null}
         </div>
         <div id="rightCol">
@@ -164,10 +169,6 @@ function CourseSummary(props) {
             summary={props.course.description}
             trainees={props.course.trainees}
           />
-          {props.vc !== ViewerContexts.guest &&
-          props.vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
-            <ReportCourse course={props.course} />
-          ) : null}
         </div>
       </div>
 
