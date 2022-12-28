@@ -42,7 +42,7 @@
   font-size: 14px;
   color: #6a6f73;
   gap: 0.1rem;
-  padding-left: 3.6em;
+
   padding-top: 0.4em;
 }
 
@@ -51,6 +51,8 @@
 }
 
 .Content-card-details {
+  display: flex;
+  flex-direction: row;
   margin: 0;
   padding-left: 1.3em;
 }

@@ -5,6 +5,7 @@ import constants from "../../../constants/SubtitlesTypes.json";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import VisitedCard from "./VisitedCard/VisitedCard";
+import {totalDurationWithColon} from '../../../utils/getVideoDurationUtils'
 
 const SubtitleTypeCard = (props) => {
   const navigate = useNavigate();
@@ -60,23 +61,29 @@ const SubtitleTypeCard = (props) => {
     >
 
       <div className="Content-card-details">
-        <i class={type === constants.content ? "bi bi-play-circle" : "bi-card-checklist"}></i>
-        <span>{type === constants.content ? "Content : " + title : "Excercise "} </span>
 
-        <div class="content-duration">
+      <i class={type === constants.content ? "bi bi-play-circle" : "bi-card-checklist"}></i>
+        <div className="course-card-icon-and-text">
+         
+          <span>{type === constants.content ? "Content : " + title : "Excercise "} </span>
+          <div class="content-duration">
           {type === constants.content ? (
             <i class="bi bi-clock-fill"></i>
           ) : (
             <i>Score : </i>
           )}
           {type === constants.content ? (
-            <span>{duration} min</span>
+            <span>{totalDurationWithColon(duration)}</span>
           ) : (
             <span>
               {traineeMark === -1 ? "-" : traineeMark} / {excerciseMark}
             </span>
           )}
         </div>
+        </div>
+       
+
+
       </div>
 
       <VisitedCard isVisited={isVisited} setIsVisited={setIsVisited} contentID={contentID} contentType={contentType}/>

@@ -44,9 +44,31 @@ export const totalDuration = (duration) => {
     res += hours + " hr(s) ";
   }
   let mins = parseInt((duration % 3600) / 60);
-  if((duration % 3600) % 60 >= 30){
+  if ((duration % 3600) % 60 >= 30) {
     mins++;
   }
   res += mins + " min(s)";
+  return res;
+};
+
+export const totalDurationWithColon = (duration) => {
+  let res = "";
+  let hours = parseInt(duration / 3600);
+  if (hours !== 0) {
+    res += hours + ":";
+  }
+
+  duration = duration % 3600;
+
+  let mins = parseInt(duration / 60);
+
+  if (mins >= 10) res += mins + ":";
+  else res += "0" + mins + ":";
+
+  let secs = duration % 60;
+
+  if (secs >= 10) res += secs;
+  else res += "0" + secs;
+
   return res;
 };

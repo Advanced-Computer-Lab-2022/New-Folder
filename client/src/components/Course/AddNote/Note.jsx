@@ -14,7 +14,6 @@ const Note = (props) => {
 
   const [noteValue, setNoteValue] = useState("");
 
-  //   not used but could be used anytime later
   const [saving, setSaving] = useState(false);
   const [saved, setSaved] = useState(true);
 
