@@ -46,9 +46,23 @@ function Reports() {
   );
   return (
     <div>
-      <NavDropdown id="nav-dropdown-dark-example" title={selected}>
-        <NavDropdown.Item>Unresolved reports</NavDropdown.Item>
-        <NavDropdown.Item>Resolved reports</NavDropdown.Item>
+      <NavDropdown
+        style={{
+          marginRight: "2.5%",
+          marginBottom: "1.2%",
+          fontSize: "18px",
+          fontWeight: "500",
+        }}
+        className="text-end"
+        title={selected}
+        onSelect={(e) => setSelected(e)}
+      >
+        <NavDropdown.Item eventKey="Unresolved reports">
+          Unresolved reports
+        </NavDropdown.Item>
+        <NavDropdown.Item eventKey="Resolved reports">
+          Resolved reports
+        </NavDropdown.Item>
       </NavDropdown>
       {selected === "Resolved reports" ? (
         <ResolvedReports />
