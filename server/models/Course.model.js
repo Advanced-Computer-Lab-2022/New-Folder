@@ -109,6 +109,10 @@ const Course = mongoose.Schema({
     type: [{ type: mongoose.Types.ObjectId, ref: "Trainee" }],
     default: [],
   },
+  published: {
+    type: Boolean,
+    default: false,
+  },
 });
 
 module.exports = mongoose.model("Course", Course);
