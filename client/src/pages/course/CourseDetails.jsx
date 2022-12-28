@@ -17,6 +17,7 @@ import CourseReviewCard from "../../components/Course/CourseReviewCard/CourseRev
 import colors from "../../colors.json";
 import ReactLoading from "react-loading";
 import { Spinner } from "react-bootstrap";
+import AddSubtitle from "../../components/Course/AddSubtitle/AddSubtitle";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -33,6 +34,7 @@ const CourseDetails = () => {
   const [subContents, setSubContents] = useState([]);
   const [allPageLoading, setAllPageLoading] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [subtitleValidated, setSubtitleValidated] = useState(false);
 
   let ReviewCards = useMemo(() => {
     return () => <CourseReviewCard reviews={reviews} />;
@@ -109,6 +111,13 @@ const CourseDetails = () => {
 
   const addSubtitle = async (e) => {
     e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      setSubtitleValidated(true);
+      return;
+    }
     try {
       const updatedCourse = await createNewSubtitle(course._id, newSubtitle);
       setCourse(updatedCourse);
@@ -189,27 +198,14 @@ const CourseDetails = () => {
                     />
                   ))}
                 </div>
+
                 {vc === ViewerContexts.author ? (
-                  <Form onSubmit={addSubtitle}>
-                    <Container className="mt-4">
-                      <Form.Group className="mt-3">
-                        <Form.Control
-                          type="text"
-                          placeholder="Add Subtitle"
-                          value={newSubtitle}
-                          required
-                          onChange={(e) => {
-                            setNewSubtitle(e.target.value);
-                          }}
-                        ></Form.Control>
-                      </Form.Group>
-                      <div className="text-center">
-                        <Button className="mt-3" type="submit">
-                          Add Subtitle
-                        </Button>
-                      </div>
-                    </Container>
-                  </Form>
+                  <AddSubtitle
+                    submit={addSubtitle}
+                    newSubtitle={newSubtitle}
+                    setNewSubtitle={setNewSubtitle}
+                    validated={subtitleValidated}
+                  />
                 ) : null}
               </Accordion>
             </div>

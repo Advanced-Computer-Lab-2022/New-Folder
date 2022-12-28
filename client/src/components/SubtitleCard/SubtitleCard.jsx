@@ -7,8 +7,8 @@ import Accordion from "react-bootstrap/Accordion";
 import { BsFillFileTextFill, BsTrashFill } from "react-icons/bs";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import { ImPencil } from "react-icons/im";
-import Button from "react-bootstrap/Button";
 import colors from "../../colors.json";
+import { AiOutlinePlusCircle } from "react-icons/ai";
 import "./SubtitleCard.css";
 function SubtitleCard(props) {
   const navigate = useNavigate();
