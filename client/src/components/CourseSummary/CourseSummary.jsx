@@ -1,12 +1,8 @@
 import React, { useEffect, useMemo } from "react";
-import RatingCard from "../../components/RatingCard/RatingCard";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import "./CourseSummary.css";
 import { useState } from "react";
-import AddPromotion from "../Course/AddPromotion/AddPromotion";
 import "react-day-picker/dist/style.css";
-import { totalDuration } from "../../utils/getVideoDurationUtils";
-import ProgressBar from "./ProgressBar/ProgressBar";
 import ReportCourse from "../Course/ReportCourse/ReportCourse";
 import { ReactSession } from "react-client-session";
 import countryCurrency from "../../constants/CountryCurrency.json";
@@ -17,8 +13,6 @@ import IntroVideo from "../Course/IntroVideo/IntroVideo";
 import CourseHeader from "../Course/CourseHeader/CourseHeader";
 import CourseBody from "../Course/CourseBody/CourseBody";
 import EnrollGoToCourse from "../Course/EnrollGoToCourse/EnrollGoToCourse";
-import PageHeader from "../PageHeader/PageHeader";
-import { Button } from "react-bootstrap";
 import EditPreviewVideo from "../Course/EditPreviewVideo/EditPreviewVideo";
 
 function CourseSummary(props) {
