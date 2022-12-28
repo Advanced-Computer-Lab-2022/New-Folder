@@ -7,7 +7,7 @@ const ChoiceCard = (props) => {
 
   return (
     <div 
-      className={checked ? "choice-card selected" : "choice-card blueBgHover"} onClick={()=> {if (!isSubmitted)setAnswerSelected(index) ;selectedChoice(index)} }
+      className={checked ? "choice-card selected" : "choice-card NotSelected blueBgHover"} onClick={()=> {if (!isSubmitted)setAnswerSelected(index) ;selectedChoice(index)} }
     >
       <Form.Check
         className="choice-radio"

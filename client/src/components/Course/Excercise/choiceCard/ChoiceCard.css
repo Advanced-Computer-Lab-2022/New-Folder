@@ -6,7 +6,11 @@
   border-radius: 1em;
   margin-top: 1em;
   cursor: pointer;
+}
 
+.choice-card.NotSelected {
+  background-color: transparent !important;
+  color: black !important;
 }
 
 .choice-card.selected {
