@@ -25,6 +25,7 @@ import Earnings from "./pages/user/instructor/Earnings";
 import EnrolledCourses from "./pages/user/EnrolledCourses";
 import Signup from "./pages/Signup/Signup";
 import AdminHome from "./pages/admin/AdminHome/AdminHome";
+import SetpromotionPage from "./pages/admin/SetpromotionPage";
 ReactSession.setStoreType("sessionStorage");
 
 function App() {
@@ -67,6 +68,7 @@ function App() {
         <Route path="/adminHome" element={<AdminHome />} />
         <Route path="/earnings" element={<Earnings />} />
         <Route path="/enrolledCourses" element={<EnrolledCourses />} />
+        <Route path="/setPromotion" element={<SetpromotionPage />} />
         <Route path="/signup" element={<Signup setUserType={setUserType} />} />
       </Routes>
     </>

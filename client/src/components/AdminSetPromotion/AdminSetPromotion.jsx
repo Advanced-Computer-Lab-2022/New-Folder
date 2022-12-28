@@ -21,8 +21,7 @@ import SuccessFeedback from "../SuccessFeedback/SuccessFeedback";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
-function AdminSetPromotion(props) {
-  const { show, setShow } = props;
+function AdminSetPromotion() {
   const [range, setRange] = useState(null);
   const [newPercentage, setNewPercentage] = useState(null);
   const [dateError, setDateError] = useState(null);
@@ -102,7 +101,6 @@ function AdminSetPromotion(props) {
     }
     setPercentageError(null);
     setDateError(null);
-    setShow(false);
     setNewPercentage(null);
     setRange(null);
     setSelectedCourses([]);
@@ -110,155 +108,144 @@ function AdminSetPromotion(props) {
     setSelectError(null);
     setEditing(true);
     setSuccess(false);
-    setShow(false);
     setLoading(false);
   };
   return (
     <div>
       <>
-        <Modal
-          show={show}
-          onHide={cancel}
-          size={"lg"}
-          centered
-          backdrop={loading ? "static" : "dynamic"}
-        >
-          {!editing ? (
-            <>
-              {success ? (
-                <SuccessFeedback
-                  msg="Promotion added successfully!"
-                  onClose={cancel}
-                />
-              ) : null}
-            </>
-          ) : (
-            <>
-              <Modal.Header>
-                <Modal.Title>Set promotion</Modal.Title>
-              </Modal.Header>
-              <div>
-                <Autocomplete
-                  multiple
-                  disabled={allSelected}
-                  id="checkboxes-tags-demo"
-                  options={courses}
-                  disableCloseOnSelect
-                  value={allSelected ? [] : selectedCourses}
-                  onChange={(event, value) => {
-                    setSelectedCourses(value);
-                  }}
-                  getOptionLabel={(option) => option.name}
-                  renderOption={(props, option, { selected }) => (
-                    <li {...props}>
+        {!editing ? (
+          <>
+            {success ? (
+              <SuccessFeedback
+                msg="Promotion added successfully!"
+                onClose={cancel}
+              />
+            ) : null}
+          </>
+        ) : (
+          <div>
+            <Modal.Header>
+              <Modal.Title>Set promotion</Modal.Title>
+            </Modal.Header>
+            <div>
+              <Autocomplete
+                multiple
+                disabled={allSelected}
+                id="checkboxes-tags-demo"
+                options={courses}
+                disableCloseOnSelect
+                value={allSelected ? [] : selectedCourses}
+                onChange={(event, value) => {
+                  setSelectedCourses(value);
+                }}
+                getOptionLabel={(option) => option.name}
+                renderOption={(props, option, { selected }) => (
+                  <li {...props}>
+                    <Checkbox
+                      icon={icon}
+                      checkedIcon={checkedIcon}
+                      style={{ marginRight: 8 }}
+                      checked={selected}
+                    />
+                    {option.name}
+                  </li>
+                )}
+                style={{ width: 400 }}
+                renderInput={(params) => (
+                  <TextField
+                    {...params}
+                    id="standard-basic"
+                    variant="standard"
+                    label={
+                      allSelected ? "All courses selected" : "Select courses"
+                    }
+                  />
+                )}
+              />
+
+              <FormControl component="fieldset">
+                <FormGroup aria-label="position" row sx={{ margin: 0 }}>
+                  <FormControlLabel
+                    value="end"
+                    control={
                       <Checkbox
                         icon={icon}
                         checkedIcon={checkedIcon}
                         style={{ marginRight: 8 }}
-                        checked={selected}
+                        checked={allSelected}
+                        onChange={() => {
+                          allSelected
+                            ? setSelectedCourses([])
+                            : setSelectedCourses(courses);
+                          setAllSelected(!allSelected);
+                        }}
+                        sx={{ padding: 0, marginLeft: 1 }}
                       />
-                      {option.name}
-                    </li>
-                  )}
-                  style={{ width: 400 }}
-                  renderInput={(params) => (
-                    <TextField
-                      {...params}
-                      id="standard-basic"
-                      variant="standard"
-                      label={
-                        allSelected ? "All courses selected" : "Select courses"
-                      }
-                    />
-                  )}
+                    }
+                    label="Select all"
+                    labelPlacement="end"
+                  />
+                </FormGroup>
+              </FormControl>
+              {selectError ? (
+                <p className="promotionError">{selectError}</p>
+              ) : null}
+            </div>
+            <Modal.Body>
+              <h6 id="addPromotionHeader">Select start and end dates:</h6>
+              <Stack direction="vertical" gap={1}>
+                <DayPicker
+                  mode="range"
+                  selected={range}
+                  onSelect={setRange}
+                  disabled={[
+                    {
+                      from: new Date(1900, 4, 18),
+                      to: new Date(
+                        new Date().getFullYear(),
+                        new Date().getMonth(),
+                        new Date().getDate() - 1
+                      ),
+                    },
+                  ]}
                 />
-
-                <FormControl component="fieldset">
-                  <FormGroup aria-label="position" row sx={{ margin: 0 }}>
-                    <FormControlLabel
-                      value="end"
-                      control={
-                        <Checkbox
-                          icon={icon}
-                          checkedIcon={checkedIcon}
-                          style={{ marginRight: 8 }}
-                          checked={allSelected}
-                          onChange={() => {
-                            allSelected
-                              ? setSelectedCourses([])
-                              : setSelectedCourses(courses);
-                            setAllSelected(!allSelected);
-                          }}
-                          sx={{ padding: 0, marginLeft: 1 }}
-                        />
-                      }
-                      label="Select all"
-                      labelPlacement="end"
-                    />
-                  </FormGroup>
-                </FormControl>
-                {selectError ? (
-                  <p className="promotionError">{selectError}</p>
+              </Stack>
+              {dateError ? <p className="promotionError">{dateError}</p> : null}
+              <Form.Group as={Col}>
+                <Form.Control
+                  type="number"
+                  placeholder="Promotion %"
+                  value={newPercentage}
+                  onChange={(e) => setNewPercentage(e.target.value)}
+                />
+                {percentageError ? (
+                  <p className="promotionError">{percentageError}</p>
                 ) : null}
-              </div>
-              <Modal.Body>
-                <h6 id="addPromotionHeader">Select start and end dates:</h6>
-                <Stack direction="vertical" gap={1}>
-                  <DayPicker
-                    mode="range"
-                    selected={range}
-                    onSelect={setRange}
-                    disabled={[
-                      {
-                        from: new Date(1900, 4, 18),
-                        to: new Date(
-                          new Date().getFullYear(),
-                          new Date().getMonth(),
-                          new Date().getDate() - 1
-                        ),
-                      },
-                    ]}
+              </Form.Group>
+            </Modal.Body>
+            <Modal.Footer>
+              <Button variant="secondary" onClick={cancel} disabled={loading}>
+                Close
+              </Button>
+              {loading ? (
+                <Button variant="primary" disabled>
+                  <Spinner
+                    as="span"
+                    animation="border"
+                    size="sm"
+                    role="status"
+                    aria-hidden="true"
                   />
-                </Stack>
-                {dateError ? (
-                  <p className="promotionError">{dateError}</p>
-                ) : null}
-                <Form.Group as={Col}>
-                  <Form.Control
-                    type="number"
-                    placeholder="Promotion %"
-                    value={newPercentage}
-                    onChange={(e) => setNewPercentage(e.target.value)}
-                  />
-                  {percentageError ? (
-                    <p className="promotionError">{percentageError}</p>
-                  ) : null}
-                </Form.Group>
-              </Modal.Body>
-              <Modal.Footer>
-                <Button variant="secondary" onClick={cancel} disabled={loading}>
-                  Close
+                  {" Saving..."}
                 </Button>
-                {loading ? (
-                  <Button variant="primary" disabled>
-                    <Spinner
-                      as="span"
-                      animation="border"
-                      size="sm"
-                      role="status"
-                      aria-hidden="true"
-                    />
-                    {" Saving..."}
-                  </Button>
-                ) : (
-                  <Button variant="primary" onClick={save}>
-                    Save Changes
-                  </Button>
-                )}
-              </Modal.Footer>
-            </>
-          )}
-        </Modal>
+              ) : (
+                <Button variant="primary" onClick={save}>
+                  Save Changes
+                </Button>
+              )}
+            </Modal.Footer>
+          </div>
+        )}
       </>
     </div>
   );
