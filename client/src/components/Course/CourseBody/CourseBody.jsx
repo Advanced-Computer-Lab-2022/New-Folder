@@ -2,6 +2,8 @@ import React from "react";
 import ViewerContexts from "../../../constants/ViewerContexts.json";
 import "./CourseBody.css";
 import "../../../App.css";
+import { BsClockFill, BsFillPeopleFill } from "react-icons/bs";
+import { IoBookSharp } from "react-icons/io5";
 function CourseBody(props) {
   const {
     vc,
@@ -39,20 +41,23 @@ function CourseBody(props) {
         </>
       ) : null}
       <h5 className="courseInfo">
-        <b>Total duration:</b> {totalDuration}
+        <BsClockFill size={17} style={{ marginBottom: 5, marginRight: 5 }} />{" "}
+        {totalDuration ?? "2 Hours"}
       </h5>
-      {vc === ViewerContexts.author ? (
+      {vc === ViewerContexts.author || vc === ViewerContexts.savedAuthor ? (
         <h5 className="courseInfo">
-          <b>Count of enrolled trainees: </b> {trainees.length + " trainee(s)"}
+          <BsFillPeopleFill
+            size={17}
+            style={{ marginBottom: 5, marginRight: 5 }}
+          />{" "}
+          {trainees.length + " trainee(s)"}
         </h5>
       ) : null}
       <h5 className="courseInfo">
-        <strong>Subject:</strong> {subject ?? ""}
+        <IoBookSharp size={17} style={{ marginBottom: 4, marginRight: 5 }} />{" "}
+        {subject ?? "Computer science"}
       </h5>
-      <h5 className="courseInfo">
-        <strong>Summary:</strong>
-        <br /> {summary ?? ""}
-      </h5>
+      <h6 style={{ color: "#666666" }}>{summary}</h6>
     </div>
   );
 }
