@@ -1,0 +1,13 @@
+#addPromotionHeader {
+  margin: 0;
+}
+#adminSetPromotionClose {
+  width: 49%;
+  margin: 0;
+  margin-right: 1%;
+}
+#adminSetPromotionSave {
+  width: 49%;
+  margin: 0;
+  margin-left: 1%;
+}

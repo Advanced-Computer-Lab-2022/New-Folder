@@ -17,7 +17,10 @@ import CheckBoxOutlineBlankIcon from "@mui/icons-material/CheckBoxOutlineBlank";
 import CheckBoxIcon from "@mui/icons-material/CheckBox";
 import { FormControl, FormControlLabel, FormGroup } from "@mui/material";
 import Spinner from "react-bootstrap/Spinner";
-import SuccessFeedback from "../SuccessFeedback/SuccessFeedback";
+import SuccessModal from "../SuccessModal/SuccessModal";
+import PageHeader from "../PageHeader/PageHeader";
+import { useNavigate } from "react-router-dom";
+import "./AdminSetPromotion.css";
 const icon = <CheckBoxOutlineBlankIcon fontSize="small" />;
 const checkedIcon = <CheckBoxIcon fontSize="small" />;
 
@@ -33,6 +36,7 @@ function AdminSetPromotion() {
   const [editing, setEditing] = useState(true);
   const [success, setSuccess] = useState(false);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
   const fetchData = async () => {
     try {
       const fetchedCourses = await fetchExploreData();
@@ -94,11 +98,6 @@ function AdminSetPromotion() {
     setLoading(false);
   };
   const cancel = () => {
-    clearTimeout(timeoutId);
-    if (success) {
-      window.location.reload();
-      return;
-    }
     setPercentageError(null);
     setDateError(null);
     setNewPercentage(null);
@@ -109,24 +108,22 @@ function AdminSetPromotion() {
     setEditing(true);
     setSuccess(false);
     setLoading(false);
+    navigate("/adminHome");
   };
   return (
     <div>
+      <PageHeader pageName="Set promotion" />
       <>
         {!editing ? (
           <>
-            {success ? (
-              <SuccessFeedback
-                msg="Promotion added successfully!"
-                onClose={cancel}
-              />
-            ) : null}
+            <SuccessModal
+              msg="Promotion added successfully!"
+              onClose={cancel}
+              show={success}
+            />
           </>
         ) : (
-          <div>
-            <Modal.Header>
-              <Modal.Title>Set promotion</Modal.Title>
-            </Modal.Header>
+          <Stack direction="vertical" gap={1} style={{ width: "21%" }}>
             <div>
               <Autocomplete
                 multiple
@@ -191,44 +188,51 @@ function AdminSetPromotion() {
                 <p className="promotionError">{selectError}</p>
               ) : null}
             </div>
-            <Modal.Body>
-              <h6 id="addPromotionHeader">Select start and end dates:</h6>
-              <Stack direction="vertical" gap={1}>
-                <DayPicker
-                  mode="range"
-                  selected={range}
-                  onSelect={setRange}
-                  disabled={[
-                    {
-                      from: new Date(1900, 4, 18),
-                      to: new Date(
-                        new Date().getFullYear(),
-                        new Date().getMonth(),
-                        new Date().getDate() - 1
-                      ),
-                    },
-                  ]}
-                />
-              </Stack>
-              {dateError ? <p className="promotionError">{dateError}</p> : null}
-              <Form.Group as={Col}>
-                <Form.Control
-                  type="number"
-                  placeholder="Promotion %"
-                  value={newPercentage}
-                  onChange={(e) => setNewPercentage(e.target.value)}
-                />
-                {percentageError ? (
-                  <p className="promotionError">{percentageError}</p>
-                ) : null}
-              </Form.Group>
-            </Modal.Body>
-            <Modal.Footer>
-              <Button variant="secondary" onClick={cancel} disabled={loading}>
+            <h6 id="addPromotionHeader">Select start and end dates:</h6>
+            <div>
+              <DayPicker
+                mode="range"
+                selected={range}
+                onSelect={setRange}
+                disabled={[
+                  {
+                    from: new Date(1900, 4, 18),
+                    to: new Date(
+                      new Date().getFullYear(),
+                      new Date().getMonth(),
+                      new Date().getDate() - 1
+                    ),
+                  },
+                ]}
+              />
+            </div>
+            {dateError ? <p className="promotionError">{dateError}</p> : null}
+            <Form.Group style={{ width: "100%" }}>
+              <Form.Control
+                type="number"
+                placeholder="Promotion %"
+                value={newPercentage}
+                onChange={(e) => setNewPercentage(e.target.value)}
+              />
+              {percentageError ? (
+                <p className="promotionError">{percentageError}</p>
+              ) : null}
+            </Form.Group>
+            <div style={{ width: "100%" }}>
+              <Button
+                id="adminSetPromotionClose"
+                className="greyBgHover"
+                onClick={cancel}
+                disabled={loading}
+              >
                 Close
               </Button>
               {loading ? (
-                <Button variant="primary" disabled>
+                <Button
+                  id="adminSetPromotionSave"
+                  disabled
+                  className="blueBgHover"
+                >
                   <Spinner
                     as="span"
                     animation="border"
@@ -239,12 +243,16 @@ function AdminSetPromotion() {
                   {" Saving..."}
                 </Button>
               ) : (
-                <Button variant="primary" onClick={save}>
+                <Button
+                  id="adminSetPromotionSave"
+                  onClick={save}
+                  className="blueBgHover"
+                >
                   Save Changes
                 </Button>
               )}
-            </Modal.Footer>
-          </div>
+            </div>
+          </Stack>
         )}
       </>
     </div>
