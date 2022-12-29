@@ -48,7 +48,6 @@ const Explore = () => {
         </Stack>
       ) : (
         <div>
-          <PageHeader pageName="Explore" />
           <div id="exploreSlogan" className="blackBg whiteCard">
             <h1 id="exploreSloganTxt">Reach the next level</h1>
             <p id="sloganSmallTxt">
