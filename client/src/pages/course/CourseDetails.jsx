@@ -9,13 +9,11 @@ import "./CourseDetails.css";
 import Container from "react-bootstrap/esm/Container";
 import Button from "react-bootstrap/Button";
 import ViewerContexts from "../../constants/ViewerContexts.json";
-import { updateCourse, createNewSubtitle } from "../../network";
-import Form from "react-bootstrap/Form";
+import { updateCourse } from "../../network";
 import CourseSummary from "../../components/CourseSummary/CourseSummary";
 import Accordion from "react-bootstrap/Accordion";
 import CourseReviewCard from "../../components/Course/CourseReviewCard/CourseReviewCard";
 import colors from "../../colors.json";
-import ReactLoading from "react-loading";
 import { Spinner } from "react-bootstrap";
 import AddSubtitle from "../../components/Course/AddSubtitle/AddSubtitle";
 
@@ -178,16 +176,15 @@ const CourseDetails = () => {
                     />
                   ))}
                 </div>
-
-                {vc === ViewerContexts.author ? (
-                  <AddSubtitle
-                    course={course}
-                    setCourse={setCourse}
-                    setSubtitles={setSubtitles}
-                  />
-                ) : null}
               </Accordion>
             </div>
+            {vc === ViewerContexts.author ? (
+              <AddSubtitle
+                course={course}
+                setCourse={setCourse}
+                setSubtitles={setSubtitles}
+              />
+            ) : null}
             <ReviewCards />
           </div>
         </div>
