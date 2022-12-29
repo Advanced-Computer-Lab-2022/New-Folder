@@ -392,6 +392,7 @@ const requestAccess = async (req, res) => {
       userName: req.body.userName,
       courseName: req.body.courseName,
       reason: req.body.reason,
+      corporateName: req.body.corporateName,
     });
     const course = await Course.findById(req.body.courseId);
     course.pendingTrainees.push(req.session.userId);

@@ -3,8 +3,11 @@ import { Card, Image } from "semantic-ui-react";
 import Button from "react-bootstrap/Button";
 import "semantic-ui-css/semantic.min.css";
 import { Row, Col, Spinner } from "react-bootstrap";
+import { BiBuildings } from "react-icons/bi";
+import { BsBookHalf } from "react-icons/bs";
 import { declineAccessRequest, approveAccessRequest } from "../../network";
 import "./AccessRequestCard.css";
+//import "../../App.css"
 function AccessRequestCard(props) {
   const {
     request,
@@ -47,20 +50,24 @@ function AccessRequestCard(props) {
     }
     setDeclineLoading(false);
   };
-
   return (
-    <div id="accessRequestContainer">
+    <div id="accessRequestContainer" className="whiteCard">
       <Row md={2} id="accessRequestHeader">
         <Col>
           <h4>{request.userName}</h4>
           <small>
+            <BiBuildings></BiBuildings>
+            <b>{" " + request.corporateName}</b>
+            <br />
+          </small>
+          <small>
             <b>
-              {"Course: "}
+              <BsBookHalf></BsBookHalf>
               <a
                 href={"/course/" + request.courseId}
                 id="problemCourseNameLink"
               >
-                {request.courseName}
+                {" " + request.courseName}
               </a>
             </b>
             <br />

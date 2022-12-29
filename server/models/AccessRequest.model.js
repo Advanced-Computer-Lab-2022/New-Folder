@@ -12,6 +12,7 @@ const AccessRequest = mongoose.Schema({
   },
   userName: { type: String, required: true },
   courseName: { type: String, required: true },
+  corporateName: { type: String, default: "" },
   reason: { type: String, required: true },
 });
 

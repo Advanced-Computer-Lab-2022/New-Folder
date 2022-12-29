@@ -22,6 +22,7 @@ function AddUser() {
   const [userType, setUserType] = useState(UserTypes.admin);
   const [showError, setShowError] = useState(false);
   const [errorMsg, setErrorMsg] = useState(null);
+  const [corporateName, setCorporateName] = useState("");
   const navigate = useNavigate();
   const onSubmit = async (e) => {
     e.preventDefault();
@@ -35,7 +36,17 @@ function AddUser() {
     setErrorMsg(null);
     setLoading(true);
     try {
-      await postAddUser(userType, { ...data, gender: gender });
+      if (userType === UserTypes.instructor) {
+        const finalData = { ...data, gender: gender };
+        await postAddUser(userType, finalData);
+      } else {
+        const finalData = {
+          ...data,
+          gender: gender,
+          corporateName: corporateName,
+        };
+        await postAddUser(userType, finalData);
+      }
       setSuccess(true);
     } catch (err) {
       setErrorMsg(err.response.data.message);
@@ -160,7 +171,26 @@ function AddUser() {
                   This field is required
                 </Form.Control.Feedback>
               </Form.Group>
-
+              {userType === UserTypes.corporateTrainee ? (
+                <Form.Group controlId="validationCustom04">
+                  <Form.Label>Corporate Name</Form.Label>
+                  <Form.Control
+                    required
+                    type="text"
+                    placeholder="Corporate Name"
+                    name="Corporate Name"
+                    value={corporateName}
+                    onChange={(e) => {
+                      setCorporateName(e.target.value);
+                    }}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    This field is required
+                  </Form.Control.Feedback>
+                </Form.Group>
+              ) : (
+                <></>
+              )}
               <Form.Group controlId="validationCustom03">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
