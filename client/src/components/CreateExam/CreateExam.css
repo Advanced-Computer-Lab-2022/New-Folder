@@ -1,9 +1,11 @@
 .create-exam {
   margin: 4em;
   margin-top: 0;
+  padding-bottom: 2em;
 }
 .btn-addmore button {
   width: 20%;
+  margin-top: 1em;
 }
 
 .create-exam-header {
@@ -16,12 +18,24 @@
 
 .btn-addmore {
   display: flex;
+  flex-direction: column;
   text-align: center;
+  width: 100%;
+  align-items: center;
 }
 
 .form-area.row.row-cols-lg-1 {
   display: block;
   align-items: center;
+}
+
+.form-field-map {
+  display: flex;
+  flex-direction: column;
+}
+.form-area {
+
+  width: 100%;
 }
 
 #Modal-header {

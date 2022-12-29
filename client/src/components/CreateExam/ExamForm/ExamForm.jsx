@@ -39,7 +39,10 @@ const ExamForm = (props) => {
     const statementQuestion = temp[questionIdx].statement;
     let ischoicesNone = false;
     for (let i = 0; i < temp[questionIdx].choices.length; i++) {
-      if (temp[questionIdx].choices[i] === "none" || temp[questionIdx].choices[i] === "")  {
+      if (
+        temp[questionIdx].choices[i] === "none" ||
+        temp[questionIdx].choices[i] === ""
+      ) {
         ischoicesNone = true;
         break;
       }
@@ -49,104 +52,117 @@ const ExamForm = (props) => {
     else setIsCompleted(true);
   };
 
-
   return (
-    <div className={isCompleted ? "ExamForm" :  "ExamForm NotCompleted"}>
+    <div className={"whiteCard ExamForm"}>
       <div className="questionStatement-header">
         <h4 className="question-number">Question {questionIdx + 1}</h4>
-        {!isCompleted && <div className="alert-IsRequired">
-          <p >* please fill in all the fields</p>
-        </div> }
       </div>
-      
+
       <Form.Group>
         <Form.Label>Statement</Form.Label>
         <Form.Control
-          size="sm"
+          required
           type="text"
           placeholder="Statement"
           onChange={(e) => updateStatement(e.target.value)}
         />
-        <div>
-          <Form.Label>Choices</Form.Label>
+        <Form.Control.Feedback id="text-feedback" className="text-start" type="invalid">
+          This field is required.
+        </Form.Control.Feedback>
+      </Form.Group>
+
+      <div>
+        <Form.Label>Choices</Form.Label>
+        <Form.Group>
           <Form.Control
-            size="sm"
             type="text"
+            required
             placeholder="First Choice"
             onChange={(e) => {
               setFirstChoice(e.target.value);
               updateChoiceArray(e.target.value, 0);
             }}
           />
+          <Form.Control.Feedback id="text-feedback" className="text-start" type="invalid">
+            This field is required.
+          </Form.Control.Feedback>
           <Form.Control
-            size="sm"
             type="text"
+            required
             placeholder="Second Choice"
             onChange={(e) => {
               setSecondChoice(e.target.value);
               updateChoiceArray(e.target.value, 1);
             }}
           />
+          <Form.Control.Feedback id="text-feedback" className="text-start" type="invalid">
+            This field is required.
+          </Form.Control.Feedback>
           <Form.Control
-            size="sm"
             type="text"
+            required
             placeholder="Third Choice"
             onChange={(e) => {
               setThirdChoice(e.target.value);
               updateChoiceArray(e.target.value, 2);
-              
             }}
           />
+          <Form.Control.Feedback id="text-feedback" className="text-start" type="invalid">
+            This field is required.
+          </Form.Control.Feedback>
           <Form.Control
-            size="sm"
             type="text"
+            required
             placeholder="Forth Choice"
             onChange={(e) => {
               setForthChoice(e.target.value);
               updateChoiceArray(e.target.value, 3);
             }}
           />
-          <Form.Label>Correct Answer</Form.Label>
-          <div className="chooseCorrectAnswer">
-            <Form.Check
-              checked={correctAns == 0}
-              type="radio"
-              label={firstChoice}
-              onClick={() => {
-                updateCorrectAnsData(0);
-                setCorrectAns(0);
-              }}
-            />
-            <Form.Check
-              checked={correctAns == 1}
-              type="radio"
-              label={secondChoice}
-              onClick={() => {
-                updateCorrectAnsData(1);
-                setCorrectAns(1);
-              }}
-            />
-            <Form.Check
-              checked={correctAns == 2}
-              type="radio"
-              label={thirdChoice}
-              onClick={() => {
-                updateCorrectAnsData(2);
-                setCorrectAns(2);
-              }}
-            />
-            <Form.Check
-              checked={correctAns == 3}
-              type="radio"
-              label={forthChoice}
-              onClick={() => {
-                updateCorrectAnsData(3);
-                setCorrectAns(3);
-              }}
-            />
-          </div>
+          <Form.Control.Feedback id="text-feedback" className="text-start" type="invalid">
+            This field is required.
+          </Form.Control.Feedback>
+        </Form.Group>
+        <Form.Label>Correct Answer</Form.Label>
+        <div className="chooseCorrectAnswer">
+          <Form.Check
+            checked={correctAns == 0}
+            type="radio"
+            label={firstChoice}
+            onClick={() => {
+              updateCorrectAnsData(0);
+              setCorrectAns(0);
+            }}
+          />
+          <Form.Check
+            checked={correctAns == 1}
+            type="radio"
+            label={secondChoice}
+            onClick={() => {
+              updateCorrectAnsData(1);
+              setCorrectAns(1);
+            }}
+          />
+          <Form.Check
+            checked={correctAns == 2}
+            type="radio"
+            label={thirdChoice}
+            onClick={() => {
+              updateCorrectAnsData(2);
+              setCorrectAns(2);
+            }}
+          />
+          <Form.Check
+            checked={correctAns == 3}
+            type="radio"
+            label={forthChoice}
+            onClick={() => {
+              updateCorrectAnsData(3);
+              setCorrectAns(3);
+            }}
+          />
         </div>
-      </Form.Group>
+      </div>
     </div>
   );
 };

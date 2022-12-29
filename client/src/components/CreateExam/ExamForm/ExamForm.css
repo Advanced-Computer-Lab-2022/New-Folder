@@ -4,13 +4,12 @@
   
   width: 50% !important;
   padding: 2em !important; 
-  background-color: #f7f7f7;
-  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+
   margin-bottom: 2em;
 }
 
 .ExamForm.NotCompleted {
-  /* box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px; */
+
   box-shadow: rgba(255, 238, 0, 0.658) 4px 11px 41px;
 
 }
@@ -37,7 +36,7 @@
 }
 
 .ExamForm input {
-  margin: 0.5em;
+  margin: 0.4em;
 }
 
 .ExamForm label {
@@ -47,4 +46,8 @@
 
 .chooseCorrectAnswer {
   margin-left: 0.5em;
+}
+
+#text-feedback {
+  padding-left: 0.5em;
 }

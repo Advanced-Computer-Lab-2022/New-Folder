@@ -8,6 +8,7 @@ import { addExam } from "../../network";
 import "./CreateExam.css";
 import ExamForm from "./ExamForm/ExamForm";
 import { useNavigate } from "react-router-dom";
+import { Form } from "react-bootstrap";
 
 const CreateExam = (props) => {
   const subtitleID = props.subtitleID;
@@ -24,6 +25,7 @@ const CreateExam = (props) => {
   const [headerMsg, setHeaderMsg] = useState("");
   const [configMsg, setConfigMsg] = useState("");
   const [show, setShow] = useState(false);
+  const [validate, setValidate] = useState(false);
   const navigate = useNavigate();
 
   const handleShow = () => setShow(true);
@@ -78,9 +80,12 @@ const CreateExam = (props) => {
   };
 
   // handleSubmit is used for passing examContent as it is into the database
-  const handleSubmit = async () => {
-    console.log("from handleNotComlete" + handleNotCompletedQuestions());
-    if (handleNotCompletedQuestions()) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidate(true);
       setIsSubmitted(false);
       setHeaderMsg("Fields are not completed");
       setConfigMsg(
@@ -118,22 +123,17 @@ const CreateExam = (props) => {
 
   return (
     <div className="create-exam">
-      <Row className="create-exam-header">
-        <Col>
-          <h4>Create New Quiz</h4>
-        </Col>
-        <Col>
-          <button type="button" class="btn btn-primary" onClick={handleSubmit}>
-            Add Quiz
-          </button>
-        </Col>
-      </Row>
-      <Row>
-        <Row className="form-area" lg={1}>
+      <Form
+        noValidate
+        validated={validate}
+        onSubmit={handleSubmit}
+        className="form-area"
+        lg={1}
+      >
+        <Row className="form-field-map">
           {questionRecord.map((questionComponent, index) => {
             return (
               <ExamForm
-                // isCompleted={}
                 key={index}
                 questionIdx={index}
                 questionComponentArr={questionComponentArr}
@@ -142,19 +142,24 @@ const CreateExam = (props) => {
             );
           })}
         </Row>
-      </Row>
 
-      <Row className="btn-addmore">
-        <Col>
+        <div className="btn-addmore">
           <button
             type="button"
-            class="btn btn-primary rounded-pill"
+            className="btn btn-primary rounded-pill blueBgHover"
             onClick={addAnotherQuestion}
           >
-            <i class="bi bi-plus"></i>Add Another Question
+            Add Another Question
           </button>
-        </Col>
-      </Row>
+          <Button
+            type="submit"
+            className="btn btn-primary rounded-pill blackBgHover"
+            
+          >
+            Add Quiz
+          </Button>
+        </div>
+      </Form>
 
       <Modal centered show={show} onHide={handleClose}>
         <Modal.Header closeButton id="Modal-header">
@@ -164,7 +169,7 @@ const CreateExam = (props) => {
         <Modal.Footer id="Modal-header">
           <Button
             variant={isSubmitted ? "success" : "dark"}
-            onClick={ isSubmitted ? goBack : handleClose}
+            onClick={isSubmitted ? goBack : handleClose}
           >
             {isSubmitted ? "Return to Course Content" : "close"}
           </Button>
