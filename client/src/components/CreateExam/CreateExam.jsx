@@ -97,6 +97,7 @@ const CreateExam = (props) => {
       setValidate(true);
       setIsSubmitted(false);
     } else {
+      setValidate(false);
       setLoading(true);
       const examContent = {
         subtitleID: subtitleID,
