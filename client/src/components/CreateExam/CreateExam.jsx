@@ -9,6 +9,8 @@ import "./CreateExam.css";
 import ExamForm from "./ExamForm/ExamForm";
 import { useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
+import SuccessModal from "../SuccessModal/SuccessModal";
+import ErrorModal from "../ErrorModal/ErrorModal";
 
 const CreateExam = (props) => {
   const subtitleID = props.subtitleID;
@@ -22,15 +24,21 @@ const CreateExam = (props) => {
 
   const [questionRecord, setQuestionRecord] = useState([null]);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [headerMsg, setHeaderMsg] = useState("");
+  const [clear, setClear] = useState(false);
+
   const [configMsg, setConfigMsg] = useState("");
   const [show, setShow] = useState(false);
+  const [showError, setShowError] = useState(false);
   const [validate, setValidate] = useState(false);
   const navigate = useNavigate();
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  const goBack = () => navigate(-1);
+
+  const handleCloseError = () => setShowError(false);
+  const handleShowError = () => setShowError(true);
+
+  const goRefresh = () => navigate(0);
 
   // add more question forms
   const addAnotherQuestion = () => {
@@ -87,11 +95,6 @@ const CreateExam = (props) => {
       e.stopPropagation();
       setValidate(true);
       setIsSubmitted(false);
-      setHeaderMsg("Fields are not completed");
-      setConfigMsg(
-        "Please fill all required fields including question statement and choices"
-      );
-      handleShow();
     } else {
       const examContent = {
         subtitleID: subtitleID,
@@ -99,22 +102,27 @@ const CreateExam = (props) => {
       };
       try {
         await addExam(examContent);
+        setIsSubmitted(true);
+        setConfigMsg("Excercise has been created and submitted successfully");
+        handleShow();
+        clearAll();
       } catch (err) {
         console.log(err);
+        handleShowError();
       }
-      setIsSubmitted(true);
-      setHeaderMsg("Excercise Created");
-      setConfigMsg("Excercise has been created and submitted successfully");
-      handleShow();
-      setQuestionComponentArr([
-        {
-          statement: "none",
-          choices: ["none", "none", "none", "none"],
-          correctIdx: 0,
-        },
-      ]);
-      setQuestionRecord([null]);
     }
+  };
+
+  const clearAll = () => {
+    setQuestionComponentArr([
+      {
+        statement: "none",
+        choices: ["none", "none", "none", "none"],
+        correctIdx: 0,
+      },
+    ]);
+    setQuestionRecord([null]);
+    setClear(true);
   };
 
   useEffect(() => {
@@ -138,6 +146,8 @@ const CreateExam = (props) => {
                 questionIdx={index}
                 questionComponentArr={questionComponentArr}
                 setQuestionComponentArr={setQuestionComponentArr}
+                clear={clear}
+                setClear={setClear}
               />
             );
           })}
@@ -154,27 +164,13 @@ const CreateExam = (props) => {
           <Button
             type="submit"
             className="btn btn-primary rounded-pill blackBgHover"
-            
           >
             Add Quiz
           </Button>
         </div>
       </Form>
-
-      <Modal centered show={show} onHide={handleClose}>
-        <Modal.Header closeButton id="Modal-header">
-          <Modal.Title id="Modal-header">{headerMsg}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="mt-3">{configMsg}</Modal.Body>
-        <Modal.Footer id="Modal-header">
-          <Button
-            variant={isSubmitted ? "success" : "dark"}
-            onClick={isSubmitted ? goBack : handleClose}
-          >
-            {isSubmitted ? "Return to Course Content" : "close"}
-          </Button>
-        </Modal.Footer>
-      </Modal>
+      <SuccessModal msg={configMsg} show={show} handleClose={handleClose} />
+      <ErrorModal show={showError} handleClose={handleCloseError} />
     </div>
   );
 };

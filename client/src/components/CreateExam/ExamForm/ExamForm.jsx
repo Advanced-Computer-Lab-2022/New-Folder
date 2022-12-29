@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./ExamForm.css";
 import Form from "react-bootstrap/Form";
 
@@ -6,13 +6,34 @@ const ExamForm = (props) => {
   const questionIdx = props.questionIdx;
   const questionComponentArr = props.questionComponentArr;
   const setQuestionComponentArr = props.setQuestionComponentArr;
-
+  const clear = props.clear;
+  const setClear = props.setClear;
+  const [statement, steStatement] = useState("");
   const [firstChoice, setFirstChoice] = useState("[ None ]");
   const [secondChoice, setSecondChoice] = useState("[ None ]");
   const [thirdChoice, setThirdChoice] = useState("[ None ]");
   const [forthChoice, setForthChoice] = useState("[ None ]");
+  const [firstField, setFirstField] = useState("");
+  const [secondField, setSecondField] = useState("");
+  const [thirdField, setThirdField] = useState("");
+  const [forthField, setForthField] = useState("");
   const [correctAns, setCorrectAns] = useState(0);
   const [isCompleted, setIsCompleted] = useState(false);
+
+  useEffect(() => {
+    if (clear) {
+      steStatement("");
+      setFirstChoice("[ None ]");
+      setSecondChoice("[ None ]");
+      setThirdChoice("[ None ]");
+      setForthChoice("[ None ]");
+      setFirstField("");
+      setSecondField("");
+      setThirdField("");
+      setForthField("");
+      setClear(false);
+    }
+  }, [clear]);
 
   const updateCorrectAnsData = (ans) => {
     const temp = [...questionComponentArr];
@@ -64,9 +85,17 @@ const ExamForm = (props) => {
           required
           type="text"
           placeholder="Statement"
-          onChange={(e) => updateStatement(e.target.value)}
+          onChange={(e) => {
+            steStatement(e.target.value);
+            updateStatement(e.target.value);
+          }}
+          value={statement}
         />
-        <Form.Control.Feedback id="text-feedback" className="text-start" type="invalid">
+        <Form.Control.Feedback
+          id="text-feedback"
+          className="text-start"
+          type="invalid"
+        >
           This field is required.
         </Form.Control.Feedback>
       </Form.Group>
@@ -79,11 +108,17 @@ const ExamForm = (props) => {
             required
             placeholder="First Choice"
             onChange={(e) => {
+              setFirstField(e.target.value);
               setFirstChoice(e.target.value);
               updateChoiceArray(e.target.value, 0);
             }}
+            value={firstField}
           />
-          <Form.Control.Feedback id="text-feedback" className="text-start" type="invalid">
+          <Form.Control.Feedback
+            id="text-feedback"
+            className="text-start"
+            type="invalid"
+          >
             This field is required.
           </Form.Control.Feedback>
           <Form.Control
@@ -91,11 +126,17 @@ const ExamForm = (props) => {
             required
             placeholder="Second Choice"
             onChange={(e) => {
+              setSecondField(e.target.value);
               setSecondChoice(e.target.value);
               updateChoiceArray(e.target.value, 1);
             }}
+            value={secondField}
           />
-          <Form.Control.Feedback id="text-feedback" className="text-start" type="invalid">
+          <Form.Control.Feedback
+            id="text-feedback"
+            className="text-start"
+            type="invalid"
+          >
             This field is required.
           </Form.Control.Feedback>
           <Form.Control
@@ -103,11 +144,17 @@ const ExamForm = (props) => {
             required
             placeholder="Third Choice"
             onChange={(e) => {
+              setThirdField(e.target.value);
               setThirdChoice(e.target.value);
               updateChoiceArray(e.target.value, 2);
             }}
+            value={thirdField}
           />
-          <Form.Control.Feedback id="text-feedback" className="text-start" type="invalid">
+          <Form.Control.Feedback
+            id="text-feedback"
+            className="text-start"
+            type="invalid"
+          >
             This field is required.
           </Form.Control.Feedback>
           <Form.Control
@@ -115,11 +162,17 @@ const ExamForm = (props) => {
             required
             placeholder="Forth Choice"
             onChange={(e) => {
+              setForthField(e.target.value);
               setForthChoice(e.target.value);
               updateChoiceArray(e.target.value, 3);
             }}
+            value={forthField}
           />
-          <Form.Control.Feedback id="text-feedback" className="text-start" type="invalid">
+          <Form.Control.Feedback
+            id="text-feedback"
+            className="text-start"
+            type="invalid"
+          >
             This field is required.
           </Form.Control.Feedback>
         </Form.Group>
