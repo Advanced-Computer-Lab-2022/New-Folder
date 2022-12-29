@@ -1,8 +1,0 @@
-GET   http://localhost:8080/course/isVisited/635e6026f86a4e355820979e HTTP/1.1
-Content-Type: application/json
-
-{
-    "userId" : "sad",
-    "contentType": "content"
-}
-

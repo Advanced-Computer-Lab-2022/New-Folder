@@ -8,6 +8,10 @@ import { addExam } from "../../network";
 import "./CreateExam.css";
 import ExamForm from "./ExamForm/ExamForm";
 import { useNavigate } from "react-router-dom";
+import { Form } from "react-bootstrap";
+import SuccessModal from "../SuccessModal/SuccessModal";
+import ErrorModal from "../ErrorModal/ErrorModal";
+import ReactLoading from 'react-loading';
 
 const CreateExam = (props) => {
   const subtitleID = props.subtitleID;
@@ -21,14 +25,21 @@ const CreateExam = (props) => {
 
   const [questionRecord, setQuestionRecord] = useState([null]);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [headerMsg, setHeaderMsg] = useState("");
+  const [clear, setClear] = useState(false);
+
   const [configMsg, setConfigMsg] = useState("");
   const [show, setShow] = useState(false);
+  const [showError, setShowError] = useState(false);
+  const [validate, setValidate] = useState(false);
+  const [loading , setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
-  const goBack = () => navigate(-1);
+
+  const handleCloseError = () => setShowError(false);
+  const handleShowError = () => setShowError(true);
+
 
   // add more question forms
   const addAnotherQuestion = () => {
@@ -78,98 +89,93 @@ const CreateExam = (props) => {
   };
 
   // handleSubmit is used for passing examContent as it is into the database
-  const handleSubmit = async () => {
-    console.log("from handleNotComlete" + handleNotCompletedQuestions());
-    if (handleNotCompletedQuestions()) {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.stopPropagation();
+      setValidate(true);
       setIsSubmitted(false);
-      setHeaderMsg("Fields are not completed");
-      setConfigMsg(
-        "Please fill all required fields including question statement and choices"
-      );
-      handleShow();
     } else {
+      setValidate(false);
+      setLoading(true);
       const examContent = {
         subtitleID: subtitleID,
         questionComponentArr,
       };
       try {
         await addExam(examContent);
+        setIsSubmitted(true);
+        setConfigMsg("Exercise created successfully");
+        setLoading(false);
+        handleShow();
+        clearAll();
       } catch (err) {
         console.log(err);
+        setLoading(false);
+        handleShowError();
       }
-      setIsSubmitted(true);
-      setHeaderMsg("Excercise Created");
-      setConfigMsg("Excercise has been created and submitted successfully");
-      handleShow();
-      setQuestionComponentArr([
-        {
-          statement: "none",
-          choices: ["none", "none", "none", "none"],
-          correctIdx: 0,
-        },
-      ]);
-      setQuestionRecord([null]);
     }
   };
 
-  useEffect(() => {
-    console.log(questionComponentArr);
-  }, [questionComponentArr]);
+  const clearAll = () => {
+    setQuestionComponentArr([
+      {
+        statement: "none",
+        choices: ["none", "none", "none", "none"],
+        correctIdx: 0,
+      },
+    ]);
+    setQuestionRecord([null]);
+    setClear(true);
+  };
 
   return (
     <div className="create-exam">
-      <Row className="create-exam-header">
-        <Col>
-          <h4>Create New Quiz</h4>
-        </Col>
-        <Col>
-          <button type="button" class="btn btn-primary" onClick={handleSubmit}>
-            Add Quiz
-          </button>
-        </Col>
-      </Row>
-      <Row>
-        <Row className="form-area" lg={1}>
+      <Form
+        noValidate
+        validated={validate}
+        onSubmit={handleSubmit}
+        className="form-area"
+        lg={1}
+      >
+        <Row className="form-field-map">
           {questionRecord.map((questionComponent, index) => {
             return (
               <ExamForm
-                // isCompleted={}
                 key={index}
                 questionIdx={index}
                 questionComponentArr={questionComponentArr}
                 setQuestionComponentArr={setQuestionComponentArr}
+                clear={clear}
+                setClear={setClear}
               />
             );
           })}
         </Row>
-      </Row>
 
-      <Row className="btn-addmore">
-        <Col>
+        <div className="btn-addmore">
           <button
             type="button"
-            class="btn btn-primary rounded-pill"
+            className="btn btn-primary rounded-pill blueBgHover"
             onClick={addAnotherQuestion}
           >
-            <i class="bi bi-plus"></i>Add Another Question
+            Add Another Question
           </button>
-        </Col>
-      </Row>
-
-      <Modal centered show={show} onHide={handleClose}>
-        <Modal.Header closeButton id="Modal-header">
-          <Modal.Title id="Modal-header">{headerMsg}</Modal.Title>
-        </Modal.Header>
-        <Modal.Body className="mt-3">{configMsg}</Modal.Body>
-        <Modal.Footer id="Modal-header">
           <Button
-            variant={isSubmitted ? "success" : "dark"}
-            onClick={ isSubmitted ? goBack : handleClose}
+            type="submit"
+            className="btn btn-primary rounded-pill blackBgHover"
           >
-            {isSubmitted ? "Return to Course Content" : "close"}
+            <div className="execise-loader">
+              {loading && <ReactLoading className="exercise-Loader-spinner" type={"spin"} height={17} width={17}/>}
+              <span>Add Exercise</span>
+            </div>
+          
           </Button>
-        </Modal.Footer>
-      </Modal>
+        </div>
+      </Form>
+      <SuccessModal msg={configMsg} show={show} handleClose={handleClose} />
+      <ErrorModal show={showError} handleClose={handleCloseError} />
     </div>
   );
 };

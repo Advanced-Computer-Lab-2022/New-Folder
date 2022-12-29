@@ -7,11 +7,12 @@
     rgba(0, 0, 0, 0.1) 0px 10px 15px -3px;
 }
 #accessRequestHeader {
-  background-color: rgba(255, 211, 105, 1);
   color: 5%;
   margin: 0%;
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
+  border-bottom: #555555;
+  border-bottom-style: solid;
   padding: 1%;
 }
 #accessRequestBody {
