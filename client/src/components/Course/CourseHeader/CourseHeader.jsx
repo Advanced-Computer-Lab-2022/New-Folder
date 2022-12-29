@@ -61,13 +61,6 @@ function CourseHeader(props) {
             {instructorName ?? "Instructor"}
           </a>
         </h5>
-        <div id="courseHeaderStarsContainer">
-          <Stars />
-          <h6 id="courseHeaderRatingCount">
-            &nbsp;&nbsp;({ratingsCount}{" "}
-            {ratingsCount == 1 ? "rating" : "rating"})
-          </h6>
-        </div>
         <RatingCard
           courseId={courseId}
           vc={vc}

@@ -167,6 +167,8 @@ function CourseSummary(props) {
             subject={props.course.subject}
             summary={props.course.description}
             trainees={props.course.trainees}
+            ratingsCount={ratingsCount}
+            totalRating={totalRating}
           />
         </div>
       </div>
