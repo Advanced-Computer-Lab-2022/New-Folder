@@ -1,13 +1,33 @@
 import React, { useState } from "react";
 import { Button, Container, Form } from "react-bootstrap";
 import { AiOutlinePlusCircle } from "react-icons/ai";
+import { createNewSubtitle } from "../../../network";
 
 function AddSubtitle(props) {
-  const { newSubtitle, setNewSubtitle, submit, validated } = props;
+  const { course, setCourse, setSubtitles } = props;
   const [editing, setEditing] = useState(false);
+  const [validated, setValidated] = useState(false);
+  const [newSubtitle, setNewSubtitle] = useState("");
   const cancel = () => {
     setEditing(false);
     setNewSubtitle("");
+  };
+  const submit = async (e) => {
+    e.preventDefault();
+    const form = e.currentTarget;
+    if (form.checkValidity() === false) {
+      e.preventDefault();
+      e.stopPropagation();
+      setValidated(true);
+      return;
+    }
+    try {
+      const updatedCourse = await createNewSubtitle(course._id, newSubtitle);
+      setCourse(updatedCourse);
+      setSubtitles(updatedCourse.subtitles);
+    } catch (err) {
+      console.log(err);
+    }
   };
   return (
     <>

@@ -29,12 +29,10 @@ const CourseDetails = () => {
   const [durationMap, setDurationMap] = useState(new Map());
   const [duration, setDuration] = useState(0);
   const [newVideo, setNewVideo] = useState();
-  const [newSubtitle, setNewSubtitle] = useState("");
   const [promotion, setPromotion] = useState(null);
   const [subContents, setSubContents] = useState([]);
   const [allPageLoading, setAllPageLoading] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [subtitleValidated, setSubtitleValidated] = useState(false);
 
   let ReviewCards = useMemo(() => {
     return () => <CourseReviewCard reviews={reviews} />;
@@ -106,24 +104,6 @@ const CourseDetails = () => {
         }
       }
       setDuration(d);
-    }
-  };
-
-  const addSubtitle = async (e) => {
-    e.preventDefault();
-    const form = e.currentTarget;
-    if (form.checkValidity() === false) {
-      e.preventDefault();
-      e.stopPropagation();
-      setSubtitleValidated(true);
-      return;
-    }
-    try {
-      const updatedCourse = await createNewSubtitle(course._id, newSubtitle);
-      setCourse(updatedCourse);
-      setSubtitles(updatedCourse.subtitles);
-    } catch (err) {
-      console.log(err);
     }
   };
 
@@ -201,10 +181,9 @@ const CourseDetails = () => {
 
                 {vc === ViewerContexts.author ? (
                   <AddSubtitle
-                    submit={addSubtitle}
-                    newSubtitle={newSubtitle}
-                    setNewSubtitle={setNewSubtitle}
-                    validated={subtitleValidated}
+                    course={course}
+                    setCourse={setCourse}
+                    setSubtitles={setSubtitles}
                   />
                 ) : null}
               </Accordion>
