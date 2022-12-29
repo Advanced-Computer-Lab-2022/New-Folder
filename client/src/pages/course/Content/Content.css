@@ -1,72 +1,70 @@
 .sideBar {
-    width: 70%;
-    float: left;
-    padding-left: 0 !important;
-    padding-right: 0 !important;
-    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-  }
-  
-  #sideBar-parent {
-    padding-left: 1em !important;
-    padding-right: 2em ;
-    position: sticky;
-    top: 4.5em;
-    
-  }
+  width: 70%;
+  float: left;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}
 
-  #sideBar-parent textarea {
-    width: 100%;
-    min-height: 100px;
-    resize: none;
-    border-radius: 8px;
-    border: 1px solid #ddd;
-    padding: 0.5rem;
-    color: #666;
-    box-shadow: inset 0 0 0.25rem #ddd;
-    height: 75vh;
-    outline: none;
-    margin-bottom: 1em;
+#sideBar-parent {
+  padding-left: 1em !important;
+  padding-right: 2em;
+  position: sticky;
+  top: 6.5em;
+  height: 100vh;
+}
 
-  }
+#sideBar-parent textarea {
+  width: 100%;
+  min-height: 100px;
+  resize: none;
+  border-radius: 8px;
+  border: 1px solid #ddd;
+  padding: 0.5rem;
+  color: #666;
+  box-shadow: inset 0 0 0.25rem #ddd;
+  height: 74%;
+  outline: none;
+  margin-bottom: 1em;
+}
 
-  #sideBar-parent h2 {
-    padding-top: 0.5em;
-    padding-bottom: 0.1em;
-    color: rgba(0, 0, 0, 0.3);
-    font-weight: 300;
-  }
+#sideBar-parent h2 {
+  padding-top: 0.5em;
+  padding-bottom: 0.1em;
+  color: rgba(0, 0, 0, 0.3);
+  font-weight: 300;
+}
 
-  .subtitle-Content-sideBar {
- 
-    display: flex;
-    flex-direction: column;
-  }
+.subtitle-Content-sideBar {
+  display: flex;
+  flex-direction: column;
+}
 
-  .subtitle-Content-sideBar-header {
-    display: flex;
-    width: 70%;
-    justify-content: space-between;
-    padding-top: 1em;
-    margin-bottom: 1em;
-  }
+.subtitle-Content-sideBar-header {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+  padding-top: 1em;
+  margin-bottom: 1em;
+}
 
-  .subtitle-Content-sideBar-header h3 {
-    margin: 0;
-    color: rgba(0, 0, 0, 0.3);
-    font-weight: 400;
-  }
+.subtitle-Content-sideBar-header h3 {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.3);
+  font-weight: 400;
+}
 
-  .subtitle-Content-sideBar-header p {
-    margin: 0;
-    color: rgba(0, 0, 0, 0.3);
-    font-weight: 900;
-    padding-top: 0.3em;
-  }
-  
-  .subtitle-Content-sideBar-parent {
-    padding-bottom: 4rem;
-  }
+.subtitle-Content-sideBar-header p {
+  margin: 0;
+  color: rgba(0, 0, 0, 0.3);
+  font-weight: 900;
+  padding-top: 0.3em;
+}
 
-  .note-buttons button{
-    margin-right: 0.5em;
-  }
+.subtitle-Content-sideBar-parent {
+  padding-bottom: 4rem;
+}
+
+.note-buttons button {
+  margin-right: 0.5em;
+}

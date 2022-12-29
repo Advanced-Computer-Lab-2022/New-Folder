@@ -5,6 +5,7 @@ import { Button, Col, Modal, Row } from "react-bootstrap";
 import { useNavigate, useParams } from "react-router-dom";
 import ExcerciseCard from "../../../components/Course/Excercise/ExcerciseCard";
 import { fetchExcercise, postMark } from "../../../network";
+import PageHeader from "../../../components/PageHeader/PageHeader";
 import "./Excercise.css";
 
 const Excercise = () => {
@@ -18,23 +19,21 @@ const Excercise = () => {
 
   const [show, setShow] = useState(false);
   const [configMsg, setConfigMsg] = useState("");
-  
-  const [showConfirmation , setShowConfirmation] = useState(false);
 
-
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
 
   const handleShowConfirmation = () => setShowConfirmation(true);
-  const handleCloseConfirmation = ()=> setShowConfirmation(false);
+  const handleCloseConfirmation = () => setShowConfirmation(false);
 
   const handleConfirm = async () => {
     handleCloseConfirmation();
-    const exer = await postMark(excerciseID , correctAns);
+    const exer = await postMark(excerciseID, correctAns);
     setIsSubmitted(true);
     handleShow();
-  }
+  };
 
   const fetchingExcercise = async () => {
     try {
@@ -96,7 +95,6 @@ const Excercise = () => {
       setConfigMsg("please Answer all required questions");
       handleShow();
     }
-   
   };
 
   useEffect(() => {
@@ -105,16 +103,19 @@ const Excercise = () => {
 
   return (
     <Col>
-      <Row lg={1}>
-        <div className="mark-quiz">
-          <p>Excercise</p>
-          {isSubmitted && (
-            <h4>
-              Mark : {correctAns} / {lengthOfQuestions}
-            </h4>
-          )}
-        </div>
-
+      <PageHeader
+        pageName="Exercise"
+        extra={
+          <Col md="auto" className="mark-quiz" id="pageNameCol">
+            {isSubmitted && (
+              <h3>
+                Mark : {correctAns} / {lengthOfQuestions}
+              </h3>
+            )}
+          </Col>
+        }
+      />
+      <Row className="pt-5" lg={1}>
         {questions.map((question, index) => {
           return (
             <ExcerciseCard
@@ -133,7 +134,7 @@ const Excercise = () => {
         <button
           disabled={isSubmitted}
           type="button"
-          class="btn btn-primary"
+          className ="blueBg blueBgHover btn btn-primary"
           onClick={handleSubmit}
         >
           Submit
@@ -141,7 +142,7 @@ const Excercise = () => {
         {isSubmitted && (
           <button
             type="button"
-            class="btn btn-success"
+            className ="blackBg blackBgHover btn btn-success"
             onClick={() => navigate(-1)}
           >
             Go Back to Course Content
@@ -150,7 +151,9 @@ const Excercise = () => {
       </div>
       <Modal centered show={show} onHide={handleClose}>
         <Modal.Header id="quiz-reaction">
-          <Modal.Title id="quiz-reaction">{isSubmitted ? "Quiz Submission" : "Quiz Not Completed"}</Modal.Title>
+          <Modal.Title id="quiz-reaction">
+            {isSubmitted ? "Quiz Submission" : "Quiz Not Completed"}
+          </Modal.Title>
         </Modal.Header>
 
         <Modal.Body id="quiz-reaction-body">
@@ -169,7 +172,7 @@ const Excercise = () => {
         </Modal.Body>
 
         <Modal.Footer id="quiz-reaction">
-          <Button variant="primary" onClick={handleClose}>
+          <Button className="blueBg blueBgHover " variant="primary" onClick={handleClose}>
             continue
           </Button>
         </Modal.Footer>
@@ -185,10 +188,10 @@ const Excercise = () => {
         </Modal.Body>
 
         <Modal.Footer id="quiz-reaction">
-          <Button variant="Danger" onClick={handleCloseConfirmation}>
+          <Button className = "greyBg greyBgHover" variant="Danger" onClick={handleCloseConfirmation}>
             Cancel
           </Button>
-          <Button variant="primary" onClick={handleConfirm} >
+          <Button className="blueBg blueBgHover " variant="primary" onClick={handleConfirm}>
             Confirm
           </Button>
         </Modal.Footer>

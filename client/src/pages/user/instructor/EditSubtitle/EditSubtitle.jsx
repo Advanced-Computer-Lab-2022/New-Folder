@@ -17,13 +17,13 @@ const EditSubtitle = () => {
     >
       <Tab
         eventKey="Upload video"
-        title={<h3 className="blackTxt">Upload video</h3>}
+        title={<h3 className="blackTxt">Upload Video</h3>}
       >
         <UploadVideo courseID={courseID} subtitleID={subtitleID} />
       </Tab>
       <Tab
         eventKey="Create exam"
-        title={<h3 className="blackTxt">Create exam</h3>}
+        title={<h3 className="blackTxt">Create Exercise</h3>}
       >
         <CreateExam courseID={courseID} subtitleID={subtitleID} />
       </Tab>
