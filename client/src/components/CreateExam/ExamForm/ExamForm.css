@@ -48,6 +48,10 @@
   margin-left: 0.5em;
 }
 
+.chooseCorrectAnswer input {
+  cursor : pointer;
+}
+
 #text-feedback {
   padding-left: 0.5em;
 }

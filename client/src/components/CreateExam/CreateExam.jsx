@@ -11,6 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import ErrorModal from "../ErrorModal/ErrorModal";
+import ReactLoading from 'react-loading';
 
 const CreateExam = (props) => {
   const subtitleID = props.subtitleID;
@@ -30,6 +31,7 @@ const CreateExam = (props) => {
   const [show, setShow] = useState(false);
   const [showError, setShowError] = useState(false);
   const [validate, setValidate] = useState(false);
+  const [loading , setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleShow = () => setShow(true);
@@ -38,7 +40,6 @@ const CreateExam = (props) => {
   const handleCloseError = () => setShowError(false);
   const handleShowError = () => setShowError(true);
 
-  const goRefresh = () => navigate(0);
 
   // add more question forms
   const addAnotherQuestion = () => {
@@ -96,6 +97,7 @@ const CreateExam = (props) => {
       setValidate(true);
       setIsSubmitted(false);
     } else {
+      setLoading(true);
       const examContent = {
         subtitleID: subtitleID,
         questionComponentArr,
@@ -103,11 +105,13 @@ const CreateExam = (props) => {
       try {
         await addExam(examContent);
         setIsSubmitted(true);
-        setConfigMsg("Excercise has been created and submitted successfully");
+        setConfigMsg("Exercise created successfully");
+        setLoading(false);
         handleShow();
         clearAll();
       } catch (err) {
         console.log(err);
+        setLoading(false);
         handleShowError();
       }
     }
@@ -124,10 +128,6 @@ const CreateExam = (props) => {
     setQuestionRecord([null]);
     setClear(true);
   };
-
-  useEffect(() => {
-    console.log(questionComponentArr);
-  }, [questionComponentArr]);
 
   return (
     <div className="create-exam">
@@ -165,7 +165,11 @@ const CreateExam = (props) => {
             type="submit"
             className="btn btn-primary rounded-pill blackBgHover"
           >
-            Add Quiz
+            <div className="execise-loader">
+              {loading && <ReactLoading className="exercise-Loader-spinner" type={"spin"} height={17} width={17}/>}
+              <span>Add Exercise</span>
+            </div>
+          
           </Button>
         </div>
       </Form>

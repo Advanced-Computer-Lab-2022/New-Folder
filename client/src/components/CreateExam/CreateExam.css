@@ -41,3 +41,14 @@
 #Modal-header {
   margin: 0 !important;
 }
+
+.execise-loader {
+  display: flex;
+  flex-direction: row;
+  width: 40%;
+}
+
+
+.exercise-Loader-spinner {
+  margin-bottom: 7px;
+}
