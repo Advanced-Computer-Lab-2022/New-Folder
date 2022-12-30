@@ -2,13 +2,15 @@ import "./EarningsDropdown.css";
 import NavDropdown from "react-bootstrap/NavDropdown";
 const EarningsDropdown = (props) => {
   return (
-    <div id="earningsDropdown">
+    <div>
       {props.years?.length <= 1 ? (
-        <h3>{props?.years[0]?.year ?? ""}</h3>
+        <p id="earningsDropdown">{props?.years[0]?.year ?? ""}</p>
       ) : (
         <NavDropdown
-          title={props?.years[0]?.year ?? ""}
+          title={<p id="earningsDropdown">{props?.years[0]?.year ?? ""}</p>}
           menuVariant="dark"
+          align="end"
+          drop="bottom"
           onSelect={(e) => props.setYear(e)}
         >
           {props.years.map((i) => (

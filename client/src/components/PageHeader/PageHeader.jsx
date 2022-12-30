@@ -6,9 +6,9 @@ const PageHeader = (props) => {
   return (
     <Row className="mb-3 blueBg whiteTxt" id="pageHeaderBackground">
       <Col md="auto" id="pageNameCol">
-        <h3>{props.pageName}</h3>
+        <p id="pageName">{props.pageName}</p>
       </Col>
-      {props.extra ? <Col>{props.extra}</Col> : null}
+      {props.extra ? <Col id="pageExtraCol">{props.extra}</Col> : null}
     </Row>
   );
 };

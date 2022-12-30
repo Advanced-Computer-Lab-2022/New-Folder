@@ -1,13 +1,37 @@
 .dropdown-menu {
   max-height: 700px;
-  overflow-y: scroll;
-}
-#navbar {
-  font-size: larger;
-}
-#navBrand {
-  font-size: x-large;
+  overflow-y: auto;
+  right: auto;
+  left: 30%;
+  -webkit-transform: translate(-30%, 0);
+  -o-transform: translate(-30%, 0);
+  transform: translate(-30%, 0);
 }
 .navItem {
-  font-size: 1.2em !important;
+  font-size: 1.3em !important;
+  margin-bottom: -5px;
+}
+#navBrand {
+  margin: 0;
+  margin-left: 1.5%;
+  font-size: 2em !important;
+}
+
+#mainNav {
+  height: 4.5em;
+  margin: 0;
+  margin-left: 1.5%;
+  margin-right: 2%;
+  width: 100%;
+}
+#navRight {
+  display: inline-flex;
+  align-items: flex-end !important;
+  margin-right: 0;
+}
+
+#navLeft {
+  display: inline-flex;
+  align-items: flex-start !important;
+  margin-left: 0;
 }
