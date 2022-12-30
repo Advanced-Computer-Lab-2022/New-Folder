@@ -9,11 +9,14 @@ import { addRating, fetchCourseDetails, deleteRating } from "../../network";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import ReactStars from "react-rating-stars-component";
 import Modal from "react-bootstrap/Modal";
-
+import { ImPencil } from "react-icons/im";
 import "./RatingCard.css";
 import { Spinner } from "react-bootstrap";
 import SuccessFeedback from "../SuccessFeedback/SuccessFeedback";
 import ErrorFeedback from "../ErrorFeedback/ErrorFeedback";
+import { AiOutlinePlusCircle } from "react-icons/ai";
+import colors from "../../colors.json";
+
 function RatingCard(props) {
   const {
     courseId,
@@ -233,7 +236,7 @@ function RatingCard(props) {
                         <Button
                           onClick={() => cancel()}
                           variant="secondary"
-                          className="rateCourseFormButton"
+                          className="rateCourseFormButton greyBgHover"
                           disabled={saveLoading || deleteLoading}
                         >
                           Close
@@ -241,8 +244,7 @@ function RatingCard(props) {
                         {traineeRating != null ? (
                           <Button
                             onClick={() => deleteReview()}
-                            className="rateCourseFormButton"
-                            variant="danger"
+                            className="rateCourseFormButton redBgHover"
                             disabled={saveLoading || deleteLoading}
                           >
                             {deleteLoading ? (
@@ -264,7 +266,7 @@ function RatingCard(props) {
 
                         <Button
                           onClick={() => rate()}
-                          className="rateCourseFormButton"
+                          className="rateCourseFormButton blueBgHover"
                           disabled={saveLoading || deleteLoading}
                         >
                           {saveLoading ? (
@@ -288,14 +290,33 @@ function RatingCard(props) {
                 )}
               </Modal>
             </>
-            <Button
-              onClick={() => {
-                setEditing(true);
-                setSubmitted(false);
-              }}
-            >
-              {traineeRating != null ? "Edit your review" : "Review course"}
-            </Button>
+            {traineeRating != null ? (
+              <h6 style={{ marginTop: "7%" }}>
+                &nbsp;&nbsp;&nbsp;&nbsp;Edit your review
+                <ImPencil
+                  color={colors.blue}
+                  size={15}
+                  style={{ marginBottom: 5, marginLeft: 5, cursor: "pointer" }}
+                  onClick={() => {
+                    setEditing(true);
+                    setSubmitted(false);
+                  }}
+                />
+              </h6>
+            ) : (
+              <h6 style={{ marginTop: "9%" }}>
+                <AiOutlinePlusCircle
+                  color={colors.blue}
+                  size={15}
+                  style={{ marginBottom: 3, marginLeft: 7, cursor: "pointer" }}
+                  onClick={() => {
+                    setEditing(true);
+                    setSubmitted(false);
+                  }}
+                />
+                &nbsp;Add a review
+              </h6>
+            )}
           </>
         </div>
       ) : null}

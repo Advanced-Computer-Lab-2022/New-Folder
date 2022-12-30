@@ -192,17 +192,29 @@ const CourseDetails = () => {
                 setSubtitles={setSubtitles}
               />
             ) : null}
-            <ReviewCards />
-            <RatingCard
-              courseId={courseId}
-              vc={vc}
-              totalRating={totalRating}
-              setTotalRating={setTotalRating}
-              ratingsCount={ratingsCount}
-              setRatingsCount={setRatingsCount}
-              reviews={reviews}
-              setReviews={setReviews}
-            />
+            <div
+              style={{
+                marginTop: "3%",
+                marginRight: "2.5%",
+                marginLeft: "2.5%",
+              }}
+            >
+              <h3 style={{ width: "100%", display: "flex" }}>
+                Reviews ({reviews.length})
+                <RatingCard
+                  courseId={courseId}
+                  vc={vc}
+                  totalRating={totalRating}
+                  setTotalRating={setTotalRating}
+                  ratingsCount={ratingsCount}
+                  setRatingsCount={setRatingsCount}
+                  reviews={reviews}
+                  setReviews={setReviews}
+                />
+              </h3>
+
+              <ReviewCards />
+            </div>
           </div>
         </div>
       )}

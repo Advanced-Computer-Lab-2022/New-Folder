@@ -8,12 +8,10 @@
   margin-bottom: 1%;
 }
 #courseReviewContainer {
-  margin: 3%;
-  margin-left: 2.5%;
-  margin-right: 2.5%;
+  margin-top: 0;
 }
 #courseReviewInnerContainer {
-  margin-top: 2%;
+  margin-top: 0;
   margin-bottom: 2%;
 }
 #courseSeeMoreBtn {

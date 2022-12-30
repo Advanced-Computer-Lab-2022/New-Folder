@@ -60,7 +60,6 @@ const CourseReviewCard = (props) => {
   };
   return (
     <div id="courseReviewContainer">
-      <h3>Reviews ({reviews.length})</h3>
       <div id="courseReviewInnerContainer">
         <Stack gap={3}>
           {reviews}{" "}
