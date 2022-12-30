@@ -27,11 +27,15 @@ const Wallet = () => {
           <Popover.Body>
             <Stack gap={1}>
               {wallet.length === 0 ? (
-                <strong>Your wallet is empty</strong>
+                <h5>
+                  <strong>Your wallet is empty</strong>
+                </h5>
               ) : (
                 wallet.map((item, index) => (
                   <>
-                    <strong>{item}</strong>
+                    <h5>
+                      <strong>{item}</strong>
+                    </h5>
                     {index < wallet.length - 1 ? <hr /> : null}
                   </>
                 ))

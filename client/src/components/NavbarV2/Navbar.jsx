@@ -1,5 +1,5 @@
 import "./Navbar.css";
-import { Nav, Navbar } from "react-bootstrap";
+import { Image, Nav, Navbar } from "react-bootstrap";
 import { ReactSession } from "react-client-session";
 import { useNavigate } from "react-router-dom";
 import CountrySelector from "../CountrySelector/CountrySelector";
@@ -24,7 +24,9 @@ const AppNavbar = (props) => {
 
   return (
     <Navbar className="blackBg" sticky="top" variant="dark">
-      <Navbar.Brand id="navBrand">Level Up</Navbar.Brand>
+      <Navbar.Brand id="navBrand">
+        <Image height={50} src="/assets/logo.png" />
+      </Navbar.Brand>
       <Nav id="mainNav" navbarScroll>
         <span id="navLeft">
           {ReactSession.get("userType") === userTypes.admin ? (
