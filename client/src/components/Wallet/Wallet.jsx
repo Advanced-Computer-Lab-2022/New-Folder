@@ -27,11 +27,15 @@ const Wallet = () => {
           <Popover.Body>
             <Stack gap={1}>
               {wallet.length === 0 ? (
-                <strong>Your wallet is empty</strong>
+                <h5>
+                  <strong>Your wallet is empty</strong>
+                </h5>
               ) : (
                 wallet.map((item, index) => (
                   <>
-                    <strong>{item}</strong>
+                    <h5>
+                      <strong>{item}</strong>
+                    </h5>
                     {index < wallet.length - 1 ? <hr /> : null}
                   </>
                 ))
@@ -42,7 +46,7 @@ const Wallet = () => {
       }
     >
       <Button variant="dark" id="walletIcon">
-        <IoWalletOutline color="#6C757D" size={36.5} />
+        <IoWalletOutline color="#949494" size={36} />
       </Button>
     </OverlayTrigger>
   );

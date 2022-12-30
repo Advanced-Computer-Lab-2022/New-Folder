@@ -17,8 +17,12 @@ import {
   Image,
   Container,
 } from "react-bootstrap";
+import { createTheme, ThemeProvider } from "@mui/material/styles";
+import { Autocomplete, TextField } from "@mui/material";
 import "./Explore/Explore.css";
-const Explore = () => {
+import { useNavigate } from "react-router-dom";
+const Filter = () => {
+  const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState(courses);
   const [minPrice, setMinPrice] = useState("");
@@ -71,6 +75,17 @@ const Explore = () => {
     setFilteredCourses(newCourses);
   };
 
+  const theme = createTheme({
+    palette: {
+      primary: {
+        main: "#fff",
+      },
+      secondary: {
+        main: "#fff",
+      },
+    },
+  });
+
   return (
     <div>
       {loading ? (
@@ -79,7 +94,42 @@ const Explore = () => {
         </Stack>
       ) : (
         <div>
-          <PageHeader pageName="All courses" />
+          <PageHeader
+            pageName="All courses"
+            extra={
+              <Autocomplete
+                sx={{ maxWidth: "400px", marginLeft: "0px" }}
+                freeSolo
+                id="free-solo-2-demo"
+                disableClearable
+                options={filteredCourses}
+                getOptionLabel={(option) => option.name}
+                onChange={(event, value) => {
+                  navigate("/course/" + value.id);
+                }}
+                renderInput={(params) => (
+                  <ThemeProvider theme={theme}>
+                    <TextField
+                      {...params}
+                      variant="filled"
+                      size="small"
+                      InputProps={{
+                        ...params.InputProps,
+                        type: "search",
+                      }}
+                      label="Search filtered courses"
+                      sx={{
+                        input: { color: "white" },
+                        label: { color: "white" },
+                        borderColor: "white",
+                        marginTop: 0.5,
+                      }}
+                    />
+                  </ThemeProvider>
+                )}
+              />
+            }
+          />
           <Row className="m-4 p-2 pt-3 ps-5 pe-5 text-center">
             <Form.Group as={Col}>
               <Form.Control
@@ -148,4 +198,4 @@ const Explore = () => {
   );
 };
 
-export default Explore;
+export default Filter;

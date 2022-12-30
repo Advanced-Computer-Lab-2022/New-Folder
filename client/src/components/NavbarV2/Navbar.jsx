@@ -1,7 +1,7 @@
 import "./Navbar.css";
-import { Nav, Navbar } from "react-bootstrap";
+import { Image, Nav, Navbar } from "react-bootstrap";
 import { ReactSession } from "react-client-session";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CountrySelector from "../CountrySelector/CountrySelector";
 import SearchBar from "../SearchBar/SearchBar";
 import Wallet from "../Wallet/Wallet";
@@ -13,6 +13,7 @@ import { BsCoin } from "react-icons/bs";
 
 const AppNavbar = (props) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const logout = async () => {
     await networkLogout();
@@ -24,8 +25,10 @@ const AppNavbar = (props) => {
 
   return (
     <Navbar className="blackBg" sticky="top" variant="dark">
-      <Navbar.Brand id="navBrand">Level Up</Navbar.Brand>
-      <Nav id="mainNav" navbarScroll>
+      <Navbar.Brand id="navBrand">
+        <Image height={45} src="/assets/logo.png" />
+      </Navbar.Brand>
+      <Nav activeKey={location.pathname} id="mainNav" navbarScroll>
         <span id="navLeft">
           {ReactSession.get("userType") === userTypes.admin ? (
             <Nav.Link className="navItem" href="/adminHome">
@@ -49,22 +52,21 @@ const AppNavbar = (props) => {
               <Nav.Link className="navItem" href="/setPromotion">
                 Set promotion
               </Nav.Link>
+              <Nav.Link className="navItem" onClick={logout}>
+                Log out
+              </Nav.Link>
             </>
           ) : null}
 
-          {ReactSession.get("userType") ? (
-            <Nav.Link className="navItem" onClick={logout}>
-              Log out
-            </Nav.Link>
-          ) : (
-            <Nav.Link className="navItem" href="/login">
-              Log in
-            </Nav.Link>
-          )}
           {ReactSession.get("userType") ? null : (
-            <Nav.Link className="navItem" href="/signup">
-              Sign up
-            </Nav.Link>
+            <>
+              <Nav.Link className="navItem" href="/login">
+                Log in
+              </Nav.Link>
+              <Nav.Link className="navItem" href="/signup">
+                Sign up
+              </Nav.Link>
+            </>
           )}
         </span>
         <span id="navRight">
@@ -74,18 +76,21 @@ const AppNavbar = (props) => {
 
           {ReactSession.get("userType") === userTypes.instructor ? (
             <Nav.Link href="/earnings">
-              <BsCoin color="#6C757D" size={36} />
+              <BsCoin
+                color={location.pathname === "/earnings" ? "white" : "#949494"}
+                size={34.5}
+              />
             </Nav.Link>
           ) : null}
 
           {[userTypes.trainee, userTypes.corporateTrainee].includes(
             ReactSession.get("userType")
           ) ? (
-            <TraineeNavDropdown />
+            <TraineeNavDropdown logout={logout} />
           ) : null}
 
           {ReactSession.get("userType") === userTypes.instructor ? (
-            <InstructorNavDropdown />
+            <InstructorNavDropdown logout={logout} />
           ) : null}
 
           <CountrySelector setCountry={props.setCountry} />

@@ -17,8 +17,15 @@ exports.getMyCourses = async (req, res) => {
   );
 
   let coursesFormatted = courses.map((course, index) => {
-    const { name, subject, totalRating, image, instructorInfo, ratings } =
-      course;
+    const {
+      name,
+      subject,
+      totalRating,
+      image,
+      instructorInfo,
+      ratings,
+      published,
+    } = course;
 
     return {
       id: course._id,
@@ -30,6 +37,7 @@ exports.getMyCourses = async (req, res) => {
       totalRating,
       ratingsCount: ratings?.length ?? 0,
       image,
+      published,
     };
   });
   res.send(coursesFormatted);

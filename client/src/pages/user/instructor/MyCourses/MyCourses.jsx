@@ -77,6 +77,7 @@ const MyCourses = () => {
         extra={
           <Autocomplete
             freeSolo
+            sx={{ maxWidth: "400px", marginLeft: "0px" }}
             id="free-solo-2-demo"
             disableClearable
             options={courses}
@@ -107,61 +108,58 @@ const MyCourses = () => {
           />
         }
       />
-      <Row>
-        <Row className="m-4">
-          <Form.Group as={Col}>
-            <Form.Control
-              type="number"
-              placeholder="min price"
-              value={minPrice}
-              onChange={(e) => setMinPrice(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group as={Col}>
-            <Form.Control
-              type="number"
-              placeholder="max price"
-              value={maxPrice}
-              onChange={(e) => setMaxPrice(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group as={Col}>
-            <Form.Control
-              type="number"
-              placeholder="rating"
-              value={rating}
-              onChange={(e) => setRating(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group as={Col}>
-            <Form.Control
-              type="text"
-              placeholder="subject"
-              value={subject}
-              onChange={(e) => setSubject(e.target.value)}
-            />
-          </Form.Group>
-          <Form.Group as={Col}>
-            <Button variant="dark" className="me-4" onClick={filter}>
-              Filter
-            </Button>
-            <Button variant="dark" onClick={clearFilters}>
-              Clear filters
-            </Button>
-          </Form.Group>
-        </Row>
-
-        <div className="myCourses__content">
-          <div className="myCourses__header">
-            <p className="header">My Courses</p>
-          </div>
-          <div className="wrapper">
-            {filteredCourses.map((course) => (
-              <CourseCard course={course} />
-            ))}
-          </div>
-        </div>
+      <Row className="m-4 p-2 pt-3 ps-5 pe-5 text-center">
+        <Form.Group as={Col}>
+          <Form.Control
+            type="number"
+            placeholder="min price"
+            value={minPrice}
+            onChange={(e) => setMinPrice(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Control
+            type="number"
+            placeholder="max price"
+            value={maxPrice}
+            onChange={(e) => setMaxPrice(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Control
+            type="number"
+            placeholder="rating"
+            value={rating}
+            onChange={(e) => setRating(e.target.value)}
+          />
+        </Form.Group>
+        <Form.Group as={Col}>
+          <Form.Control
+            type="text"
+            placeholder="subject"
+            value={subject}
+            onChange={(e) => setSubject(e.target.value)}
+          />
+        </Form.Group>
+        <Col lg="auto">
+          <Button className="blueBg blueBgHover" onClick={filter}>
+            Filter
+          </Button>
+        </Col>
+        <Col lg="auto">
+          <Button className="greyBg greyBgHover" onClick={clearFilters}>
+            Clear filters
+          </Button>
+        </Col>
       </Row>
+
+      <div className="wrapper">
+        {filteredCourses.map((course) => (
+          <div className="mb-4 mt-1">
+            <CourseCard course={course} />
+          </div>
+        ))}
+      </div>
     </>
   );
 };

@@ -52,7 +52,8 @@
   white-space: nowrap;
   overflow: hidden;
   animation: typewriter 4s steps(44) 1s 1 normal both,
-    blinkTextCursor 500ms steps(44) infinite normal;
+    blinkTextCursor 500ms steps(44) infinite normal,
+    removeTextCursor 10s steps(44) 1s 1 normal both;
 }
 
 @keyframes typewriter {
@@ -71,7 +72,13 @@
     border-right-color: transparent;
   }
 }
-
+@keyframes removeTextCursor {
+  from {
+  }
+  to {
+    border-right-color: transparent;
+  }
+}
 #sloganSmallTxt {
   font-weight: 200;
   font-size: 22px;
