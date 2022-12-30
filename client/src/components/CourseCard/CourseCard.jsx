@@ -8,7 +8,7 @@ import CardMedia from "@mui/material/CardMedia";
 import Typography from "@mui/material/Typography";
 import { CardActionArea, Rating } from "@mui/material";
 import "./CourseCard.css";
-import { Spinner, Stack } from "react-bootstrap";
+import { Badge, Spinner, Stack } from "react-bootstrap";
 import { MdPayments, MdOutlineStar } from "react-icons/md";
 import { RiPlayList2Fill } from "react-icons/ri";
 import Placeholder from "react-bootstrap/Placeholder";
@@ -52,7 +52,12 @@ function CourseCard(props) {
   return (
     <Card
       id="courseCardMain"
-      sx={{ maxWidth: 230, minWidth: 230, maxHeight: 322, minHeight: 322 }}
+      sx={{
+        maxWidth: 230,
+        minWidth: 230,
+        maxHeight: 322,
+        minHeight: 322,
+      }}
       onClick={(e) => navigate("/course/" + props.course.id)}
     >
       <CardActionArea>
@@ -80,14 +85,22 @@ function CourseCard(props) {
           </CardContent>
         ) : (
           <CardContent>
-            <Typography variant="h5" component="div">
+            <Typography variant="h5" component="span">
               {props.course.name}
-            </Typography>
+            </Typography>{" "}
+            {props.course?.published !== null &&
+            props.course?.published !== undefined &&
+            !props.course?.published ? (
+              <Badge style={{ marginTop: "-50px" }} bg="secondary" pill>
+                Unpublished
+              </Badge>
+            ) : null}
             <Typography variant="body2">
               <Stack gap={1}>
-                <h6 className="courseCardItem greyTxt">
+                <h6 className="courseCardItem blueTxt">
                   {props.course.instructorName}
                 </h6>
+
                 <h6 className="courseCardItem">
                   <RiPlayList2Fill size={16} color="#100F0F" /> {duration}
                 </h6>
