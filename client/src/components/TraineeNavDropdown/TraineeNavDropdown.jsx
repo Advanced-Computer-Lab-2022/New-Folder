@@ -1,15 +1,24 @@
+import "./TraineeNavDropdown.css";
 import { NavDropdown } from "react-bootstrap";
+import { BsPersonCircle } from "react-icons/bs";
 
 const TraineeNavDropdown = () => {
   return (
-    <NavDropdown title="Trainee Dropdown" menuVariant="dark">
-      <NavDropdown.Item href="/enrolledCourses">
+    <NavDropdown
+      id="navDropdown"
+      className="ms-3"
+      title={<BsPersonCircle color="#6C757D" size={34} />}
+      menuVariant="dark"
+    >
+      <NavDropdown.Item className="text-center" href="/enrolledCourses">
         Enrolled Courses
       </NavDropdown.Item>
       <NavDropdown.Divider />
-      <NavDropdown.Item href="/myProblems">Reports</NavDropdown.Item>
+      <NavDropdown.Item className="text-center" href="/myProblems">
+        Reports
+      </NavDropdown.Item>
       <NavDropdown.Divider />
-      <NavDropdown.Item href="/changePassword">
+      <NavDropdown.Item className="text-center" href="/changePassword">
         Change password
       </NavDropdown.Item>
     </NavDropdown>

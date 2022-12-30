@@ -53,6 +53,8 @@ function Reports() {
           fontSize: "18px",
           fontWeight: "500",
         }}
+        align="end"
+        drop="bottom"
         className="text-end"
         title={selected}
         onSelect={(e) => setSelected(e)}

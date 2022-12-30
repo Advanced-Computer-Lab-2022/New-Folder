@@ -40,7 +40,11 @@ const Login = (props) => {
         userData.data.firstName + " " + userData.data.lastName
       );
       setLoading(false);
-      navigate("/");
+      if (userData.data.userType === userTypes.admin) {
+        navigate("/adminHome");
+      } else {
+        navigate("/");
+      }
     } catch (err) {
       setLoading(false);
       setErrorMsg(err.response.data.error);

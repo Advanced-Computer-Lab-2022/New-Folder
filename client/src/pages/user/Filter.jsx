@@ -79,7 +79,7 @@ const Explore = () => {
         </Stack>
       ) : (
         <div>
-          <PageHeader pageName="Filter courses" />
+          <PageHeader pageName="All courses" />
           <Row className="m-4 p-2 pt-3 ps-5 pe-5 text-center">
             <Form.Group as={Col}>
               <Form.Control

@@ -45,6 +45,7 @@
 }
 #exploreSloganTxt {
   font-family: "Monoton", sans-serif;
+  font-size: 3.2em;
   margin: 0 auto;
   border-right: 2px solid rgba(255, 255, 255, 0.75);
   text-align: center;

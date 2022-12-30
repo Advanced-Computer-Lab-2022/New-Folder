@@ -25,7 +25,7 @@ const Wallet = () => {
       overlay={
         <Popover>
           <Popover.Body>
-            <Stack gao={4}>
+            <Stack gap={1}>
               {wallet.length === 0 ? (
                 <strong>Your wallet is empty</strong>
               ) : (
@@ -42,7 +42,7 @@ const Wallet = () => {
       }
     >
       <Button variant="dark" id="walletIcon">
-        <IoWalletOutline color="#6C757D" size={24} />
+        <IoWalletOutline color="#6C757D" size={36.5} />
       </Button>
     </OverlayTrigger>
   );

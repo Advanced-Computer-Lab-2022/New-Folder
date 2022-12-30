@@ -9,6 +9,7 @@ import { networkLogout } from "../../network";
 import userTypes from "../../constants/UserTypes.json";
 import TraineeNavDropdown from "../TraineeNavDropdown/TraineeNavDropdown";
 import InstructorNavDropdown from "../InstructorNavDropdown/InstructorNavDropdown";
+import { BsCoin } from "react-icons/bs";
 
 const AppNavbar = (props) => {
   const navigate = useNavigate();
@@ -23,73 +24,73 @@ const AppNavbar = (props) => {
 
   return (
     <Navbar className="blackBg" sticky="top" variant="dark">
-      <Navbar.Brand id="navBrand" href="/">
-        Learning System
-      </Navbar.Brand>
-      <Nav
-        className="me-auto my-2 my-lg-0"
-        style={{ height: "5em" }}
-        navbarScroll
-      >
-        {ReactSession.get("userType") === userTypes.admin ? (
-          <Nav.Link className="navItem" href="/adminHome">
-            Home
-          </Nav.Link>
-        ) : (
-          <Nav.Link className="navItem" href="/">
-            Explore
-          </Nav.Link>
-        )}
-
-        <Nav.Link className="navItem" href="/allCourses">
-          Courses
-        </Nav.Link>
-        {ReactSession.get("userType") ? (
-          <Nav.Link className="navItem" onClick={logout}>
-            Log out
-          </Nav.Link>
-        ) : (
-          <Nav.Link className="navItem" href="/login">
-            Log in
-          </Nav.Link>
-        )}
-        {ReactSession.get("userType") ? null : (
-          <Nav.Link className="navItem" href="/signup">
-            Sign up
-          </Nav.Link>
-        )}
-
-        {ReactSession.get("userType") === userTypes.trainee ? <Wallet /> : null}
-
-        {ReactSession.get("userType") === userTypes.instructor ? (
-          <Nav.Link className="navItem" href="/earnings">
-            Earnings
-          </Nav.Link>
-        ) : null}
-
-        {[userTypes.trainee, userTypes.corporateTrainee].includes(
-          ReactSession.get("userType")
-        ) ? (
-          <TraineeNavDropdown />
-        ) : null}
-
-        {ReactSession.get("userType") === userTypes.instructor ? (
-          <InstructorNavDropdown />
-        ) : null}
-
-        {ReactSession.get("userType") === userTypes.admin ? (
-          <>
-            <Nav.Link className="navItem" href="/addUser">
-              Add user
+      <Navbar.Brand id="navBrand">Level Up</Navbar.Brand>
+      <Nav id="mainNav" navbarScroll>
+        <span id="navLeft">
+          {ReactSession.get("userType") === userTypes.admin ? (
+            <Nav.Link className="navItem" href="/adminHome">
+              Home
             </Nav.Link>
-            <Nav.Link className="navItem" href="/setPromotion">
-              Set promotion
+          ) : (
+            <Nav.Link className="navItem" href="/">
+              Explore
             </Nav.Link>
-          </>
-        ) : null}
+          )}
 
-        <SearchBar />
-        <CountrySelector setCountry={props.setCountry} />
+          <Nav.Link className="navItem" href="/allCourses">
+            All Courses
+          </Nav.Link>
+
+          {ReactSession.get("userType") === userTypes.admin ? (
+            <>
+              <Nav.Link className="navItem" href="/addUser">
+                Add user
+              </Nav.Link>
+              <Nav.Link className="navItem" href="/setPromotion">
+                Set promotion
+              </Nav.Link>
+            </>
+          ) : null}
+
+          {ReactSession.get("userType") ? (
+            <Nav.Link className="navItem" onClick={logout}>
+              Log out
+            </Nav.Link>
+          ) : (
+            <Nav.Link className="navItem" href="/login">
+              Log in
+            </Nav.Link>
+          )}
+          {ReactSession.get("userType") ? null : (
+            <Nav.Link className="navItem" href="/signup">
+              Sign up
+            </Nav.Link>
+          )}
+        </span>
+        <span id="navRight">
+          {ReactSession.get("userType") === userTypes.trainee ? (
+            <Wallet />
+          ) : null}
+
+          {ReactSession.get("userType") === userTypes.instructor ? (
+            <Nav.Link href="/earnings">
+              <BsCoin color="#6C757D" size={36} />
+            </Nav.Link>
+          ) : null}
+
+          {[userTypes.trainee, userTypes.corporateTrainee].includes(
+            ReactSession.get("userType")
+          ) ? (
+            <TraineeNavDropdown />
+          ) : null}
+
+          {ReactSession.get("userType") === userTypes.instructor ? (
+            <InstructorNavDropdown />
+          ) : null}
+
+          <CountrySelector setCountry={props.setCountry} />
+          <SearchBar />
+        </span>
       </Nav>
     </Navbar>
   );
