@@ -18,34 +18,51 @@ import { Button } from "react-bootstrap";
 import "../../App.css";
 import PublishCourse from "../Course/PublishCourse/PublishCourse";
 function CourseSummary(props) {
-  const [totalRating, setTotalRating] = useState(null);
-  const [ratingsCount, setRatingsCount] = useState(0);
+  const {
+    course,
+    vc,
+    setVc,
+    price,
+    courseId,
+    duration,
+    newVideo,
+    setNewVideo,
+    uploadIntroVideo,
+    promotion,
+    setPromotion,
+    reviews,
+    setReviews,
+    subtitles,
+    setSubContents,
+    subContents,
+    setLoading,
+    totalRating,
+    setTotalRating,
+    ratingsCount,
+    setRatingsCount,
+  } = props;
   const [validPromotion, setValidPromotion] = useState(false);
   const [loadingEnrollBtn, setLoadingEnrollBtn] = useState(false);
   const [showPaymentConfirmation, setShowPaymentConfirmation] = useState(false);
   const [paymentConfirmationMsg, setPaymentConfirmationMsg] = useState("");
   const [showError, setShowError] = useState(false);
   const [progress, setProgress] = useState(0);
-  const promotion = props.promotion;
-  const setPromotion = props.setPromotion;
-  const subContents = props.subContents;
-  const setLoading = props.setLoading;
 
   useEffect(() => {
-    setTotalRating(props.course.totalRating);
+    setTotalRating(course.totalRating);
   }, []);
 
   useEffect(() => {
-    if (props.vc !== "")
+    if (vc !== "")
       if (
         !(
-          props.vc === ViewerContexts.enrolledTrainee ||
-          props.vc === ViewerContexts.refundingTrainee
+          vc === ViewerContexts.enrolledTrainee ||
+          vc === ViewerContexts.refundingTrainee
         )
       ) {
         setLoading(true);
       }
-  }, [props.vc]);
+  }, [vc]);
 
   useEffect(() => {
     const startDate = new Date(promotion?.startDate).getTime();
@@ -56,7 +73,7 @@ function CourseSummary(props) {
     } else {
       setValidPromotion(false);
     }
-  }, [props.promotion]);
+  }, [promotion]);
 
   const enroll = async () => {
     setLoadingEnrollBtn(true);
@@ -64,7 +81,7 @@ function CourseSummary(props) {
       const currency =
         countryCurrency.country_currency[ReactSession.get("country")];
       const payment = await getPayment({
-        courseID: props.course._id,
+        courseID: course._id,
         userCurrency: currency,
       });
       if (payment.wallet <= 0) {
@@ -102,71 +119,67 @@ function CourseSummary(props) {
       <div id="courseSummaryContainer" className="blueBg">
         <div id="leftCol">
           <IntroVideo
-            introVideo={props.course.introVideo}
-            vc={props.vc}
-            newVideo={props.newVideo}
-            setNewVideo={props.setNewVideo}
-            uploadIntroVideo={props.uploadIntroVideo}
+            introVideo={course.introVideo}
+            vc={vc}
+            newVideo={newVideo}
+            setNewVideo={setNewVideo}
+            uploadIntroVideo={uploadIntroVideo}
           />
-          {props.vc === ViewerContexts.author ? (
+          {vc === ViewerContexts.author ? (
             <EditPreviewVideo
-              newVideo={props.newVideo}
-              setNewVideo={props.setNewVideo}
-              uploadIntroVideo={props.uploadIntroVideo}
+              newVideo={newVideo}
+              setNewVideo={setNewVideo}
+              uploadIntroVideo={uploadIntroVideo}
             />
           ) : null}
-          <PublishCourse
-            courseId={props.course._id}
-            vc={props.vc}
-            setVc={props.setVc}
-          />
+          <PublishCourse courseId={course._id} vc={vc} setVc={setVc} />
           <EnrollGoToCourse
-            vc={props.vc}
+            vc={vc}
             enroll={enroll}
             loadingEnrollBtn={loadingEnrollBtn}
-            courseId={props.courseId}
-            course={props.course}
-            setVc={props.setVc}
+            courseId={courseId}
+            course={course}
+            setVc={setVc}
           />
 
-          {props.vc !== ViewerContexts.guest &&
-          props.vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
-            <ReportCourse course={props.course} />
+          {vc !== ViewerContexts.guest &&
+          vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
+            <ReportCourse course={course} />
           ) : null}
         </div>
         <div id="rightCol">
           <CourseHeader
             totalRating={totalRating}
-            name={props.course.name}
-            vc={props.vc}
-            instructorId={props.course.instructorInfo?.instructorId}
-            instructorName={props.course.instructorInfo?.instructorName}
+            name={course.name}
+            vc={vc}
+            instructorId={course.instructorInfo?.instructorId}
+            instructorName={course.instructorInfo?.instructorName}
             ratingsCount={ratingsCount}
             subContents={subContents}
-            subtitles={props.subtitles}
+            subtitles={subtitles}
             percentage={progress}
             setPercentage={setProgress}
-            setVc={props.setVc}
-            courseId={props.course._id}
+            setVc={setVc}
+            courseId={course._id}
             setLoading={setLoading}
-            courseName={props.course.name}
+            courseName={course.name}
             setTotalRating={setTotalRating}
             setRatingsCount={setRatingsCount}
-            reviews={props.reviews}
-            setReviews={props.setReviews}
+            reviews={reviews}
+            setReviews={setReviews}
             promotion={promotion}
             setPromotion={setPromotion}
           />
 
           <CourseBody
-            vc={props.vc}
+            vc={vc}
             validPromotion={validPromotion}
-            price={props.price}
+            price={price}
             percentage={promotion?.percentage}
-            totalDuration={props.duration}
-            subject={props.course.subject}
-            summary={props.course.description}
-            trainees={props.course.trainees}
+            totalDuration={duration}
+            subject={course.subject}
+            summary={course.description}
+            trainees={course.trainees}
             ratingsCount={ratingsCount}
             totalRating={totalRating}
           />
@@ -177,7 +190,7 @@ function CourseSummary(props) {
         show={showPaymentConfirmation}
         setShow={setShowPaymentConfirmation}
         msg={paymentConfirmationMsg}
-        courseId={props.course._id}
+        courseId={course._id}
       />
       <ErrorModal show={showError} handleClose={() => setShowError(false)} />
     </>

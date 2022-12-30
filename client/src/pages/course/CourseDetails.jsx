@@ -16,12 +16,15 @@ import CourseReviewCard from "../../components/Course/CourseReviewCard/CourseRev
 import colors from "../../colors.json";
 import { Spinner } from "react-bootstrap";
 import AddSubtitle from "../../components/Course/AddSubtitle/AddSubtitle";
+import RatingCard from "../../components/RatingCard/RatingCard";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
   const [course, setCourse] = useState({});
   const [reviews, setReviews] = useState([]);
   const [subtitles, setSubtitles] = useState([]);
+  const [ratingsCount, setRatingsCount] = useState(0);
+  const [totalRating, setTotalRating] = useState(null);
   const [price, setPrice] = useState("");
   const [vc, setVc] = useState("");
   const [durationMap, setDurationMap] = useState(new Map());
@@ -151,6 +154,10 @@ const CourseDetails = () => {
               setSubContents={setSubContents}
               subContents={subContents}
               setLoading={setLoading}
+              totalRating={totalRating}
+              setTotalRating={setTotalRating}
+              ratingsCount={ratingsCount}
+              setRatingsCount={setRatingsCount}
             />
             <div>
               <Accordion>
@@ -186,6 +193,16 @@ const CourseDetails = () => {
               />
             ) : null}
             <ReviewCards />
+            <RatingCard
+              courseId={courseId}
+              vc={vc}
+              totalRating={totalRating}
+              setTotalRating={setTotalRating}
+              ratingsCount={ratingsCount}
+              setRatingsCount={setRatingsCount}
+              reviews={reviews}
+              setReviews={setReviews}
+            />
           </div>
         </div>
       )}

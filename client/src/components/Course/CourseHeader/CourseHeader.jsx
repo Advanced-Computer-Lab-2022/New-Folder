@@ -61,16 +61,6 @@ function CourseHeader(props) {
             {instructorName ?? "Instructor"}
           </a>
         </h5>
-        <RatingCard
-          courseId={courseId}
-          vc={vc}
-          totalRating={totalRating}
-          setTotalRating={setTotalRating}
-          ratingsCount={ratingsCount}
-          setRatingsCount={setRatingsCount}
-          reviews={reviews}
-          setReviews={setReviews}
-        />
       </Stack>
 
       {(vc === ViewerContexts.enrolledTrainee ||
