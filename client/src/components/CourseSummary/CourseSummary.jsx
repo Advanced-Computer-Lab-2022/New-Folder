@@ -14,9 +14,13 @@ import CourseHeader from "../Course/CourseHeader/CourseHeader";
 import CourseBody from "../Course/CourseBody/CourseBody";
 import EnrollGoToCourse from "../Course/EnrollGoToCourse/EnrollGoToCourse";
 import EditPreviewVideo from "../Course/EditPreviewVideo/EditPreviewVideo";
-import { Button } from "react-bootstrap";
+import { Button, Card, Overlay, Tooltip } from "react-bootstrap";
 import "../../App.css";
 import PublishCourse from "../Course/PublishCourse/PublishCourse";
+import { useRef } from "react";
+import RefundForm from "../Course/Refund/RefundForm";
+import { GiReceiveMoney } from "react-icons/gi";
+import { AiOutlineQuestionCircle } from "react-icons/ai";
 function CourseSummary(props) {
   const {
     course,
@@ -47,6 +51,8 @@ function CourseSummary(props) {
   const [paymentConfirmationMsg, setPaymentConfirmationMsg] = useState("");
   const [showError, setShowError] = useState(false);
   const [progress, setProgress] = useState(0);
+  const [showPopOver, setShowPopOver] = useState(false);
+  const target = useRef(null);
 
   useEffect(() => {
     setTotalRating(course.totalRating);
@@ -141,11 +147,39 @@ function CourseSummary(props) {
             course={course}
             setVc={setVc}
           />
-
-          {vc !== ViewerContexts.guest &&
-          vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
-            <ReportCourse course={course} />
-          ) : null}
+          <small
+            ref={target}
+            style={{ width: "fit-content", marginLeft: 0, marginBottom: -20 }}
+          >
+            Help&nbsp;
+            <AiOutlineQuestionCircle
+              onClick={() => setShowPopOver(!showPopOver)}
+              style={{ cursor: "pointer", marginBottom: "0%" }}
+            />
+          </small>
+          <Overlay target={target.current} show={showPopOver} placement="right">
+            {(props) => (
+              <Tooltip id="overlay-example" {...props}>
+                {vc !== ViewerContexts.guest &&
+                vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
+                  <ReportCourse
+                    course={course}
+                    setShowPopOver={setShowPopOver}
+                    showPopOver={showPopOver}
+                  />
+                ) : null}
+                {progress > 50 ? (
+                  <RefundForm
+                    vc={vc}
+                    setVc={setVc}
+                    courseId={courseId}
+                    setShowPopOver={setShowPopOver}
+                    showPopOver={showPopOver}
+                  />
+                ) : null}
+              </Tooltip>
+            )}
+          </Overlay>
         </div>
         <div id="rightCol">
           <CourseHeader

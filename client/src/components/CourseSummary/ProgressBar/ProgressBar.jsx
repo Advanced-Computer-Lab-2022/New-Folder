@@ -19,8 +19,9 @@ function ProgressBar(props) {
     courseId,
     setLoading,
     courseName,
+    percentage,
+    setPercentage,
   } = props;
-  const [percentage, setPercentage] = useState(0);
 
   const handleProgressPercentage = async () => {
     let totalPercentage = 0;

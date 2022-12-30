@@ -7,9 +7,10 @@ import ProblemTypes from "../../../constants/ProblemTypes.json";
 import { ReactSession } from "react-client-session";
 import "./ReportCourse.css";
 import { FiAlertCircle } from "react-icons/fi";
-import { Card, Spinner } from "react-bootstrap";
+import { Card, Overlay, Spinner, Tooltip } from "react-bootstrap";
 import ErrorFeedback from "../../ErrorFeedback/ErrorFeedback";
 import SuccessFeedback from "../../SuccessFeedback/SuccessFeedback";
+import { useRef } from "react";
 function ReportCourse(props) {
   const [show, setShow] = useState(false);
   const [validated, setValidated] = useState(false);
@@ -20,6 +21,7 @@ function ReportCourse(props) {
   const [success, setSuccess] = useState(false);
   const [fail, setFail] = useState(false);
   const [editing, setEditing] = useState(true);
+
   let timeoutId;
   useEffect(() => {
     if (success || fail) {
@@ -67,6 +69,7 @@ function ReportCourse(props) {
     setSuccess(false);
     setEditing(false);
     setFail(false);
+    props.setShowPopOver(false);
   };
   return (
     <>
@@ -132,17 +135,15 @@ function ReportCourse(props) {
                     </Form.Group>
                     <div id="reportFormFooter">
                       <Button
-                        variant="secondary"
                         onClick={cancel}
-                        className="reportFormButton"
+                        className="reportFormButton greyBgHover"
                         disabled={loading}
                       >
                         Close
                       </Button>
                       <Button
-                        variant="primary"
                         type="submit"
-                        className="reportFormButton"
+                        className="reportFormButton blueBgHover"
                         disabled={loading}
                       >
                         {loading ? (
@@ -180,16 +181,15 @@ function ReportCourse(props) {
           </>
         </>
       </Modal>
-
-      <Card
-        onClick={() => {
-          setShow(true);
-          setEditing(true);
-        }}
-        id="reportButton"
-      >
+      <Card id="reportButton">
         <div id="reportIconWrapper">
-          <FiAlertCircle />
+          <FiAlertCircle
+            onClick={() => {
+              setShow(true);
+              setEditing(true);
+            }}
+            style={{ cursor: "pointer" }}
+          />
         </div>
         &nbsp;Report problem
       </Card>

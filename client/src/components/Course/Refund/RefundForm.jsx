@@ -5,6 +5,8 @@ import ViewerContexts from "../../../constants/ViewerContexts.json";
 import Modal from "react-bootstrap/Modal";
 import { requestRefund, cancelRefund } from "../../../network";
 import "./RefundForm.css";
+import { Card } from "react-bootstrap";
+import { GiReceiveMoney } from "react-icons/gi";
 function RefundForm(props) {
   const { vc, setVc, courseId } = props;
   const [show, setShow] = useState(false);
@@ -22,6 +24,7 @@ function RefundForm(props) {
       setRefundReason(null);
       setShow(false);
       setVc(ViewerContexts.refundingTrainee);
+      props.setShowPopOver(false);
       await requestRefund({ courseId: courseId, reason: refundReason });
     }
   };
@@ -29,12 +32,14 @@ function RefundForm(props) {
     setValidated(false);
     setRefundReason(null);
     setShow(false);
+    props.setShowPopOver(false);
   };
   const cancel = async () => {
     setValidated(false);
     setRefundReason(null);
     setShow(false);
     setVc(ViewerContexts.enrolledTrainee);
+    props.setShowPopOver(false);
     await cancelRefund(courseId);
   };
   return (
@@ -66,18 +71,10 @@ function RefundForm(props) {
               </Form.Control.Feedback>
             </Form.Group>
             <div id="reportFormFooter">
-              <Button
-                variant="secondary"
-                onClick={close}
-                className="reportFormButton"
-              >
+              <Button onClick={close} className="reportFormButton greyBgHover">
                 Close
               </Button>
-              <Button
-                variant="primary"
-                type="submit"
-                className="reportFormButton"
-              >
+              <Button type="submit" className="reportFormButton blueBgHover">
                 Submit
               </Button>
             </div>
@@ -86,9 +83,27 @@ function RefundForm(props) {
         <Modal.Footer></Modal.Footer>
       </Modal>
       {vc === ViewerContexts.refundingTrainee ? (
-        <Button onClick={cancel}>Cancel refund request</Button>
+        <Card id="reportButton">
+          <div id="reportIconWrapper">
+            <GiReceiveMoney
+              onClick={cancel}
+              style={{ cursor: "pointer", marginBottom: "1%" }}
+            />
+          </div>
+          &nbsp;Cancel refund request
+        </Card>
       ) : (
-        <Button onClick={(e) => setShow(true)}>Request refund</Button>
+        <Card id="reportButton">
+          <div id="reportIconWrapper">
+            <GiReceiveMoney
+              onClick={(e) => {
+                setShow(true);
+              }}
+              style={{ cursor: "pointer", marginBottom: "1%" }}
+            />
+          </div>
+          &nbsp;Request a refund
+        </Card>
       )}
     </>
   );
