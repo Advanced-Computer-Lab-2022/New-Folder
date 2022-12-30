@@ -20,7 +20,7 @@ const VisitedCard = (props) => {
 
     return (
     <div className="Content-card-visit">
-      {!isVisited &&<i class="bi bi-dot"></i>}
+      <i class= {isVisited ? "bi bi-check-square-fill icon-visited-checkBox": "bi bi-check-square" }></i>
     </div>
   );
 };
