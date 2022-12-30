@@ -7,7 +7,7 @@ const InstructorNavDropdown = (props) => {
     <NavDropdown
       id="navDropdown"
       className="ms-3"
-      title={<BsPersonCircle color="#6C757D" size={34} />}
+      title={<BsPersonCircle color="#949494" size={34} />}
       menuVariant="dark"
     >
       <NavDropdown.Item className="text-center" href="/myCourses">

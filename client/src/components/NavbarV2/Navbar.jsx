@@ -77,8 +77,8 @@ const AppNavbar = (props) => {
           {ReactSession.get("userType") === userTypes.instructor ? (
             <Nav.Link href="/earnings">
               <BsCoin
-                color={location.pathname === "/earnings" ? "white" : "#6C757D"}
-                size={35}
+                color={location.pathname === "/earnings" ? "white" : "#949494"}
+                size={34.5}
               />
             </Nav.Link>
           ) : null}
