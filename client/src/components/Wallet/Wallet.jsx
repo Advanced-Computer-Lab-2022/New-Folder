@@ -46,7 +46,7 @@ const Wallet = () => {
       }
     >
       <Button variant="dark" id="walletIcon">
-        <IoWalletOutline color="#949494" size={36.5} />
+        <IoWalletOutline color="#949494" size={36} />
       </Button>
     </OverlayTrigger>
   );
