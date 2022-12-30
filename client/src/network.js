@@ -293,12 +293,8 @@ export const payForCourse = async (data) => {
 
 //Add report
 export const postAccessRequest = async (data) => {
-  try {
-    const res = await instance.post("course/requestAccess", data);
-    return res.data;
-  } catch (err) {
-    console.log(err);
-  }
+  const res = await instance.post("course/requestAccess", data);
+  return res.data;
 };
 
 //Add followup on a report
@@ -313,12 +309,8 @@ export const addFollowup = async (data) => {
 
 // cancel request access
 export const deleteAccessRequest = async (courseId) => {
-  try {
-    const res = await instance.delete(`course/${courseId}/cancelAccessRequest`);
-    return res.data;
-  } catch (err) {
-    console.log(err);
-  }
+  const res = await instance.delete(`course/${courseId}/cancelAccessRequest`);
+  return res.data;
 };
 
 // update Report status

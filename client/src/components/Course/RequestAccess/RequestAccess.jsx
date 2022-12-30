@@ -1,17 +1,26 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { Button, Modal } from "react-bootstrap";
+import { Button, Modal, Spinner } from "react-bootstrap";
 import Form from "react-bootstrap/Form";
 import ViewerContexts from "../../../constants/ViewerContexts.json";
 import { postAccessRequest, deleteAccessRequest } from "../../../network";
 import { ReactSession } from "react-client-session";
 import "./RequestAccess.css";
+import SuccessModal from "../../SuccessModal/SuccessModal";
+import ErrorModal from "../../ErrorModal/ErrorModal";
 function RequestAccess(props) {
   const [pending, setPending] = useState(false);
   const [show, setShow] = useState(false);
   const [validated, setValidated] = useState(false);
   const [reason, setReason] = useState(null);
+  const [requestLoading, setRequestLoading] = useState(false);
+  const [cancelLoading, setCancelLoading] = useState(false);
+  const [requestSuccess, setRequestSuccess] = useState(false);
+  const [cancelSuccess, setCancelSuccess] = useState(false);
+  const [cancelFail, setCancelFail] = useState(false);
+  const [requestFail, setRequestFail] = useState(false);
+
   useEffect(() => {
     setPending(props.vc === ViewerContexts.pendingCorporateTrainee);
   }, [props.vc]);
@@ -23,31 +32,59 @@ function RequestAccess(props) {
       event.stopPropagation();
       setValidated(true);
     } else {
-      await postAccessRequest({
-        courseId: props.course._id,
-        reason: reason,
-        courseName: props.course.name,
-        userName: ReactSession.get("userName"),
-        corporateName: ReactSession.get("corporateName"),
-      });
-      props.setVc(ViewerContexts.pendingCorporateTrainee);
-      setValidated(false);
-      setReason(null);
-      setShow(false);
+      setRequestLoading(true);
+      try {
+        await postAccessRequest({
+          courseId: props.course._id,
+          reason: reason,
+          courseName: props.course.name,
+          userName: ReactSession.get("userName"),
+          corporateName: ReactSession.get("corporateName"),
+        });
+        props.setVc(ViewerContexts.pendingCorporateTrainee);
+        setValidated(false);
+        setReason(null);
+        setShow(false);
+        setRequestSuccess(true);
+      } catch (err) {
+        setRequestFail(true);
+      }
+      setRequestLoading(false);
     }
   };
   const cancelRequest = async (event) => {
-    event.preventDefault();
-    props.setVc(ViewerContexts.nonEnrolledCorporateTrainee);
-    await deleteAccessRequest(props.course._id);
+    setCancelLoading(true);
+    try {
+      await deleteAccessRequest(props.course._id);
+      props.setVc(ViewerContexts.nonEnrolledCorporateTrainee);
+      setCancelSuccess(true);
+    } catch (err) {
+      setCancelFail(true);
+    }
+    setCancelLoading(false);
   };
   const cancel = () => {
     setValidated(false);
     setReason(null);
     setShow(false);
+    setCancelSuccess(false);
+    setCancelFail(false);
+    setRequestFail(false);
+    setRequestSuccess(false);
   };
   return (
     <>
+      <SuccessModal
+        show={requestSuccess}
+        msg="Access request submitted successfully!"
+        handleClose={cancel}
+      />
+      <SuccessModal
+        show={cancelSuccess}
+        msg="Access request cancelled successfully!"
+        handleClose={cancel}
+      />
+      <ErrorModal show={requestFail || cancelFail} handleClose={cancel} />
       <Modal show={show} onHide={cancel} size={"lg"} centered>
         <Modal.Body>
           <Form
@@ -75,39 +112,68 @@ function RequestAccess(props) {
             </Form.Group>
             <div id="requestAccessFormFooter">
               <Button
-                variant="secondary"
                 onClick={cancel}
-                className="requestAccessFormButton"
+                className="requestAccessFormButton greyBgHover"
+                disabled={requestLoading}
               >
                 Close
               </Button>
               <Button
-                variant="primary"
                 type="submit"
-                className="requestAccessFormButton"
+                className="requestAccessFormButton blueBgHover"
+                disabled={requestLoading}
               >
-                Submit
+                {requestLoading ? (
+                  <>
+                    <Spinner
+                      as="span"
+                      animation="border"
+                      className="ms-1"
+                      size="sm"
+                      role="status"
+                      aria-hidden="true"
+                    />
+                    {" Saving"}
+                  </>
+                ) : (
+                  <>Submit</>
+                )}
               </Button>
             </div>
           </Form>
         </Modal.Body>
       </Modal>
-      <Button
-        className="accessButton"
-        variant="danger"
-        onClick={cancelRequest}
-        hidden={!pending}
-      >
-        Cancel access request
-      </Button>
-      <Button
-        className="accessButton"
-        variant="dark"
-        onClick={() => setShow(true)}
-        hidden={pending}
-      >
-        Request access
-      </Button>
+      {pending ? (
+        <Button
+          className="accessButton redBgHover"
+          onClick={cancelRequest}
+          disabled={cancelLoading}
+        >
+          {cancelLoading ? (
+            <>
+              <Spinner
+                as="span"
+                animation="border"
+                className="ms-1"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+              {" Cancelling"}
+            </>
+          ) : (
+            <> Cancel access request</>
+          )}
+        </Button>
+      ) : (
+        <Button
+          className="accessButton blackBgHover"
+          onClick={() => setShow(true)}
+          hidden={pending}
+        >
+          Request access
+        </Button>
+      )}
     </>
   );
 }

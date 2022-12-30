@@ -16,7 +16,7 @@ function EnrollGoToCourse(props) {
         <>
           {ReactSession.get("userType") === UserTypes.trainee ? (
             <Button
-              variant="dark"
+              className="blackBgHover"
               onClick={enroll}
               disabled={loadingEnrollBtn}
               id="enrollButton"
@@ -39,7 +39,7 @@ function EnrollGoToCourse(props) {
         <>
           {vc === ViewerContexts.enrolledTrainee ? (
             <Button
-              variant="dark"
+            className="blackBgHover"
               onClick={() => navigate("/watch/" + courseId + "?sId=0&cId=0")}
               id="enrollButton"
             >
