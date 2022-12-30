@@ -29,6 +29,7 @@
     "react-bootstrap": "^2.6.0",
     "react-chartjs-2": "^5.1.0",
     "react-checkmark": "^1.4.0",
+    "react-circular-progressbar": "^2.1.0",
     "react-client-session": "^0.0.8",
     "react-country-flag": "^3.0.2",
     "react-datepicker": "^4.8.0",

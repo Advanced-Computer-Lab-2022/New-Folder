@@ -72,22 +72,22 @@ function CourseHeader(props) {
           setReviews={setReviews}
         />
       </Stack>
-      <div className="course-progress-bar">
-        {(vc === ViewerContexts.enrolledTrainee ||
-          vc === ViewerContexts.refundingTrainee) && (
-          <ProgressBar
-            subContents={subContents}
-            subtitles={subtitles}
-            percentage={percentage}
-            setPercentage={setPercentage}
-            vc={vc}
-            setVc={setVc}
-            courseId={courseId}
-            setLoading={setLoading}
-            courseName={courseName}
-          />
-        )}
-      </div>
+
+      {(vc === ViewerContexts.enrolledTrainee ||
+        vc === ViewerContexts.refundingTrainee) && (
+        <ProgressBar
+          subContents={subContents}
+          subtitles={subtitles}
+          percentage={percentage}
+          setPercentage={setPercentage}
+          vc={vc}
+          setVc={setVc}
+          courseId={courseId}
+          setLoading={setLoading}
+          courseName={courseName}
+        />
+      )}
+
       {[
         ViewerContexts.author,
         ViewerContexts.admin,
