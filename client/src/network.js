@@ -450,22 +450,14 @@ export const signup = async (data) => {
 
 // request refund
 export const requestRefund = async (data) => {
-  try {
-    await instance.post("/course/requestRefund", data);
-    console.log("mango");
-  } catch (err) {
-    console.log(err);
-  }
+  const res = await instance.post("/course/requestRefund", data);
+  return res.data;
 };
 
 // request refund
 export const cancelRefund = async (courseId) => {
-  try {
-    const res = await instance.delete(`course/${courseId}/cancelRefundRequest`);
-    return res.data;
-  } catch (err) {
-    console.log(err);
-  }
+  const res = await instance.delete(`course/${courseId}/cancelRefundRequest`);
+  return res.data;
 };
 
 // get all refunds
