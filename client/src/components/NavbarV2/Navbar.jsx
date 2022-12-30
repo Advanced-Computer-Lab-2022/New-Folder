@@ -1,7 +1,7 @@
 import "./Navbar.css";
 import { Image, Nav, Navbar } from "react-bootstrap";
 import { ReactSession } from "react-client-session";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import CountrySelector from "../CountrySelector/CountrySelector";
 import SearchBar from "../SearchBar/SearchBar";
 import Wallet from "../Wallet/Wallet";
@@ -13,6 +13,7 @@ import { BsCoin } from "react-icons/bs";
 
 const AppNavbar = (props) => {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const logout = async () => {
     await networkLogout();
@@ -25,9 +26,9 @@ const AppNavbar = (props) => {
   return (
     <Navbar className="blackBg" sticky="top" variant="dark">
       <Navbar.Brand id="navBrand">
-        <Image height={50} src="/assets/logo.png" />
+        <Image height={45} src="/assets/logo.png" />
       </Navbar.Brand>
-      <Nav id="mainNav" navbarScroll>
+      <Nav activeKey={location.pathname} id="mainNav" navbarScroll>
         <span id="navLeft">
           {ReactSession.get("userType") === userTypes.admin ? (
             <Nav.Link className="navItem" href="/adminHome">
@@ -75,7 +76,10 @@ const AppNavbar = (props) => {
 
           {ReactSession.get("userType") === userTypes.instructor ? (
             <Nav.Link href="/earnings">
-              <BsCoin color="#6C757D" size={36} />
+              <BsCoin
+                color={location.pathname === "/earnings" ? "white" : "#6C757D"}
+                size={35}
+              />
             </Nav.Link>
           ) : null}
 
