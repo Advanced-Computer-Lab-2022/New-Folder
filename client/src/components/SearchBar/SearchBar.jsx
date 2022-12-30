@@ -1,3 +1,4 @@
+import "./SearchBar.css";
 import { useState } from "react";
 import { Button, Form } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +15,7 @@ const SearchBar = () => {
     }
   };
   return (
-    <Form className="d-flex" onSubmit={submit}>
+    <Form className="d-flex" id="searchBar" onSubmit={submit}>
       <Form.Control
         type="search"
         placeholder="Search all courses"
@@ -22,7 +23,11 @@ const SearchBar = () => {
         aria-label="Search"
         onChange={(e) => setSearchQuery(e.target.value)}
       />
-      <Button type="submit" variant="outline-light">
+      <Button
+        type="submit"
+        style={{ fontSize: "1.3em " }}
+        variant="outline-light"
+      >
         Search
       </Button>
     </Form>
