@@ -168,7 +168,7 @@ function CourseSummary(props) {
                     showPopOver={showPopOver}
                   />
                 ) : null}
-                {progress > 50 ? (
+                {progress < 50 ? (
                   <RefundForm
                     vc={vc}
                     setVc={setVc}
