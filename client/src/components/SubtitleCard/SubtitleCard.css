@@ -1,3 +1,22 @@
 #sectionHeader {
   margin-left: -10px;
 }
+#confirmationContainer {
+  width: 100%;
+  padding: 3%;
+  text-align: center;
+}
+#warningSign {
+  color: #b22727;
+  margin: 10px;
+}
+#cancelConfirmationButton {
+  width: 30%;
+  margin-left: 10%;
+  margin-right: 3%;
+}
+#confirmationButton {
+  width: 30%;
+  margin-right: 10%;
+  margin-left: 3%;
+}

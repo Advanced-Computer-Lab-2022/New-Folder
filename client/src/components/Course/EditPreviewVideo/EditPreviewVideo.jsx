@@ -62,10 +62,20 @@ function EditPreviewVideo(props) {
             </Form.Control.Feedback>
           </Form.Group>
 
-          <Button id="cancelPreviewVideo" onClick={close} disabled={loading}>
+          <Button
+            id="cancelPreviewVideo"
+            onClick={close}
+            disabled={loading}
+            className="redBgHover"
+          >
             Cancel
           </Button>
-          <Button id="savePreviewVideo" type="submit" disabled={loading}>
+          <Button
+            id="savePreviewVideo"
+            type="submit"
+            disabled={loading}
+            className="blackBgHover"
+          >
             {loading ? (
               <>
                 <Spinner

@@ -5,6 +5,7 @@ import { Checkmark } from "react-checkmark";
 import "./SuccessFeedback.css";
 function SuccessFeedback(props) {
   const { msg } = props;
+  console.log("succed");
   return (
     <div id="successFeedbackContainer">
       <h3 className="blackTxt" id="successHeader">

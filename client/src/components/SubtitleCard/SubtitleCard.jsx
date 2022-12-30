@@ -8,11 +8,19 @@ import { BsFillFileTextFill, BsTrashFill } from "react-icons/bs";
 import ViewerContexts from "../../constants/ViewerContexts.json";
 import { ImPencil } from "react-icons/im";
 import colors from "../../colors.json";
-import { AiOutlinePlusCircle } from "react-icons/ai";
 import "./SubtitleCard.css";
+import SuccessFeedback from "../SuccessFeedback/SuccessFeedback";
+import ErrorFeedback from "../ErrorFeedback/ErrorFeedback";
+import { Button, Modal, Spinner } from "react-bootstrap";
+import { Alert, AlertIcon } from "@chakra-ui/alert";
+
 function SubtitleCard(props) {
   const navigate = useNavigate();
   const [subtitle, setSubtitle] = useState({ subTitle_Content: [] });
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [deleteFail, setDeleteFail] = useState(false);
   const getSubtitle = async () => {
     try {
       const fetchedSubtitle = await fetchSubtitle(props.subtitleId);
@@ -21,8 +29,14 @@ function SubtitleCard(props) {
       console.log(err);
     }
   };
-
+  let timeoutId;
+  useEffect(() => {
+    if (deleteFail || deleteSuccess) {
+      timeoutId = setTimeout(closeConfirmation, 3000);
+    }
+  }, [deleteSuccess, deleteFail]);
   const deleteSubtitle = async () => {
+    setDeleteLoading(true);
     try {
       const updatedSubtitles = [...props.subtitles];
       updatedSubtitles.splice(props.index, 1);
@@ -32,24 +46,84 @@ function SubtitleCard(props) {
       });
       console.log(updatedCourse);
       props.setCourse(updatedCourse);
-      props.setSubtitles(updatedCourse.subtitles);
-      const map = new Map(props.durationMap);
-      for (let i = 0; i < subtitle.subTitle_Content.length; i++) {
-        map.delete(subtitle.subTitle_Content[i].subTitle_Content_id);
-      }
-      props.setDurationMap(map);
-      props.claculateDuration();
+      setDeleteSuccess(true);
     } catch (err) {
-      console.log(err);
+      setDeleteFail(true);
     }
+    setDeleteLoading(false);
   };
-
+  const closeConfirmation = () => {
+    clearTimeout(timeoutId);
+    if (deleteSuccess) {
+      const updatedSubtitles = [...props.subtitles];
+      updatedSubtitles.splice(props.index, 1);
+      props.setSubtitles(updatedSubtitles);
+    }
+    setDeleteSuccess(false);
+    setDeleteFail(false);
+    setShowDeleteConfirmation(false);
+  };
   useEffect(() => {
     getSubtitle();
   }, []);
 
   return (
     <>
+      <Modal centered show={showDeleteConfirmation} onHide={closeConfirmation}>
+        {deleteSuccess ? (
+          <SuccessFeedback
+            msg={`Subtitle "${subtitle.title}" deleted successfully!`}
+          />
+        ) : (
+          <>
+            {deleteFail ? (
+              <ErrorFeedback />
+            ) : (
+              <div id="confirmationContainer">
+                <h3 className="blackTxt" id="confirmationHeader">
+                  {`Are you sure you want to delete subtitle "${subtitle.title}"?`}
+                </h3>
+                <div id="warningSign">
+                  <Alert status="warning">
+                    <AlertIcon boxSize="80px" />
+                  </Alert>
+                </div>
+                <div style={{ width: "100%" }}>
+                  <Button
+                    className="greyBgHover"
+                    id="cancelConfirmationButton"
+                    onClick={closeConfirmation}
+                    disabled={deleteLoading}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    className="redBgHover"
+                    id="confirmationButton"
+                    onClick={deleteSubtitle}
+                    disabled={deleteLoading}
+                  >
+                    {deleteLoading ? (
+                      <>
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                        {" Deleting..."}
+                      </>
+                    ) : (
+                      "Delete"
+                    )}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+      </Modal>
       <Accordion.Item eventKey={props.index}>
         <Accordion.Header>
           <div id="sectionHeader">
@@ -71,7 +145,7 @@ function SubtitleCard(props) {
                     color={colors.red}
                     size={18}
                     style={{ marginBottom: 5, marginLeft: 7 }}
-                    onClick={deleteSubtitle}
+                    onClick={() => setShowDeleteConfirmation(true)}
                   />
                 </>
               ) : null}
