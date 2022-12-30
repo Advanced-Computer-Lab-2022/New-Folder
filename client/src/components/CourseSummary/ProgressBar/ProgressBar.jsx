@@ -65,13 +65,14 @@ function ProgressBar(props) {
           <CircularProgressbar
             value={percentage}
             text={`Progress: \n${percentage}%`}
+            strokeWidth={12}
             styles={buildStyles({
               strokeLinecap: "butt",
               textSize: "11px",
               pathTransitionDuration: 0.5,
               pathColor: "#100F0F",
               textColor: "rgba(255, 255, 255, 0.7)",
-              trailColor: "#fff",
+              trailColor: "rgba(255, 255, 255, 0.3)",
               backgroundColor: "#fffff",
             })}
           />
