@@ -1,0 +1,3 @@
+#navDropdown::after {
+  content: none !important;
+}
