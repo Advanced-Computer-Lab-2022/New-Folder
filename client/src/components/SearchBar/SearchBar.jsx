@@ -20,6 +20,7 @@ const SearchBar = () => {
         type="search"
         placeholder="Search all courses"
         className="me-2"
+        style={{ minWidth: "320px" }}
         aria-label="Search"
         onChange={(e) => setSearchQuery(e.target.value)}
       />

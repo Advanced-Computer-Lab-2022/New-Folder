@@ -1,8 +1,7 @@
 import "./TraineeNavDropdown.css";
 import { NavDropdown } from "react-bootstrap";
 import { BsPersonCircle } from "react-icons/bs";
-
-const TraineeNavDropdown = () => {
+const TraineeNavDropdown = (props) => {
   return (
     <NavDropdown
       id="navDropdown"
@@ -20,6 +19,10 @@ const TraineeNavDropdown = () => {
       <NavDropdown.Divider />
       <NavDropdown.Item className="text-center" href="/changePassword">
         Change password
+      </NavDropdown.Item>
+      <NavDropdown.Divider />
+      <NavDropdown.Item className="text-center" onClick={props.logout}>
+        Log out
       </NavDropdown.Item>
     </NavDropdown>
   );

@@ -49,22 +49,21 @@ const AppNavbar = (props) => {
               <Nav.Link className="navItem" href="/setPromotion">
                 Set promotion
               </Nav.Link>
+              <Nav.Link className="navItem" onClick={logout}>
+                Log out
+              </Nav.Link>
             </>
           ) : null}
 
-          {ReactSession.get("userType") ? (
-            <Nav.Link className="navItem" onClick={logout}>
-              Log out
-            </Nav.Link>
-          ) : (
-            <Nav.Link className="navItem" href="/login">
-              Log in
-            </Nav.Link>
-          )}
           {ReactSession.get("userType") ? null : (
-            <Nav.Link className="navItem" href="/signup">
-              Sign up
-            </Nav.Link>
+            <>
+              <Nav.Link className="navItem" href="/login">
+                Log in
+              </Nav.Link>
+              <Nav.Link className="navItem" href="/signup">
+                Sign up
+              </Nav.Link>
+            </>
           )}
         </span>
         <span id="navRight">
@@ -81,11 +80,11 @@ const AppNavbar = (props) => {
           {[userTypes.trainee, userTypes.corporateTrainee].includes(
             ReactSession.get("userType")
           ) ? (
-            <TraineeNavDropdown />
+            <TraineeNavDropdown logout={logout} />
           ) : null}
 
           {ReactSession.get("userType") === userTypes.instructor ? (
-            <InstructorNavDropdown />
+            <InstructorNavDropdown logout={logout} />
           ) : null}
 
           <CountrySelector setCountry={props.setCountry} />
