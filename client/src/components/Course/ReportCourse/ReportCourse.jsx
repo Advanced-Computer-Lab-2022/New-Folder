@@ -71,9 +71,6 @@ function ReportCourse(props) {
   return (
     <>
       <Modal show={show} onHide={cancel} size={"lg"} centered>
-        <Modal.Header>
-          <Modal.Title>Report course</Modal.Title>
-        </Modal.Header>
         <>
           <>
             {editing ? (
@@ -85,6 +82,7 @@ function ReportCourse(props) {
                     onSubmit={handleSubmit}
                     id="reportProblemForm"
                   >
+                    <h1 className="text-center">Report Course</h1>
                     <Form.Group className="mb-3">
                       <Form.Label>Problem type</Form.Label>
                       <Form.Select

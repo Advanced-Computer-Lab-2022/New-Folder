@@ -9,7 +9,7 @@
     "@emotion/styled": "^11.10.5",
     "@material-ui/icons": "^4.11.3",
     "@mui/icons-material": "^5.11.0",
-    "@mui/material": "^5.10.16",
+    "@mui/material": "^5.11.2",
     "@mui/styled-engine-sc": "^5.10.16",
     "@react-pdf/renderer": "^3.0.1",
     "@testing-library/jest-dom": "^5.16.5",

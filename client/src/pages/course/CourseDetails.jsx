@@ -9,14 +9,13 @@ import "./CourseDetails.css";
 import Container from "react-bootstrap/esm/Container";
 import Button from "react-bootstrap/Button";
 import ViewerContexts from "../../constants/ViewerContexts.json";
-import { updateCourse, createNewSubtitle } from "../../network";
-import Form from "react-bootstrap/Form";
+import { updateCourse } from "../../network";
 import CourseSummary from "../../components/CourseSummary/CourseSummary";
 import Accordion from "react-bootstrap/Accordion";
 import CourseReviewCard from "../../components/Course/CourseReviewCard/CourseReviewCard";
 import colors from "../../colors.json";
-import ReactLoading from "react-loading";
 import { Spinner } from "react-bootstrap";
+import AddSubtitle from "../../components/Course/AddSubtitle/AddSubtitle";
 
 const CourseDetails = () => {
   const { courseId } = useParams();
@@ -28,7 +27,6 @@ const CourseDetails = () => {
   const [durationMap, setDurationMap] = useState(new Map());
   const [duration, setDuration] = useState(0);
   const [newVideo, setNewVideo] = useState();
-  const [newSubtitle, setNewSubtitle] = useState("");
   const [promotion, setPromotion] = useState(null);
   const [subContents, setSubContents] = useState([]);
   const [allPageLoading, setAllPageLoading] = useState(false);
@@ -107,17 +105,6 @@ const CourseDetails = () => {
     }
   };
 
-  const addSubtitle = async (e) => {
-    e.preventDefault();
-    try {
-      const updatedCourse = await createNewSubtitle(course._id, newSubtitle);
-      setCourse(updatedCourse);
-      setSubtitles(updatedCourse.subtitles);
-    } catch (err) {
-      console.log(err);
-    }
-  };
-
   useEffect(() => {
     fetchCourse();
   }, []);
@@ -189,30 +176,15 @@ const CourseDetails = () => {
                     />
                   ))}
                 </div>
-                {vc === ViewerContexts.author ? (
-                  <Form onSubmit={addSubtitle}>
-                    <Container className="mt-4">
-                      <Form.Group className="mt-3">
-                        <Form.Control
-                          type="text"
-                          placeholder="Add Subtitle"
-                          value={newSubtitle}
-                          required
-                          onChange={(e) => {
-                            setNewSubtitle(e.target.value);
-                          }}
-                        ></Form.Control>
-                      </Form.Group>
-                      <div className="text-center">
-                        <Button className="mt-3" type="submit">
-                          Add Subtitle
-                        </Button>
-                      </div>
-                    </Container>
-                  </Form>
-                ) : null}
               </Accordion>
             </div>
+            {vc === ViewerContexts.author ? (
+              <AddSubtitle
+                course={course}
+                setCourse={setCourse}
+                setSubtitles={setSubtitles}
+              />
+            ) : null}
             <ReviewCards />
           </div>
         </div>

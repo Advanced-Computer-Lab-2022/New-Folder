@@ -4,14 +4,23 @@ import { fetchSubtitle, updateCourse } from "../../network";
 import { useNavigate } from "react-router-dom";
 import VideoPreview from "./VideoPreview";
 import Accordion from "react-bootstrap/Accordion";
-import { MdOutlineOndemandVideo } from "react-icons/md";
-import { GiNotebook } from "react-icons/gi";
+import { BsFillFileTextFill, BsTrashFill } from "react-icons/bs";
 import ViewerContexts from "../../constants/ViewerContexts.json";
-import Button from "react-bootstrap/Button";
+import { ImPencil } from "react-icons/im";
+import colors from "../../colors.json";
 import "./SubtitleCard.css";
+import SuccessFeedback from "../SuccessFeedback/SuccessFeedback";
+import ErrorFeedback from "../ErrorFeedback/ErrorFeedback";
+import { Button, Modal, Spinner } from "react-bootstrap";
+import { Alert, AlertIcon } from "@chakra-ui/alert";
+
 function SubtitleCard(props) {
   const navigate = useNavigate();
   const [subtitle, setSubtitle] = useState({ subTitle_Content: [] });
+  const [showDeleteConfirmation, setShowDeleteConfirmation] = useState(false);
+  const [deleteLoading, setDeleteLoading] = useState(false);
+  const [deleteSuccess, setDeleteSuccess] = useState(false);
+  const [deleteFail, setDeleteFail] = useState(false);
   const getSubtitle = async () => {
     try {
       const fetchedSubtitle = await fetchSubtitle(props.subtitleId);
@@ -20,8 +29,14 @@ function SubtitleCard(props) {
       console.log(err);
     }
   };
-
+  let timeoutId;
+  useEffect(() => {
+    if (deleteFail || deleteSuccess) {
+      timeoutId = setTimeout(closeConfirmation, 3000);
+    }
+  }, [deleteSuccess, deleteFail]);
   const deleteSubtitle = async () => {
+    setDeleteLoading(true);
     try {
       const updatedSubtitles = [...props.subtitles];
       updatedSubtitles.splice(props.index, 1);
@@ -31,73 +46,136 @@ function SubtitleCard(props) {
       });
       console.log(updatedCourse);
       props.setCourse(updatedCourse);
-      props.setSubtitles(updatedCourse.subtitles);
-      const map = new Map(props.durationMap);
-      for (let i = 0; i < subtitle.subTitle_Content.length; i++) {
-        map.delete(subtitle.subTitle_Content[i].subTitle_Content_id);
-      }
-      props.setDurationMap(map);
-      props.claculateDuration();
+      setDeleteSuccess(true);
     } catch (err) {
-      console.log(err);
+      setDeleteFail(true);
     }
+    setDeleteLoading(false);
   };
-
+  const closeConfirmation = () => {
+    clearTimeout(timeoutId);
+    if (deleteSuccess) {
+      const updatedSubtitles = [...props.subtitles];
+      updatedSubtitles.splice(props.index, 1);
+      props.setSubtitles(updatedSubtitles);
+    }
+    setDeleteSuccess(false);
+    setDeleteFail(false);
+    setShowDeleteConfirmation(false);
+  };
   useEffect(() => {
     getSubtitle();
   }, []);
 
   return (
     <>
+      <Modal centered show={showDeleteConfirmation} onHide={closeConfirmation}>
+        {deleteSuccess ? (
+          <SuccessFeedback
+            msg={`Subtitle "${subtitle.title}" deleted successfully!`}
+          />
+        ) : (
+          <>
+            {deleteFail ? (
+              <ErrorFeedback />
+            ) : (
+              <div id="confirmationContainer">
+                <h3 className="blackTxt" id="confirmationHeader">
+                  {`Are you sure you want to delete subtitle "${subtitle.title}"?`}
+                </h3>
+                <div id="warningSign">
+                  <Alert status="warning">
+                    <AlertIcon boxSize="80px" />
+                  </Alert>
+                </div>
+                <div style={{ width: "100%" }}>
+                  <Button
+                    className="greyBgHover"
+                    id="cancelConfirmationButton"
+                    onClick={closeConfirmation}
+                    disabled={deleteLoading}
+                  >
+                    Cancel
+                  </Button>
+                  <Button
+                    className="redBgHover"
+                    id="confirmationButton"
+                    onClick={deleteSubtitle}
+                    disabled={deleteLoading}
+                  >
+                    {deleteLoading ? (
+                      <>
+                        <Spinner
+                          as="span"
+                          animation="border"
+                          size="sm"
+                          role="status"
+                          aria-hidden="true"
+                        />
+                        {" Deleting..."}
+                      </>
+                    ) : (
+                      "Delete"
+                    )}
+                  </Button>
+                </div>
+              </div>
+            )}
+          </>
+        )}
+      </Modal>
       <Accordion.Item eventKey={props.index}>
         <Accordion.Header>
           <div id="sectionHeader">
-            <h5>{"Section " + subtitle.subtitleNumber + ": "}</h5>
+            <h4>
+              <b>{subtitle.title}</b>
+              {props.vc === ViewerContexts.author ? (
+                <>
+                  <ImPencil
+                    color={colors.blue}
+                    size={18}
+                    style={{ marginBottom: 5, marginLeft: 7 }}
+                    onClick={() =>
+                      navigate(
+                        `/editSubtitle/${props.courseId}/${props.subtitleId}`
+                      )
+                    }
+                  />
+                  <BsTrashFill
+                    color={colors.red}
+                    size={18}
+                    style={{ marginBottom: 5, marginLeft: 7 }}
+                    onClick={() => setShowDeleteConfirmation(true)}
+                  />
+                </>
+              ) : null}
+            </h4>
           </div>
         </Accordion.Header>
         <Accordion.Body>
-          {props.vc === ViewerContexts.author ? (
-            <Button
-              onClick={() =>
-                navigate(`/editSubtitle/${props.courseId}/${props.subtitleId}`)
-              }
-            >
-              edit
-            </Button>
-          ) : null}
-          {props.vc === ViewerContexts.author ? (
-            <Button variant="danger" onClick={deleteSubtitle}>
-              delete
-            </Button>
-          ) : null}
-          <p>{"Title: " + (subtitle.title ?? "")}</p>
-          <ol style={{ border: "1px dotted black" }}>
-            {subtitle.subTitle_Content.map((content, index) => {
-              return (
-                <li>
-                  <div>
-                    {content.type == "content" ? (
-                      <div>
-                        <MdOutlineOndemandVideo gap={3} />
-                        video
-                        <VideoPreview
-                          videoId={content.subTitle_Content_id}
-                          idx={index}
-                          durationMap={props.durationMap}
-                          setDurationMap={props.setDurationMap}
-                        />
-                      </div>
-                    ) : (
-                      <div>
-                        <GiNotebook />
-                        Exercise
-                      </div>
-                    )}
-                  </div>
-                </li>
-              );
-            })}
-          </ol>
+          {subtitle.subTitle_Content.map((content, index) => {
+            return (
+              <div>
+                {content.type == "content" ? (
+                  <VideoPreview
+                    videoId={content.subTitle_Content_id}
+                    idx={index}
+                    durationMap={props.durationMap}
+                    setDurationMap={props.setDurationMap}
+                  />
+                ) : (
+                  <h5>
+                    <BsFillFileTextFill
+                      size={18}
+                      style={{ marginBottom: 5, marginRight: 4 }}
+                    />
+                    Exercise
+                  </h5>
+                )}
+                {index != subtitle.subTitle_Content.length - 1 ? <hr /> : null}
+              </div>
+            );
+          })}
         </Accordion.Body>
       </Accordion.Item>
     </>

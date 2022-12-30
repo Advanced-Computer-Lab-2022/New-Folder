@@ -2,6 +2,9 @@ import React from "react";
 import ViewerContexts from "../../../constants/ViewerContexts.json";
 import "./CourseBody.css";
 import "../../../App.css";
+import { BsClockFill, BsFillPeopleFill, BsFillStarFill } from "react-icons/bs";
+import { MdPayments } from "react-icons/md";
+import { IoBookSharp } from "react-icons/io5";
 function CourseBody(props) {
   const {
     vc,
@@ -12,6 +15,8 @@ function CourseBody(props) {
     subject,
     summary,
     trainees,
+    ratingsCount,
+    totalRating,
   } = props;
   return (
     <div id="courseBodyContainer" className="whiteCard">
@@ -22,7 +27,7 @@ function CourseBody(props) {
           {validPromotion ? (
             <>
               <h5 className="courseInfo">
-                <b>Price:</b> <del>{price.split(" ")[0] ?? ""}</del>{" "}
+                <MdPayments /> <del>{price.split(" ")[0] ?? ""}</del>{" "}
                 {(
                   parseFloat(price.split(" ")[0]) *
                   (1 - percentage / 100)
@@ -33,26 +38,42 @@ function CourseBody(props) {
             </>
           ) : (
             <h5 className="courseInfo">
-              <b>Price:</b> {price ?? ""}
+              <MdPayments style={{ marginBottom: 4, marginRight: 3 }} />{" "}
+              {price ?? ""}
             </h5>
           )}
         </>
       ) : null}
       <h5 className="courseInfo">
-        <b>Total duration:</b> {totalDuration}
+        <BsFillStarFill
+          size={19}
+          style={{ marginLeft: -1, marginBottom: 5, marginRight: 4 }}
+        />{" "}
+        {totalRating ?? 0}
+        <small>
+          &nbsp;&nbsp;&nbsp;
+          {"(" + ratingsCount ?? 0}
+          {ratingsCount == 1 ? " rating)" : " ratings)"}
+        </small>
       </h5>
-      {vc === ViewerContexts.author ? (
+      <h5 className="courseInfo">
+        <BsClockFill size={17} style={{ marginBottom: 5, marginRight: 5 }} />{" "}
+        {totalDuration ?? "2 Hours"}
+      </h5>
+      {vc === ViewerContexts.author || vc === ViewerContexts.savedAuthor ? (
         <h5 className="courseInfo">
-          <b>Count of enrolled trainees: </b> {trainees.length + " trainee(s)"}
+          <BsFillPeopleFill
+            size={17}
+            style={{ marginBottom: 5, marginRight: 5 }}
+          />{" "}
+          {trainees.length + " trainee(s)"}
         </h5>
       ) : null}
       <h5 className="courseInfo">
-        <strong>Subject:</strong> {subject ?? ""}
+        <IoBookSharp size={17} style={{ marginBottom: 2, marginRight: 5 }} />{" "}
+        {subject ?? "Computer science"}
       </h5>
-      <h5 className="courseInfo">
-        <strong>Summary:</strong>
-        <br /> {summary ?? ""}
-      </h5>
+      <h6 style={{ color: "#666666" }}>{summary}</h6>
     </div>
   );
 }
