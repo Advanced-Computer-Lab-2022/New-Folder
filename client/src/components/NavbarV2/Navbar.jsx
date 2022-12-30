@@ -78,7 +78,7 @@ const AppNavbar = (props) => {
             <Nav.Link href="/earnings">
               <BsCoin
                 color={location.pathname === "/earnings" ? "white" : "#949494"}
-                size={34.5}
+                size={35}
               />
             </Nav.Link>
           ) : null}
