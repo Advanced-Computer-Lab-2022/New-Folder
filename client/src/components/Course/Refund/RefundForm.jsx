@@ -11,7 +11,7 @@ import SuccessFeedback from "../../SuccessFeedback/SuccessFeedback";
 import ErrorFeedback from "../../ErrorFeedback/ErrorFeedback";
 import SuccessModal from "../../SuccessModal/SuccessModal";
 import ErrorModal from "../../ErrorModal/ErrorModal";
-import {ImCancelCircle} from "react-icons/im"
+import { ImCancelCircle } from "react-icons/im";
 import colors from "../../../colors.json";
 function RefundForm(props) {
   const { vc, setVc, courseId } = props;

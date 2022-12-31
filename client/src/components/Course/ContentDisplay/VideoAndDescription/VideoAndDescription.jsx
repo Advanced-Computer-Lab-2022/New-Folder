@@ -9,7 +9,7 @@ const VideoAndDescription = (props) => {
   const contentID = props.contentFetched;
   const [video, setVideo] = useState("");
   const [description, setDescription] = useState("");
-  const [title , setTitle] = useState("");
+  const [title, setTitle] = useState("");
   const setParentContentTitle = props.setParentContentTitle;
 
   // get content from database and then display video and title
@@ -35,14 +35,14 @@ const VideoAndDescription = (props) => {
     fetchingContent();
   }, []);
 
-  useEffect (()=>{
+  useEffect(() => {
     setParentContentTitle(title);
-  },[title])
+  }, [title]);
 
   // only video and video title are dislayed here
   // there is a button for next video is commented till further discussions
   return (
-    <div id="videaAndDescription" >
+    <div id="videaAndDescription">
       <div className="watchScreen__player">
         <iframe
           src={video}
@@ -54,15 +54,12 @@ const VideoAndDescription = (props) => {
         ></iframe>
       </div>
       <div class="watchScreen__description">
-    
         <p>{title}</p>
         <span>{description}</span>
-        
+
         {/* <button type="button" class="btn btn-primary">Next Video</button> */}
       </div>
-      <div className="watchscreen__des">
-        
-      </div>
+      <div className="watchscreen__des"></div>
     </div>
   );
 };

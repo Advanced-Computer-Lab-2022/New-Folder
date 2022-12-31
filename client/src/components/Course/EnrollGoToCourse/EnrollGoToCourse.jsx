@@ -39,7 +39,7 @@ function EnrollGoToCourse(props) {
         <>
           {vc === ViewerContexts.enrolledTrainee ? (
             <Button
-            className="blackBgHover"
+              className="blackBgHover"
               onClick={() => navigate("/watch/" + courseId + "?sId=0&cId=0")}
               id="enrollButton"
             >

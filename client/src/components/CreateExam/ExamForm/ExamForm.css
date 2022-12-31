@@ -1,17 +1,15 @@
 .ExamForm {
   padding-left: 0 !important;
   padding-right: 0 !important;
-  
+
   width: 50% !important;
-  padding: 2em !important; 
+  padding: 2em !important;
 
   margin-bottom: 2em;
 }
 
 .ExamForm.NotCompleted {
-
   box-shadow: rgba(255, 238, 0, 0.658) 4px 11px 41px;
-
 }
 
 .questionStatement-header {
@@ -43,13 +41,12 @@
   margin: 0.4em;
 }
 
-
 .chooseCorrectAnswer {
   margin-left: 0.5em;
 }
 
 .chooseCorrectAnswer input {
-  cursor : pointer;
+  cursor: pointer;
 }
 
 #text-feedback {

@@ -42,7 +42,7 @@ function PDFnote(props) {
     <Document>
       <Page style={styles.body}>
         <Text style={styles.header} fixed>
-            {conTitle}
+          {conTitle}
         </Text>
         <Text style={styles.text}>{notes}</Text>
         <Text
