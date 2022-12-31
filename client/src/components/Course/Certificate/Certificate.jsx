@@ -6,14 +6,14 @@ import certificateTemp from "./certificate-template/certificate.png";
 import { ReactSession } from "react-client-session";
 import "./Certificate.css";
 import { sendCertificate } from "../../../network";
-import ReactLoading from 'react-loading';
+import ReactLoading from "react-loading";
 import Loading from "react-loading";
 import { useEffect } from "react";
 
 const Certificate = (props) => {
   const [show, setShow] = useState(false);
-  const [showMail , setShowMail] = useState(false);
-  const [mailLoading , setMailLoading] = useState(false);
+  const [showMail, setShowMail] = useState(false);
+  const [mailLoading, setMailLoading] = useState(false);
   const courseName = props.courseName;
   const percentage = props.percentage;
 
@@ -44,7 +44,6 @@ const Certificate = (props) => {
     doc.save(ReactSession.get("userName") + " certificate");
   };
 
-
   return (
     <div>
       <div
@@ -60,7 +59,8 @@ const Certificate = (props) => {
         <Button
           disabled={Math.trunc(percentage) !== 100}
           onClick={handleShow}
-          variant="success"
+          className="greenBgHover ms-3"
+          style={{ height: "41px" }}
         >
           Earn Certificate
         </Button>
@@ -75,22 +75,31 @@ const Certificate = (props) => {
           or send it on your <strong>Email</strong>
         </Modal.Body>
         <Modal.Footer id="modal-Certificate">
-          <Button className="blueBg blueBgHover"
+          <Button
+            className="blueBg blueBgHover"
             variant="warning"
             onClick={() => {
               setMailLoading(true);
               handlesendCertificate();
-              
-       
             }}
           >
             <div className="Email-loader">
-             {mailLoading && <ReactLoading className="Email-Loader-spinner" type={"spin"} height={18} width={18}/>}
-              <span> Send by <strong>Email</strong></span>
+              {mailLoading && (
+                <ReactLoading
+                  className="Email-Loader-spinner"
+                  type={"spin"}
+                  height={18}
+                  width={18}
+                />
+              )}
+              <span>
+                {" "}
+                Send by <strong>Email</strong>
+              </span>
             </div>
-            
           </Button>
-          <Button className="blackBg blackBgHover"
+          <Button
+            className="blackBg blackBgHover"
             variant="warning"
             onClick={() => {
               generatePDF();
@@ -107,7 +116,8 @@ const Certificate = (props) => {
           <Modal.Title id="modal-Certificate">Certificate Sent</Modal.Title>
         </Modal.Header>
         <Modal.Body id="modal-Certificate">
-          Your Certificate has been sent on your <strong>Email</strong> successfully.
+          Your Certificate has been sent on your <strong>Email</strong>{" "}
+          successfully.
         </Modal.Body>
         <Modal.Footer id="modal-Certificate">
           <Button

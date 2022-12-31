@@ -59,21 +59,17 @@ function AccessRequests() {
         <>
           {accessRequests.length > 0 ? (
             <>
-              <div id="gridContainer">
-                <Row xs={1} md={3}>
-                  {accessRequests.map((request) => (
-                    <Col>
-                      <AccessRequestCard
-                        accessRequests={accessRequests}
-                        setAccessRequests={setAccessRequests}
-                        request={request}
-                        setFail={setFail}
-                        setSuccess={setSuccess}
-                        setMsg={setMsg}
-                      />
-                    </Col>
-                  ))}
-                </Row>
+              <div id="gridContainer3">
+                {accessRequests.map((request) => (
+                  <AccessRequestCard
+                    accessRequests={accessRequests}
+                    setAccessRequests={setAccessRequests}
+                    request={request}
+                    setFail={setFail}
+                    setSuccess={setSuccess}
+                    setMsg={setMsg}
+                  />
+                ))}
               </div>
             </>
           ) : (

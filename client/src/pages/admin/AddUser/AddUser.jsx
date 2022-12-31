@@ -79,7 +79,7 @@ function AddUser() {
     navigate("/");
   };
   return (
-    <>
+    <div className="pb-3">
       <SuccessModal
         show={success}
         msg={`${getUserType(userType)} added successfully!`}
@@ -92,7 +92,7 @@ function AddUser() {
           <Alert show={showError} variant="danger">
             {errorMsg}
           </Alert>
-          <Form.Group controlId="validationCustomUsername">
+          <Form.Group className="mb-2" controlId="validationCustomUsername">
             <Form.Label>Username</Form.Label>
             <InputGroup hasValidation>
               <Form.Control
@@ -109,18 +109,31 @@ function AddUser() {
               </Form.Control.Feedback>
             </InputGroup>
           </Form.Group>
-          <Form.Group controlId="validationCustom04">
+          <Form.Group className="mb-2" controlId="validationCustom04">
             <Form.Label>Password</Form.Label>
             <Form.Control
               type="password"
               required
               name="password"
               placeholder="Password"
+              minLength={6}
               value={data.password}
               onChange={onChange}
             />
             <Form.Control.Feedback type="invalid">
-              This field is required
+              Please enter a valid password (min: 6 characters).
+            </Form.Control.Feedback>
+          </Form.Group>
+          <Form.Group className="mb-3" controlId="exampleForm.ControlTextarea1">
+            <Form.Label>Confirm Password</Form.Label>
+            <Form.Control
+              type="password"
+              placeholder="Confirm Password"
+              required
+              pattern={data.password}
+            />
+            <Form.Control.Feedback type="invalid">
+              This doesn't match the password you entered.
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-3">
@@ -143,7 +156,7 @@ function AddUser() {
           </Form.Group>
           {userType !== UserTypes.admin ? (
             <>
-              <Form.Group controlId="validationCustom01">
+              <Form.Group className="mb-2" controlId="validationCustom01">
                 <Form.Label>First name</Form.Label>
                 <Form.Control
                   required
@@ -157,7 +170,7 @@ function AddUser() {
                   This field is required
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group controlId="validationCustom02">
+              <Form.Group className="mb-2" controlId="validationCustom02">
                 <Form.Label>Last name</Form.Label>
                 <Form.Control
                   required
@@ -172,7 +185,7 @@ function AddUser() {
                 </Form.Control.Feedback>
               </Form.Group>
               {userType === UserTypes.corporateTrainee ? (
-                <Form.Group controlId="validationCustom04">
+                <Form.Group className="mb-2" controlId="validationCustom04">
                   <Form.Label>Corporate Name</Form.Label>
                   <Form.Control
                     required
@@ -191,7 +204,7 @@ function AddUser() {
               ) : (
                 <></>
               )}
-              <Form.Group controlId="validationCustom03">
+              <Form.Group className="mb-2" controlId="validationCustom03">
                 <Form.Label>Email</Form.Label>
                 <Form.Control
                   type="text"
@@ -205,7 +218,7 @@ function AddUser() {
                   This field is required
                 </Form.Control.Feedback>
               </Form.Group>
-              <Form.Group className="mb-3">
+              <Form.Group className="mb-4">
                 <Form.Label>Gender</Form.Label>
                 {Object.values(["Male", "Female"]).map((type) => {
                   return (
@@ -224,34 +237,27 @@ function AddUser() {
               </Form.Group>
             </>
           ) : null}
-          {loading ? (
-            <Button
-              type="submit"
-              id="addUserSaveButton"
-              className="blueBgHover"
-              disabled
-            >
+          <Button
+            type="submit"
+            className="blueBgHover"
+            id="addUserSaveButton"
+            disabled={loading}
+          >
+            Add user{" "}
+            {loading ? (
               <Spinner
                 as="span"
                 animation="border"
+                className="ms-1"
                 size="sm"
                 role="status"
                 aria-hidden="true"
               />
-              {" Saving..."}
-            </Button>
-          ) : (
-            <Button
-              type="submit"
-              id="addUserSaveButton"
-              className="blueBgHover"
-            >
-              Add user
-            </Button>
-          )}
+            ) : null}
+          </Button>
         </Col>
       </Form>
-    </>
+    </div>
   );
 }
 

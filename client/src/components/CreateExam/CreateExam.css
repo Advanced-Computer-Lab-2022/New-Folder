@@ -34,7 +34,6 @@
   flex-direction: column;
 }
 .form-area {
-
   width: 100%;
 }
 
@@ -47,7 +46,6 @@
   flex-direction: row;
   width: 40%;
 }
-
 
 .exercise-Loader-spinner {
   margin-bottom: 7px;

@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { Form } from "react-bootstrap";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import ErrorModal from "../ErrorModal/ErrorModal";
-import ReactLoading from 'react-loading';
+import ReactLoading from "react-loading";
 
 const CreateExam = (props) => {
   const subtitleID = props.subtitleID;
@@ -31,7 +31,7 @@ const CreateExam = (props) => {
   const [show, setShow] = useState(false);
   const [showError, setShowError] = useState(false);
   const [validate, setValidate] = useState(false);
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleShow = () => setShow(true);
@@ -39,7 +39,6 @@ const CreateExam = (props) => {
 
   const handleCloseError = () => setShowError(false);
   const handleShowError = () => setShowError(true);
-
 
   // add more question forms
   const addAnotherQuestion = () => {
@@ -167,10 +166,16 @@ const CreateExam = (props) => {
             className="btn btn-primary rounded-pill blackBgHover"
           >
             <div className="execise-loader">
-              {loading && <ReactLoading className="exercise-Loader-spinner" type={"spin"} height={17} width={17}/>}
+              {loading && (
+                <ReactLoading
+                  className="exercise-Loader-spinner"
+                  type={"spin"}
+                  height={17}
+                  width={17}
+                />
+              )}
               <span>Add Exercise</span>
             </div>
-          
           </Button>
         </div>
       </Form>

@@ -26,7 +26,11 @@ const SubtitleSideBarItem = (props) => {
   }, []);
 
   return (
-    <div className={isOpenedSubtitle[subIDx] ? "sidebar-item open" : "sidebar-item"}>
+    <div
+      className={
+        isOpenedSubtitle[subIDx] ? "sidebar-item open" : "sidebar-item"
+      }
+    >
       <div
         className="sidebar-title"
         onClick={() => {

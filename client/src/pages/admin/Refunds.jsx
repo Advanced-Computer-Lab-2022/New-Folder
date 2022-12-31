@@ -58,20 +58,16 @@ function Reports() {
           {refunds.length > 0 ? (
             <>
               <div id="gridContainer">
-                <Row xs={1} md={3}>
-                  {refunds.map((refund) => (
-                    <Col>
-                      <RefundInfoCard
-                        request={refund}
-                        allRefunds={refunds}
-                        setAllRefunds={setRefunds}
-                        setFail={setFail}
-                        setSuccess={setSuccess}
-                        setMsg={setMsg}
-                      />
-                    </Col>
-                  ))}
-                </Row>
+                {refunds.map((refund) => (
+                  <RefundInfoCard
+                    request={refund}
+                    allRefunds={refunds}
+                    setAllRefunds={setRefunds}
+                    setFail={setFail}
+                    setSuccess={setSuccess}
+                    setMsg={setMsg}
+                  />
+                ))}
               </div>
             </>
           ) : (

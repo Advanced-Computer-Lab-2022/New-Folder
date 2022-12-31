@@ -56,13 +56,13 @@ function AccessRequestCard(props) {
         <Col>
           <h4>{request.userName}</h4>
           <small>
-            <BiBuildings></BiBuildings>
+            <BiBuildings size={18} />
             <b>{" " + request.corporateName}</b>
             <br />
           </small>
           <small>
             <b>
-              <BsBookHalf></BsBookHalf>
+              <BsBookHalf size={16} />
               <a
                 href={"/course/" + request.courseId}
                 id="problemCourseNameLink"
@@ -130,12 +130,14 @@ function AccessRequestCard(props) {
             ) : (
               <>
                 <Button
+                  className="redBgHover m-2"
                   onClick={() => decline()}
                   id="accessRequestDeclineButton"
                 >
                   Decline
                 </Button>
                 <Button
+                  className="blueBgHover m-2"
                   onClick={() => approve()}
                   id="accessRequestApproveButton"
                 >

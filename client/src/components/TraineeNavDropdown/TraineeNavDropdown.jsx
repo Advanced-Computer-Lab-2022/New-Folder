@@ -14,15 +14,15 @@ const TraineeNavDropdown = (props) => {
       </NavDropdown.Item>
       <NavDropdown.Divider />
       <NavDropdown.Item className="text-center" href="/myProblems">
-        Reports
+        Reported Issues
       </NavDropdown.Item>
       <NavDropdown.Divider />
       <NavDropdown.Item className="text-center" href="/changePassword">
-        Change password
+        Change Password
       </NavDropdown.Item>
       <NavDropdown.Divider />
       <NavDropdown.Item className="text-center" onClick={props.logout}>
-        Log out
+        Log Out
       </NavDropdown.Item>
     </NavDropdown>
   );
