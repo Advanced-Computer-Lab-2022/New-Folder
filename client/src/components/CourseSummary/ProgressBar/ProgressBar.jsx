@@ -1,15 +1,11 @@
 import React, { useState } from "react";
-import { Progress } from "antd";
 import { FetchContentVisit, fetchSubtitle } from "../../../network";
 import { useEffect } from "react";
 import ReactLoading from "react-loading";
-import { buildStyles, CircularProgressbar } from "react-circular-progressbar";
-import "react-circular-progressbar/dist/styles.css";
-
 import "./ProgressBar.css";
 import Certificate from "../../Course/Certificate/Certificate";
-import { Spinner } from "react-bootstrap";
-function ProgressBar(props) {
+import { Spinner, ProgressBar } from "react-bootstrap";
+function Progress(props) {
   const [done, setDone] = useState(false);
   const {
     subContents,
@@ -59,24 +55,20 @@ function ProgressBar(props) {
   }, [subtitles]);
 
   return (
-    <div id="progressWrapper">
-      <div style={{ width: "35%", marginRight: 0 }}>
+    <span id="progressWrapper">
+      <div>
         {done ? (
-          <CircularProgressbar
-            value={percentage}
-            text={`Progress: \n${percentage}%`}
-            styles={buildStyles({
-              strokeLinecap: "butt",
-              textSize: "11px",
-              pathTransitionDuration: 0.5,
-              pathColor: "#100F0F",
-              textColor: "rgba(255, 255, 255, 0.7)",
-              trailColor: "#fff",
-              backgroundColor: "#fffff",
-            })}
-          />
+          <div>
+            <h4 className="mb-3">Your progress : </h4>
+            <ProgressBar
+              variant="dark"
+              striped
+              now={percentage}
+              label={`${Math.round(percentage)}%`}
+            />
+          </div>
         ) : (
-          <div style={{ width: "45%", marginRight: 0 }}>
+          <div style={{ width: "45%", marginRight: 20 }}>
             <ReactLoading type={"spin"} color="#fff" />
           </div>
         )}
@@ -84,8 +76,8 @@ function ProgressBar(props) {
       {done && percentage == 100 ? (
         <Certificate percentage={percentage} courseName={courseName} />
       ) : null}
-    </div>
+    </span>
   );
 }
 
-export default ProgressBar;
+export default Progress;

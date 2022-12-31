@@ -114,3 +114,15 @@ input[type="checkbox"]:checked {
   box-shadow: none;
   border: 1px solid #100f0f;
 }
+
+.greenBgHover:hover {
+  background-color: transparent !important;
+  border: 1px solid white !important;
+  color: white !important;
+}
+
+.greenBgHover {
+  background-color: #35a7a0 !important;
+  border: 1px solid #35a7a0 !important;
+  color: white !important;
+}
