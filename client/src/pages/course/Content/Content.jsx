@@ -8,7 +8,9 @@ import ContentDisplay from "../../../components/Course/ContentDisplay/ContentDis
 import SubtitleSideBarItem from "../../../components/Course/SubtitleSideBarItem/SubtitleSideBarItem";
 import { fetchCourseDetails } from "../../../network";
 import "./Content.css";
-import ReactLoading from 'react-loading';
+import userTypes from "../../../constants/UserTypes.json";
+import { ReactSession } from "react-client-session";
+import ReactLoading from "react-loading";
 
 const Content = () => {
   // States of subtitle Array , Video will be displayed, and content description
@@ -17,7 +19,7 @@ const Content = () => {
   const [isOpenedSubtitle, setIsOpenedSubtitle] = useState([]);
   const [parentContentID, setParentContentID] = useState("");
   const [parentContentTitle, setParentContentTitle] = useState("");
-
+  const [isTrainee, setTrainee] = useState(false);
   const [loading, setLoading] = useState(false);
 
   // get course ID to get Course Object
@@ -33,6 +35,15 @@ const Content = () => {
   }, []);
 
   const fetchCourse = async () => {
+    if (
+      [userTypes.trainee, userTypes.corporateTrainee].includes(
+        ReactSession.get("userType")
+      )
+    ) {
+      setTrainee(true);
+    } else {
+      setTrainee(false);
+    }
     try {
       const fetchedCourse = await fetchCourseDetails(courseId);
       setSubtitles(fetchedCourse.subtitles);
@@ -63,9 +74,7 @@ const Content = () => {
   // second part which is the accordion shows all subtitle_content to let the user choose desired excercise or content Video
   return (
     <div className="content-page">
-   
       <Row>
-        
         <Col lg={8}>
           {subtitleID !== "" && (
             <ContentDisplay
@@ -99,7 +108,7 @@ const Content = () => {
           </div>
         </Col>
 
-        {parentContentID !== "" && (
+        {parentContentID !== "" && isTrainee && (
           <Note conID={parentContentID} conTitle={parentContentTitle} />
         )}
       </Row>

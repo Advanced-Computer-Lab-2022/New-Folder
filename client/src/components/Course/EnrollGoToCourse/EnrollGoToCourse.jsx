@@ -37,9 +37,14 @@ function EnrollGoToCourse(props) {
         </>
       ) : (
         <>
-          {vc === ViewerContexts.enrolledTrainee ? (
+          {[
+            ViewerContexts.author,
+            ViewerContexts.savedAuthor,
+            ViewerContexts.admin,
+            ViewerContexts.enrolledTrainee,
+          ].includes(vc) ? (
             <Button
-            className="blackBgHover"
+              className="blackBgHover"
               onClick={() => navigate("/watch/" + courseId + "?sId=0&cId=0")}
               id="enrollButton"
             >
