@@ -75,7 +75,7 @@ function CreateCourse() {
     navigate("/");
   };
   return (
-    <>
+    <div className="pb-2">
       <PageHeader pageName="Create course" />
       <SuccessModal
         msg="Course created successfully!"
@@ -220,32 +220,34 @@ function CreateCourse() {
             </Form.Select>
           </Form.Group>
           <Form.Group className="mb-3">
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "flex-start",
-                width: "fit-content",
-                margin: 0,
-              }}
-            >
-              <Form.Check
-                required
-                feedback="You must agree before submitting."
-                feedbackType="invalid"
-              />
-              &nbsp; Agree on&nbsp;
-              <a
-                style={{ textDecoration: "none" }}
-                className="blueTxt"
-                onClick={() => setShow(true)}
-              >
-                terms and conditions.
-              </a>
-            </div>
+            <Form.Check
+              required
+              feedback="You must agree before submitting."
+              feedbackType="invalid"
+              label={
+                <p>
+                  Agree to{" "}
+                  <a
+                    onClick={() => setShow(true)}
+                    style={{ textDecoration: "none" }}
+                    className="blueTxt"
+                  >
+                    terms and conditions
+                  </a>
+                  .
+                </p>
+              }
+            />
           </Form.Group>
           <Form.Group className="mb-3">
-            {loading ? (
-              <Button type="submit" id="createCourseSaveButton" disabled>
+            <Button
+              type="submit"
+              className="blueBgHover"
+              id="createCourseSaveButton"
+              disabled={loading}
+            >
+              Create course{" "}
+              {loading ? (
                 <Spinner
                   as="span"
                   animation="border"
@@ -253,22 +255,13 @@ function CreateCourse() {
                   role="status"
                   aria-hidden="true"
                 />
-                {" Saving..."}
-              </Button>
-            ) : (
-              <Button
-                type="submit"
-                className="blueBgHover"
-                id="createCourseSaveButton"
-              >
-                Create course
-              </Button>
-            )}
+              ) : null}
+            </Button>
             <ContractCard show={show} setShow={setShow} />
           </Form.Group>
         </Col>
       </Form>
-    </>
+    </div>
   );
 }
 
