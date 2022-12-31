@@ -78,78 +78,41 @@ function AccessRequestCard(props) {
         </Col>
         <Col></Col>
       </Row>
+      <hr className="m-1" />
       <div id="accessRequestBody">{request.reason}</div>
       <div id="accessRequestFooter">
-        {declineLoading ? (
-          <>
-            <Button
-              onClick={() => decline()}
-              id="accessRequestDeclineButton"
-              disabled
-            >
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-              {" Saving..."}
-            </Button>
-            <Button
-              onClick={() => approve()}
-              id="accessRequestApproveButton"
-              disabled
-            >
-              Approve
-            </Button>
-          </>
-        ) : (
-          <>
-            {approveLoading ? (
-              <>
-                <Button
-                  onClick={() => decline()}
-                  id="accessRequestDeclineButton"
-                  disabled
-                >
-                  Decline
-                </Button>
-                <Button
-                  onClick={() => approve()}
-                  id="accessRequestApproveButton"
-                  disabled
-                >
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                  {" Saving..."}
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button
-                  className="redBgHover m-2"
-                  onClick={() => decline()}
-                  id="accessRequestDeclineButton"
-                >
-                  Decline
-                </Button>
-                <Button
-                  className="blueBgHover m-2"
-                  onClick={() => approve()}
-                  id="accessRequestApproveButton"
-                >
-                  Approve
-                </Button>
-              </>
-            )}
-          </>
-        )}
+        <Button
+          onClick={() => decline()}
+          className="redBgHover accessRequestButton"
+          disabled={approveLoading || declineLoading}
+        >
+          Decline{" "}
+          {declineLoading ? (
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          ) : null}
+        </Button>
+        <Button
+          onClick={() => approve()}
+          className="blueBgHover accessRequestButton"
+          disabled={approveLoading || declineLoading}
+        >
+          Approve{" "}
+          {approveLoading ? (
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          ) : null}
+        </Button>
       </div>
     </div>
   );
