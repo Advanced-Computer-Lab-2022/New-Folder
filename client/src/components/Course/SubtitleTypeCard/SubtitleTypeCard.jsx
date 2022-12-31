@@ -97,14 +97,18 @@ const SubtitleTypeCard = (props) => {
             {type === constants.content ? (
               <i class="bi bi-clock-fill"></i>
             ) : (
-              <i>Score : </i>
+              <>{isTrainee ? <i>Score : </i> : null}</>
             )}
             {type === constants.content ? (
               <span>{totalDurationWithColon(duration)}</span>
             ) : (
-              <span>
-                {traineeMark === -1 ? "-" : traineeMark} / {excerciseMark}
-              </span>
+              <>
+                {isTrainee ? (
+                  <span>
+                    {traineeMark === -1 ? "-" : traineeMark} / {excerciseMark}
+                  </span>
+                ) : null}
+              </>
             )}
           </div>
         </div>

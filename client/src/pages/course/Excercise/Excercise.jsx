@@ -7,7 +7,8 @@ import ExcerciseCard from "../../../components/Course/Excercise/ExcerciseCard";
 import { fetchExcercise, postMark } from "../../../network";
 import PageHeader from "../../../components/PageHeader/PageHeader";
 import "./Excercise.css";
-
+import userTypes from "../../../constants/UserTypes.json";
+import { ReactSession } from "react-client-session";
 const Excercise = () => {
   const navigate = useNavigate();
   const { excerciseID } = useParams();
@@ -21,6 +22,7 @@ const Excercise = () => {
   const [configMsg, setConfigMsg] = useState("");
 
   const [showConfirmation, setShowConfirmation] = useState(false);
+  const [isTrainee, setTrainee] = useState(false);
 
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
@@ -36,6 +38,15 @@ const Excercise = () => {
   };
 
   const fetchingExcercise = async () => {
+    if (
+      [userTypes.trainee, userTypes.corporateTrainee].includes(
+        ReactSession.get("userType")
+      )
+    ) {
+      setTrainee(true);
+    } else {
+      setTrainee(false);
+    }
     try {
       const fetchedExcercise = await fetchExcercise(excerciseID);
       setQuestions(fetchedExcercise.Questions);
@@ -131,18 +142,21 @@ const Excercise = () => {
         })}
       </Row>
       <div className="submit-quiz">
-        <button
-          disabled={isSubmitted}
-          type="button"
-          className ="blueBg blueBgHover btn btn-primary"
-          onClick={handleSubmit}
-        >
-          Submit
-        </button>
+        {isTrainee ? (
+          <button
+            disabled={isSubmitted}
+            type="button"
+            className="blueBg blueBgHover btn btn-primary"
+            onClick={handleSubmit}
+          >
+            Submit
+          </button>
+        ) : null}
+
         {isSubmitted && (
           <button
             type="button"
-            className ="blackBg blackBgHover btn btn-success"
+            className="blackBg blackBgHover btn btn-success"
             onClick={() => navigate(-1)}
           >
             Go Back to Course Content
@@ -172,7 +186,11 @@ const Excercise = () => {
         </Modal.Body>
 
         <Modal.Footer id="quiz-reaction">
-          <Button className="blueBg blueBgHover " variant="primary" onClick={handleClose}>
+          <Button
+            className="blueBg blueBgHover "
+            variant="primary"
+            onClick={handleClose}
+          >
             continue
           </Button>
         </Modal.Footer>
@@ -188,10 +206,18 @@ const Excercise = () => {
         </Modal.Body>
 
         <Modal.Footer id="quiz-reaction">
-          <Button className = "greyBg greyBgHover" variant="Danger" onClick={handleCloseConfirmation}>
+          <Button
+            className="greyBg greyBgHover"
+            variant="Danger"
+            onClick={handleCloseConfirmation}
+          >
             Cancel
           </Button>
-          <Button className="blueBg blueBgHover " variant="primary" onClick={handleConfirm}>
+          <Button
+            className="blueBg blueBgHover "
+            variant="primary"
+            onClick={handleConfirm}
+          >
             Confirm
           </Button>
         </Modal.Footer>
