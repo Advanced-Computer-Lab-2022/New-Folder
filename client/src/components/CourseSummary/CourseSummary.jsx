@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import ViewerContexts from "../../constants/ViewerContexts.json";
+import userTypes from "../../constants/UserTypes.json";
 import "./CourseSummary.css";
 import { useState } from "react";
 import "react-day-picker/dist/style.css";
@@ -147,7 +148,12 @@ function CourseSummary(props) {
             course={course}
             setVc={setVc}
           />
-          {vc !== ViewerContexts.admin && vc !== ViewerContexts.guest ? (
+          {![
+            ViewerContexts.admin,
+            ViewerContexts.guest,
+            ViewerContexts.nonEnrolledCorporateTrainee,
+            ViewerContexts.pendingCorporateTrainee,
+          ].includes(vc) ? (
             <>
               {" "}
               <small
@@ -179,7 +185,10 @@ function CourseSummary(props) {
                         showPopOver={showPopOver}
                       />
                     ) : null}
-                    {(vc === ViewerContexts.enrolledTrainee && progress < 50) ||
+                    {(vc === ViewerContexts.enrolledTrainee &&
+                      ReactSession.get("userType") !==
+                        userTypes.corporateTrainee &&
+                      progress < 50) ||
                     vc === ViewerContexts.refundingTrainee ? (
                       <RefundForm
                         vc={vc}
