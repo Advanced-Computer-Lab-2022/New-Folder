@@ -50,6 +50,7 @@ const EditMyProfileForm = (props) => {
         <ImPencil
           onClick={() => setAllowEdit(true)}
           id="pencilIcon"
+          color="#297f87"
           size={20}
         />
       </h3>

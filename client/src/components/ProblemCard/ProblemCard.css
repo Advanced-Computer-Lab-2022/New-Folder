@@ -4,41 +4,27 @@
 #problemCard {
   margin-left: 0px;
   padding: 1%;
-  border-radius: 1em;
 }
 #problemContainer {
   display: inline-block;
   width: 100%;
   margin: 1%;
+  padding-top: 1%;
   height: max-content;
-  border-radius: 1em;
+  background-color: white !important;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
-    rgba(0, 0, 0, 0.1) 0px 10px 15px -3px;
+    rgba(0, 0, 0, 0.1) 0px 10px 15px -3px !important;
+  border-radius: 8px !important;
+  color: #100f0f !important;
 }
-#problemHeaderUnseen {
-  background-color: #ffd269;
-  color: 5%;
+.problemHeader {
   margin: 0%;
-  border-radius: 1em;
-  padding: 1%;
-}
-#problemHeaderPending {
-  background-color: #87b3b4;
-  color: 5%;
-  margin: 0%;
-  border-radius: 1em;
-  padding: 1%;
-}
-#problemHeaderResolved {
-  background-color: #6bb16f7c;
-  color: 5%;
-  margin: 0%;
-  border-radius: 1em;
   padding: 1%;
 }
 #problemStatus {
   justify-content: flex-end;
   text-align-last: right;
+  margin-top: 4%;
 }
 #resolveButton {
   justify-content: flex-end;
@@ -50,16 +36,16 @@
 }
 #panel1a-header {
   background-color: white;
-  border-radius: 1em;
+  border-radius: 8px;
 }
 #reportAccordionWrapper {
-  border-radius: 1em;
+  border-top: 1px solid lightgray;
 }
 #reportAccordionWrapper::before {
   content: none;
 }
 #followupsList {
-  border-radius: 1em;
+  border-radius: 8px;
 }
 #addFollowupButton {
   background-color: rgb(0, 0, 0, 0);
@@ -68,7 +54,7 @@
   flex-direction: row;
   width: fit-content;
   border: none;
-  margin-left: 1.6%;
+  margin-left: -3px;
   margin-top: -0.5%;
 }
 #addIconWrapper {
@@ -77,7 +63,7 @@
 }
 #followupFormFooter {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-end;
 }
 .followupFormButton {
   width: 30%;

@@ -7,11 +7,9 @@
 }
 #accessRequestHeader {
   margin: 0%;
-  border-bottom-style: solid;
   padding: 1%;
 }
 #accessRequestBody {
-  margin: 1%;
   margin-right: 2%;
   margin-left: 2%;
   padding: 1%;
@@ -20,4 +18,7 @@
   display: flex;
   justify-content: flex-end;
   padding: 1%;
+}
+.accessRequestButton {
+  margin: 1%;
 }

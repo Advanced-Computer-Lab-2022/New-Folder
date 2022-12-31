@@ -50,7 +50,7 @@ function RefundInfoCard(props) {
   };
 
   return (
-    <div id="refundContainer">
+    <div id="refundContainer" className="whiteCard">
       <Row md={2} id="refundHeader">
         <Col>
           <h4>{request.userName}</h4>
@@ -72,76 +72,43 @@ function RefundInfoCard(props) {
         </Col>
         <Col></Col>
       </Row>
+      <hr className="m-1" />
       <div id="refundBody">{request.reason}</div>
       <div id="refundFooter">
-        {declineLoading ? (
-          <>
-            <Button
-              onClick={() => decline()}
-              id="refundRequestDeclineButton"
-              disabled
-            >
-              <Spinner
-                as="span"
-                animation="border"
-                size="sm"
-                role="status"
-                aria-hidden="true"
-              />
-              {" Saving..."}
-            </Button>
-            <Button
-              onClick={() => approve()}
-              id="refundRequestApproveButton"
-              disabled
-            >
-              Approve
-            </Button>
-          </>
-        ) : (
-          <>
-            {approveLoading ? (
-              <>
-                <Button
-                  onClick={() => decline()}
-                  id="refundRequestDeclineButton"
-                  disabled
-                >
-                  Decline
-                </Button>
-                <Button
-                  onClick={() => approve()}
-                  id="refundRequestApproveButton"
-                  disabled
-                >
-                  <Spinner
-                    as="span"
-                    animation="border"
-                    size="sm"
-                    role="status"
-                    aria-hidden="true"
-                  />
-                  {" Saving..."}
-                </Button>
-              </>
-            ) : (
-              <>
-                <Button
-                  onClick={() => decline()}
-                  id="refundRequestDeclineButton"
-                >
-                  Decline
-                </Button>
-                <Button
-                  onClick={() => approve()}
-                  id="refundRequestApproveButton"
-                >
-                  Approve
-                </Button>
-              </>
-            )}
-          </>
-        )}
+        <Button
+          onClick={() => decline()}
+          id="refundRequestDeclineButton"
+          className="redBgHover"
+          disabled={approveLoading || declineLoading}
+        >
+          Decline{" "}
+          {declineLoading ? (
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          ) : null}
+        </Button>
+        <Button
+          onClick={() => approve()}
+          id="refundRequestApproveButton"
+          className="blueBgHover"
+          disabled={approveLoading || declineLoading}
+        >
+          Approve{" "}
+          {approveLoading ? (
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          ) : null}
+        </Button>
       </div>
     </div>
   );
