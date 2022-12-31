@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Form, Button, Card, Col, Row } from "react-bootstrap";
+import { Form, Button, Card, Col, Row, Badge } from "react-bootstrap";
 import { MdOutlinePending } from "react-icons/md";
 import { AiOutlineEyeInvisible } from "react-icons/ai";
 import { FiCheckCircle } from "react-icons/fi";
@@ -62,9 +62,44 @@ function ProblemCard(props) {
   return (
     <>
       <div id="problemContainer">
-        <Row md={2} id={`problemHeader${problem.status}`}>
+        <Row md={2} className="problemHeader">
           <Col>
-            <h4 id="problemSummary">{problem.summary}</h4>
+            <h4 id="problemSummary">
+              {problem.summary}{" "}
+              {problem.status === ProblemStatus.unseen ? (
+                <Badge
+                  style={{ marginLeft: "1%", fontSize: "13px" }}
+                  pill
+                  bg="info"
+                >
+                  {problem.status + " "}
+                  <AiOutlineEyeInvisible />
+                </Badge>
+              ) : (
+                <>
+                  {problem.status === ProblemStatus.pending ? (
+                    <Badge
+                      style={{ marginLeft: "1%", fontSize: "13px" }}
+                      pill
+                      bg="warning"
+                      text="dark"
+                    >
+                      {problem.status + " "}
+                      <MdOutlinePending />
+                    </Badge>
+                  ) : (
+                    <Badge
+                      style={{ marginLeft: "1%", fontSize: "13px" }}
+                      pill
+                      bg="success"
+                    >
+                      {problem.status + " "}
+                      <FiCheckCircle />
+                    </Badge>
+                  )}
+                </>
+              )}
+            </h4>
 
             <small>
               <b>
@@ -99,29 +134,12 @@ function ProblemCard(props) {
           </Col>
           <Col>
             <div id="problemStatus">
-              {problem.status + " "}
-              {problem.status === ProblemStatus.unseen ? (
-                <AiOutlineEyeInvisible />
-              ) : (
-                <>
-                  {problem.status === ProblemStatus.pending ? (
-                    <MdOutlinePending />
-                  ) : (
-                    <FiCheckCircle />
-                  )}
-                </>
-              )}
-            </div>
-            <div id="problemStatus">
               {ReactSession.get("userType") == UserTypes.admin && (
                 <Col className="mb-1">
                   {problem.status === ProblemStatus.unseen && (
-                    <Col className="mb-1">
+                    <Col className="mb-2">
                       <Button
-                        style={{
-                          backgroundColor: "#F6F5F6",
-                        }}
-                        variant="light"
+                        className="blackBgHover"
                         size="sm"
                         onClick={(e) => changeStatus(ProblemStatus.pending)}
                       >
@@ -130,10 +148,9 @@ function ProblemCard(props) {
                     </Col>
                   )}
                   {problem.status !== ProblemStatus.resolved && (
-                    <Col className="mb-1">
+                    <Col className="mb-2">
                       <Button
-                        variant="success"
-                        style={{ backgroundColor: "#156358" }}
+                        className="blueBgHover"
                         size="sm"
                         onClick={(e) => changeStatus(ProblemStatus.resolved)}
                       >
@@ -146,6 +163,7 @@ function ProblemCard(props) {
             </div>
           </Col>
         </Row>
+        <hr className="m-1" />
         <div id="problemCard">{problem.body}</div>
         <Accordion id="reportAccordionWrapper">
           <AccordionSummary
@@ -179,16 +197,14 @@ function ProblemCard(props) {
                 </Form.Group>
                 <div id="followupFormFooter">
                   <Button
-                    variant="secondary"
                     onClick={cancel}
-                    className="followupFormButton"
+                    className="greyBgHover followupFormButton me-4"
                   >
                     Cancel
                   </Button>
                   <Button
-                    variant="primary"
                     type="submit"
-                    className="followupFormButton"
+                    className="blueBgHover followupFormButton"
                   >
                     Add
                   </Button>
@@ -204,10 +220,13 @@ function ProblemCard(props) {
                   setEditing(true);
                 }}
               >
-                <div id="addIconWrapper">
-                  <AiOutlinePlusCircle />
-                </div>
-                &nbsp;Add a follow up
+                <h6>
+                  <AiOutlinePlusCircle
+                    style={{ marginTop: "-5px" }}
+                    size={18}
+                  />{" "}
+                  Add a follow up
+                </h6>
               </Card>
             ) : null}
           </AccordionDetails>
