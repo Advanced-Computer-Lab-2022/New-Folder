@@ -177,6 +177,7 @@ const Signup = (props) => {
                   <a
                     onClick={() => setShowTerms(true)}
                     className="signupLinks blueTxt"
+                    style={{ cursor: "pointer" }}
                   >
                     terms and conditions
                   </a>
