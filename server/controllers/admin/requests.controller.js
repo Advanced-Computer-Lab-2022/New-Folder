@@ -20,7 +20,7 @@ const updateAndDelete = async (course, request) => {
   }
   course.pendingTrainees = pendingTrainees;
   await course.save();
-  await Request.deleteOne({ id: request.id });
+  await Request.deleteOne({ _id: request._id });
 };
 
 const deleteRequest = async (req, res) => {
@@ -44,7 +44,7 @@ const approveRequest = async (req, res) => {
     await updateAndDelete(course, request);
     const trainee = await Trainee.findById(request.userId);
     trainee.courses.push(request.courseId);
-    trainee.save();
+    await trainee.save();
     res.status(200).send("Approved Successfully");
   } catch (err) {
     res.status(500).json({ message: err.message });
