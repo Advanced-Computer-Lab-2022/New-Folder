@@ -14,26 +14,24 @@ function EnrollGoToCourse(props) {
     <>
       {vc === ViewerContexts.guest ? (
         <>
-          {ReactSession.get("userType") === UserTypes.trainee ? (
-            <Button
-              className="blackBgHover"
-              onClick={enroll}
-              disabled={loadingEnrollBtn}
-              id="enrollButton"
-            >
-              Enroll{" "}
-              {loadingEnrollBtn ? (
-                <Spinner
-                  as="span"
-                  animation="border"
-                  className="ms-1"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-              ) : null}
-            </Button>
-          ) : null}
+          <Button
+            className="blackBgHover"
+            onClick={enroll}
+            disabled={loadingEnrollBtn}
+            id="enrollButton"
+          >
+            Enroll{" "}
+            {loadingEnrollBtn ? (
+              <Spinner
+                as="span"
+                animation="border"
+                className="ms-1"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            ) : null}
+          </Button>
         </>
       ) : (
         <>
