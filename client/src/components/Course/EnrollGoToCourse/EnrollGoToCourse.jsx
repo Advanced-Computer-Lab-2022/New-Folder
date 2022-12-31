@@ -14,30 +14,33 @@ function EnrollGoToCourse(props) {
     <>
       {vc === ViewerContexts.guest ? (
         <>
-          {ReactSession.get("userType") === UserTypes.trainee ? (
-            <Button
-              className="blackBgHover"
-              onClick={enroll}
-              disabled={loadingEnrollBtn}
-              id="enrollButton"
-            >
-              Enroll{" "}
-              {loadingEnrollBtn ? (
-                <Spinner
-                  as="span"
-                  animation="border"
-                  className="ms-1"
-                  size="sm"
-                  role="status"
-                  aria-hidden="true"
-                />
-              ) : null}
-            </Button>
-          ) : null}
+          <Button
+            className="blackBgHover"
+            onClick={enroll}
+            disabled={loadingEnrollBtn}
+            id="enrollButton"
+          >
+            Enroll{" "}
+            {loadingEnrollBtn ? (
+              <Spinner
+                as="span"
+                animation="border"
+                className="ms-1"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            ) : null}
+          </Button>
         </>
       ) : (
         <>
-          {vc === ViewerContexts.enrolledTrainee ? (
+          {[
+            ViewerContexts.author,
+            ViewerContexts.savedAuthor,
+            ViewerContexts.admin,
+            ViewerContexts.enrolledTrainee,
+          ].includes(vc) ? (
             <Button
               className="blackBgHover"
               onClick={() => navigate("/watch/" + courseId + "?sId=0&cId=0")}

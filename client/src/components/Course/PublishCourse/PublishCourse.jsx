@@ -38,7 +38,7 @@ function PublishCourse(props) {
         <Button
           onClick={publish}
           id="publishButton"
-          className="greyBg greyBgHover"
+          className="greenBgHover"
           disabled={loading}
         >
           {loading ? (

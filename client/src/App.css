@@ -70,6 +70,12 @@
   color: #100f0f !important;
 }
 
+.greenBgHover {
+  background-color: #35a7a0 !important;
+  border: 1px solid #35a7a0 !important;
+  color: white !important;
+}
+
 .blueBgHover:hover {
   background-color: transparent !important;
   border: 1px solid #297f87 !important;

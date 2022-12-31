@@ -182,6 +182,7 @@ function CreateCourse() {
                 setSubtitles([...subtitles, ""]);
               }}
               disabled={loading}
+              className="blueBgHover"
             >
               Add Subtitle
             </Button>

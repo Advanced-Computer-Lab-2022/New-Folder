@@ -50,7 +50,7 @@ function CourseHeader(props) {
           <a
             id="courseInstructorNameLink"
             href={
-              vc === ViewerContexts.author
+              vc === ViewerContexts.author || vc === ViewerContexts.savedAuthor
                 ? "/myProfile"
                 : `/viewInstructorProfile/${
                     vc === ViewerContexts.enrolledTrainee

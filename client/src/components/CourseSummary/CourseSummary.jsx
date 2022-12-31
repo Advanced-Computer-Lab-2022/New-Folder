@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo } from "react";
 import ViewerContexts from "../../constants/ViewerContexts.json";
+import userTypes from "../../constants/UserTypes.json";
 import "./CourseSummary.css";
 import { useState } from "react";
 import "react-day-picker/dist/style.css";
@@ -14,13 +15,15 @@ import CourseHeader from "../Course/CourseHeader/CourseHeader";
 import CourseBody from "../Course/CourseBody/CourseBody";
 import EnrollGoToCourse from "../Course/EnrollGoToCourse/EnrollGoToCourse";
 import EditPreviewVideo from "../Course/EditPreviewVideo/EditPreviewVideo";
-import { Button, Card, Overlay, Tooltip } from "react-bootstrap";
+import { Button, Card, Modal, Overlay, Tooltip } from "react-bootstrap";
 import "../../App.css";
 import PublishCourse from "../Course/PublishCourse/PublishCourse";
 import { useRef } from "react";
 import RefundForm from "../Course/Refund/RefundForm";
 import { GiReceiveMoney } from "react-icons/gi";
 import { AiOutlineQuestionCircle } from "react-icons/ai";
+import { Alert, AlertIcon } from "@chakra-ui/alert";
+import { useNavigate } from "react-router-dom";
 function CourseSummary(props) {
   const {
     course,
@@ -52,8 +55,9 @@ function CourseSummary(props) {
   const [showError, setShowError] = useState(false);
   const [progress, setProgress] = useState(0);
   const [showPopOver, setShowPopOver] = useState(false);
+  const [showLoginModal, setShowLoginModal] = useState(false);
   const target = useRef(null);
-
+  const navigate = useNavigate();
   useEffect(() => {
     setTotalRating(course.totalRating);
   }, []);
@@ -82,6 +86,10 @@ function CourseSummary(props) {
   }, [promotion]);
 
   const enroll = async () => {
+    if (ReactSession.get("userType") !== userTypes.trainee) {
+      setShowLoginModal(true);
+      return;
+    }
     setLoadingEnrollBtn(true);
     try {
       const currency =
@@ -122,6 +130,41 @@ function CourseSummary(props) {
 
   return (
     <>
+      <Modal
+        centered
+        show={showLoginModal}
+        onHide={() => setShowLoginModal(false)}
+      >
+        <div style={{ padding: 5, textAlign: "center" }}>
+          <h3 className="blackTxt">
+            You need to log in as a trainee to enroll for this course.
+          </h3>
+
+          <div
+            style={{
+              width: "100%",
+              marginTop: "3%",
+              display: "flex",
+              justifyContent: "space-around",
+            }}
+          >
+            <Button
+              className="greyBgHover"
+              style={{ width: "30%" }}
+              onClick={() => setShowLoginModal(false)}
+            >
+              Close
+            </Button>
+            <Button
+              className="blueBgHover"
+              style={{ width: "30%" }}
+              onClick={() => navigate("/login")}
+            >
+              Join us!
+            </Button>
+          </div>
+        </div>
+      </Modal>
       <div id="courseSummaryContainer" className="blueBg">
         <div id="leftCol">
           <IntroVideo
@@ -147,39 +190,61 @@ function CourseSummary(props) {
             course={course}
             setVc={setVc}
           />
-          <small
-            ref={target}
-            style={{ width: "fit-content", marginLeft: 0, marginBottom: -20 }}
-          >
-            Help&nbsp;
-            <AiOutlineQuestionCircle
-              onClick={() => setShowPopOver(!showPopOver)}
-              style={{ cursor: "pointer", marginBottom: "0%" }}
-            />
-          </small>
-          <Overlay target={target.current} show={showPopOver} placement="right">
-            {(props) => (
-              <Tooltip id="overlay-example" {...props}>
-                {vc !== ViewerContexts.guest &&
-                vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
-                  <ReportCourse
-                    course={course}
-                    setShowPopOver={setShowPopOver}
-                    showPopOver={showPopOver}
-                  />
-                ) : null}
-                {progress < 50 ? (
-                  <RefundForm
-                    vc={vc}
-                    setVc={setVc}
-                    courseId={courseId}
-                    setShowPopOver={setShowPopOver}
-                    showPopOver={showPopOver}
-                  />
-                ) : null}
-              </Tooltip>
-            )}
-          </Overlay>
+          {![
+            ViewerContexts.admin,
+            ViewerContexts.guest,
+            ViewerContexts.nonEnrolledCorporateTrainee,
+            ViewerContexts.pendingCorporateTrainee,
+          ].includes(vc) ? (
+            <>
+              {" "}
+              <small
+                ref={target}
+                style={{
+                  width: "fit-content",
+                  marginLeft: 0,
+                  marginBottom: -20,
+                }}
+              >
+                Help&nbsp;
+                <AiOutlineQuestionCircle
+                  onClick={() => setShowPopOver(!showPopOver)}
+                  style={{ cursor: "pointer", marginBottom: "0%" }}
+                />
+              </small>
+              <Overlay
+                target={target.current}
+                show={showPopOver}
+                placement="right"
+              >
+                {(props) => (
+                  <Tooltip id="overlay-example" {...props}>
+                    {vc !== ViewerContexts.guest &&
+                    vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
+                      <ReportCourse
+                        course={course}
+                        setShowPopOver={setShowPopOver}
+                        showPopOver={showPopOver}
+                      />
+                    ) : null}
+                    {(vc === ViewerContexts.enrolledTrainee &&
+                      ReactSession.get("userType") !==
+                        userTypes.corporateTrainee &&
+                      progress < 50) ||
+                    vc === ViewerContexts.refundingTrainee ? (
+                      <RefundForm
+                        vc={vc}
+                        setVc={setVc}
+                        courseId={courseId}
+                        setShowPopOver={setShowPopOver}
+                        showPopOver={showPopOver}
+                      />
+                    ) : null}
+                  </Tooltip>
+                )}
+              </Overlay>
+            </>
+          ) : null}
         </div>
         <div id="rightCol">
           <CourseHeader
