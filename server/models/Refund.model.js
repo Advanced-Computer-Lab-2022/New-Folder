@@ -13,6 +13,7 @@ const Refund = mongoose.Schema({
   userName: { type: String, required: true },
   courseName: { type: String, required: true },
   reason: { type: String, required: true },
+  uniqueUserName: { type: String },
 });
 
 module.exports = mongoose.model("Refund", Refund);

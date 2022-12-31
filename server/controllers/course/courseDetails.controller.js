@@ -366,6 +366,7 @@ const createSubtitle = async (req, res) => {
 
 const submitReport = async (req, res) => {
   try {
+    const user = await User.findById(req.session.userId);
     const report = await Report.create({
       userId: req.session.userId,
       courseId: req.body.courseId,
@@ -374,8 +375,8 @@ const submitReport = async (req, res) => {
       userName: req.body.userName,
       courseName: req.body.courseName,
       summary: req.body.problemSummary,
+      uniqueUserName: user.username,
     });
-    const user = await User.findById(req.session.userId);
     user.reports.push(report._id);
     user.save();
     res.status(201).json(report);
@@ -386,6 +387,7 @@ const submitReport = async (req, res) => {
 
 const requestAccess = async (req, res) => {
   try {
+    const user = await User.findById(req.session.userId);
     const request = await AccessRequest.create({
       userId: req.session.userId,
       courseId: req.body.courseId,
@@ -393,6 +395,7 @@ const requestAccess = async (req, res) => {
       courseName: req.body.courseName,
       reason: req.body.reason,
       corporateName: req.body.corporateName,
+      uniqueUserName: user.username,
     });
     const course = await Course.findById(req.body.courseId);
     course.pendingTrainees.push(req.session.userId);
@@ -470,6 +473,7 @@ const requestRefund = async (req, res) => {
       userName: user.firstName + " " + user.lastName,
       courseName: course.name,
       reason: req.body.reason,
+      uniqueUserName: user.username,
     });
     course.refundingTrainees.push(req.session.userId);
     await course.save();

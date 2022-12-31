@@ -14,6 +14,7 @@ const AccessRequest = mongoose.Schema({
   courseName: { type: String, required: true },
   corporateName: { type: String, default: "" },
   reason: { type: String, required: true },
+  uniqueUserName: { type: String },
 });
 
 module.exports = mongoose.model("AccessRequest", AccessRequest);

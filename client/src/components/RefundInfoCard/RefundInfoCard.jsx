@@ -8,6 +8,8 @@ import "./RefundInfoCard.css";
 import { useState } from "react";
 import SuccessModal from "../SuccessModal/SuccessModal";
 import ErrorModal from "../ErrorModal/ErrorModal";
+import { BiBuildings } from "react-icons/bi";
+import { BsBookHalf } from "react-icons/bs";
 function RefundInfoCard(props) {
   const { request, allRefunds, setAllRefunds, setFail, setMsg, setSuccess } =
     props;
@@ -53,13 +55,16 @@ function RefundInfoCard(props) {
         <Col>
           <h4>{request.userName}</h4>
           <small>
+            <h6 className="greyTxt">{"@" + request.uniqueUserName}</h6>
+          </small>
+          <small>
             <b>
-              {"Course: "}
+              <BsBookHalf size={16} />
               <a
                 href={"/course/" + request.courseId}
                 id="problemCourseNameLink"
               >
-                {request.courseName}
+                {" " + request.courseName}
               </a>
             </b>
             <br />
