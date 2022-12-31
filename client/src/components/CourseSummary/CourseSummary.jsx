@@ -147,39 +147,52 @@ function CourseSummary(props) {
             course={course}
             setVc={setVc}
           />
-          <small
-            ref={target}
-            style={{ width: "fit-content", marginLeft: 0, marginBottom: -20 }}
-          >
-            Help&nbsp;
-            <AiOutlineQuestionCircle
-              onClick={() => setShowPopOver(!showPopOver)}
-              style={{ cursor: "pointer", marginBottom: "0%" }}
-            />
-          </small>
-          <Overlay target={target.current} show={showPopOver} placement="right">
-            {(props) => (
-              <Tooltip id="overlay-example" {...props}>
-                {vc !== ViewerContexts.guest &&
-                vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
-                  <ReportCourse
-                    course={course}
-                    setShowPopOver={setShowPopOver}
-                    showPopOver={showPopOver}
-                  />
-                ) : null}
-                {progress < 50 ? (
-                  <RefundForm
-                    vc={vc}
-                    setVc={setVc}
-                    courseId={courseId}
-                    setShowPopOver={setShowPopOver}
-                    showPopOver={showPopOver}
-                  />
-                ) : null}
-              </Tooltip>
-            )}
-          </Overlay>
+          {vc !== ViewerContexts.admin && vc !== ViewerContexts.guest ? (
+            <>
+              {" "}
+              <small
+                ref={target}
+                style={{
+                  width: "fit-content",
+                  marginLeft: 0,
+                  marginBottom: -20,
+                }}
+              >
+                Help&nbsp;
+                <AiOutlineQuestionCircle
+                  onClick={() => setShowPopOver(!showPopOver)}
+                  style={{ cursor: "pointer", marginBottom: "0%" }}
+                />
+              </small>
+              <Overlay
+                target={target.current}
+                show={showPopOver}
+                placement="right"
+              >
+                {(props) => (
+                  <Tooltip id="overlay-example" {...props}>
+                    {vc !== ViewerContexts.guest &&
+                    vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
+                      <ReportCourse
+                        course={course}
+                        setShowPopOver={setShowPopOver}
+                        showPopOver={showPopOver}
+                      />
+                    ) : null}
+                    {progress < 50 ? (
+                      <RefundForm
+                        vc={vc}
+                        setVc={setVc}
+                        courseId={courseId}
+                        setShowPopOver={setShowPopOver}
+                        showPopOver={showPopOver}
+                      />
+                    ) : null}
+                  </Tooltip>
+                )}
+              </Overlay>
+            </>
+          ) : null}
         </div>
         <div id="rightCol">
           <CourseHeader
