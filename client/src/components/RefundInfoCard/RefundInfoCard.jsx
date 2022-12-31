@@ -55,8 +55,7 @@ function RefundInfoCard(props) {
         <Col>
           <h4>{request.userName}</h4>
           <small>
-            <b>{"@" + request.uniqueUserName}</b>
-            <br />
+            <h6 className="greyTxt">{"@" + request.uniqueUserName}</h6>
           </small>
           <small>
             <b>

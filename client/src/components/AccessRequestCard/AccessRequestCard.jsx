@@ -54,11 +54,10 @@ function AccessRequestCard(props) {
     <div id="accessRequestContainer" className="whiteCard">
       <Row md={2} id="accessRequestHeader">
         <Col>
-          <h4>{request.userName}</h4>
-          <small>
-            <b>{"@" + request.uniqueUserName}</b>
-            <br />
-          </small>
+          <h4>
+            {request.userName}
+            <br /> <h6 className="greyTxt">{"@" + request.uniqueUserName}</h6>
+          </h4>
           <small>
             <BiBuildings size={18} />
             <b>{" " + request.corporateName}</b>
