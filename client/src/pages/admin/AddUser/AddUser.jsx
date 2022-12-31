@@ -225,7 +225,12 @@ function AddUser() {
             </>
           ) : null}
           {loading ? (
-            <Button type="submit" id="addUserSaveButton" disabled>
+            <Button
+              type="submit"
+              id="addUserSaveButton"
+              className="blueBgHover"
+              disabled
+            >
               <Spinner
                 as="span"
                 animation="border"
@@ -236,7 +241,11 @@ function AddUser() {
               {" Saving..."}
             </Button>
           ) : (
-            <Button type="submit" id="addUserSaveButton">
+            <Button
+              type="submit"
+              id="addUserSaveButton"
+              className="blueBgHover"
+            >
               Add user
             </Button>
           )}

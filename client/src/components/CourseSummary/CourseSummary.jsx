@@ -179,7 +179,8 @@ function CourseSummary(props) {
                         showPopOver={showPopOver}
                       />
                     ) : null}
-                    {progress < 50 ? (
+                    {(vc === ViewerContexts.enrolledTrainee && progress < 50) ||
+                    vc === ViewerContexts.refundingTrainee ? (
                       <RefundForm
                         vc={vc}
                         setVc={setVc}

@@ -102,7 +102,7 @@ const ContractCard = (props) => {
         consectetur tempora?
       </Modal.Body>
       <Modal.Footer>
-        <Button variant="outline-dark" onClick={handleClose}>
+        <Button className="blackBgHover" onClick={handleClose}>
           Close
         </Button>
       </Modal.Footer>

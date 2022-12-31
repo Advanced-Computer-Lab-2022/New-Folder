@@ -181,6 +181,7 @@ function CreateCourse() {
                 setSubtitles([...subtitles, ""]);
               }}
               disabled={loading}
+              className="blueBgHover"
             >
               Add Subtitle
             </Button>
@@ -238,7 +239,12 @@ function CreateCourse() {
           </Form.Group>
           <Form.Group className="mb-3">
             {loading ? (
-              <Button type="submit" id="createCourseSaveButton" disabled>
+              <Button
+                type="submit"
+                id="createCourseSaveButton"
+                className="blueBgHover"
+                disabled
+              >
                 <Spinner
                   as="span"
                   animation="border"
@@ -249,7 +255,11 @@ function CreateCourse() {
                 {" Saving..."}
               </Button>
             ) : (
-              <Button type="submit" id="createCourseSaveButton">
+              <Button
+                type="submit"
+                id="createCourseSaveButton"
+                className="blueBgHover"
+              >
                 Create course
               </Button>
             )}
