@@ -101,11 +101,12 @@ function AddUser() {
                 aria-describedby="inputGroupPrepend"
                 name="username"
                 required
+                minLength={2}
                 value={data.username}
                 onChange={onChange}
               />
               <Form.Control.Feedback type="invalid">
-                This field is required
+                Please enter a valid username (min: 2 characters).
               </Form.Control.Feedback>
             </InputGroup>
           </Form.Group>

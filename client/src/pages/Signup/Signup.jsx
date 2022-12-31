@@ -74,10 +74,11 @@ const Signup = (props) => {
               type="text"
               placeholder="Username"
               required
+              minLength={2}
               onChange={(e) => setUsername(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
-              This field is required.
+              Please enter a valid username (min: 2 characters).
             </Form.Control.Feedback>
           </Form.Group>
           <Form.Group className="mb-2" controlId="exampleForm.ControlTextarea1">

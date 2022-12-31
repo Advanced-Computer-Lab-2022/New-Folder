@@ -4,8 +4,11 @@
   "description": "Backend for online learning system",
   "main": "app.js",
   "scripts": {
-    "start": "nodemon app.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon app.js",
+    "client": "cd.. && cd client && npm start",
+    "stripe": "stripe listen --forward-to localhost:8080/stripe/webhook",
+    "start": "concurrently \"npm run dev\" \"npm run client\" \"npm run stripe\""
   },
   "author": "New Folder team",
   "license": "ISC",
@@ -13,6 +16,7 @@
     "@react-pdf/renderer": "^3.0.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.20.1",
+    "concurrently": "^7.6.0",
     "cors": "^2.8.5",
     "currency-converter-lt": "^2.0.0-beta.0",
     "dotenv": "^16.0.3",
