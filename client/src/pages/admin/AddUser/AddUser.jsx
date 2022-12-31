@@ -236,7 +236,11 @@ function AddUser() {
               {" Saving..."}
             </Button>
           ) : (
-            <Button type="submit" id="addUserSaveButton">
+            <Button
+              type="submit"
+              className="blueBgHover"
+              id="addUserSaveButton"
+            >
               Add user
             </Button>
           )}
