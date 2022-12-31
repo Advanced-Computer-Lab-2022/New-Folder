@@ -5,10 +5,3 @@
   column-count: 2;
   column-fill: balance;
 }
-#gridContainer3 {
-  margin: 2%;
-  margin-left: 3%;
-  margin-right: 3%;
-  column-count: 3;
-  column-fill: balance;
-}

@@ -59,7 +59,7 @@ function AccessRequests() {
         <>
           {accessRequests.length > 0 ? (
             <>
-              <div id="gridContainer3">
+              <div id="gridContainer">
                 {accessRequests.map((request) => (
                   <AccessRequestCard
                     accessRequests={accessRequests}
