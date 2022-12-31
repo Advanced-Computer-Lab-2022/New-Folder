@@ -1,6 +1,7 @@
 #accessRequestContainer {
-  width: 500px;
+  width: 100%;
   margin: 1%;
+  height: max-content;
   padding: 0.5%;
   padding-top: 1%;
 }

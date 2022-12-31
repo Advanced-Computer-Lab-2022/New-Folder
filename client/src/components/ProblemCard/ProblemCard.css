@@ -7,9 +7,10 @@
   border-radius: 1em;
 }
 #problemContainer {
+  display: inline-block;
   width: 100%;
-  margin: 0%;
-  margin-bottom: 2%;
+  margin: 1%;
+  height: max-content;
   border-radius: 1em;
   box-shadow: rgba(0, 0, 0, 0.1) 0px 10px 15px -3px,
     rgba(0, 0, 0, 0.1) 0px 10px 15px -3px;

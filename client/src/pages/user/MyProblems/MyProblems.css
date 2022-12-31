@@ -1,8 +1,14 @@
 #gridContainer {
-  width: 97%;
-  margin-top: 1%;
+  margin: 1%;
+  margin-left: 3%;
+  margin-right: 3%;
+  column-count: 2;
+  column-fill: balance;
 }
-#problemsPageHeader {
-  background-color: #a6d1e6;
-  padding: 2%;
+#gridContainer3 {
+  margin: 2%;
+  margin-left: 3%;
+  margin-right: 3%;
+  column-count: 3;
+  column-fill: balance;
 }

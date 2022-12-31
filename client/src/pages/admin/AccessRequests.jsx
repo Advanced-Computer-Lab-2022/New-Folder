@@ -59,16 +59,7 @@ function AccessRequests() {
         <>
           {accessRequests.length > 0 ? (
             <>
-              <div
-                style={{
-                  margin: "0.7%",
-                  marginLeft: "3%",
-                  marginRight: "3%",
-                  display: "inline-flex",
-                  justifyContent: "start !important",
-                  flexWrap: "wrap",
-                }}
-              >
+              <div id="gridContainer3">
                 {accessRequests.map((request) => (
                   <AccessRequestCard
                     accessRequests={accessRequests}

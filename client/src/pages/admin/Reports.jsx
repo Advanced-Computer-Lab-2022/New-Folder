@@ -23,32 +23,24 @@ function Reports() {
 
   const UnresolvedReports = () => (
     <div id="gridContainer">
-      <Row xs={1} md={2}>
-        {unresolved.map((report) => (
-          <Col>
-            <ProblemCard problem={report} getReports={getReports} />
-          </Col>
-        ))}
-      </Row>
+      {unresolved.map((report) => (
+        <ProblemCard problem={report} getReports={getReports} />
+      ))}
     </div>
   );
 
   const ResolvedReports = () => (
     <div id="gridContainer">
-      <Row xs={1} md={2}>
-        {resolved.map((report) => (
-          <Col>
-            <ProblemCard problem={report} />
-          </Col>
-        ))}
-      </Row>
+      {resolved.map((report) => (
+        <ProblemCard problem={report} />
+      ))}
     </div>
   );
   return (
     <div>
       <NavDropdown
         style={{
-          marginRight: "2.5%",
+          marginRight: "2.7%",
           marginBottom: "1.2%",
           fontSize: "18px",
           fontWeight: "500",
