@@ -176,6 +176,7 @@ function CreateCourse() {
           })}
           <Form.Group className="mb-3">
             <Button
+              className="blueBgHover"
               id="addSubtitleButton"
               onClick={(e) => {
                 setSubtitles([...subtitles, ""]);
@@ -232,8 +233,14 @@ function CreateCourse() {
                 feedback="You must agree before submitting."
                 feedbackType="invalid"
               />
-              &nbsp; Agree on &nbsp;
-              <Link onClick={() => setShow(true)}>terms and conditions</Link>
+              &nbsp; Agree on&nbsp;
+              <a
+                style={{ textDecoration: "none" }}
+                className="blueTxt"
+                onClick={() => setShow(true)}
+              >
+                terms and conditions.
+              </a>
             </div>
           </Form.Group>
           <Form.Group className="mb-3">
@@ -249,7 +256,11 @@ function CreateCourse() {
                 {" Saving..."}
               </Button>
             ) : (
-              <Button type="submit" id="createCourseSaveButton">
+              <Button
+                type="submit"
+                className="blueBgHover"
+                id="createCourseSaveButton"
+              >
                 Create course
               </Button>
             )}
