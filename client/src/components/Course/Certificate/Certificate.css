@@ -1,21 +1,24 @@
 #modal-Certificate {
-    margin: 0;
+  margin: 0;
 }
 
 .certificate-msg {
-    font-size: 1.25em;
+  font-size: 1.25em;
 }
 
 .tooltip-wrapper {
-    cursor: pointer;
+  cursor: pointer;
+  width: fit-content;
+  margin-right: 0;
+  margin-top: 29%;
 }
 
 .Email-loader {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 .Email-Loader-spinner {
-    margin-right: 5px;
-    margin-bottom: 3px;
+  margin-right: 5px;
+  margin-bottom: 3px;
 }

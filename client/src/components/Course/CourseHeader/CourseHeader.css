@@ -11,6 +11,7 @@
 }
 #courseHeaderWrapper {
   display: flex;
+  margin-top: 1%;
 }
 #courseHeaderLeft {
   margin: 0%;
