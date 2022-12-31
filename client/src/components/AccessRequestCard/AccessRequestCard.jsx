@@ -56,6 +56,10 @@ function AccessRequestCard(props) {
         <Col>
           <h4>{request.userName}</h4>
           <small>
+            <b>{"@" + request.uniqueUserName}</b>
+            <br />
+          </small>
+          <small>
             <BiBuildings size={18} />
             <b>{" " + request.corporateName}</b>
             <br />

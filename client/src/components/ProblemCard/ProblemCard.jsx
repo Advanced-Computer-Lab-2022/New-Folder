@@ -80,7 +80,7 @@ function ProblemCard(props) {
               {ReactSession.get("userType") === UserTypes.admin ? (
                 <>
                   <b>Reported by: </b>
-                  {problem.userName}
+                  {problem.userName + "  @" + problem.uniqueUserName}
                   <br />
                 </>
               ) : null}
