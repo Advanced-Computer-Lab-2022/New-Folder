@@ -48,9 +48,10 @@ function CourseBody(props) {
         <BsFillStarFill
           size={19}
           style={{ marginLeft: -1, marginBottom: 5, marginRight: 4 }}
+          color="ffd700"
         />{" "}
         {totalRating ?? 0}
-        <small>
+        <small className="greyTxt">
           &nbsp;&nbsp;&nbsp;
           {"(" + ratingsCount ?? 0}
           {ratingsCount == 1 ? " rating)" : " ratings)"}

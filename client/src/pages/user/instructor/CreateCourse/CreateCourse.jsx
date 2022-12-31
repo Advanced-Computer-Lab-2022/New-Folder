@@ -230,7 +230,7 @@ function CreateCourse() {
                   Agree to{" "}
                   <a
                     onClick={() => setShow(true)}
-                    style={{ textDecoration: "none" }}
+                    style={{ textDecoration: "none", cursor: "pointer" }}
                     className="blueTxt"
                   >
                     terms and conditions

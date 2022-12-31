@@ -43,6 +43,7 @@ const Report = mongoose.Schema({
     type: [String],
     default: [],
   },
+  uniqueUserName: { type: String },
 });
 
 module.exports = mongoose.model("Report", Report);
