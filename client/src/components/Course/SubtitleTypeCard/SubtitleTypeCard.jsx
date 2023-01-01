@@ -90,9 +90,10 @@ const SubtitleTypeCard = (props) => {
 
         {/* <i class={type === constants.content ? "bi bi-play-circle" : "bi-card-checklist"}></i> */}
         <div className="course-card-icon-and-text">
-          <span>
-            {type === constants.content ? title ?? "Unknown" : "Excercise "}{" "}
-          </span>
+          <p className="subTitleP">
+            {type === constants.content ? title ?? "Unknown" : "Excercise "}
+          </p>
+          {type === constants.content && <span className="subTitleSpan">{description}</span>}
           <div class="content-duration">
             {type === constants.content ? (
               <i class="bi bi-clock-fill"></i>

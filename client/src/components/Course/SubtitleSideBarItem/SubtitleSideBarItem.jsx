@@ -13,12 +13,14 @@ const SubtitleSideBarItem = (props) => {
   const isOpenedSubtitle = props.isOpenedSubtitle;
   // const [open, setOpen] = useState(false);
   const [subtitleContent, setSubtitleContent] = useState([]);
-  const [subtitleNumber, setSubtitleNumber] = useState([]);
+  const [subtitleNumber, setSubtitleNumber] = useState("");
+  const  [subtitleTitlem, setSubtitleTitle] = useState("");
 
   const fetchingSubtitle = async () => {
     const fetchedSubtitle = await fetchSubtitle(subtitleID);
     setSubtitleNumber(fetchedSubtitle.subtitleNumber);
     setSubtitleContent(fetchedSubtitle.subTitle_Content);
+    setSubtitleTitle(fetchedSubtitle.title);
   };
 
   useEffect(() => {
@@ -38,7 +40,7 @@ const SubtitleSideBarItem = (props) => {
         }}
       >
         <i class="bi bi-chevron-compact-down toggle-btn"></i>
-        <span>Section {subtitleNumber}</span>
+        <span>{subtitleTitlem}</span>
       </div>
       <div className="sidebar-content">
         {/* from each subtitle get the array of subTitle_Content and insert each content and Excercise */}

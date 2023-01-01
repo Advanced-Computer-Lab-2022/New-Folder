@@ -89,3 +89,13 @@
 .icon-visited-checkBox {
   color: rgba(0, 0, 0, 0.5) !important;
 }
+
+.subTitleP {
+  margin: 0;
+}
+
+.subTitleSpan {
+  font-weight: 400 !important;
+  font-size: 0.9em;
+  color:gray;
+}

@@ -22,7 +22,7 @@ const VisitedCard = (props) => {
         class={
           isVisited
             ? "bi bi-check-square-fill icon-visited-checkBox"
-            : "bi bi-check-square"
+            : "bi bi-square"
         }
       ></i>
     </div>
