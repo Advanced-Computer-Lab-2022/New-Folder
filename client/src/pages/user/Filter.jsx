@@ -105,9 +105,11 @@ const Filter = () => {
                 id="free-solo-2-demo"
                 disableClearable
                 options={filteredCourses}
-                getOptionLabel={(option) => option.name}
+                getOptionLabel={(option) => option?.name ?? ""}
                 onChange={(event, value) => {
-                  navigate("/course/" + value.id);
+                  if (filteredCourses.includes(value)) {
+                    setFilteredCourses([value]);
+                  }
                 }}
                 renderInput={(params) => (
                   <ThemeProvider theme={theme}>
@@ -194,7 +196,7 @@ const Filter = () => {
               <div className="pt-5">
                 <Stack className="mt-5" gap={3}>
                   <Image width={"23%"} src="/assets/Empty.png" />
-                  <h4 className="m-auto mt-2">No results found</h4>
+                  <h4 className="m-auto mt-2">No courses found</h4>
                 </Stack>
               </div>
             )}

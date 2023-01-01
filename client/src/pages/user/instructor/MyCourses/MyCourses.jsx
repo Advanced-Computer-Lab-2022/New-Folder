@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import PageHeader from "../../../../components/PageHeader/PageHeader";
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import colors from "../../../../colors.json";
+import { Image, Stack } from "react-bootstrap";
 const MyCourses = () => {
   const [courses, setCourses] = useState([]);
   const [filteredCourses, setFilteredCourses] = useState(courses);
@@ -152,14 +153,22 @@ const MyCourses = () => {
           </Button>
         </Col>
       </Row>
-
-      <div className="wrapper">
-        {filteredCourses.map((course) => (
-          <div className="mb-4 mt-1">
-            <CourseCard course={course} />
-          </div>
-        ))}
-      </div>
+      {filteredCourses.length > 0 ? (
+        <div className="wrapper">
+          {filteredCourses.map((course) => (
+            <div className="mb-4 mt-1">
+              <CourseCard course={course} />
+            </div>
+          ))}
+        </div>
+      ) : (
+        <div className="pt-5">
+          <Stack className="mt-5" gap={3}>
+            <Image width={"23%"} src="/assets/Empty.png" />
+            <h4 className="m-auto mt-2">You haven't created any courses yet</h4>
+          </Stack>
+        </div>
+      )}
     </>
   );
 };
