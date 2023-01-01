@@ -43,6 +43,14 @@ In the past decade people all around the world satrted heading for learning new 
   - Rate and review the instructors of the courses they are enrolled in.
   - View the ratings and reviews of any course or instructor.
   - Report any issue.
+- If you are an admin, you can:
+  - Add other admins to the system.
+  - Add instructors.
+  - Add corporate trainees.
+  - Set promotions on selected/all courses.
+  - Approve access requests for courses.
+  - Approve refund requests.
+  - View the reported issues.
 
 ## Screenshots
 
