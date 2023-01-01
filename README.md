@@ -62,6 +62,10 @@ In the past decade people all around the world satrted heading for learning new 
 
   <img src = "./client/public/assets/AllCourses.png" style = "width: 100%;">
 
+### Sign Up
+
+  <img src = "./client/public/assets/signup.png" style = "width: 100%;">
+
 ### Log in
 
   <img src = "./client/public/assets/LogIn.png" style = "width: 100%;">
@@ -74,6 +78,10 @@ In the past decade people all around the world satrted heading for learning new 
 
   <img src = "./client/public/assets/Content.png" style = "width: 100%;">
 
+### Solve Exercises
+
+  <img src = "./client/public/assets/exercise.png" style = "width: 100%;">
+  
 ### Create course
 
   <img src = "./client/public/assets/CreateCourse.png" style = "width: 100%;">
@@ -102,7 +110,7 @@ In the past decade people all around the world satrted heading for learning new 
 
 The application is built in Client/Server architecture, where the server logic is written in `server` directory and the client is in `client` directory.
 
-# Technology
+## Technology
 
 Level Up uses a number of open source projects to work properly:
 
@@ -494,8 +502,6 @@ POST localhost:8080/admin/declineRefund
 }
 ```
 
-
-
 ### Reports
 
 ---
@@ -523,7 +529,6 @@ GET localhost:8080/admin/reports
 }
 ```
 
-
 ### Approve Course Access Request
 
 ---
@@ -539,8 +544,6 @@ POST localhost:8080/admin/requests/approve/:id
 ```json
 Approved Successfully
 ```
-
-
 
 ### Decline Course Access Request
 
@@ -604,7 +607,7 @@ POST localhost:8080/instructor/createCourse
   "image": "$image",
   "ratings": [],
   "totalRating": 0,
-  
+
   "trainees": [],
   "subtitles": ["$subID",...],
   "pendingTrainees": [],
@@ -612,7 +615,6 @@ POST localhost:8080/instructor/createCourse
   "published": false
 }
 ```
-
 
 ### Get Instructor's Courses
 
@@ -647,6 +649,152 @@ GET localhost:8080/insttructor/myCourses
 ]
 ```
 
+### Get Instructor's Profile
+
+---
+
+**request**:
+
+```r
+GET localhost:8080/insttructor/myCourses
+```
+
+**Response**:
+
+```json
+{
+  "firstName": "$firstName",
+  "lastName": "$lastName",
+  "about": "$about",
+  "email": "$email",
+  "ratings": ["$ratings"],
+  "totalRating": "$totalRatings"
+}
+```
+
+### Get Course Exercise
+
+---
+
+**request**:
+
+```r
+GET localhost:8080/course/subtitle/excercise/:id
+```
+
+**Response**:
+
+```json
+{
+  "Questions": ["$Questions"],
+  "Visits": [{"$visit"}],
+  "Mark": {
+    "$traineeId",
+    "$mark"
+   },
+}
+```
+
+### Get Course Subtitle
+
+---
+
+**request**:
+
+```r
+GET localhost:8080/course/subtitle/:id
+```
+
+**Response**:
+
+```json
+{
+  "subtitleNumber": "$subtitleNumber",
+  "courseId": "$courseId",
+  "title": "$title",
+  "subTitle_Content": [
+    "subTitle_Content_id": "$subTitle_Content_id",
+    "type": "excercise | content"
+  ]
+}
+```
+
+### Get Course Details
+
+---
+
+**request**:
+
+```r
+GET localhost:8080/course/:id
+```
+
+**Response**:
+
+```json
+{
+  "description": "$description",
+  "name": "$name",
+  "subject": "$field",
+  "price": { "magnitude": "$magnitude", "currency": "$currency" },
+  "instructorInfo": {
+    "instructorId": "$userId",
+    "instructorName": "$userName",
+  },
+  "duration": 0,
+  "introVideo": "$introVideo",
+  "image": "$image",
+  "ratings": [],
+  "totalRating": 0,
+
+  "trainees": [],
+  "subtitles": ["$subID",...],
+  "pendingTrainees": [],
+  "refundingTrainees": [],
+  "published": false
+}
+```
+
+### Report Course
+
+---
+
+**request**:
+
+```r
+POST localhost:8080/course/report
+```
+
+**Body**:
+
+```json
+{
+  "courseId": "$courseId",
+  "problemType": "$problemType",
+  "problemBody": "$problemBody",
+  "userName": "$userName",
+  "courseName": "$courseName",
+  "problemSummary": "$problemSummary",
+  "uniqueUserName": "$uniqueUserName"
+}
+```
+
+**Response**:
+
+```json
+{
+  "userId": "$userId",
+  "courseId": "$courseId",
+  "problemType": "$problemType",
+  "body": "$problemBody",
+  "userName": "$userName",
+  "courseName": "$courseName",
+  "summary": "$problemSummary",
+  "uniqueUserName": "username"
+}
+```
+
+## Color Palette
 
 ---
 
@@ -658,6 +806,8 @@ The background used for the whole website is this gradient: linear-gradient(to t
 | <img src="https://www.colorhexa.com/297f87.png" style="height:70px; width:120px"> | #297F87  |
 | <img src="https://www.colorhexa.com/9d9d9d.png" style="height:70px; width:120px"> | #9D9D9D  |
 | <img src="https://www.colorhexa.com/ffffff.png" style="height:70px; width:120px"> | #FFFFFF  |
+
+---
 
 # Credits
 
