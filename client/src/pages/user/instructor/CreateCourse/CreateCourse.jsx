@@ -30,6 +30,7 @@ function CreateCourse() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [fail, setFail] = useState(false);
+  const [courseId, setCourseId] = useState(null);
   //terms and conditions
   const [show, setShow] = useState(false);
 
@@ -62,7 +63,8 @@ function CreateCourse() {
         introVideo: introVideo,
         image: courseImage,
       };
-      await postCourse(data);
+      const courseData = await postCourse(data);
+      setCourseId(courseData.courseId);
       setSuccess(true);
     } catch (err) {
       setFail(true);
@@ -72,7 +74,7 @@ function CreateCourse() {
   const close = () => {
     setFail(false);
     setSuccess(false);
-    navigate("/");
+    courseId ? navigate("/course/" + courseId) : navigate("/myCourses");
   };
   return (
     <div className="pb-2">
