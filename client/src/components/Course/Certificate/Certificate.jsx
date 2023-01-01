@@ -121,12 +121,13 @@ const Certificate = (props) => {
         </Modal.Body>
         <Modal.Footer id="modal-Certificate">
           <Button
+          className="blueBg blueBgHover"
             variant="warning"
             onClick={() => {
               handleCloseMail();
             }}
           >
-            Continue
+            Okay
           </Button>
         </Modal.Footer>
       </Modal>
