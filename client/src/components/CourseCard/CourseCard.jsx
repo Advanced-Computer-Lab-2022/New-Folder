@@ -58,8 +58,8 @@ function CourseCard(props) {
       sx={{
         maxWidth: 230,
         minWidth: 230,
-        maxHeight: 322,
-        minHeight: 322,
+        maxHeight: 326,
+        minHeight: 326,
       }}
       onClick={(e) => navigate("/course/" + props.course.id)}
     >
