@@ -176,7 +176,7 @@ function ProblemCard(props) {
           <AccordionDetails id="followupsList">
             <ol>
               {followups.map((followup) => {
-                return <li>{followup}</li>;
+                return <li style={{ marginLeft: "-12px" }}>{followup}</li>;
               })}
             </ol>
             {editing ? (
