@@ -10,14 +10,16 @@ import { CardActionArea, Rating } from "@mui/material";
 import "./CourseCard.css";
 import { Badge, Spinner, Stack } from "react-bootstrap";
 import { MdPayments, MdOutlineStar } from "react-icons/md";
-import { RiPlayList2Fill } from "react-icons/ri";
+import { RiPlayList2Fill, RiBookReadFill } from "react-icons/ri";
 import Placeholder from "react-bootstrap/Placeholder";
+import userTypes from "../../constants/UserTypes.json";
 
 function CourseCard(props) {
   const [price, setPrice] = useState("");
   const [discount, setDiscount] = useState(null);
   const [currency, setCurrency] = useState("");
   const [duration, setDuration] = useState("");
+  const [subject, setSubject] = useState("");
   const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
@@ -31,6 +33,7 @@ function CourseCard(props) {
       });
       let priceStr = fetchedPrice.split(" ");
       setDuration(props.course.duration);
+      setSubject(props.course.subject);
       setPrice(priceStr[0]);
       setCurrency(priceStr[1]);
       if (props.course.price.hasPromotion) {
@@ -113,13 +116,19 @@ function CourseCard(props) {
                     })`}</span>
                   </span>
                 </h6>
-                <h6 className="courseCardItem">
-                  <MdPayments size={17} color="#100F0F" />{" "}
-                  <span id="courseCardTxt">
-                    {price} <span className="greyTxt">{currency}</span>
-                    {discount ? <span>{` (-${discount}%)`}</span> : null}
-                  </span>
-                </h6>
+                {ReactSession.get("userType") === userTypes.corporateTrainee ? (
+                  <h6 className="courseCardItem">
+                    <RiBookReadFill size={16} color="#100F0F" /> {subject}
+                  </h6>
+                ) : (
+                  <h6 className="courseCardItem">
+                    <MdPayments size={17} color="#100F0F" />{" "}
+                    <span id="courseCardTxt">
+                      {price} <span className="greyTxt">{currency}</span>
+                      {discount ? <span>{` (-${discount}%)`}</span> : null}
+                    </span>
+                  </h6>
+                )}
               </Stack>
             </Typography>
           </CardContent>

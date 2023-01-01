@@ -20,6 +20,8 @@ import {
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 import { Autocomplete, TextField } from "@mui/material";
 import "./Explore/Explore.css";
+import { ReactSession } from "react-client-session";
+import userTypes from "../../constants/UserTypes.json";
 import { useNavigate } from "react-router-dom";
 const Filter = () => {
   const navigate = useNavigate();
@@ -131,22 +133,27 @@ const Filter = () => {
             }
           />
           <Row className="m-4 p-2 pt-3 ps-5 pe-5 text-center">
-            <Form.Group as={Col}>
-              <Form.Control
-                type="number"
-                placeholder="min price"
-                value={minPrice}
-                onChange={(e) => setMinPrice(e.target.value)}
-              />
-            </Form.Group>
-            <Form.Group as={Col}>
-              <Form.Control
-                type="number"
-                placeholder="max price"
-                value={maxPrice}
-                onChange={(e) => setMaxPrice(e.target.value)}
-              />
-            </Form.Group>
+            {ReactSession.get("userType") ===
+            userTypes.corporateTrainee ? null : (
+              <>
+                <Form.Group as={Col}>
+                  <Form.Control
+                    type="number"
+                    placeholder="min price"
+                    value={minPrice}
+                    onChange={(e) => setMinPrice(e.target.value)}
+                  />
+                </Form.Group>
+                <Form.Group as={Col}>
+                  <Form.Control
+                    type="number"
+                    placeholder="max price"
+                    value={maxPrice}
+                    onChange={(e) => setMaxPrice(e.target.value)}
+                  />
+                </Form.Group>
+              </>
+            )}
             <Form.Group as={Col}>
               <Form.Control
                 type="number"

@@ -2,7 +2,15 @@ import React from "react";
 import { useState, useEffect } from "react";
 import { fetchReports } from "../../network";
 import ProblemCard from "../../components/ProblemCard/ProblemCard";
-import { Col, NavDropdown, Row, Tab, Tabs } from "react-bootstrap";
+import {
+  Col,
+  Image,
+  NavDropdown,
+  Row,
+  Stack,
+  Tab,
+  Tabs,
+} from "react-bootstrap";
 
 function Reports() {
   const [unresolved, setUnresolved] = useState([]);
@@ -59,9 +67,31 @@ function Reports() {
         </NavDropdown.Item>
       </NavDropdown>
       {selected === "Resolved reports" ? (
-        <ResolvedReports />
+        <>
+          {resolved.length === 0 ? (
+            <div className="pt-3">
+              <Stack className="mt-5" gap={3}>
+                <Image width={"30%"} src="/assets/Empty.png" />
+                <h2 className="m-auto">There are no resolved reports</h2>
+              </Stack>
+            </div>
+          ) : (
+            <ResolvedReports />
+          )}
+        </>
       ) : (
-        <UnresolvedReports />
+        <>
+          {unresolved.length === 0 ? (
+            <div className="pt-3">
+              <Stack className="mt-5" gap={3}>
+                <Image width={"30%"} src="/assets/Empty.png" />
+                <h2 className="m-auto">There are no unresolved reports</h2>
+              </Stack>
+            </div>
+          ) : (
+            <UnresolvedReports />
+          )}
+        </>
       )}
     </div>
   );
