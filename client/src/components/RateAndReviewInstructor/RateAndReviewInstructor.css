@@ -1,8 +1,8 @@
 #rateInstructorMain {
-  padding: 2%;
-  padding-top: 3%;
-  padding-left: 3%;
-  padding-right: 3%;
+  padding: 1%;
+  padding-top: 2.5%;
+  padding-left: 2%;
+  padding-right: 2%;
   margin: 2%;
   margin-left: 15%;
   margin-right: 15%;
@@ -12,7 +12,8 @@
   margin: 0%;
   padding: 0%;
   width: 170px;
-  height: 90px;
+  height: 70px;
+  margin-top: -14px;
 }
 
 #reviewBox {
@@ -28,12 +29,18 @@
 
 #ratingLabel {
   margin: 0%;
+  margin-right: 3px;
+  font-size: 24px !important;
 }
 #reviewLabel {
   margin: 0%;
+  font-size: 24px !important;
 }
 #reviewButtonsContainer {
   display: flex;
   justify-content: flex-end;
   margin: 0;
+}
+#labelRating {
+  display: inline-flex !important;
 }

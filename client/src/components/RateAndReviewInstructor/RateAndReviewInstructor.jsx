@@ -81,7 +81,7 @@ const RateAndReviewInstructor = (props) => {
     return () => (
       <ReactStars
         count={5}
-        size={40}
+        size={36}
         isHalf={true}
         activeColor="#ffd700"
         value={props.myRating}
@@ -93,13 +93,17 @@ const RateAndReviewInstructor = (props) => {
 
   return (
     <div id="rateInstructorMain" className="whiteCard">
-      <h3 id="ratingLabel">
-        {props.myRating ? "Your rating" : "Rate this instructor"}
-      </h3>
-      <div id="ratingStars">
-        <Stars />
+      <div id="labelRating">
+        <h4 id="ratingLabel">
+          {props.myRating ? "Your rating" : "Rate this instructor"}
+        </h4>
+        <span id="ratingStars">
+          <Stars />
+        </span>
       </div>
-      <h3 id="reviewLabel">Write a review (optional)</h3>
+      <h4 id="reviewLabel">
+        Write a review <span className="greyTxt">(optional)</span>
+      </h4>
       <div id="reviewBox">
         <Form.Control
           size="lg"
