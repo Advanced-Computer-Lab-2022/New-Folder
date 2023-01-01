@@ -90,20 +90,19 @@ function CourseCard(props) {
           <CardContent>
             <Typography variant="h5" component="span">
               {props.course.name}
-            </Typography>{" "}
-            {props.course?.published !== null &&
-            props.course?.published !== undefined &&
-            !props.course?.published ? (
-              <Badge style={{ marginTop: "-50px" }} bg="secondary" pill>
-                Unpublished
-              </Badge>
-            ) : null}
+            </Typography>
             <Typography variant="body2">
               <Stack gap={1}>
                 <h6 className="courseCardItem blueTxt">
-                  {props.course.instructorName}
+                  {props.course.instructorName}{" "}
+                  {props.course?.published !== null &&
+                  props.course?.published !== undefined &&
+                  !props.course?.published ? (
+                    <Badge bg="secondary" pill>
+                      Unpublished
+                    </Badge>
+                  ) : null}
                 </h6>
-
                 <h6 className="courseCardItem">
                   <RiPlayList2Fill size={16} color="#100F0F" /> {duration}
                 </h6>
