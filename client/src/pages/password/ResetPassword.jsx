@@ -1,5 +1,5 @@
 import "./Password.css";
-import { Form, Button, Spinner } from "react-bootstrap";
+import { Form, Button, Spinner, Alert } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { useState } from "react";
 import { resetPassword } from "../../network";
@@ -16,11 +16,13 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [confMsg, setConfMsg] = useState("");
   const [validated, setValidated] = useState(false);
+  const [errorMsg, setErrorMsg] = useState("");
 
   const handleClose = () => setShowConfirmation(false);
-  const handleCloseError = () => setShowError(false);
 
   const submit = async (e) => {
+    setErrorMsg("");
+    setShowError(false);
     e.preventDefault();
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
@@ -36,6 +38,7 @@ const ResetPassword = () => {
       setLoading(false);
     } catch (err) {
       setLoading(false);
+      setErrorMsg(err.response.data.error);
       setShowError(true);
       console.log(err);
     }
@@ -45,6 +48,9 @@ const ResetPassword = () => {
     <div>
       <PageHeader pageName="Reset password" />
       <div className="passwordMain whiteCard">
+        <Alert show={showError} variant="danger">
+          {errorMsg}
+        </Alert>
         <Form noValidate validated={validated} onSubmit={submit}>
           <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
             <Form.Label>New password</Form.Label>
@@ -96,7 +102,6 @@ const ResetPassword = () => {
         show={showConfirmation}
         handleClose={handleClose}
       />
-      <ErrorModal show={showError} handleClose={handleCloseError} />
     </div>
   );
 };

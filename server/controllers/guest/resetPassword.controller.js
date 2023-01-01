@@ -31,7 +31,8 @@ exports.resetPassword = asyncHandler(async (req, res) => {
       res.status(200).json();
     } catch (error) {
       console.log(error.message);
-      res.send(error.message);
+      res.status(500).json({ error: "This link has expired." });
+      return;
     }
   } else {
     res.status(500).json({ error: "Something went wrong." });
