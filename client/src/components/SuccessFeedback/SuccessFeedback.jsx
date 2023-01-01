@@ -7,7 +7,7 @@ function SuccessFeedback(props) {
   const { msg } = props;
   console.log("succed");
   return (
-    <div id="successFeedbackContainer">
+    <div className="text-center" id="successFeedbackContainer">
       <h3 className="blackTxt" id="successHeader">
         {msg}
       </h3>

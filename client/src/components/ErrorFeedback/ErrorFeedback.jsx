@@ -3,7 +3,7 @@ import { Alert, AlertIcon } from "@chakra-ui/alert";
 import "./ErrorFeedback.css";
 function ErrorFeedback(props) {
   return (
-    <div id="successFeedbackContainer">
+    <div className="text-center" id="successFeedbackContainer">
       <h3 className="blackTxt" id="successHeader">
         Something went wrong, try again later.
       </h3>

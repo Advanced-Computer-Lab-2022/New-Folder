@@ -10,7 +10,8 @@ import { CardActionArea, Rating } from "@mui/material";
 import "./CourseCard.css";
 import { Badge, Spinner, Stack } from "react-bootstrap";
 import { MdPayments, MdOutlineStar } from "react-icons/md";
-import { RiPlayList2Fill, RiBookReadFill } from "react-icons/ri";
+import { RiPlayList2Fill } from "react-icons/ri";
+import { IoBookSharp } from "react-icons/io5";
 import Placeholder from "react-bootstrap/Placeholder";
 import userTypes from "../../constants/UserTypes.json";
 
@@ -93,7 +94,7 @@ function CourseCard(props) {
             </Typography>
             <Typography variant="body2">
               <Stack gap={1}>
-                <h6 className="courseCardItem blueTxt">
+                <h6 className="courseCardItem blueTxt mb-1">
                   {props.course.instructorName}{" "}
                   {props.course?.published !== null &&
                   props.course?.published !== undefined &&
@@ -103,6 +104,11 @@ function CourseCard(props) {
                     </Badge>
                   ) : null}
                 </h6>
+                {ReactSession.get("userType") === userTypes.corporateTrainee ? (
+                  <h6 className="courseCardItem">
+                    <IoBookSharp size={17} color="#100F0F" /> {subject}
+                  </h6>
+                ) : null}
                 <h6 className="courseCardItem">
                   <RiPlayList2Fill size={16} color="#100F0F" /> {duration}
                 </h6>
@@ -115,11 +121,8 @@ function CourseCard(props) {
                     })`}</span>
                   </span>
                 </h6>
-                {ReactSession.get("userType") === userTypes.corporateTrainee ? (
-                  <h6 className="courseCardItem">
-                    <RiBookReadFill size={16} color="#100F0F" /> {subject}
-                  </h6>
-                ) : (
+                {ReactSession.get("userType") ===
+                userTypes.corporateTrainee ? null : (
                   <h6 className="courseCardItem">
                     <MdPayments size={17} color="#100F0F" />{" "}
                     <span id="courseCardTxt">
