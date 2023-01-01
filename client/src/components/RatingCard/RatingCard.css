@@ -6,17 +6,20 @@
   margin-left: -5%;
 }
 .rateCourseFormButton {
-  width: 30%;
+  width: 20%;
+  margin-left: 1%;
 }
 #rateCourseFooter {
   display: flex;
-  justify-content: space-around;
-  padding: 10%;
+  justify-content: end;
 }
 .courseRatingForm {
   margin-left: -50%;
   margin-right: -50%;
+  margin-top: 5%;
+  margin-bottom: 5%;
 }
 #rateCourseButton {
   margin-left: 0%;
+  margin-right: 0%;
 }
