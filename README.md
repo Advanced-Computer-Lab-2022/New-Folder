@@ -52,6 +52,16 @@ In the past decade people all around the world satrted heading for learning new 
   <img src = "./client/public/assets/AllCourses.png" style = "width: 100%;">
 - Log in
   <img src = "./client/public/assets/LogIn.png" style = "width: 100%;">
+- Course details
+  <img src = "./client/public/assets/CourseDetails.png" style = "width: 100%;">
+- Course content
+  <img src = "./client/public/assets/Content.png" style = "width: 100%;">
+- Create course
+  <img src = "./client/public/assets/CreateCourse.png" style = "width: 100%;">
+- Instructor profile
+  <img src = "./client/public/assets/InstructorProfile.png" style = "width: 100%;">
+- Instructor earnings
+  <img src = "./client/public/assets/Earnings.png" style = "width: 100%;">
 
 # Code Style
 
