@@ -127,7 +127,7 @@ function SubtitleCard(props) {
       <Accordion.Item eventKey={props.index}>
         <Accordion.Header>
           <div id="sectionHeader">
-            <h4>
+            <h4 className="ms-2">
               <b>{subtitle.title}</b>
               {props.vc === ViewerContexts.author ? (
                 <>
