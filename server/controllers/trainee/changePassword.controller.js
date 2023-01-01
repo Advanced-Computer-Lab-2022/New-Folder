@@ -23,6 +23,10 @@ exports.changePassword = asyncHandler(async (req, res) => {
   const isCorrectPassword = await bcrypt.compare(oldPassword, user.password);
   const encryptedPassword = await bcrypt.hash(newPassword, 12);
   //const isCorrectPassword = oldPassword === user.password;
+  if (!isCorrectPassword) {
+    res.status(500).json({ error: "Incorrect old password." });
+    return;
+  }
   if (user && isCorrectPassword) {
     await User.findByIdAndUpdate(userId, {
       password: encryptedPassword,

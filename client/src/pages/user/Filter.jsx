@@ -109,6 +109,8 @@ const Filter = () => {
                 onChange={(event, value) => {
                   if (filteredCourses.includes(value)) {
                     setFilteredCourses([value]);
+                  } else {
+                    setFilteredCourses([]);
                   }
                 }}
                 renderInput={(params) => (

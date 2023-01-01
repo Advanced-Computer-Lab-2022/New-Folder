@@ -1,6 +1,6 @@
 import "./Password.css";
 import { useState } from "react";
-import { Form, Button, Spinner } from "react-bootstrap";
+import { Form, Button, Spinner, Alert } from "react-bootstrap";
 import { changePassword } from "../../network";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
@@ -14,6 +14,7 @@ const ChangePassword = () => {
   const [showError, setShowError] = useState(false);
   const [loading, setLoading] = useState(false);
   const [confMsg, setConfMsg] = useState("");
+  const [errorMsg, setErrorMsg] = useState("");
   const [validated, setValidated] = useState(false);
 
   const handleClose = () => setShowConfirmation(false);
@@ -34,6 +35,7 @@ const ChangePassword = () => {
       setLoading(false);
     } catch (err) {
       setLoading(false);
+      setErrorMsg(err.response.data.error);
       setShowError(true);
       console.log(err);
     }
@@ -43,6 +45,9 @@ const ChangePassword = () => {
     <div>
       <PageHeader pageName="Change password" />
       <div className="passwordMain whiteCard">
+        <Alert show={showError} variant="danger">
+          {errorMsg}
+        </Alert>
         <Form noValidate validated={validated} onSubmit={submit}>
           <Form.Group className="mb-2" controlId="exampleForm.ControlInput1">
             <Form.Label>Old password</Form.Label>
@@ -106,7 +111,6 @@ const ChangePassword = () => {
         show={showConfirmation}
         handleClose={handleClose}
       />
-      <ErrorModal show={showError} handleClose={handleCloseError} />
     </div>
   );
 };
