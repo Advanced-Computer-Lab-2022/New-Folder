@@ -116,6 +116,7 @@ function ReportCourse(props) {
                         as="textarea"
                         rows={1}
                         required
+                        className="mb-3"
                         maxLength={50}
                         onChange={(e) => setProblemSummary(e.target.value)}
                       />
