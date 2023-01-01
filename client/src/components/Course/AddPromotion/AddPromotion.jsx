@@ -194,7 +194,7 @@ function AddPromotion(props) {
         </Modal>
       </>
 
-      <div>
+      <div className="mb-3">
         <h4>
           Course promotion
           <ImPencil
