@@ -16,6 +16,7 @@ function AddUser() {
     lastName: "",
   });
   const [validated, setValidated] = useState(false);
+  const [confirmedPassword, setConfirmedPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [gender, setGender] = useState("Male");
@@ -54,6 +55,19 @@ function AddUser() {
     }
     setLoading(false);
   };
+  const clearAll = () => {
+    setValidated(false);
+    setCorporateName("");
+    setConfirmedPassword("");
+    setData({
+      username: "",
+      password: "",
+      email: "",
+      firstName: "",
+      lastName: "",
+    });
+  };
+
   // This function returns the user type in a human readable way instead of camel case
   const getUserType = (s) => {
     if (s === UserTypes.admin) {
@@ -76,7 +90,7 @@ function AddUser() {
   const close = () => {
     setSuccess(false);
     setShowError(false);
-    navigate("/");
+    clearAll();
   };
   return (
     <div className="pb-3">
@@ -131,6 +145,8 @@ function AddUser() {
               type="password"
               placeholder="Confirm Password"
               required
+              value={confirmedPassword}
+              onChange={(e) => setConfirmedPassword(e.target.value)}
               pattern={data.password}
             />
             <Form.Control.Feedback type="invalid">

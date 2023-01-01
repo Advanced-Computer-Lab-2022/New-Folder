@@ -101,6 +101,7 @@ const Signup = (props) => {
               placeholder="Confirm Password"
               required
               pattern={password}
+              value={confirmedPassword}
               onChange={(e) => setConfirmedPassword(e.target.value)}
             />
             <Form.Control.Feedback type="invalid">
