@@ -1,6 +1,6 @@
 <img src = "./client/public/assets/logo.png" style = "width: 100%; background-color:#000000;">
+
 # Level Up
------------------
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
@@ -8,13 +8,10 @@ Level Up is an online learning platform that an instructor can use to publish th
 
 ## Motivation
 
----
-
 In the past decade people all around the world satrted heading for learning new skills through online learning platfrom and instructor started posting valuable learning materials all over the internet. The Main idea behind Level Up is to allow instructors to post the content from outside open sources and create a unified platform for online learning and that contains multiple materials from different sources.
 
 ## Features
 
----
 
 - If you are an instructor , you can:
   - Create a course and sets its price.
@@ -50,13 +47,11 @@ In the past decade people all around the world satrted heading for learning new 
 
 # Code Style
 
----
 
 The application is built in Client/Server architecture, where the server logic is written in `server` directory and the client is in `client` directory.
 
 ## Technology
 
----
 
 Level Up uses a number of open source projects to work properly:
 
@@ -69,7 +64,6 @@ Level Up uses a number of open source projects to work properly:
 
 ## Installation & Running
 
----
 
 Install the dependencies and start the server.
 
@@ -84,7 +78,6 @@ npm start
 
 ## API Refrence
 
----
 
 ### login
 
@@ -188,7 +181,6 @@ POST localhost:8080/signup
 
 ## Color Palette
 
----
 
 The background used for the whole website is this gradient: linear-gradient(to top, #E6E9F0 0%, #EEF1F5 100%)
 
@@ -201,7 +193,6 @@ The background used for the whole website is this gradient: linear-gradient(to t
 
 # Credits
 
----
 
 This project is delivered by a group of 5 Engineering students at the German University in Cairo:
 
@@ -215,13 +206,11 @@ with the help of all the amazing and supportive TAs and the great professor Dr. 
 
 # Contribute
 
----
 
 If you want to cotribute to this project send us email on (onlinelearningsystem10@gmail.com). And if you have suggestion don't hesitate to open issue about it.
 
 # License
 
----
 
 This application is licensed under [MIT](https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt) License.
 
