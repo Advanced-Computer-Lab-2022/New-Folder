@@ -13,7 +13,9 @@
   flex-direction: row;
   width: fit-content;
   border: none;
-  margin: 0;
+  margin: 5px;
+  margin-left: 3px;
+  margin-bottom: 7px;
   padding-top: 1%;
 }
 .reportFormButton {

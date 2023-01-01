@@ -15,7 +15,7 @@ function EnrollGoToCourse(props) {
       {vc === ViewerContexts.guest ? (
         <>
           <Button
-            className="blackBgHover"
+            className="blackBgHover mb-2"
             onClick={enroll}
             disabled={loadingEnrollBtn}
             id="enrollButton"
@@ -42,7 +42,7 @@ function EnrollGoToCourse(props) {
             ViewerContexts.enrolledTrainee,
           ].includes(vc) ? (
             <Button
-              className="blackBgHover"
+              className="blackBgHover mb-2"
               onClick={() => navigate("/watch/" + courseId + "?sId=0&cId=0")}
               id="enrollButton"
             >

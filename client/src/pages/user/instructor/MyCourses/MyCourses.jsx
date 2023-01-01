@@ -84,7 +84,7 @@ const MyCourses = () => {
             options={courses}
             getOptionLabel={(option) => option?.name ?? ""}
             onChange={(event, value) => {
-              if (filteredCourses.includes(value)) {
+              if (courses.includes(value)) {
                 setFilteredCourses([value]);
               } else {
                 setFilteredCourses([]);

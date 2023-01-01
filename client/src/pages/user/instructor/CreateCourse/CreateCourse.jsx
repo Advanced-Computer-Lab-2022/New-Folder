@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { postCourse } from "../../../../network";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import Form from "react-bootstrap/Form";
 import CountryCurrency from "iso-country-currency";
 import Button from "react-bootstrap/Button";

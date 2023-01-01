@@ -194,7 +194,7 @@ const CourseDetails = () => {
             ) : null}
             <div
               style={{
-                marginTop: "3%",
+                marginTop: "2%",
                 marginRight: "2.5%",
                 marginLeft: "2.5%",
               }}
