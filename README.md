@@ -6,11 +6,11 @@
 
 Level Up is an online learning platform that an instructor can use to publish their courses and trainees can use to enrol in these courses to improve their knowledge and skills, also corporates can use it to train their employees and give them access to some learning material published on our website.
 
-## Motivation
+# Motivation
 
 In the past decade people all around the world satrted heading for learning new skills through online learning platfrom and instructor started posting valuable learning materials all over the internet. The Main idea behind Level Up is to allow instructors to post the content from outside open sources and create a unified platform for online learning and that contains multiple materials from different sources.
 
-## Features
+# Features
 
 - If you are an instructor , you can:
   - Create a course and sets its price.
@@ -52,30 +52,57 @@ In the past decade people all around the world satrted heading for learning new 
   - Approve refund requests.
   - View the reported issues.
 
-## Screenshots
+# Screenshots
 
-- Explore
+### Explore
+
   <img src = "./client/public/assets/Explore.png" style = "width: 100%;">
-- All courses
+
+### All courses
+
   <img src = "./client/public/assets/AllCourses.png" style = "width: 100%;">
-- Log in
+
+### Log in
+
   <img src = "./client/public/assets/LogIn.png" style = "width: 100%;">
-- Course details
+
+### Course details
+
   <img src = "./client/public/assets/CourseDetails.png" style = "width: 100%;">
-- Course content
+
+### Course content
+
   <img src = "./client/public/assets/Content.png" style = "width: 100%;">
-- Create course
+
+### Create course
+
   <img src = "./client/public/assets/CreateCourse.png" style = "width: 100%;">
-- Instructor profile
+
+### Instructor profile
+
   <img src = "./client/public/assets/InstructorProfile.png" style = "width: 100%;">
-- Instructor earnings
+
+### Instructor earnings
+
   <img src = "./client/public/assets/Earnings.png" style = "width: 100%;">
+
+### Admin view reports
+
+  <img src = "./client/public/assets/Reports.png" style = "width: 100%;">
+
+### Admin view corporate trainees access requests for courses
+
+  <img src = "./client/public/assets/AccessReq.png" style = "width: 100%;">
+
+### Admin set promotion
+
+  <img src = "./client/public/assets/adminPromotion.png" style = "width: 100%;">
 
 # Code Style
 
 The application is built in Client/Server architecture, where the server logic is written in `server` directory and the client is in `client` directory.
 
-## Technology
+# Technology
 
 Level Up uses a number of open source projects to work properly:
 
@@ -86,7 +113,7 @@ Level Up uses a number of open source projects to work properly:
 - [Express] - Backend
 - [MongoDB](https://www.mongodb.com/home) - Database
 
-## Installation & Running
+# Installation & Running
 
 Install the dependencies and start the server.
 
@@ -99,7 +126,7 @@ npm i
 npm start
 ```
 
-## API Refrence
+# API Refrence
 
 ### login
 
@@ -526,7 +553,7 @@ POST localhost:8080/admin/requests/decline/:id
 declined Successfully
 ```
 
-## Color Palette
+# Color Palette
 
 The background used for the whole website is this gradient: linear-gradient(to top, #E6E9F0 0%, #EEF1F5 100%)
 
