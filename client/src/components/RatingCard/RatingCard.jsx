@@ -291,7 +291,13 @@ function RatingCard(props) {
               </Modal>
             </>
             {traineeRating != null ? (
-              <h6 style={{ marginTop: "7%" }}>
+              <h6
+                style={{ marginTop: "7%", cursor: "pointer" }}
+                onClick={() => {
+                  setEditing(true);
+                  setSubmitted(false);
+                }}
+              >
                 &nbsp;&nbsp;&nbsp;&nbsp;Edit your review
                 <ImPencil
                   color={colors.blue}
@@ -304,7 +310,13 @@ function RatingCard(props) {
                 />
               </h6>
             ) : (
-              <h6 style={{ marginTop: "9%" }}>
+              <h6
+                style={{ marginTop: "9%", cursor: "pointer" }}
+                onClick={() => {
+                  setEditing(true);
+                  setSubmitted(false);
+                }}
+              >
                 <AiOutlinePlusCircle
                   color={colors.blue}
                   size={15}

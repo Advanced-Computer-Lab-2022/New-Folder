@@ -43,7 +43,12 @@ function CourseHeader(props) {
   }, [totalRating]);
   return (
     <div id="courseHeaderWrapper">
-      <Stack gap={1} id="courseHeaderLeft" direction="vertical">
+      <Stack
+        gap={1}
+        className="mb-3"
+        id="courseHeaderLeft"
+        direction="vertical"
+      >
         <h2>{name}</h2>
         <h5>
           By:{" "}

@@ -5,7 +5,7 @@ import Form from "react-bootstrap/Form";
 import Button from "react-bootstrap/Button";
 import { ReactSession } from "react-client-session";
 import { signup } from "../../network";
-import { Alert, Spinner } from "react-bootstrap";
+import { Alert, Image, Spinner } from "react-bootstrap";
 import SignupTerms from "../../components/SignupTerms/SignupTerms";
 
 const Signup = (props) => {
@@ -63,7 +63,12 @@ const Signup = (props) => {
   return (
     <div id="signupMain3">
       <div id="signupMain" className="whiteCard">
-        <h1 className="text-center mb-5">Learning System</h1>
+        <Image
+          height={80}
+          src="/assets/logoBlack.png"
+          className="mb-4"
+          style={{ display: "block", marginLeft: "auto", marginRight: "auto" }}
+        />
         <Alert show={showError} variant="danger">
           {errorMsg}
         </Alert>

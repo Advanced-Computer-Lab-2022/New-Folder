@@ -4,7 +4,7 @@
 }
 #reportFormFooter {
   display: flex;
-  justify-content: space-around;
+  justify-content: end;
 }
 #reportButton {
   background-color: rgb(0, 0, 0, 0);
@@ -13,11 +13,12 @@
   flex-direction: row;
   width: fit-content;
   border: none;
-  margin: 0;
-  padding-top: 1%;
+  margin: 3px;
+  margin-bottom: 7px;
 }
 .reportFormButton {
-  width: 40%;
+  width: 15%;
+  margin-left: 1%;
 }
 #reportIconWrapper {
   width: fit-content;

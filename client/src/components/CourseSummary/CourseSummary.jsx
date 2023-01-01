@@ -198,20 +198,23 @@ function CourseSummary(props) {
           ].includes(vc) ? (
             <>
               {" "}
-              <small
+              <h6
+                onClick={() => setShowPopOver(!showPopOver)}
                 ref={target}
                 style={{
                   width: "fit-content",
-                  marginLeft: 0,
-                  marginBottom: -20,
+                  marginLeft: 4.5,
+                  marginTop: 6,
+                  marginBottom: 0,
+                  cursor: "pointer",
                 }}
               >
                 Help&nbsp;
                 <AiOutlineQuestionCircle
-                  onClick={() => setShowPopOver(!showPopOver)}
+                  size={16}
                   style={{ cursor: "pointer", marginBottom: "0%" }}
                 />
-              </small>
+              </h6>
               <Overlay
                 target={target.current}
                 show={showPopOver}

@@ -82,9 +82,13 @@ const MyCourses = () => {
             id="free-solo-2-demo"
             disableClearable
             options={courses}
-            getOptionLabel={(option) => option.name}
+            getOptionLabel={(option) => option?.name ?? ""}
             onChange={(event, value) => {
-              navigate("/course/" + value.id);
+              if (courses.includes(value)) {
+                setFilteredCourses([value]);
+              } else {
+                setFilteredCourses([]);
+              }
             }}
             renderInput={(params) => (
               <ThemeProvider theme={theme}>

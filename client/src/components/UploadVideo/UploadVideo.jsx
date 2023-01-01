@@ -4,11 +4,12 @@ import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import Spinner from "react-bootstrap/Spinner";
 import { addVideo } from "../../network";
-import { useNavigate } from "react-router-dom";
 import SuccessModal from "../SuccessModal/SuccessModal";
+import { useNavigate } from "react-router-dom";
 import ErrorModal from "../ErrorModal/ErrorModal";
 
 const UploadVideo = (props) => {
+  const navigate = useNavigate();
   const [validated, setValidated] = useState(false);
   const [videoURL, setVideoURL] = useState("");
   const [description, setDescription] = useState("");
@@ -105,12 +106,13 @@ const UploadVideo = (props) => {
         <div className="text-end">
           <Button
             disabled={loading}
-            className="greyBg me-4"
+            className="greyBgHover me-3"
+            style={{ width: 82 }}
             onClick={() => clearAll()}
           >
             Cancel
           </Button>
-          <Button disabled={loading} className="blueBg" type="submit">
+          <Button disabled={loading} className="blueBgHover me-3" type="submit">
             Add video{" "}
             {loading ? (
               <Spinner
@@ -122,6 +124,13 @@ const UploadVideo = (props) => {
                 aria-hidden="true"
               />
             ) : null}
+          </Button>
+          <Button
+            disabled={loading}
+            className="blackBgHover"
+            onClick={() => navigate("/course/" + props.courseID)}
+          >
+            Back to course
           </Button>
         </div>
       </Form>

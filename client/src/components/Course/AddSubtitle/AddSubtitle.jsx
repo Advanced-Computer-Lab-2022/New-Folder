@@ -89,9 +89,12 @@ function AddSubtitle(props) {
             </Button>
           </Form>
         ) : (
-          <h5 id="addIconWrapper">
+          <h5
+            style={{ cursor: "pointer" }}
+            onClick={() => setEditing(true)}
+            id="addIconWrapper"
+          >
             <AiOutlinePlusCircle
-              onClick={() => setEditing(true)}
               style={{ marginBottom: 4, cursor: "pointer" }}
             />{" "}
             &nbsp;Add a subtitle

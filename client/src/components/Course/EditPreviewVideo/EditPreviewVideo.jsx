@@ -66,7 +66,7 @@ function EditPreviewVideo(props) {
             id="cancelPreviewVideo"
             onClick={close}
             disabled={loading}
-            className="redBgHover"
+            className="greyBgHover"
           >
             Cancel
           </Button>

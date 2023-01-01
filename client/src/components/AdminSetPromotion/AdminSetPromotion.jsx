@@ -87,7 +87,7 @@ function AdminSetPromotion() {
       endDate: new Date(endDate).getTime(),
       percentage: newPercentage,
     };
-    const coursesIds = selectedCourses.map((course) => course._id);
+    const coursesIds = selectedCourses.map((course) => course.id);
     await postMultiPromotion(coursesIds, addedPromotion);
     setNewPercentage(null);
     setRange(null);
@@ -107,8 +107,8 @@ function AdminSetPromotion() {
     setSelectError(null);
     setEditing(true);
     setSuccess(false);
+    setNewPercentage("");
     setLoading(false);
-    navigate("/adminHome");
   };
   return (
     <div>
@@ -123,9 +123,23 @@ function AdminSetPromotion() {
             />
           </>
         ) : (
-          <Stack direction="vertical" gap={1} style={{ width: "21%" }}>
+          <Stack
+            className="whiteCard"
+            direction="vertical"
+            gap={1}
+            style={{
+              paddingTop: "40px",
+              paddingBottom: "45px",
+              width: "29%",
+              marginTop: "3%",
+            }}
+          >
             <div>
               <Autocomplete
+                sx={{
+                  maxWidth: "340px",
+                  marginLeft: "0px",
+                }}
                 multiple
                 disabled={allSelected}
                 id="checkboxes-tags-demo"
@@ -147,7 +161,7 @@ function AdminSetPromotion() {
                     {option.name}
                   </li>
                 )}
-                style={{ width: 400 }}
+                style={{ width: 340 }}
                 renderInput={(params) => (
                   <TextField
                     {...params}
@@ -188,7 +202,9 @@ function AdminSetPromotion() {
                 <p className="promotionError">{selectError}</p>
               ) : null}
             </div>
-            <h6 id="addPromotionHeader">Select start and end dates:</h6>
+            <h5 className="blueTxt" id="addPromotionHeader">
+              Select start and end dates:
+            </h5>
             <div>
               <DayPicker
                 mode="range"
@@ -206,8 +222,12 @@ function AdminSetPromotion() {
                 ]}
               />
             </div>
-            {dateError ? <p className="promotionError">{dateError}</p> : null}
-            <Form.Group style={{ width: "100%" }}>
+            {dateError ? (
+              <p style={{ marginLeft: "15%" }} className="promotionError">
+                {dateError}
+              </p>
+            ) : null}
+            <Form.Group style={{ width: "70%" }} className="mb-3">
               <Form.Control
                 type="number"
                 placeholder="Promotion %"
@@ -215,17 +235,19 @@ function AdminSetPromotion() {
                 onChange={(e) => setNewPercentage(e.target.value)}
               />
               {percentageError ? (
-                <p className="promotionError">{percentageError}</p>
+                <p style={{ marginLeft: "15%" }} className="promotionError">
+                  {percentageError}
+                </p>
               ) : null}
             </Form.Group>
-            <div style={{ width: "100%" }}>
+            <div style={{ width: "70%" }}>
               <Button
                 id="adminSetPromotionClose"
                 className="greyBgHover"
                 onClick={cancel}
                 disabled={loading}
               >
-                Close
+                Cancel
               </Button>
               {loading ? (
                 <Button

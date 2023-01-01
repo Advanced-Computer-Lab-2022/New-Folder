@@ -163,15 +163,16 @@ function RefundForm(props) {
         </Card>
       ) : (
         <Card id="reportButton">
-          <div id="reportIconWrapper">
-            <GiReceiveMoney
-              onClick={(e) => {
-                setShow(true);
-              }}
-              style={{ cursor: "pointer", marginBottom: "1%" }}
-            />
-          </div>
-          &nbsp;Request a refund
+          <h6
+            onClick={(e) => {
+              setShow(true);
+            }}
+            style={{ cursor: "pointer" }}
+            id="reportIconWrapper"
+          >
+            <GiReceiveMoney style={{ marginTop: -6 }} size={16} />
+            &nbsp;Request a refund
+          </h6>
         </Card>
       )}
     </>

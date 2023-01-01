@@ -8,7 +8,7 @@ import Container from "react-bootstrap/esm/Container";
 import Col from "react-bootstrap/esm/Col";
 import { ReactSession } from "react-client-session";
 import userTypes from "../../constants/UserTypes.json";
-import { Alert, Spinner } from "react-bootstrap";
+import { Alert, Image, Spinner } from "react-bootstrap";
 const Login = (props) => {
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -59,7 +59,7 @@ const Login = (props) => {
   return (
     <div id="loginMain3">
       <div id="loginMain" className="whiteCard">
-        <h1 className="mb-5">Learning System</h1>
+        <Image height={115} src="/assets/logoBlack.png" className="mb-5" />
         <Alert show={showError} variant="danger">
           {errorMsg}
         </Alert>

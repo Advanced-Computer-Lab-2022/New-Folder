@@ -116,6 +116,7 @@ function ReportCourse(props) {
                         as="textarea"
                         rows={1}
                         required
+                        className="mb-3"
                         maxLength={50}
                         onChange={(e) => setProblemSummary(e.target.value)}
                       />
@@ -182,16 +183,17 @@ function ReportCourse(props) {
         </>
       </Modal>
       <Card id="reportButton">
-        <div id="reportIconWrapper">
-          <FiAlertCircle
-            onClick={() => {
-              setShow(true);
-              setEditing(true);
-            }}
-            style={{ cursor: "pointer" }}
-          />
-        </div>
-        &nbsp;Report problem
+        <h6
+          id="reportIconWrapper"
+          onClick={() => {
+            setShow(true);
+            setEditing(true);
+          }}
+          style={{ cursor: "pointer", marginBottom: 0 }}
+        >
+          <FiAlertCircle style={{ marginTop: -3 }} size={16} />
+          &nbsp;Report problem
+        </h6>
       </Card>
     </>
   );

@@ -74,7 +74,9 @@ function CourseBody(props) {
         <IoBookSharp size={17} style={{ marginBottom: 2, marginRight: 5 }} />{" "}
         {subject ?? "Computer science"}
       </h5>
-      <h6 style={{ color: "#666666" }}>{summary}</h6>
+      <h6 className="mt-2" style={{ color: "#666666" }}>
+        {summary}
+      </h6>
     </div>
   );
 }
