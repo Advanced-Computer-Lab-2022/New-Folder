@@ -19,6 +19,7 @@ const ForgetPassword = () => {
   const submit = async (e) => {
     e.preventDefault();
     setErrorMsg("");
+    setShowError(false);
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
       e.stopPropagation();
@@ -29,6 +30,7 @@ const ForgetPassword = () => {
     try {
       await sendPasswordResetLink({ username });
       setConfMsg("You will recieve an email with your password reset link.");
+      setShowConfirmation(true);
       setLoading(false);
     } catch (err) {
       setLoading(false);

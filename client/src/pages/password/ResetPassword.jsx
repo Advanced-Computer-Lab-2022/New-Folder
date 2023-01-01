@@ -32,6 +32,7 @@ const ResetPassword = () => {
     try {
       await resetPassword({ userID, token, newPassword, confirmNewPassword });
       setConfMsg("Your password has been changed successfully.");
+      setShowConfirmation(true);
       setLoading(false);
     } catch (err) {
       setLoading(false);

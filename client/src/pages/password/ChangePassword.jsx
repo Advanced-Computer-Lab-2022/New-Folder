@@ -4,7 +4,6 @@ import { Form, Button, Spinner, Alert } from "react-bootstrap";
 import { changePassword } from "../../network";
 import PageHeader from "../../components/PageHeader/PageHeader";
 import SuccessModal from "../../components/SuccessModal/SuccessModal";
-import ErrorModal from "../../components/ErrorModal/ErrorModal";
 
 const ChangePassword = () => {
   const [oldPassword, setOldPassword] = useState("");
@@ -18,9 +17,10 @@ const ChangePassword = () => {
   const [validated, setValidated] = useState(false);
 
   const handleClose = () => setShowConfirmation(false);
-  const handleCloseError = () => setShowError(false);
 
   const submit = async (e) => {
+    setErrorMsg("");
+    setShowError(false);
     e.preventDefault();
     const form = e.currentTarget;
     if (form.checkValidity() === false) {
@@ -32,6 +32,7 @@ const ChangePassword = () => {
     try {
       await changePassword({ oldPassword, newPassword, confirmNewPassword });
       setConfMsg("Your password has been changed successfully.");
+      setShowConfirmation(true);
       setLoading(false);
     } catch (err) {
       setLoading(false);
