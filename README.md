@@ -134,7 +134,8 @@ GET localhost:8080
       "name": "$name",
       "subject": "$subject",
       "totalRating": "$totalRating",
-      "ratingsCount": "$ratingsCount"
+      "ratingsCount": "$ratingsCount",
+      "image": "imageURL"
     },
     {
       "id": "$courseId",
@@ -178,6 +179,98 @@ POST localhost:8080/signup
   "userName": "$username",
 }
 ```
+
+### Convert Currency
+
+---
+
+**request**:
+
+```r
+POST localhost:8080/convertCurrency
+```
+
+**body**:
+
+```json
+{
+  "magnitude": "$magnitude",
+  "oldCurrency": "$oldCurrency", 
+  "newCurrency": "$newCurrency"
+}
+```
+
+**response**:
+
+```json
+{
+  "magnitude": "$newMagnitude",
+  "currency": "$newCurrency",
+}
+```
+
+### Search
+
+---
+
+**request**:
+
+```r
+POST localhost:8080/search
+```
+
+**body**:
+
+```json
+{ 
+  "query": "$query"
+}
+```
+
+**response**:
+
+```json
+[
+  {
+      "id": "$courseId",
+      "price": "$price",
+      "duration": "$duration",
+      "instructorName": "$instructorInfo?.instructorName",
+      "name": "$name",
+      "subject": "$subject",
+      "totalRating": "$totalRating",
+      "ratingsCount": "$ratingsCount",
+      "image": "imageURL"
+    },
+    {
+      "id": "$courseId",
+      ...
+    }
+    ...
+]
+```
+
+
+### Reset Password
+
+---
+
+**request**:
+
+```r
+POST localhost:8080/resetPassword
+```
+
+**body**:
+
+```json
+{ 
+  "userID": "$userID", 
+  "token": "$token", 
+  "confirmNewPassword": "$confirmNewPassword"
+}
+```
+
 
 ## Color Palette
 
