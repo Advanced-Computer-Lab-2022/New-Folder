@@ -1,12 +1,20 @@
+<img src = "./client/public/assets/logo.png" style = "width: 100%; background-color:#000000;">
 # Level Up
-## Online Learning Platform
-
+-----------------
 
 [![Build Status](https://travis-ci.org/joemccann/dillinger.svg?branch=master)](https://travis-ci.org/joemccann/dillinger)
 
 Level Up is an online learning platform that an instructor can use to publish their courses and trainees can use to enrol in these courses to improve their knowledge and skills, also corporates can use it to train their employees and give them access to some learning material published on our website.
 
+## Motivation
+
+---
+
+In the past decade people all around the world satrted heading for learning new skills through online learning platfrom and instructor started posting valuable learning materials all over the internet. The Main idea behind Level Up is to allow instructors to post the content from outside open sources and create a unified platform for online learning and that contains multiple materials from different sources.
+
 ## Features
+
+---
 
 - If you are an instructor , you can:
   - Create a course and sets its price.
@@ -30,7 +38,7 @@ Level Up is an online learning platform that an instructor can use to publish th
   - Report any issue.
   - Refund a course and get its amount back in their wallet.
 - If you are a corporate trainee, you can:
-   - Browse, search and filter all the courses published on the website.
+  - Browse, search and filter all the courses published on the website.
   - View the details of any course.
   - See the trending courses.
   - Request access for a course.
@@ -39,7 +47,16 @@ Level Up is an online learning platform that an instructor can use to publish th
   - Rate and review the instructors of the courses they are enrolled in.
   - View the ratings and reviews of any course or instructor.
   - Report any issue.
-## Tech
+
+# Code Style
+
+---
+
+The application is built in Client/Server architecture, where the server logic is written in `server` directory and the client is in `client` directory.
+
+## Technology
+
+---
 
 Level Up uses a number of open source projects to work properly:
 
@@ -50,7 +67,9 @@ Level Up uses a number of open source projects to work properly:
 - [Express] - Backend
 - [MongoDB](https://www.mongodb.com/home) - Database
 
-## Installation
+## Installation & Running
+
+---
 
 Install the dependencies and start the server.
 
@@ -59,33 +78,153 @@ cd client
 npm i
 cd ..
 cd server
-npm i 
+npm i
 npm start
 ```
 
+## API Refrence
+
+---
+
+### login
+
+---
+
+**request**:
+
+```r
+POST localhost:8080/login
+```
+
+**body**:
+
+```json
+{
+  "username": "$username",
+  "password": "$password"
+}
+```
+
+**response**:
+
+```json
+{
+  "userType": "admin | trainee | instructor | corporateTrainee",
+  "userId": "$userId",
+  "firstName": "$userFirstName",
+  "lastName": "$userLastName",
+  "userName": "$username",
+  "corporateName": "corporateName" // if corporate trainee only
+}
+```
+
+### Explore
+
+---
+
+Get the featured courses.
+**request**:
+
+```r
+GET localhost:8080
+```
+
+**response**:
+
+```json
+[
+  {
+      "id": "$courseId",
+      "price": "$price",
+      "duration": "$duration",
+      "instructorName": "$instructorInfo?.instructorName",
+      "name": "$name",
+      "subject": "$subject",
+      "totalRating": "$totalRating",
+      "ratingsCount": "$ratingsCount"
+    },
+    {
+      "id": "$courseId",
+      ...
+    }
+    ...
+]
+```
+
+### Sign Up
+
+---
+
+**request**:
+
+```r
+POST localhost:8080/signup
+```
+
+**body**:
+
+```json
+{ 
+  "username": "$username",
+  "password": "$password", 
+  "email": "$email", 
+  "gender": "$gender", 
+  "firstName": "$firstName", 
+  "lastName":"$lastName" 
+}
+```
+
+**response**:
+
+```json
+{
+  "userType": "trainee",
+  "userId": "$userId",
+  "firstName": "$userFirstName",
+  "lastName": "$userLastName",
+  "userName": "$username",
+}
+```
 
 ## Color Palette
 
-The background used for the whole website is this gradient: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%) 
+---
 
-| Color | Hex Code |
-| ------ | ------ |
-| ![black](https://www.colorhexa.com/100F0F.png) | #100F0F|
-| ![turquoise](https://www.colorhexa.com/297f87.png) | #297f87 |
-| ![grey](https://www.colorhexa.com/9d9d9d.png) | #9d9d9d |
-| ![white](https://www.colorhexa.com/ffffff.png) | #ffffff|
+The background used for the whole website is this gradient: linear-gradient(to top, #E6E9F0 0%, #EEF1F5 100%)
 
-## contributors
+| Color                                                                             | Hex Code |
+| --------------------------------------------------------------------------------- | -------- |
+| <img src="https://www.colorhexa.com/100F0F.png" style="height:70px; width:120px"> | #100F0F  |
+| <img src="https://www.colorhexa.com/297f87.png" style="height:70px; width:120px"> | #297F87  |
+| <img src="https://www.colorhexa.com/9d9d9d.png" style="height:70px; width:120px"> | #9D9D9D  |
+| <img src="https://www.colorhexa.com/ffffff.png" style="height:70px; width:120px"> | #FFFFFF  |
 
-This project is delivered by a group of 5 Engineering students at the German University in Cairo with the help of all the amazing and supportive TAs and the great professor Dr. Mervat Abu-ElKheir.
+# Credits
 
-## License
+---
 
-MIT
+This project is delivered by a group of 5 Engineering students at the German University in Cairo:
 
+- [Ziad Ahmed Sadek](https://github.com/ziadsadek999)
+- [Aya Ahmed Fayed](https://github.com/AyaFayed)
+- [Aly Hassan Elsokkary](https://github.com/Elsokkary101)
+- [Abdelrahman Fathy Elsalh](https://github.com/abd0123)
+- [Ahmed Moneer Esmail](https://github.com/Itchyyy110)
 
-[//]: # (These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax)
+with the help of all the amazing and supportive TAs and the great professor Dr. Mervat Abu-ElKheir.
 
-   [node.js]: <http://nodejs.org>
-   [express]: <http://expressjs.com>
+# Contribute
 
+---
+
+If you want to cotribute to this project send us email on (onlinelearningsystem10@gmail.com). And if you have suggestion don't hesitate to open issue about it.
+
+# License
+
+---
+
+This application is licensed under [MIT](https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt) License.
+
+[//]: # "These are reference links used in the body of this note and get stripped out when the markdown processor does its job. There is no need to format nicely because it shouldn't be seen. Thanks SO - http://stackoverflow.com/questions/4823468/store-comments-in-markdown-syntax"
+[node.js]: http://nodejs.org
+[express]: http://expressjs.com
