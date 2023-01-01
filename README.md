@@ -44,6 +44,15 @@ In the past decade people all around the world satrted heading for learning new 
   - View the ratings and reviews of any course or instructor.
   - Report any issue.
 
+## Screenshots
+
+- Explore
+  <img src = "./client/public/assets/Explore.png" style = "width: 80%;">
+- All courses
+  <img src = "./client/public/assets/AllCourses.png" style = "width: 80%;">
+- Log in
+  <img src = "./client/public/assets/LogIn.png" style = "width: 80%;">
+
 # Code Style
 
 The application is built in Client/Server architecture, where the server logic is written in `server` directory and the client is in `client` directory.
@@ -440,8 +449,6 @@ POST localhost:8080/admin/declineRefund
 }
 ```
 
-
-
 ### Reports
 
 ---
@@ -469,7 +476,6 @@ GET localhost:8080/admin/reports
 }
 ```
 
-
 ### Approve Course Access Request
 
 ---
@@ -486,8 +492,6 @@ POST localhost:8080/admin/requests/approve/:id
 Approved Successfully
 ```
 
-
-
 ### Decline Course Access Request
 
 ---
@@ -503,7 +507,6 @@ POST localhost:8080/admin/requests/decline/:id
 ```json
 declined Successfully
 ```
-
 
 ## Color Palette
 
