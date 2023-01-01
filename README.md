@@ -47,11 +47,11 @@ In the past decade people all around the world satrted heading for learning new 
 ## Screenshots
 
 - Explore
-  <img src = "./client/public/assets/Explore.png" style = "width: 80%;">
+  <img src = "./client/public/assets/Explore.png" style = "width: 100%;">
 - All courses
-  <img src = "./client/public/assets/AllCourses.png" style = "width: 80%;">
+  <img src = "./client/public/assets/AllCourses.png" style = "width: 100%;">
 - Log in
-  <img src = "./client/public/assets/LogIn.png" style = "width: 80%;">
+  <img src = "./client/public/assets/LogIn.png" style = "width: 100%;">
 
 # Code Style
 
