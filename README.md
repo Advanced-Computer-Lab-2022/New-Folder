@@ -1,4 +1,4 @@
-<img src = "./client/public/assets/logo.png" style = "width: 100%; background-color:#000000;">
+<img src = "./client/public/assets/logo.png" style = "width: 100%; background-color:#100F0F;">
 
 # Level Up
 
@@ -11,7 +11,6 @@ Level Up is an online learning platform that an instructor can use to publish th
 In the past decade people all around the world satrted heading for learning new skills through online learning platfrom and instructor started posting valuable learning materials all over the internet. The Main idea behind Level Up is to allow instructors to post the content from outside open sources and create a unified platform for online learning and that contains multiple materials from different sources.
 
 ## Features
-
 
 - If you are an instructor , you can:
   - Create a course and sets its price.
@@ -47,11 +46,9 @@ In the past decade people all around the world satrted heading for learning new 
 
 # Code Style
 
-
 The application is built in Client/Server architecture, where the server logic is written in `server` directory and the client is in `client` directory.
 
 ## Technology
-
 
 Level Up uses a number of open source projects to work properly:
 
@@ -63,7 +60,6 @@ Level Up uses a number of open source projects to work properly:
 - [MongoDB](https://www.mongodb.com/home) - Database
 
 ## Installation & Running
-
 
 Install the dependencies and start the server.
 
@@ -77,7 +73,6 @@ npm start
 ```
 
 ## API Refrence
-
 
 ### login
 
@@ -158,13 +153,13 @@ POST localhost:8080/signup
 **body**:
 
 ```json
-{ 
+{
   "username": "$username",
-  "password": "$password", 
-  "email": "$email", 
-  "gender": "$gender", 
-  "firstName": "$firstName", 
-  "lastName":"$lastName" 
+  "password": "$password",
+  "email": "$email",
+  "gender": "$gender",
+  "firstName": "$firstName",
+  "lastName": "$lastName"
 }
 ```
 
@@ -176,7 +171,7 @@ POST localhost:8080/signup
   "userId": "$userId",
   "firstName": "$userFirstName",
   "lastName": "$userLastName",
-  "userName": "$username",
+  "userName": "$username"
 }
 ```
 
@@ -195,7 +190,7 @@ POST localhost:8080/convertCurrency
 ```json
 {
   "magnitude": "$magnitude",
-  "oldCurrency": "$oldCurrency", 
+  "oldCurrency": "$oldCurrency",
   "newCurrency": "$newCurrency"
 }
 ```
@@ -205,7 +200,7 @@ POST localhost:8080/convertCurrency
 ```json
 {
   "magnitude": "$newMagnitude",
-  "currency": "$newCurrency",
+  "currency": "$newCurrency"
 }
 ```
 
@@ -222,7 +217,7 @@ POST localhost:8080/search
 **body**:
 
 ```json
-{ 
+{
   "query": "$query"
 }
 ```
@@ -250,7 +245,6 @@ POST localhost:8080/search
 ]
 ```
 
-
 ### Reset Password
 
 ---
@@ -264,16 +258,343 @@ POST localhost:8080/resetPassword
 **body**:
 
 ```json
-{ 
-  "userID": "$userID", 
-  "token": "$token", 
+{
+  "userID": "$userID",
+  "token": "$token",
   "confirmNewPassword": "$confirmNewPassword"
 }
 ```
 
+### Add Instructor
+
+---
+
+**request**:
+
+```r
+POST localhost:8080/admin/addInstructor
+```
+
+**body**:
+
+```json
+{
+  "username": "$username",
+  "password": "$password",
+  "email": "$email",
+  "firstName": "$firstName",
+  "lastName": "$lastName",
+  "gender": "$gender"
+}
+```
+
+**response**:
+
+```json
+{
+  "message": "success"
+}
+```
+
+### Add Admin
+
+---
+
+**request**:
+
+```r
+POST localhost:8080/admin/addAdmin
+```
+
+**body**:
+
+```json
+{
+  "username": "$username",
+  "password": "$password"
+}
+```
+
+**response**:
+
+```json
+{
+  "message": "success"
+}
+```
+
+### Add Corporate Trainee
+
+---
+
+**request**:
+
+```r
+POST localhost:8080/admin/corporateTrainee
+```
+
+**body**:
+
+```json
+{
+  "username": "$username",
+  "password": "$password",
+  "email": "$email",
+  "firstName": "$firstName",
+  "lastName": "$lastName",
+  "gender": "$gender",
+  "corporateName": "$corporateName"
+}
+```
+
+**response**:
+
+```json
+{
+  "message": "success"
+}
+```
+
+### Refunds
+
+---
+
+**request**:
+
+```r
+GET localhost:8080/admin/refunds
+```
+
+**response**:
+
+```json
+[
+  {
+    "_id": "id",
+    "userId": "$userId" ,
+    "courseId": "$courseId",
+    "userName": "$userName",
+    "courseName": "$courseName",
+    "reason": "$reason",
+    "uniqueUserName": "$uniqueUserName"
+  },
+  {
+    "_id": "id",
+    ...
+  }
+  ...
+]
+```
+
+### Approve Refunds
+
+---
+
+**request**:
+
+```r
+POST localhost:8080/admin/approveRefund
+```
+
+**Body**:
+
+```json
+{
+  "userId": "$userId",
+  "courseId": "$courseId"
+}
+```
+
+**response**:
+
+```json
+{
+  "message": "Refund Approved"
+}
+```
+
+### Decline Refunds
+
+---
+
+**request**:
+
+```r
+POST localhost:8080/admin/declineRefund
+```
+
+**Body**:
+
+```json
+{
+  "userId": "$userId",
+  "courseId": "$courseId"
+}
+```
+
+**response**:
+
+```json
+{
+  "message": "Refund Declined"
+}
+```
+
+
+
+### Reports
+
+---
+
+**request**:
+
+```r
+GET localhost:8080/admin/reports
+```
+
+**response**:
+
+```json
+{
+  "resolved": [
+      {
+        "resolved reports"
+      }
+    ],
+  "unresolved": [
+      {
+        "unresolved reports"
+      }
+    ]
+}
+```
+
+
+### Approve Course Access Request
+
+---
+
+**request**:
+
+```r
+POST localhost:8080/admin/requests/approve/:id
+```
+
+**response**:
+
+```json
+Approved Successfully
+```
+
+
+
+### Decline Course Access Request
+
+---
+
+**request**:
+
+```r
+POST localhost:8080/admin/requests/decline/:id
+```
+
+**response**:
+
+```json
+declined Successfully
+```
+
+### Create Course
+
+---
+
+**request**:
+
+```r
+POST localhost:8080/instructor/createCourse
+```
+
+**body**:
+
+```json
+{
+  "description": "$description",
+  "name": "$name",
+  "subject": "$field",
+  "price": { "magnitude": "$magnitude", "currency": "$currency" },
+  "instructorInfo": {
+    "instructorId": "$userId",
+    "instructorName": "$userName",
+  },
+  "duration": 0,
+  "introVideo": "$introVideo",
+  "image": "$image",
+  "subtitles": ["sub1", ...]
+}
+```
+
+**response**:
+
+```json
+{
+  "description": "$description",
+  "name": "$name",
+  "subject": "$field",
+  "price": { "magnitude": "$magnitude", "currency": "$currency" },
+  "instructorInfo": {
+    "instructorId": "$userId",
+    "instructorName": "$userName",
+  },
+  "duration": 0,
+  "introVideo": "$introVideo",
+  "image": "$image",
+  "ratings": [],
+  "totalRating": 0,
+  
+  "trainees": [],
+  "subtitles": ["$subID",...],
+  "pendingTrainees": [],
+  "refundingTrainees": [],
+  "published": false
+}
+```
+
+
+### Get Instructor's Courses
+
+---
+
+**request**:
+
+```r
+GET localhost:8080/insttructor/myCourses
+```
+
+**Response**:
+
+```json
+[
+  {
+      "id": "$courseId",
+      "price": "$price",
+      "duration": "$duration",
+      "instructorName": "$instructorName",
+      "name": "$name",
+      "subject": "$subject",
+      "totalRating": "$totalRating",
+      "ratingsCount": "$ratingsCount",
+      "image": "imageURL"
+    },
+    {
+      "id": "$courseId",
+      ...
+    }
+    ...
+]
+```
+
 
 ## Color Palette
-
 
 The background used for the whole website is this gradient: linear-gradient(to top, #E6E9F0 0%, #EEF1F5 100%)
 
@@ -285,7 +606,6 @@ The background used for the whole website is this gradient: linear-gradient(to t
 | <img src="https://www.colorhexa.com/ffffff.png" style="height:70px; width:120px"> | #FFFFFF  |
 
 # Credits
-
 
 This project is delivered by a group of 5 Engineering students at the German University in Cairo:
 
@@ -299,11 +619,9 @@ with the help of all the amazing and supportive TAs and the great professor Dr. 
 
 # Contribute
 
-
 If you want to cotribute to this project send us email on (onlinelearningsystem10@gmail.com). And if you have suggestion don't hesitate to open issue about it.
 
 # License
-
 
 This application is licensed under [MIT](https://github.com/git/git-scm.com/blob/main/MIT-LICENSE.txt) License.
 
