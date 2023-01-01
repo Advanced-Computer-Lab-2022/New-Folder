@@ -87,7 +87,7 @@ function AdminSetPromotion() {
       endDate: new Date(endDate).getTime(),
       percentage: newPercentage,
     };
-    const coursesIds = selectedCourses.map((course) => course._id);
+    const coursesIds = selectedCourses.map((course) => course.id);
     await postMultiPromotion(coursesIds, addedPromotion);
     setNewPercentage(null);
     setRange(null);
