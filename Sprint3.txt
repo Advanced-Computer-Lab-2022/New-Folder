@@ -1,0 +1,49 @@
+Aly Hassan Elsokkary --> - write notes while watching video.
+                         - download notes as pdf.
+                         - see his/her progress in the course as a percentage of how much of the course has been completed so far
+                         - receive a certificate as a PDF after completing the course via email
+                         - download the certificate as a PDF from the website
+                         - edit subtitle page
+                         - refactoring and styling the previously written code in sprint 2 and 1
+                         - contribute to UI/UX and overall flow.
+
+Abdelrahman Fathy Elsalh --> - View preview video of a coure.
+                             - view reported problems automatically be marked as "unseen"
+                             - mark reported problems as "resolved" or "pending"
+                             - view course requests from corporate trainees
+                             - grant corporate trainees access to specific courses
+                             - edit add user to include additional fields
+                             - edit create course
+                             - refactoring and styling the previously written code in sprint 2 and 1
+                             - contribute to UI/UX and overall flow.
+
+Ahmed Mounir --> - navbar enhancement and creating new one for admin 
+                 - Reports page (admin) styling
+                 - admin dashboard
+                 - update sign up page to go along with the theme
+                 - course state functionality (published/ unpublished)
+                 - upload video page.
+                 - refactoring and styling the previously written code in sprint 2 and 1
+                 - contribute to UI/UX and overall flow.
+
+Ziad Ahmed Sadek --> - report a problem technical/financial/other.
+                     - see all previously repoted problems and their statuses
+                     - follow up on an unresolved problem
+                     - request access to a specific course they do not have access to
+                     - set a promotion (% sale) for specific courses, several courses or all courses
+                     - sign up for an account as an individual trainee using a username, email, password, first name, last name and gender
+                     - refund an amount to a trainee to their wallet
+                     - refactoring and styling the previously written code in sprint 2 and 1
+                     - Work on the UI/UX and the flow.
+
+Aya Ahmed Fayed --> - Login/Logout
+                    - enter their credit card details to pay for a course they want to register for
+                    - pay for a course
+                    - view the amount available in their wallet from refunded courses
+                    - see a list of all the courses he/she is enrolled in on their profile
+                    - view the amount of money owed per month
+                    - view the most viewed/ most popular courses
+                    - request a refund only if less than 50% of the course has been attended
+                    - view and accept the website/ company refund/ payment policy while signing up
+                    - refactoring and styling the previously written code in sprint 2 and 1
+                    - Work on the UX and the flow of the handled parts
