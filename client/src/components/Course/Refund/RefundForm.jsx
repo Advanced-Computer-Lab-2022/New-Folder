@@ -95,12 +95,12 @@ function RefundForm(props) {
                 <Modal.Header>
                   <Modal.Title>Request refund</Modal.Title>
                 </Modal.Header>
-                <Modal.Body>
+                <Modal.Body style={{ margin: 0 }}>
                   <Form
                     noValidate
                     validated={validated}
                     onSubmit={handleSubmit}
-                    id="reportProblemForm"
+                    id="requestRefundForm"
                   >
                     <Form.Group
                       className="mb-3"

@@ -3,6 +3,9 @@
   margin-bottom: 7px;
 }
 .refundFormButton {
-  width: 20%;
+  width: fit-content;
   margin-left: 1%;
+}
+#requestRefundForm {
+  width: 95%;
 }

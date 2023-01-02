@@ -7,7 +7,7 @@
   justify-content: end;
 }
 .requestAccessFormButton {
-  width: 15%;
+  width: fit-content;
   margin-left: 1%;
 }
 #reportIconWrapper {

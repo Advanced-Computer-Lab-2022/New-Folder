@@ -17,7 +17,7 @@
   margin-bottom: 7px;
 }
 .reportFormButton {
-  width: 15%;
+  width: fit-content;
   margin-left: 1%;
 }
 #reportIconWrapper {

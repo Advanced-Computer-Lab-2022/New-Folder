@@ -6,7 +6,7 @@
   margin-left: -5%;
 }
 .rateCourseFormButton {
-  width: 20%;
+  width: fit-content;
   margin-left: 1%;
 }
 #rateCourseFooter {
