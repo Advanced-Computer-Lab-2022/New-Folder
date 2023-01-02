@@ -1,0 +1,36 @@
+Aly Hassan Elsokkary --> - open all the items inside a course he/she is registered for including videos and excercises
+                         - upload a video link from YouTube under each subtitle and enter a short description of the video
+                         - create a multiple choice exam with 4 choices per question
+                         - set the answers (not visible for the trainee) for multiple choice exercises 
+                         - solve a multiple choice exercise by choosing the correct answer
+                         - submit the answers to the exercise after completing it
+                         - view his/her grade from the exercise
+                         - view the questions with the correct solution to view the incorrect answers
+                         - watch a video from a course he/she is registered for
+
+Abdelrahman Fathy Elsalh --> - upload a video link from YouTube as a preview to the course
+                            - open all the items inside a course he/she is registered for including videos and excercises
+                            - upload a video link from YouTube under each subtitle and enter a short description of the video
+                            - Calculat overall course duration
+                            - Add new subtitle
+                            - Update preview link for a course
+                            - Refactor create course
+                            - Watch preview video
+
+Ahmed Mounir -->         -create a multiple choice exam with 4 choices per question
+                         - set the answers (not visible for the trainee) for multiple choice exercises 
+                         - solve a multiple choice exercise by choosing the correct answer
+                         - submit the answers to the exercise after completing it
+                         - view his/her grade from the exercise
+
+Ziad Ahmed Sadek -->- Rate a course
+                    - define a promotion for the course (% discount) and for how long
+                    - view the ratings and reviews on all his/her courses
+                    - open all the items inside a course he/she is registered for including videos and excercises
+
+Aya Ahmed Fayed --> - view and accept the contract which includes all the rights to the posted videos and materials as well as the % taken by the company on each video per registered trainee
+                    - view his/her rating and reviews as an instructor
+                    - edit his/her mini biography or email
+                    - change his/her password
+                    - receive an email to change a forgotten password
+                    - rate an instructor 
