@@ -198,7 +198,7 @@ function ProblemCard(props) {
                 <div id="followupFormFooter">
                   <Button
                     onClick={cancel}
-                    className="greyBgHover followupFormButton me-4"
+                    className="greyBgHover followupFormButton "
                   >
                     Cancel
                   </Button>
@@ -219,6 +219,7 @@ function ProblemCard(props) {
                 onClick={() => {
                   setEditing(true);
                 }}
+                style={{ cursor: "pointer" }}
               >
                 <h6>
                   <AiOutlinePlusCircle
