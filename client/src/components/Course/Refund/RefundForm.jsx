@@ -120,14 +120,14 @@ function RefundForm(props) {
                     <div id="reportFormFooter">
                       <Button
                         onClick={close}
-                        className="reportFormButton greyBgHover"
+                        className="refundFormButton greyBgHover"
                         disabled={loading}
                       >
                         Close
                       </Button>
                       <Button
                         type="submit"
-                        className="reportFormButton blueBgHover"
+                        className="refundFormButton blueBgHover"
                         disabled={loading}
                       >
                         {loading ? (
