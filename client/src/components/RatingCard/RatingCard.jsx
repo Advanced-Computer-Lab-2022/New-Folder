@@ -198,12 +198,7 @@ function RatingCard(props) {
         <div id="rateCourseButton">
           <>
             <>
-              <Modal
-                show={editing}
-                onHide={() => setEditing(false)}
-                size={"lg"}
-                centered
-              >
+              <Modal show={editing} onHide={cancel} size={"lg"} centered>
                 <Modal.Header>
                   <Modal.Title>Review course</Modal.Title>
                 </Modal.Header>
