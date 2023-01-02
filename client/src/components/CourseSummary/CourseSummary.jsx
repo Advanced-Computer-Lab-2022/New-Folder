@@ -15,7 +15,7 @@ import CourseHeader from "../Course/CourseHeader/CourseHeader";
 import CourseBody from "../Course/CourseBody/CourseBody";
 import EnrollGoToCourse from "../Course/EnrollGoToCourse/EnrollGoToCourse";
 import EditPreviewVideo from "../Course/EditPreviewVideo/EditPreviewVideo";
-import { Button, Card, Modal, Overlay, Tooltip } from "react-bootstrap";
+import { Button, Card, Col, Modal, Overlay, Tooltip } from "react-bootstrap";
 import "../../App.css";
 import PublishCourse from "../Course/PublishCourse/PublishCourse";
 import { useRef } from "react";
@@ -222,27 +222,29 @@ function CourseSummary(props) {
               >
                 {(props) => (
                   <Tooltip id="overlay-example" {...props}>
-                    {vc !== ViewerContexts.guest &&
-                    vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
-                      <ReportCourse
-                        course={course}
-                        setShowPopOver={setShowPopOver}
-                        showPopOver={showPopOver}
-                      />
-                    ) : null}
-                    {(vc === ViewerContexts.enrolledTrainee &&
-                      ReactSession.get("userType") !==
-                        userTypes.corporateTrainee &&
-                      progress < 50) ||
-                    vc === ViewerContexts.refundingTrainee ? (
-                      <RefundForm
-                        vc={vc}
-                        setVc={setVc}
-                        courseId={courseId}
-                        setShowPopOver={setShowPopOver}
-                        showPopOver={showPopOver}
-                      />
-                    ) : null}
+                    <div style={{ display: "flex", flexDirection: "column" }}>
+                      {vc !== ViewerContexts.guest &&
+                      vc !== ViewerContexts.nonEnrolledCorporateTrainee ? (
+                        <ReportCourse
+                          course={course}
+                          setShowPopOver={setShowPopOver}
+                          showPopOver={showPopOver}
+                        />
+                      ) : null}
+                      {(vc === ViewerContexts.enrolledTrainee &&
+                        ReactSession.get("userType") !==
+                          userTypes.corporateTrainee &&
+                        progress < 50) ||
+                      vc === ViewerContexts.refundingTrainee ? (
+                        <RefundForm
+                          vc={vc}
+                          setVc={setVc}
+                          courseId={courseId}
+                          setShowPopOver={setShowPopOver}
+                          showPopOver={showPopOver}
+                        />
+                      ) : null}
+                    </div>
                   </Tooltip>
                 )}
               </Overlay>

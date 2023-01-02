@@ -13,7 +13,7 @@
   flex-direction: row;
   width: fit-content;
   border: none;
-  margin: 3px;
+  margin-left: 0;
   margin-bottom: 7px;
 }
 .reportFormButton {
@@ -23,4 +23,5 @@
 #reportIconWrapper {
   width: fit-content;
   margin-top: 0;
+  margin-left: 0;
 }

@@ -191,7 +191,7 @@ function ReportCourse(props) {
           }}
           style={{ cursor: "pointer", marginBottom: 0 }}
         >
-          <FiAlertCircle style={{ marginTop: -3 }} size={16} />
+          <FiAlertCircle style={{ marginTop: -3, marginLeft: -3 }} size={16} />
           &nbsp;Report problem
         </h6>
       </Card>

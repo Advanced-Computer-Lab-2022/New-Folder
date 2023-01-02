@@ -148,19 +148,17 @@ function RefundForm(props) {
         )}
       </Modal>
       {vc === ViewerContexts.refundingTrainee ? (
-        <Card id="reportButton">
-          <div id="reportIconWrapper">
-            {cancelLoading ? (
-              <Spinner size="sm" />
-            ) : (
-              <ImCancelCircle
-                onClick={cancel}
-                style={{ cursor: "pointer", marginBottom: "1%" }}
-              />
-            )}
-          </div>
+        <h6 onClick={cancel} style={{ cursor: "pointer", marginBottom: 0 }}>
+          {cancelLoading ? (
+            <Spinner size="sm" />
+          ) : (
+            <ImCancelCircle
+              onClick={cancel}
+              style={{ cursor: "pointer", marginBottom: "3%" }}
+            />
+          )}
           &nbsp;Cancel refund request
-        </Card>
+        </h6>
       ) : (
         <Card id="reportButton">
           <h6
