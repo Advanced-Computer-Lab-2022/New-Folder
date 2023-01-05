@@ -127,7 +127,7 @@ Install the dependencies and start the server.
 
 ```sh
 cd client
-npm i
+npm i --force
 cd ..
 cd server
 npm i
